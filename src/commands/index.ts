@@ -10,6 +10,7 @@ import getVersionType from "src/commands/get-version-type";
 import gitPostMergeCleanup from "src/commands/git-post-merge-cleanup";
 import incrementVersion from "src/commands/increment-version";
 import preCommit from "src/commands/pre-commit";
+import preCommit2 from "src/commands/pre-commit-2";
 import sayHello from "src/commands/say-hello";
 import setReleaseStatus from "src/commands/set-release-status";
 import loadCommands from "src/utility/loadCommands";
@@ -26,6 +27,7 @@ function createCommands(program: Command) {
     gitPostMergeCleanup,
     incrementVersion,
     preCommit,
+    preCommit2,
     sayHello,
     setReleaseStatus,
   });
