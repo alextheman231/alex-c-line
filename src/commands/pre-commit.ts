@@ -1,6 +1,6 @@
 import type { Command } from "commander";
 
-import { DataError, parseZodSchema } from "@alextheman/utility";
+import { DataError, normaliseIndents, parseZodSchema } from "@alextheman/utility";
 import z from "zod";
 
 import { execaNoFail } from "src/utility/execa-helpers";
@@ -12,10 +12,17 @@ interface PreCommitOptions {
   repositoryManager?: string;
 }
 
+const deprecationMessage =
+  "[DEPRECATED]: This command does not support the new alex-c-line config system. Please use `pre-commit-2` instead.";
+
 function preCommit(program: Command) {
   program
     .command("pre-commit")
-    .description("Run the standard pre-commits used across all my repositories.")
+    .description(
+      normaliseIndents`
+        ${deprecationMessage}
+        Run the standard pre-commits used across all my repositories.`,
+    )
     .option("--no-build", "Skip the build")
     .option("--no-tests", "Skip the tests")
     .option("--allow-unstaged", "Run even if nothing is staged")
@@ -30,6 +37,8 @@ function preCommit(program: Command) {
         allowUnstaged,
         repositoryManager: rawRepositoryManager,
       }: PreCommitOptions) => {
+        console.warn(deprecationMessage);
+
         const repositoryManager = rawRepositoryManager
           ? parseZodSchema(
               z.enum(["turborepo"]),
