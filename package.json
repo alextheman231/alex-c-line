@@ -15,6 +15,12 @@
       "require": "./dist/configs/index.cjs",
       "import": "./dist/configs/index.js",
       "default": "./dist/configs/index.js"
+    },
+    "./configs/internal": {
+      "types": "./dist/configs/internal/index.d.ts",
+      "require": "./dist/configs/internal/index.cjs",
+      "import": "./dist/configs/internal/index.js",
+      "default": "./dist/configs/internal/index.js"
     }
   },
   "main": "dist/index.js",
