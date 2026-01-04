@@ -1,3 +1,3 @@
-import { internalConfig } from "./dist/configs/index.js";
+import { alexCLineConfig } from "./dist/configs/internal/index.js";
 
-export default internalConfig;
+export default alexCLineConfig;
