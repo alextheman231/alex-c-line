@@ -11,7 +11,7 @@ jobs:
       id-token: write
     if: ${{ github.repository == 'AlexMan123456/alex-c-line' }}
     uses: AlexMan123456/github-actions/.github/workflows/npm-registry-publish.yml@351e9300f94bd9c648fe7367f518abe0e449a0e3 # v4.0.5
-  
+
   create-github-release:
     needs: npm-registry-publish
     permissions:
@@ -19,4 +19,4 @@ jobs:
     if: needs.npm-registry-publish.outputs.did_publish == 'true'
     uses: AlexMan123456/github-actions/.github/workflows/create-github-release.yml@351e9300f94bd9c648fe7367f518abe0e449a0e3 # v4.0.5
     secrets:
-      PAT_GITHUB: ${{ secrets.PAT_GITHUB }}
+      PAT_GITHUB: ${{ secrets.ALEX_UP_BOT_GITHUB_TOKEN }}

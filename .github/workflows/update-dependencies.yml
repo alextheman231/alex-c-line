@@ -2,7 +2,7 @@ name: Update Dependencies
 on:
   workflow_dispatch:
   schedule:
-  - cron: 0 21 * * 5
+    - cron: 0 21 * * 5
 
 permissions:
   contents: write
@@ -13,4 +13,4 @@ jobs:
     if: ${{ github.repository == 'AlexMan123456/alex-c-line' }}
     uses: AlexMan123456/github-actions/.github/workflows/update-dependencies.yml@78be199abfba7efedbc8a151b98a58963038cad7 # v4.0.4
     secrets:
-      PAT_GITHUB: ${{ secrets.PAT_GITHUB }}
+      PAT_GITHUB: ${{ secrets.ALEX_UP_BOT_GITHUB_TOKEN }}
