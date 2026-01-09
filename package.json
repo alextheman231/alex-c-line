@@ -4,7 +4,7 @@
   "description": "Command-line tool with commands to streamline the developer workflow.",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/AlexMan123456/alex-c-line.git"
+    "url": "git+https://github.com/alextheman231/alex-c-line.git"
   },
   "license": "ISC",
   "author": "alextheman",
