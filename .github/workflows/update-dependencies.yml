@@ -11,6 +11,6 @@ permissions:
 jobs:
   update-dependencies:
     if: ${{ github.repository == 'alextheman231/alex-c-line' }}
-    uses: alextheman231/github-actions/.github/workflows/update-dependencies.yml@78be199abfba7efedbc8a151b98a58963038cad7 # v4.0.4
+    uses: alextheman231/github-actions/.github/workflows/update-dependencies.yml@d94b65a56e0f50cbbd674bc019f732bd606d7063 # v5.0.0
     secrets:
       PAT_GITHUB: ${{ secrets.ALEX_UP_BOT_GITHUB_TOKEN }}
