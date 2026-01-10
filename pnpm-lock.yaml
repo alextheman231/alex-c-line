@@ -12,8 +12,8 @@ importers:
   .:
     dependencies:
       '@alextheman/utility':
-        specifier: ^4.4.2
-        version: 4.4.2
+        specifier: ^4.5.1
+        version: 4.5.1
       commander:
         specifier: ^14.0.2
         version: 14.0.2
@@ -111,8 +111,8 @@ packages:
       vite-tsconfig-paths: '>=5.1.4'
       vitest: '>=4.0.13'
 
-  '@alextheman/utility@4.4.2':
-    resolution: {integrity: sha512-6gvcYgbIv2r6E3J2k56SVA+a3kzjQp2eGhIu4Leib10Qyb58906Kdyomr2anvrDdajoAIYYnVzVGvLX1hwrzjA==}
+  '@alextheman/utility@4.5.1':
+    resolution: {integrity: sha512-7GLF+6JsZkrJ4Z+AwREqNvDi1+ZKhupLtlPzJumVNxzfapO8RsMA209r9ArvAgw1HyocxswVMHmMZvoNbEu8tg==}
     engines: {node: '>=22.0.0'}
 
   '@altano/repository-tools@2.0.1':
@@ -2994,7 +2994,7 @@ snapshots:
 
   '@alextheman/eslint-plugin@5.4.2(0ebea22b7a300c077e96ff9cca6a7795)':
     dependencies:
-      '@alextheman/utility': 4.4.2
+      '@alextheman/utility': 4.5.1
       '@eslint/js': 9.39.2
       '@typescript-eslint/utils': 8.52.0(eslint@9.39.2)(typescript@5.9.3)
       common-tags: 1.8.2
@@ -3022,8 +3022,9 @@ snapshots:
       - supports-color
       - typescript
 
-  '@alextheman/utility@4.4.2':
+  '@alextheman/utility@4.5.1':
     dependencies:
+      libsodium-wrappers: 0.8.0
       zod: 4.3.5
 
   '@altano/repository-tools@2.0.1': {}
@@ -3633,8 +3634,8 @@ snapshots:
 
   '@typescript-eslint/project-service@8.48.1(typescript@5.9.3)':
     dependencies:
-      '@typescript-eslint/tsconfig-utils': 8.52.0(typescript@5.9.3)
-      '@typescript-eslint/types': 8.52.0
+      '@typescript-eslint/tsconfig-utils': 8.48.1(typescript@5.9.3)
+      '@typescript-eslint/types': 8.48.1
       debug: 4.4.3
       typescript: 5.9.3
     transitivePeerDependencies:
