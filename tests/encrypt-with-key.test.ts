@@ -1,3 +1,4 @@
+import { encryptWithKey } from "@alextheman/utility";
 import { ExecaError } from "execa";
 import sodium from "libsodium-wrappers";
 import { beforeAll, describe, expect, test } from "vitest";
@@ -13,72 +14,85 @@ function runTests(command: CommandName) {
       await sodium.ready;
     });
 
-    test("Encrypts the value and responds with the encrypted value, NOT the plaintext", async () => {
+    test("Encrypts the value and decrypts to the same thing the utility function decrypts to", async () => {
       const { publicKey, privateKey } = sodium.crypto_box_keypair();
 
       const publicKeyBase64 = sodium.to_base64(publicKey, sodium.base64_variants.ORIGINAL);
       const plaintextValue = "Hello world";
 
-      const { stdout, exitCode } = await alexCLineTestClient(command, [
+      const { stdout, stderr, exitCode } = await alexCLineTestClient(command, [
+        publicKeyBase64,
+        plaintextValue,
+      ]);
+      expect(exitCode).toBe(0);
+      expect(normaliseStdout(stderr)).not.toContain(plaintextValue);
+
+      const utilityEncryptedValue = await encryptWithKey(publicKeyBase64, plaintextValue);
+      const utilityDecryptedValue = sodium.to_string(
+        sodium.crypto_box_seal_open(
+          sodium.from_base64(utilityEncryptedValue, sodium.base64_variants.ORIGINAL),
+          publicKey,
+          privateKey,
+        ),
+      );
+
+      const commandEncryptedValue = normaliseStdout(stdout);
+      expect(commandEncryptedValue).not.toContain(plaintextValue);
+      const commandDecryptedValue = sodium.to_string(
+        sodium.crypto_box_seal_open(
+          sodium.from_base64(commandEncryptedValue, sodium.base64_variants.ORIGINAL),
+          publicKey,
+          privateKey,
+        ),
+      );
+
+      expect(utilityDecryptedValue).toBe(commandDecryptedValue);
+      expect(commandDecryptedValue).toBe(plaintextValue);
+    });
+
+    test("Encrypts the value and does NOT respond with the plaintext", async () => {
+      const { publicKey } = sodium.crypto_box_keypair();
+
+      const publicKeyBase64 = sodium.to_base64(publicKey, sodium.base64_variants.ORIGINAL);
+      const plaintextValue = "Hello world";
+
+      const { stdout, stderr, exitCode } = await alexCLineTestClient(command, [
         publicKeyBase64,
         plaintextValue,
       ]);
       expect(exitCode).toBe(0);
 
       const encryptedValue = normaliseStdout(stdout);
-      const decryptedValue = sodium.to_string(
-        sodium.crypto_box_seal_open(
-          sodium.from_base64(encryptedValue, sodium.base64_variants.ORIGINAL),
-          publicKey,
-          privateKey,
-        ),
-      );
-
-      expect(decryptedValue).toBe(plaintextValue);
+      expect(normaliseStdout(stderr)).not.toContain(plaintextValue);
       expect(encryptedValue).not.toContain(plaintextValue);
     });
 
-    test("Returns different encrypted strings per run that still resolve to the same value", async () => {
-      const { publicKey, privateKey } = sodium.crypto_box_keypair();
+    test("Returns different encrypted strings per run", async () => {
+      const { publicKey } = sodium.crypto_box_keypair();
 
       const publicKeyBase64 = sodium.to_base64(publicKey, sodium.base64_variants.ORIGINAL);
       const plaintextValue = "Hello world";
 
-      const { exitCode: firstExitCode, stdout: firstStdout } = await alexCLineTestClient(command, [
-        publicKeyBase64,
-        plaintextValue,
-      ]);
+      const {
+        exitCode: firstExitCode,
+        stdout: firstStdout,
+        stderr: firstStderr,
+      } = await alexCLineTestClient(command, [publicKeyBase64, plaintextValue]);
       expect(firstExitCode).toBe(0);
       const firstEncryptedValue = normaliseStdout(firstStdout);
       expect(firstEncryptedValue).not.toContain(plaintextValue);
+      expect(normaliseStdout(firstStderr)).not.toContain(plaintextValue);
 
-      const { exitCode: secondExitCode, stdout: secondStdout } = await alexCLineTestClient(
-        command,
-        [publicKeyBase64, plaintextValue],
-      );
+      const {
+        exitCode: secondExitCode,
+        stdout: secondStdout,
+        stderr: secondStderr,
+      } = await alexCLineTestClient(command, [publicKeyBase64, plaintextValue]);
       expect(secondExitCode).toBe(0);
       const secondEncryptedValue = normaliseStdout(secondStdout);
       expect(secondEncryptedValue).not.toContain(plaintextValue);
-
       expect(firstEncryptedValue).not.toBe(secondEncryptedValue);
-
-      const firstDecryptedValue = sodium.to_string(
-        sodium.crypto_box_seal_open(
-          sodium.from_base64(firstEncryptedValue, sodium.base64_variants.ORIGINAL),
-          publicKey,
-          privateKey,
-        ),
-      );
-      const secondDecryptedValue = sodium.to_string(
-        sodium.crypto_box_seal_open(
-          sodium.from_base64(secondEncryptedValue, sodium.base64_variants.ORIGINAL),
-          publicKey,
-          privateKey,
-        ),
-      );
-
-      expect(firstDecryptedValue).toBe(plaintextValue);
-      expect(secondDecryptedValue).toBe(plaintextValue);
+      expect(normaliseStdout(secondStderr)).not.toContain(plaintextValue);
     });
 
     test("If any of this errors, the error message MUST NOT display the plaintext value", async () => {
@@ -88,9 +102,10 @@ function runTests(command: CommandName) {
         throw new Error("DID_NOT_THROW");
       } catch (error) {
         if (error instanceof ExecaError) {
-          const { exitCode, stderr: errorMessage } = error;
+          const { exitCode, stderr: errorMessage, stdout } = error;
           expect(exitCode).toBe(1);
 
+          expect(normaliseStdout(stdout)).not.toContain(plaintextValue);
           expect(errorMessage).not.toContain(plaintextValue);
           expect(errorMessage).toBe(
             "Encryption failed. Please double-check that the given key is a valid base 64 string.",
