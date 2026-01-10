@@ -2,11 +2,12 @@ import type { Command } from "commander";
 
 import sodium from "libsodium-wrappers";
 
-function encrypt(program: Command) {
+function encryptWithKey(program: Command) {
   program
-    .command("encrypt")
-    .description("Encrypt a secret given the public key and the thing you want to encrypt.")
-    .argument("<key>", "The public key to encrypt with")
+    .command("encrypt-with-key")
+    .alias("encrypt")
+    .description("Encrypt a secret given the public base64 key and the thing you want to encrypt.")
+    .argument("<key>", "The public base64 key to encrypt with")
     .argument("<value>", "The value to encrypt in plaintext")
     .action(async (key: string, value: string) => {
       try {
@@ -31,4 +32,4 @@ function encrypt(program: Command) {
     });
 }
 
-export default encrypt;
+export default encryptWithKey;
