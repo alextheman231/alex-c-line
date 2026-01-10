@@ -16,7 +16,7 @@ describe("encrypt", () => {
     const publicKeyBase64 = sodium.to_base64(publicKey, sodium.base64_variants.ORIGINAL);
     const plaintextValue = "Hello world";
 
-    const { stdout, exitCode } = await alexCLineTestClient("encrypt", [
+    const { stdout, exitCode } = await alexCLineTestClient("encrypt-with-key", [
       publicKeyBase64,
       plaintextValue,
     ]);
@@ -41,10 +41,10 @@ describe("encrypt", () => {
     const publicKeyBase64 = sodium.to_base64(publicKey, sodium.base64_variants.ORIGINAL);
     const plaintextValue = "Hello world";
 
-    const { exitCode: firstExitCode, stdout: firstStdout } = await alexCLineTestClient("encrypt", [
-      publicKeyBase64,
-      plaintextValue,
-    ]);
+    const { exitCode: firstExitCode, stdout: firstStdout } = await alexCLineTestClient(
+      "encrypt-with-key",
+      [publicKeyBase64, plaintextValue],
+    );
     expect(firstExitCode).toBe(0);
     const firstEncryptedValue = normaliseStdout(firstStdout);
     expect(firstEncryptedValue).not.toContain(plaintextValue);
@@ -81,7 +81,7 @@ describe("encrypt", () => {
   test("If any of this errors, the error message MUST NOT display the plaintext value", async () => {
     const plaintextValue = "gdfssdehrhrt";
     try {
-      await alexCLineTestClient("encrypt", ["Invalid public key", plaintextValue]);
+      await alexCLineTestClient("encrypt-with-key", ["Invalid public key", plaintextValue]);
       throw new Error("DID_NOT_THROW");
     } catch (error) {
       if (error instanceof ExecaError) {
