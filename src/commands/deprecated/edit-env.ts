@@ -1,17 +1,25 @@
 import type { Command } from "commander";
 
+import { normaliseIndents } from "@alextheman/utility";
 import dotenv from "dotenv";
 import dotenvStringify from "dotenv-stringify";
 
 import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
+const deprecationMessage = "[DEPRECATED]: Please use `edit-env-2` instead.";
+
 function editEnv(program: Command) {
   program
     .command("edit-env <key> [value]")
-    .description("Edit property in .env file (leave value blank to delete property)")
+    .description(
+      normaliseIndents`
+      ${deprecationMessage}
+      Edit property in .env file (leave value blank to delete property)`,
+    )
     .option("--file <file>", "The file to edit", ".env")
     .action(async (key: string, value: unknown, { file }: { file: string }) => {
+      console.warn(deprecationMessage);
       let newValue: unknown = value;
       if (typeof newValue === "string" && newValue.startsWith("--")) {
         newValue = undefined;

@@ -9,6 +9,7 @@ import createReleaseNote from "src/commands/deprecated/create-release-note";
 import editEnv from "src/commands/deprecated/edit-env";
 import preCommit from "src/commands/deprecated/pre-commit";
 import setReleaseStatus from "src/commands/deprecated/set-release-status";
+import editEnvFile from "src/commands/edit-env-file";
 import encryptWithKey from "src/commands/encrypt-with-key";
 import gitPostMergeCleanup from "src/commands/git-post-merge-cleanup";
 import preCommit2 from "src/commands/pre-commit-2";
@@ -37,6 +38,7 @@ function createCommands(program: Command) {
     createReleaseNote,
     createReleaseNote2,
     editEnv,
+    editEnvFile,
     encryptWithKey,
     getMajorVersion,
     getMinorVersion,
