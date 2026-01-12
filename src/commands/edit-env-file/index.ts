@@ -1,0 +1,48 @@
+import type { Command } from "commander";
+
+import { select } from "@inquirer/prompts";
+
+import changeExistingVariable from "src/commands/edit-env-file/changeExistingVariable";
+import parseDotenvFile from "src/utility/parseDotenvFile";
+
+export interface EditEnv2Options {
+  interactive?: boolean;
+}
+
+export type EditMode = "edit" | "delete";
+
+function editEnvFile(program: Command) {
+  program
+    .command("edit-env-file")
+    .description("Edit properties in a .env file")
+    .option("--interactive", "Enable interactive mode", true) // will be false in future updates
+    .action(async ({ interactive }: EditEnv2Options) => {
+      if (interactive) {
+        const envFileContents = await parseDotenvFile(".env");
+
+        const variableToEdit = await select({
+          message: "Please select the environment variable you wish to edit",
+          choices: [
+            ...Object.keys(envFileContents).map((key) => {
+              return {
+                name: key,
+                value: key,
+                description: "<redacted for safety>",
+              };
+            }),
+            {
+              name: "Add new environment variable",
+              value: "Add new",
+              description: `Add a new environment variable to .env.`,
+            },
+          ],
+        });
+
+        if (variableToEdit !== "Add new") {
+          await changeExistingVariable(envFileContents, variableToEdit);
+        }
+      }
+    });
+}
+
+export default editEnvFile;
