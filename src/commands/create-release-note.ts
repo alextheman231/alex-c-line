@@ -1,4 +1,3 @@
-import type { VersionType } from "@alextheman/utility";
 import type { Command } from "commander";
 
 import { parseVersionType, VersionNumber } from "@alextheman/utility";
@@ -14,15 +13,16 @@ function createReleaseNote(program: Command) {
     .argument(
       "[versionType]",
       "The version type to increment by (`major|minor|patch`). Note that this performs the version calculation without changing package.json. If left blank it will use the version in package.json",
+      parseVersionType,
     )
     .description("Create release notes based on the current version in package.json.")
-    .action(async (versionType?: VersionType) => {
+    .action(async (versionType) => {
       const { name, version }: { name: string; version: string } = JSON.parse(
         await readFile(path.join(process.cwd(), "package.json"), "utf-8"),
       );
 
       const versionNumber = versionType
-        ? new VersionNumber(version).increment(parseVersionType(versionType))
+        ? new VersionNumber(version).increment(versionType)
         : new VersionNumber(version);
       const resolvedVersionType = versionNumber.type;
 
