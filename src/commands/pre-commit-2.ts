@@ -11,16 +11,12 @@ import loadAlexCLineConfig from "src/utility/configLoaders/loadAlexCLineConfig";
 import { execaNoFail } from "src/utility/execa-helpers";
 import findAlexCLineConfig from "src/utility/findAlexCLineConfig";
 
-interface PreCommitOptions {
-  allowNoStagedChanges?: boolean;
-}
-
 function preCommit2(program: Command) {
   program
     .command("pre-commit-2")
     .description("Run the pre-commit scripts specified in the alex-c-line config (v2 experiment).")
     .option("--allow-no-staged-changes", "Run even if nothing is staged")
-    .action(async ({ allowNoStagedChanges }: PreCommitOptions) => {
+    .action(async ({ allowNoStagedChanges }) => {
       const configPath = await findAlexCLineConfig(process.cwd());
       if (!configPath) {
         program.error("Could not find the path to the alex-c-line config file. Does it exist?", {

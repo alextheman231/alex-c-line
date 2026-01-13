@@ -9,7 +9,7 @@ function encryptWithKey(program: Command) {
     .description("Encrypt a secret given the public base64 key and the thing you want to encrypt.")
     .argument("<publicKey>", "The public base64 key to encrypt with")
     .argument("<plaintextValue>", "The value to encrypt in plaintext")
-    .action(async (publicKey: string, plaintextValue: string) => {
+    .action(async (publicKey, plaintextValue) => {
       try {
         console.info(await encryptWithKeyUtility(publicKey, plaintextValue));
       } catch {
