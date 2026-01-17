@@ -3,11 +3,15 @@ import type { AlexCLineConfig } from "src/configs/types/AlexCLineConfig";
 import { DataError, parseZodSchema } from "@alextheman/utility";
 import z from "zod";
 
+import { createPullRequestTemplateSchema } from "src/configs/helpers/defineCreatePullRequestTemplateConfig";
 import { preCommitConfigSchema } from "src/configs/helpers/definePreCommitConfig";
 
-const alexCLineConfigSchema = z.object({
-  preCommit: preCommitConfigSchema,
-});
+const alexCLineConfigSchema = z
+  .object({
+    preCommit: preCommitConfigSchema,
+    createPullRequestTemplate: createPullRequestTemplateSchema,
+  })
+  .partial();
 
 function defineAlexCLineConfig<ScriptName extends string = string>(
   config: AlexCLineConfig<ScriptName>,
