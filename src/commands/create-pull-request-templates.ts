@@ -2,17 +2,28 @@ import type { Command } from "commander";
 
 import type { PullRequestTemplate } from "src/utility/getPullRequestTemplates";
 
+import { normaliseIndents } from "@alextheman/utility";
+
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
 import basePullRequestTemplate from "src/utility/basePullRequestTemplate";
 import getPullRequestTemplates from "src/utility/getPullRequestTemplates";
 
+const deprecationMessage =
+  "[DEPRECATED]: This command does not support the new markdown-native templates and alex-c-line config system. Please use `pre-commit-2` instead.";
+
 function createPullRequestTemplates(program: Command) {
   program
     .command("create-pull-request-templates")
-    .description("Create the standard pull request templates as found in my repositories")
+    .description(
+      normaliseIndents`
+      ${deprecationMessage}
+      Create the standard pull request templates as found in my repositories`,
+    )
     .action(async () => {
+      console.warn(deprecationMessage);
+
       const { name }: { name: string; version: string } = JSON.parse(
         await readFile(path.join(process.cwd(), "package.json"), "utf-8"),
       );
