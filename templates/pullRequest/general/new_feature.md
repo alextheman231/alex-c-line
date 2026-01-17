@@ -8,6 +8,6 @@ placeholders:
 
 # New Feature
 
-This is a new feature for {{projectName}} that adds new functionality to the {{projectType}}.
+This is a new feature for `{{projectName}}`. It adds new functionality to the {{projectType}}.
 
 Please see the commits tab of this pull request for the description of changes.

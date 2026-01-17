@@ -8,6 +8,6 @@ placeholders:
 
 # New Feature
 
-This is a new feature for {{projectName}} that adds a new {{infrastructureProvider}}-managed resource.
+This is a new feature for `{{projectName}}` that adds a new {{infrastructureProvider}}-managed resource.
 
 Please see the commits tab of this pull request for the description of changes.

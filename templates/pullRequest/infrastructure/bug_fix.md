@@ -1,12 +1,12 @@
 ---
-id: miscellaneous
+id: bug_fix
 category: infrastructure
 placeholders:
 - projectName
 ---
 
-# Miscellaneous
+# Bug Fix
 
-This is a general change to {{projectName}} that does not fit in any of the other provided categories.
+This is a bug fix for `{{projectName}}`. It fixes an unintended side-effect of the configuration or deployment.
 
 Please see the commits tab of this pull request for the description of changes.

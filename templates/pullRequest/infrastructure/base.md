@@ -9,7 +9,7 @@ placeholders:
 
 # Select a Template
 
-Please select the option that best describes your changes to {{projectName}}:
+Please select the option that best describes your changes to `{{projectName}}`:
 
 - [Manual Change](?template=manual_change.md) - For changes that require me to manually alter {{infrastructureProvider}} resources in some way.
 - [Irreversible Destruction](?template=irreversible_destruction.md) - For changes that irreversibly destroy something managed by {{infrastructureProvider}}.

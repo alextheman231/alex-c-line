@@ -8,8 +8,9 @@ import { readdir, readFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
+import findPackageRoot from "src/utility/findPackageRoot";
+
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 function getTemplateVariables(config: CreatePullRequestTemplateConfig): Record<string, string> {
   if (config.category === "general") {
@@ -29,7 +30,11 @@ async function getPullRequestTemplatesFromMarkdown(config: CreatePullRequestTemp
   const templateVariables = getTemplateVariables(config);
   const { category } = config;
 
-  const templatesPath = path.join(__dirname, "..", "templates", "pullRequest");
+  const templatesPath = path.join(
+    await findPackageRoot(path.dirname(__filename), "alex-c-line"),
+    "templates",
+    "pullRequest",
+  );
   const templatesDirectory = await readdir(templatesPath);
   if (!templatesDirectory.includes(category)) {
     throw new DataError(
@@ -67,7 +72,7 @@ async function getPullRequestTemplatesFromMarkdown(config: CreatePullRequestTemp
       finalContent = finalContent.replaceAll(`{{${placeholder}}}`, templateVariables[placeholder]);
     }
 
-    allTemplates[templateName] = finalContent;
+    allTemplates[templateName] = finalContent.trimStart();
   }
   return allTemplates;
 }

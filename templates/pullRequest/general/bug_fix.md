@@ -8,6 +8,6 @@ placeholders:
 
 # Bug Fix
 
-This is a bug fix for {{projectName}}. It fixes an unintended side-effect of the {{projectType}}.
+This is a bug fix for `{{projectName}}`. It fixes an unintended side-effect of the {{projectType}}.
 
 Please see the commits tab of this pull request for the description of changes.
