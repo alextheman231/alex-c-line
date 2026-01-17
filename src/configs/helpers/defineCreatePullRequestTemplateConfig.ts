@@ -19,18 +19,24 @@ export const createPullRequestTemplateSchema = z.discriminatedUnion("category", 
   }),
 ]);
 
-function defineCreatePullRequestTemplateConfig(
-  config: CreatePullRequestTemplateConfig,
+export function parseCreatePullRequestTemplateConfig(
+  input: unknown,
 ): CreatePullRequestTemplateConfig {
   return parseZodSchema(
     createPullRequestTemplateSchema,
-    config,
+    input,
     new DataError(
-      config,
+      input,
       "INVALID_PRE_COMMIT_CONFIG",
       "The config provided does not match the expected shape.",
     ),
   );
+}
+
+function defineCreatePullRequestTemplateConfig(
+  config: CreatePullRequestTemplateConfig,
+): CreatePullRequestTemplateConfig {
+  return parseCreatePullRequestTemplateConfig(config);
 }
 
 export default defineCreatePullRequestTemplateConfig;
