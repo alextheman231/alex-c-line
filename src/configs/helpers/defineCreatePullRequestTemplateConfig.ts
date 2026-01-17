@@ -4,7 +4,7 @@ import { DataError, parseZodSchema } from "@alextheman/utility";
 import z from "zod";
 
 export const createPullRequestTemplateBaseSchema = z.object({
-  projectName: z.string(),
+  projectName: z.string().optional(),
 });
 
 export const createPullRequestTemplateSchema = z.discriminatedUnion("category", [

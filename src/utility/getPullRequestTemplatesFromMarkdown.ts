@@ -12,7 +12,9 @@ import findPackageRoot from "src/utility/findPackageRoot";
 
 const __filename = fileURLToPath(import.meta.url);
 
-function getTemplateVariables(config: CreatePullRequestTemplateConfig): Record<string, string> {
+function getTemplateVariables(
+  config: Required<CreatePullRequestTemplateConfig>,
+): Record<string, string> {
   if (config.category === "general") {
     return {
       projectName: config.projectName,
@@ -26,7 +28,9 @@ function getTemplateVariables(config: CreatePullRequestTemplateConfig): Record<s
   };
 }
 
-async function getPullRequestTemplatesFromMarkdown(config: CreatePullRequestTemplateConfig) {
+async function getPullRequestTemplatesFromMarkdown(
+  config: Required<CreatePullRequestTemplateConfig>,
+) {
   const templateVariables = getTemplateVariables(config);
   const { category } = config;
 

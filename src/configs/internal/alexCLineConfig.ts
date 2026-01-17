@@ -7,6 +7,10 @@ const alexCLineConfig: AlexCLineConfig<keyof typeof scripts> = {
     packageManager: "pnpm",
     steps: ["format", "lint", "test"],
   },
+  createPullRequestTemplate: {
+    category: "general",
+    projectType: "package",
+  },
 };
 
 export default alexCLineConfig;

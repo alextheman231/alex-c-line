@@ -1,6 +1,6 @@
 import type { Command } from "commander";
 
-import { parseZodSchema } from "@alextheman/utility";
+import { DataError, parseZodSchema } from "@alextheman/utility";
 import z from "zod";
 
 import { mkdir, readFile, writeFile } from "node:fs/promises";
@@ -8,6 +8,8 @@ import path from "node:path";
 
 import { PullRequestTemplateCategory } from "src/configs";
 import { parseCreatePullRequestTemplateConfig } from "src/configs/helpers/defineCreatePullRequestTemplateConfig";
+import loadAlexCLineConfig from "src/utility/configLoaders/loadAlexCLineConfig";
+import findAlexCLineConfig from "src/utility/findAlexCLineConfig";
 import getPullRequestTemplatesFromMarkdown from "src/utility/getPullRequestTemplatesFromMarkdown";
 
 function createPullRequestTemplate(program: Command) {
@@ -24,7 +26,6 @@ function createPullRequestTemplate(program: Command) {
           );
         });
       },
-      "general",
     )
     .option(
       "--project-name <projectName>",
@@ -45,26 +46,58 @@ function createPullRequestTemplate(program: Command) {
     .description(
       "Create pull request template files for a category (currently generates all templates in that category).",
     )
-    .action(async (options) => {
+    .action(async (commandLineOptions) => {
+      const configPath = await findAlexCLineConfig(process.cwd());
+      if (!configPath) {
+        program.error("Could not find the path to the alex-c-line config file. Does it exist?", {
+          exitCode: 1,
+          code: "ALEX_C_LINE_CONFIG_NOT_FOUND",
+        });
+      }
+      const { createPullRequestTemplate: config } = await loadAlexCLineConfig(configPath);
+
       const packageInfo = JSON.parse(
         await readFile(path.join(process.cwd(), "package.json"), "utf-8"),
       );
 
-      const { name: projectName } = options.projectName
-        ? { name: options.projectName }
-        : parseZodSchema(z.object({ name: z.string() }), packageInfo, () => {
-            program.error(
-              "Invalid package.json - expected package.json to contain a `name` property.",
-              { exitCode: 1, code: "INVALID_PACKAGE_JSON" },
-            );
-          });
+      const { name: projectName } =
+        commandLineOptions.projectName || config?.projectName
+          ? { name: commandLineOptions.projectName ?? config?.projectName }
+          : parseZodSchema(z.object({ name: z.string() }), packageInfo, () => {
+              program.error(
+                "Invalid package.json - expected package.json to contain a `name` property.",
+                { exitCode: 1, code: "INVALID_PACKAGE_JSON" },
+              );
+            });
 
-      const parsedOptions = parseCreatePullRequestTemplateConfig({ ...options, projectName });
+      if (!projectName) {
+        throw new DataError(
+          { projectName },
+          "PROJECT_NAME_NOT_FOUND",
+          "Could not resolve project name.",
+        );
+      }
+
+      const parsedOptions = parseCreatePullRequestTemplateConfig({
+        category: commandLineOptions.category ?? config?.category ?? "general",
+        projectType:
+          commandLineOptions.projectType ??
+          (config?.category === "general" ? config?.projectType : undefined),
+        infrastructureProvider:
+          commandLineOptions.infrastructureProvider ??
+          (config?.category === "infrastructure" ? config?.infrastructureProvider : undefined),
+        requireConfirmationFrom:
+          commandLineOptions.requireConfirmationFrom ??
+          (config?.category === "infrastructure" ? config.requireConfirmationFrom : undefined),
+      });
 
       const gitHubPath = path.join(process.cwd(), ".github");
       const pullRequestTemplatePath = path.join(gitHubPath, "PULL_REQUEST_TEMPLATE");
 
-      const allTemplates = await getPullRequestTemplatesFromMarkdown(parsedOptions);
+      const allTemplates = await getPullRequestTemplatesFromMarkdown({
+        ...parsedOptions,
+        projectName,
+      });
 
       await mkdir(gitHubPath, { recursive: true });
       await mkdir(pullRequestTemplatePath, { recursive: true });

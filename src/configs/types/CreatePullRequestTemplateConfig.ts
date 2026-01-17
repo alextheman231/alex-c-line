@@ -1,6 +1,6 @@
 export interface CreatePullRequestTemplateBaseConfig {
   /** The name of the project. */
-  projectName: string;
+  projectName?: string;
 }
 
 export interface CreatePullRequestTemplateGeneralConfig extends CreatePullRequestTemplateBaseConfig {
