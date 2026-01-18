@@ -2,11 +2,11 @@
 
 Please select the option that best describes your changes to ``alex-c-line``:
 
-- [Breaking Change](?template=breaking_change.md) - may require changes in how the general is used and/or deployed.
-- [New Feature](?template=new_feature.md) - For changes that add a new feature to the general.
-- [Bug Fix](?template=bug_fix.md) - For changes that fix a bug in the general.
-- [Tooling Change](?template=tooling_change.md) - For changes to the general's tooling (dependencies, devDependencies, configs...).
-- [Documentation Change](?template=documentation_change.md) - For changes that affect the way that information about the general is presented to users.
+- [Breaking Change](?template=breaking_change.md) - may require changes in how the package is used and/or deployed.
+- [New Feature](?template=new_feature.md) - For changes that add a new feature to the package.
+- [Bug Fix](?template=bug_fix.md) - For changes that fix a bug in the package.
+- [Tooling Change](?template=tooling_change.md) - For changes to the package's tooling (dependencies, devDependencies, configs...).
+- [Documentation Change](?template=documentation_change.md) - For changes that affect the way that information about the package is presented to users.
 - [Refactor](?template=refactor.md) - For changes that improve code quality and structure without affecting user-facing behaviour.
 - [Miscellaneous](?template=miscellaneous.md) - For changes that do not fit cleanly into any of the above categories.
 
