@@ -30,10 +30,11 @@
     "alex-c-line": "dist/index.js"
   },
   "files": [
-    "dist"
+    "dist",
+    "templates"
   ],
   "scripts": {
-    "build": "tsdown && cpx \"templates/**/*\" dist/templates",
+    "build": "tsdown",
     "command": "bash -c 'pnpm run build && echo && echo \"Command output:\" && node dist/index.js $@' --",
     "create-release-note-major": "git pull origin main && pnpm run command create-release-note major",
     "create-release-note-minor": "git pull origin main && pnpm run command create-release-note minor",
@@ -83,7 +84,6 @@
     "@types/libsodium-wrappers": "^0.7.14",
     "@types/node": "^25.0.9",
     "@types/update-notifier": "^6.0.8",
-    "cpx": "^1.5.0",
     "dotenv-cli": "^11.0.0",
     "eslint": "^9.39.2",
     "eslint-plugin-perfectionist": "^5.3.1",
