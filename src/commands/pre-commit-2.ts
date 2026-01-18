@@ -60,8 +60,6 @@ function preCommit2(program: Command) {
             code: "PRE_COMMIT_FAILED",
           });
         }
-
-        return result;
       }
 
       const { packageManager: packagePackageManager, scripts } = JSON.parse(
@@ -79,7 +77,7 @@ function preCommit2(program: Command) {
         new DataError(
           rawPackageManager,
           "UNSUPPORTED_PACKAGE_MANAGER",
-          `This repository manager is not currently supported. Only the following are supported: ${Object.values(PackageManager).join(", ")}`,
+          `This package manager is not currently supported. Only the following are supported: ${Object.values(PackageManager).join(", ")}`,
         ),
       );
 
@@ -100,13 +98,16 @@ function preCommit2(program: Command) {
       }
 
       for (const step of preCommitConfig.steps) {
-        if (typeof step === "string") {
-          await runCommandAndLogToConsole(packageManager, [...getCommandArguments(step)]);
+        if (typeof step === "function") {
+          await step(runCommandAndLogToConsole);
+        } else if (typeof step === "string") {
+          await runCommandAndLogToConsole(packageManager, getCommandArguments(step));
         } else {
           const [script, options] = step;
-          await runCommandAndLogToConsole(packageManager, [
-            ...getCommandArguments(script, options.arguments),
-          ]);
+          await runCommandAndLogToConsole(
+            packageManager,
+            getCommandArguments(script, options.arguments),
+          );
         }
       }
 

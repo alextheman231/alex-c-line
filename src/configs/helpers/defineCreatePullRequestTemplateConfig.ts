@@ -1,9 +1,9 @@
 import type { CreatePullRequestTemplateConfig } from "src/configs/types";
 
-import { DataError, parseZodSchema } from "@alextheman/utility";
+import { parseZodSchema } from "@alextheman/utility";
 import z from "zod";
 
-export const createPullRequestTemplateBaseSchema = z.object({
+export const createPullRequestTemplateBaseSchema = z.strictObject({
   projectName: z.string().optional(),
 });
 
@@ -22,21 +22,13 @@ export const createPullRequestTemplateSchema = z.discriminatedUnion("category", 
 export function parseCreatePullRequestTemplateConfig(
   input: unknown,
 ): CreatePullRequestTemplateConfig {
-  return parseZodSchema(
-    createPullRequestTemplateSchema,
-    input,
-    new DataError(
-      input,
-      "INVALID_PRE_COMMIT_CONFIG",
-      "The config provided does not match the expected shape.",
-    ),
-  );
+  return parseZodSchema(createPullRequestTemplateSchema, input);
 }
 
 function defineCreatePullRequestTemplateConfig(
   config: CreatePullRequestTemplateConfig,
 ): CreatePullRequestTemplateConfig {
-  return parseCreatePullRequestTemplateConfig(config);
+  return config;
 }
 
 export default defineCreatePullRequestTemplateConfig;
