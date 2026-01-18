@@ -48,13 +48,9 @@ function createPullRequestTemplate(program: Command) {
     )
     .action(async (commandLineOptions) => {
       const configPath = await findAlexCLineConfig(process.cwd());
-      if (!configPath) {
-        program.error("Could not find the path to the alex-c-line config file. Does it exist?", {
-          exitCode: 1,
-          code: "ALEX_C_LINE_CONFIG_NOT_FOUND",
-        });
-      }
-      const { createPullRequestTemplate: config } = await loadAlexCLineConfig(configPath);
+      const { createPullRequestTemplate: config } = configPath
+        ? await loadAlexCLineConfig(configPath)
+        : {};
 
       const packageInfo = JSON.parse(
         await readFile(path.join(process.cwd(), "package.json"), "utf-8"),
