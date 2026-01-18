@@ -1,6 +1,6 @@
 import type { Command } from "commander";
 
-import { DataError, parseZodSchema } from "@alextheman/utility";
+import { DataError, parseZodSchema, removeUndefinedFromObject } from "@alextheman/utility";
 import z from "zod";
 
 import { mkdir, readFile, writeFile } from "node:fs/promises";
@@ -74,18 +74,20 @@ function createPullRequestTemplate(program: Command) {
         );
       }
 
-      const parsedOptions = parseCreatePullRequestTemplateConfig({
-        category: commandLineOptions.category ?? config?.category ?? "general",
-        projectType:
-          commandLineOptions.projectType ??
-          (config?.category === "general" ? config?.projectType : undefined),
-        infrastructureProvider:
-          commandLineOptions.infrastructureProvider ??
-          (config?.category === "infrastructure" ? config?.infrastructureProvider : undefined),
-        requireConfirmationFrom:
-          commandLineOptions.requireConfirmationFrom ??
-          (config?.category === "infrastructure" ? config.requireConfirmationFrom : undefined),
-      });
+      const parsedOptions = parseCreatePullRequestTemplateConfig(
+        removeUndefinedFromObject({
+          category: commandLineOptions.category ?? config?.category ?? "general",
+          projectType:
+            commandLineOptions.projectType ??
+            (config?.category === "general" ? config?.projectType : undefined),
+          infrastructureProvider:
+            commandLineOptions.infrastructureProvider ??
+            (config?.category === "infrastructure" ? config?.infrastructureProvider : undefined),
+          requireConfirmationFrom:
+            commandLineOptions.requireConfirmationFrom ??
+            (config?.category === "infrastructure" ? config.requireConfirmationFrom : undefined),
+        }),
+      );
 
       const gitHubPath = path.join(process.cwd(), ".github");
       const pullRequestTemplatePath = path.join(gitHubPath, "PULL_REQUEST_TEMPLATE");
