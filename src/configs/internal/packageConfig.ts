@@ -5,6 +5,10 @@ const packageConfig: AlexCLineConfig<"build" | "format" | "lint" | "test"> = {
     packageManager: "pnpm",
     steps: ["build", "format", "lint", "test"],
   },
+  createPullRequestTemplate: {
+    category: "general",
+    projectType: "package",
+  },
 };
 
 export default packageConfig;
