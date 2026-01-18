@@ -1,11 +1,11 @@
 import type { PreCommitConfig } from "src/configs/types/PreCommitConfig";
 
-import { DataError, parseZodSchema } from "@alextheman/utility";
+import { parseZodSchema } from "@alextheman/utility";
 import z from "zod";
 
 import { PackageManager } from "src/configs/types/PreCommitConfig";
 
-export const preCommitStepOptionsSchema = z.object({
+export const preCommitStepOptionsSchema = z.strictObject({
   arguments: z.array(z.string()).optional(),
 });
 
@@ -15,18 +15,14 @@ export const preCommitConfigSchema = z.object({
   steps: z.array(z.union([z.string(), z.tuple([z.string(), preCommitStepOptionsSchema])])),
 });
 
+export function parsePreCommitConfig(input: unknown): PreCommitConfig {
+  return parseZodSchema(preCommitConfigSchema, input);
+}
+
 function definePreCommitConfig<ScriptName extends string = string>(
   config: PreCommitConfig<ScriptName>,
-): PreCommitConfig {
-  return parseZodSchema(
-    preCommitConfigSchema,
-    config,
-    new DataError(
-      config,
-      "INVALID_PRE_COMMIT_CONFIG",
-      "The config provided does not match the expected shape.",
-    ),
-  );
+): PreCommitConfig<ScriptName> {
+  return config;
 }
 
 export default definePreCommitConfig;

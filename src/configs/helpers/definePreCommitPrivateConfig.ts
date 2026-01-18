@@ -1,24 +1,20 @@
 import type { PreCommitPrivateConfig } from "src/configs/types/PreCommitPrivateConfig";
 
-import { DataError, parseZodSchema } from "@alextheman/utility";
+import { parseZodSchema } from "@alextheman/utility";
 import z from "zod";
 
-export const preCommitPrivateConfigSchema = z.object({
+export const preCommitPrivateConfigSchema = z.strictObject({
   disableSteps: z.array(z.string()).optional(),
 });
 
+export function parsePreCommitPrivateConfig(input: unknown): PreCommitPrivateConfig {
+  return parseZodSchema(preCommitPrivateConfigSchema, input);
+}
+
 function definePreCommitPrivateConfig<ScriptName extends string = string>(
   config: PreCommitPrivateConfig<ScriptName>,
-): PreCommitPrivateConfig {
-  return parseZodSchema(
-    preCommitPrivateConfigSchema,
-    config,
-    new DataError(
-      config,
-      "INVALID_PRE_COMMIT_PRIVATE_CONFIG",
-      "The config provided does not match the expected shape.",
-    ),
-  );
+): PreCommitPrivateConfig<ScriptName> {
+  return config;
 }
 
 export default definePreCommitPrivateConfig;
