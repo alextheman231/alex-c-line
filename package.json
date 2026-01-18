@@ -78,7 +78,7 @@
     "zod": "^4.3.5"
   },
   "devDependencies": {
-    "@alextheman/eslint-plugin": "^5.4.2",
+    "@alextheman/eslint-plugin": "^5.4.3",
     "@commander-js/extra-typings": "^14.0.0",
     "@types/eslint": "^9.6.1",
     "@types/libsodium-wrappers": "^0.7.14",
