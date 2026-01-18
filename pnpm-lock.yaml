@@ -12,8 +12,8 @@ importers:
   .:
     dependencies:
       '@alextheman/utility':
-        specifier: ^4.9.0
-        version: 4.9.0
+        specifier: ^4.10.0
+        version: 4.10.0
       commander:
         specifier: ^14.0.2
         version: 14.0.2
@@ -117,8 +117,8 @@ packages:
       vite-tsconfig-paths: '>=5.1.4'
       vitest: '>=4.0.13'
 
-  '@alextheman/utility@4.9.0':
-    resolution: {integrity: sha512-njVCDVu6sjNWmUKTK8/H9Ou2QSI6cVfZzw2lZvMDQtNTzvTRpGvShnzbMPZABLiv1O+kN2l5XQaQvHLYBiRMYw==}
+  '@alextheman/utility@4.10.0':
+    resolution: {integrity: sha512-bC89kzqpV1uPSMBnBJJQczmI0c2aJePggcqqzCfB2hZwXeMKyRKYHCwfG4uf/qwTgFQf2Q22zRrjQfovSlB+qg==}
     engines: {node: '>=22.0.0'}
 
   '@altano/repository-tools@2.0.1':
@@ -1244,8 +1244,8 @@ packages:
     resolution: {integrity: sha512-8WB3Jcas3swSvjIeA2yvCJ+Miyz5l1ZmB6HFb9R1317dt9LCQoswg/BGrmAmkWVEszSrrg4RwmO46qIm2OEnSA==}
     engines: {node: '>=16'}
 
-  caniuse-lite@1.0.30001764:
-    resolution: {integrity: sha512-9JGuzl2M+vPL+pz70gtMF9sHdMFbY9FJaQBi186cHKH3pSzDvzoUJUPV6fqiKIMyXbud9ZLg4F3Yza1vJ1+93g==}
+  caniuse-lite@1.0.30001765:
+    resolution: {integrity: sha512-LWcNtSyZrakjECqmpP4qdg0MMGdN368D7X8XvvAqOcqMv0RxnlqVKZl2V6/mBR68oYMxOZPLw/gO7DuisMHUvQ==}
 
   chai@6.2.2:
     resolution: {integrity: sha512-NUPRluOfOiTKBKvWPtSD4PhFvWCqOi0BGStNWs57X9js7XGTprSmFoz5F0tWhR4WPjNeR9jXqdC7/UpSJTnlRg==}
@@ -3044,7 +3044,7 @@ snapshots:
 
   '@alextheman/eslint-plugin@5.4.2(37968c9fa0e51b0e12ec5a0064860fda)':
     dependencies:
-      '@alextheman/utility': 4.9.0
+      '@alextheman/utility': 4.10.0
       '@eslint/js': 9.39.2
       '@typescript-eslint/utils': 8.53.0(eslint@9.39.2)(typescript@5.9.3)
       common-tags: 1.8.2
@@ -3072,7 +3072,7 @@ snapshots:
       - supports-color
       - typescript
 
-  '@alextheman/utility@4.9.0':
+  '@alextheman/utility@4.10.0':
     dependencies:
       dotenv: 17.2.3
       libsodium-wrappers: 0.8.0
@@ -4075,7 +4075,7 @@ snapshots:
   browserslist@4.28.1:
     dependencies:
       baseline-browser-mapping: 2.9.15
-      caniuse-lite: 1.0.30001764
+      caniuse-lite: 1.0.30001765
       electron-to-chromium: 1.5.267
       node-releases: 2.0.27
       update-browserslist-db: 1.2.3(browserslist@4.28.1)
@@ -4105,7 +4105,7 @@ snapshots:
 
   camelcase@8.0.0: {}
 
-  caniuse-lite@1.0.30001764: {}
+  caniuse-lite@1.0.30001765: {}
 
   chai@6.2.2: {}
 
