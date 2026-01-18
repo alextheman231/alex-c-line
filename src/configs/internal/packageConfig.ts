@@ -5,13 +5,13 @@ function packageConfig(
   steps: PreCommitSteps[] = ["build", "format", "lint", "test"],
 ): AlexCLineConfig<PreCommitSteps> {
   return {
-    preCommit: {
-      packageManager: "pnpm",
-      steps,
-    },
     createPullRequestTemplate: {
       category: "general",
       projectType: "package",
+    },
+    preCommit: {
+      packageManager: "pnpm",
+      steps,
     },
   };
 }
