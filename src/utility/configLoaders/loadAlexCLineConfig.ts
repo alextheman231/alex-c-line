@@ -9,10 +9,10 @@ import { parseAlexCLineConfig } from "src/configs/helpers/defineAlexCLineConfig"
 async function loadAlexCLineConfig(filePath: string): Promise<AlexCLineConfig> {
   if (filePath.endsWith(".cjs")) {
     const module = require(filePath);
-    return parseAlexCLineConfig(module.default ?? module);
+    return await parseAlexCLineConfig(module.default ?? module);
   }
   const module = await import(pathToFileURL(filePath).href);
-  return parseAlexCLineConfig(module.default ?? module);
+  return await parseAlexCLineConfig(module.default ?? module);
 }
 
 export default loadAlexCLineConfig;

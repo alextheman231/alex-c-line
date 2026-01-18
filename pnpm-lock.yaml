@@ -12,8 +12,8 @@ importers:
   .:
     dependencies:
       '@alextheman/utility':
-        specifier: ^4.7.0
-        version: 4.7.0
+        specifier: ^4.9.0
+        version: 4.9.0
       commander:
         specifier: ^14.0.2
         version: 14.0.2
@@ -117,8 +117,8 @@ packages:
       vite-tsconfig-paths: '>=5.1.4'
       vitest: '>=4.0.13'
 
-  '@alextheman/utility@4.7.0':
-    resolution: {integrity: sha512-t+eUxeV1AXrUkBuS6IRcvDtz/iO4kFCwrJtQBMpEPDr/tOCWrgSAnEkWTIxQbeMyuGFdUPHVE5U5JS/DWfRfrw==}
+  '@alextheman/utility@4.9.0':
+    resolution: {integrity: sha512-njVCDVu6sjNWmUKTK8/H9Ou2QSI6cVfZzw2lZvMDQtNTzvTRpGvShnzbMPZABLiv1O+kN2l5XQaQvHLYBiRMYw==}
     engines: {node: '>=22.0.0'}
 
   '@altano/repository-tools@2.0.1':
@@ -1801,8 +1801,8 @@ packages:
   get-tsconfig@4.13.0:
     resolution: {integrity: sha512-1VKTZJCwBrvbd+Wn3AOgQP/2Av+TfTCOlE4AcRJE72W1ksZXbAx8PPBR9RzgTeSPzlPMHrbANMH3LbltH73wxQ==}
 
-  git-hooks-list@4.1.1:
-    resolution: {integrity: sha512-cmP497iLq54AZnv4YRAEMnEyQ1eIn4tGKbmswqwmFV4GBnAqE8NLtWxxdXa++AalfgL5EBH4IxTPyquEuGY/jA==}
+  git-hooks-list@4.2.1:
+    resolution: {integrity: sha512-WNvqJjOxxs/8ZP9+DWdwWJ7cDsd60NHf39XnD82pDVrKO5q7xfPqpkK6hwEAmBa/ZSEE4IOoR75EzbbIuwGlMw==}
 
   glob-parent@6.0.2:
     resolution: {integrity: sha512-XxwI8EOhVQgWp6iDL+3b0r86f4d6AX6zSU55HfB4ydCEuXLXc5FcYeOu+nnGftS4TEju/11rt4KJPTMgbfmv4A==}
@@ -3044,7 +3044,7 @@ snapshots:
 
   '@alextheman/eslint-plugin@5.4.2(37968c9fa0e51b0e12ec5a0064860fda)':
     dependencies:
-      '@alextheman/utility': 4.7.0
+      '@alextheman/utility': 4.9.0
       '@eslint/js': 9.39.2
       '@typescript-eslint/utils': 8.53.0(eslint@9.39.2)(typescript@5.9.3)
       common-tags: 1.8.2
@@ -3072,7 +3072,7 @@ snapshots:
       - supports-color
       - typescript
 
-  '@alextheman/utility@4.7.0':
+  '@alextheman/utility@4.9.0':
     dependencies:
       dotenv: 17.2.3
       libsodium-wrappers: 0.8.0
@@ -3689,8 +3689,8 @@ snapshots:
 
   '@typescript-eslint/project-service@8.48.1(typescript@5.9.3)':
     dependencies:
-      '@typescript-eslint/tsconfig-utils': 8.53.0(typescript@5.9.3)
-      '@typescript-eslint/types': 8.53.0
+      '@typescript-eslint/tsconfig-utils': 8.48.1(typescript@5.9.3)
+      '@typescript-eslint/types': 8.48.1
       debug: 4.4.3
       typescript: 5.9.3
     transitivePeerDependencies:
@@ -4819,7 +4819,7 @@ snapshots:
     dependencies:
       resolve-pkg-maps: 1.0.0
 
-  git-hooks-list@4.1.1: {}
+  git-hooks-list@4.2.1: {}
 
   glob-parent@6.0.2:
     dependencies:
@@ -5577,7 +5577,7 @@ snapshots:
     dependencies:
       detect-indent: 7.0.2
       detect-newline: 4.0.1
-      git-hooks-list: 4.1.1
+      git-hooks-list: 4.2.1
       is-plain-obj: 4.1.0
       semver: 7.7.3
       sort-object-keys: 2.1.0

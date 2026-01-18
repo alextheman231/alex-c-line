@@ -1,6 +1,6 @@
 import type { AlexCLineConfig } from "src/configs/types/AlexCLineConfig";
 
-import { parseZodSchema } from "@alextheman/utility";
+import { parseZodSchemaAsync } from "@alextheman/utility";
 import z from "zod";
 
 import { createPullRequestTemplateSchema } from "src/configs/helpers/defineCreatePullRequestTemplateConfig";
@@ -13,8 +13,8 @@ const alexCLineConfigSchema = z
   })
   .partial();
 
-export function parseAlexCLineConfig(input: unknown): AlexCLineConfig {
-  return parseZodSchema(alexCLineConfigSchema, input);
+export async function parseAlexCLineConfig(input: unknown): Promise<AlexCLineConfig> {
+  return await parseZodSchemaAsync(alexCLineConfigSchema, input);
 }
 
 function defineAlexCLineConfig<ScriptName extends string = string>(
