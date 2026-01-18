@@ -9,7 +9,7 @@ export const preCommitStepOptionsSchema = z.strictObject({
   arguments: z.array(z.string()).optional(),
 });
 
-export const preCommitConfigSchema = z.object({
+export const preCommitConfigSchema = z.strictObject({
   packageManager: z.enum(PackageManager).optional(),
   allowNoStagedChanges: z.boolean().optional(),
   steps: z.array(z.union([z.string(), z.tuple([z.string(), preCommitStepOptionsSchema])])),
