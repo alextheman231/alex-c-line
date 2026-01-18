@@ -12,7 +12,7 @@ export const preCommitStepOptionsSchema = z.object({
 export const preCommitConfigSchema = z.object({
   packageManager: z.enum(PackageManager).optional(),
   allowNoStagedChanges: z.boolean().optional(),
-  steps: z.union([z.array(z.string()), z.array(z.tuple([z.string(), preCommitStepOptionsSchema]))]),
+  steps: z.array(z.union([z.string(), z.tuple([z.string(), preCommitStepOptionsSchema])])),
 });
 
 function definePreCommitConfig<ScriptName extends string = string>(

@@ -18,5 +18,5 @@ export interface PreCommitConfig<ScriptName extends string = string> {
   /** Allow the hook to run even if there are no staged changes. */
   allowNoStagedChanges?: boolean;
   /** The steps to run in the pre-commit hook. */
-  steps: ScriptName[] | [ScriptName, PreCommitStepOptions][];
+  steps: (ScriptName | [ScriptName, PreCommitStepOptions])[];
 }
