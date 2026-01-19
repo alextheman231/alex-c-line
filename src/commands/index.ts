@@ -11,6 +11,7 @@ import encryptWithKey from "src/commands/encrypt-with-key";
 import getVersionType from "src/commands/get-version-type";
 import gitPostMergeCleanup from "src/commands/git-post-merge-cleanup";
 import incrementVersion from "src/commands/increment-version";
+import migrateReleaseNotes from "src/commands/migrate-release-notes";
 import preCommit from "src/commands/pre-commit";
 import preCommit2 from "src/commands/pre-commit-2";
 import sayHello from "src/commands/say-hello";
@@ -30,6 +31,7 @@ function createCommands(program: Command) {
     getVersionType,
     gitPostMergeCleanup,
     incrementVersion,
+    migrateReleaseNotes,
     preCommit,
     preCommit2,
     sayHello,
