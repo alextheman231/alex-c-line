@@ -6,6 +6,7 @@ import checkVersionNumberChange from "src/commands/check-version-number-change";
 import createPullRequestTemplate from "src/commands/create-pull-request-template-2";
 import createPullRequestTemplates from "src/commands/create-pull-request-templates";
 import createReleaseNote from "src/commands/create-release-note";
+import createReleaseNote2 from "src/commands/create-release-note-2";
 import editEnv from "src/commands/edit-env";
 import encryptWithKey from "src/commands/encrypt-with-key";
 import getVersionType from "src/commands/get-version-type";
@@ -26,6 +27,7 @@ function createCommands(program: Command) {
     createPullRequestTemplate,
     createPullRequestTemplates,
     createReleaseNote,
+    createReleaseNote2,
     editEnv,
     encryptWithKey,
     getVersionType,
