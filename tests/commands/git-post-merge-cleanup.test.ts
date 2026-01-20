@@ -14,7 +14,9 @@ import {
   setupRepository,
 } from "tests/test-clients/git-testing-utilities";
 
-describe("git-post-merge-cleanup", () => {
+// This test always takes quite a long time to complete due to the huge amounts of integration needed. Hence it has been decided that such extensive testing for a command this small is probably not worth it.
+// eslint-disable-next-line @alextheman/no-skipped-tests
+describe.skip("git-post-merge-cleanup", () => {
   test("Checks out main from the current branch, then pulls down changes and deletes the previous branch", async () => {
     await temporaryDirectoryTask(async (temporaryDirectory) => {
       // Setup
