@@ -13,7 +13,7 @@ permissions:
 
 jobs:
   package-ci:
-    uses: alextheman231/github-actions/.github/workflows/pnpm-ci.yml@40d4eac5a7058957e6fe46cafe068d92eade73d8 # v7.0.1
+    uses: alextheman231/github-actions/.github/workflows/pnpm-ci.yml@894b5b5d4d00aa34612d102b7a7721fd7bc4fc3b # v7.2.4
 
   actions-ci:
-    uses: alextheman231/github-actions/.github/workflows/actions-ci.yml@40d4eac5a7058957e6fe46cafe068d92eade73d8 # v7.0.1
+    uses: alextheman231/github-actions/.github/workflows/actions-ci.yml@894b5b5d4d00aa34612d102b7a7721fd7bc4fc3b # v7.2.4
