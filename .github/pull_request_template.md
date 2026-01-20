@@ -1,6 +1,6 @@
 # Select a Template
 
-Please select the option that best describes your changes to ``alex-c-line``:
+Please select the option that best describes your changes to `alex-c-line`:
 
 - [Breaking Change](?template=breaking_change.md) - may require changes in how the package is used and/or deployed.
 - [New Feature](?template=new_feature.md) - For changes that add a new feature to the package.
