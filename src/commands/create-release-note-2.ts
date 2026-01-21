@@ -12,7 +12,7 @@ import z from "zod";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
-import getReleaseNoteTemplate from "src/utility/getReleaseNoteTemplate";
+import getReleaseNoteTemplateFromMarkdown from "src/utility/getReleaseNoteTemplateFromMarkdown";
 
 function createReleaseNote2(program: Command) {
   program
@@ -68,7 +68,9 @@ function createReleaseNote2(program: Command) {
         `${versionNumber}.md`,
       );
 
-      const releaseNoteTemplate = getReleaseNoteTemplate(name, versionNumber, "In progress");
+      const releaseNoteTemplate = await getReleaseNoteTemplateFromMarkdown(name, versionNumber, {
+        status: "In progress",
+      });
 
       try {
         await mkdir(path.dirname(releaseNotePath), { recursive: true });

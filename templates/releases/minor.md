@@ -4,6 +4,8 @@ placeholders:
 - versionNumber
 - projectName
 - status
+- descriptionOfChanges
+- additionalNotes
 ---
 
 # {{versionNumber}} (Minor Release)
@@ -16,8 +18,8 @@ This is a new minor release of the `{{projectName}}` package. It introduces new 
 
 ## Description of Changes
 
-Description here
+{{descriptionOfChanges}}
 
 ## Additional Notes
 
-Additional notes here
+{{additionalNotes}}

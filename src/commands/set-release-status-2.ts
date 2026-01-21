@@ -7,7 +7,7 @@ import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
 import { ReleaseStatus } from "src/utility/getReleaseNoteTemplateFromMarkdown";
-import isValidReleaseDocument from "src/utility/isValidReleaseDocument";
+import validateReleaseDocument from "src/utility/validateReleaseDocument";
 
 function setReleaseStatus2(program: Command) {
   program
@@ -66,12 +66,7 @@ function setReleaseStatus2(program: Command) {
       const fullDocumentPath = path.join(process.cwd(), documentPath);
       const initialDocument = await readFile(fullDocumentPath, "utf-8");
 
-      if (!isValidReleaseDocument(name, versionNumber, initialDocument)) {
-        program.error("❌ ERROR: Document does not match a valid release note template.", {
-          exitCode: 1,
-          code: "INVALID_RELEASE_NOTE",
-        });
-      }
+      await validateReleaseDocument(name, versionNumber, initialDocument);
 
       const newDocument = initialDocument.replace(
         /^\*\*Status\*\*:\s*(.+)$/m,

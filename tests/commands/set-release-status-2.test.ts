@@ -8,13 +8,13 @@ import path from "node:path";
 
 import { createAlexCLineTestClientInDirectory } from "tests/test-clients/alex-c-line-test-client";
 
-import getReleaseNoteTemplate from "src/utility/getReleaseNoteTemplate";
+import getReleaseNoteTemplateFromMarkdown from "src/utility/getReleaseNoteTemplateFromMarkdown";
 import getReleaseSummary, { getMajorReleaseSummary } from "src/utility/getReleaseSummary";
 
 import { name, version } from "package.json" with { type: "json" };
 
 describe("set-release-status-2", () => {
-  test.skip("Takes a file path to a valid release note and sets the status to released", async () => {
+  test("Takes a file path to a valid release note and sets the status to released", async () => {
     await temporaryDirectoryTask(async (temporaryPath) => {
       const alexCLineTestClient = createAlexCLineTestClientInDirectory(temporaryPath);
       const versionNumber = new VersionNumber(version);
@@ -45,7 +45,7 @@ describe("set-release-status-2", () => {
       expect(fileContentsBeforeWrite).toContain("**Status**: In progress");
 
       const { exitCode: setReleaseStatusExitCode } = await alexCLineTestClient(
-        "set-release-status",
+        "set-release-status-2",
         [path.relative(temporaryPath, documentPath)],
       );
       expect(setReleaseStatusExitCode).toBe(0);
@@ -80,12 +80,13 @@ describe("set-release-status-2", () => {
       await mkdir(path.dirname(path.join(temporaryPath, documentPath)), { recursive: true });
       await writeFile(
         path.join(temporaryPath, documentPath),
-        getReleaseNoteTemplate(name, new VersionNumber(version), "In progress", {
+        await getReleaseNoteTemplateFromMarkdown(name, new VersionNumber(version), {
+          status: "In progress",
           descriptionOfChanges: "**Status**: In progress",
         }),
       );
 
-      const { exitCode } = await alexCLineTestClient("set-release-status", [documentPath]);
+      const { exitCode } = await alexCLineTestClient("set-release-status-2", [documentPath]);
       expect(exitCode).toBe(0);
 
       const fileContentsAfterWrite = await readFile(
@@ -177,15 +178,13 @@ describe("set-release-status-2", () => {
       await writeFile(path.join(temporaryPath, documentPath), documentContents);
 
       try {
-        await alexCLineTestClient("set-release-status", [documentPath]);
+        await alexCLineTestClient("set-release-status-2", [documentPath]);
         throw new Error("DID_NOT_THROW");
       } catch (error) {
         if (error instanceof ExecaError) {
           const { stderr: errorMessage, exitCode } = error;
           expect(exitCode).toBe(1);
-          expect(errorMessage).toBe(
-            "❌ ERROR: Document does not match a valid release note template.",
-          );
+          expect(errorMessage).toContain("DataError");
         } else {
           throw error;
         }

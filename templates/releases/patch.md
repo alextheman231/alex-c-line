@@ -4,6 +4,8 @@ placeholders:
 - versionNumber
 - projectName
 - status
+- descriptionOfChanges
+- additionalNotes
 ---
 
 # {{versionNumber}} (Patch Release)
@@ -16,8 +18,9 @@ This is a new patch release of the `{{projectName}}` package. It fixes issues wi
 
 ## Description of Changes
 
-Description here
+{{descriptionOfChanges}}
 
 ## Additional Notes
 
-Additional notes here
+{{additionalNotes}}
+

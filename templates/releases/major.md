@@ -4,6 +4,9 @@ placeholders:
 - versionNumber
 - projectName
 - status
+- descriptionOfChanges
+- migrationNotes
+- additionalNotes
 ---
 
 # {{versionNumber}} (Major Release)
@@ -16,12 +19,12 @@ This is a new major release of the `{{projectName}}` package. It has the potenti
 
 ## Description of Changes
 
-Description here
+{{descriptionOfChanges}}
 
 ## Migration Notes
 
-Migration notes here
+{{migrationNotes}}
 
 ## Additional Notes
 
-Additional notes here
+{{additionalNotes}}

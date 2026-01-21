@@ -17,6 +17,7 @@ import preCommit from "src/commands/pre-commit";
 import preCommit2 from "src/commands/pre-commit-2";
 import sayHello from "src/commands/say-hello";
 import setReleaseStatus from "src/commands/set-release-status";
+import setReleaseStatus2 from "src/commands/set-release-status-2";
 import loadCommands from "src/utility/loadCommands";
 
 function createCommands(program: Command) {
@@ -38,6 +39,7 @@ function createCommands(program: Command) {
     preCommit2,
     sayHello,
     setReleaseStatus,
+    setReleaseStatus2,
   });
 }
 
