@@ -9,6 +9,8 @@ import createReleaseNote from "src/commands/create-release-note";
 import createReleaseNote2 from "src/commands/create-release-note-2";
 import editEnv from "src/commands/edit-env";
 import encryptWithKey from "src/commands/encrypt-with-key";
+import getMajorVersion from "src/commands/get-major-version";
+import getMinorVersion from "src/commands/get-minor-version";
 import getVersionType from "src/commands/get-version-type";
 import gitPostMergeCleanup from "src/commands/git-post-merge-cleanup";
 import incrementVersion from "src/commands/increment-version";
@@ -31,6 +33,8 @@ function createCommands(program: Command) {
     createReleaseNote2,
     editEnv,
     encryptWithKey,
+    getMajorVersion,
+    getMinorVersion,
     getVersionType,
     gitPostMergeCleanup,
     incrementVersion,
