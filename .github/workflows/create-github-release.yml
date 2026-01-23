@@ -47,13 +47,13 @@ jobs:
           VERSION=v$(jq -r ".version" package.json)
           echo "version=$VERSION" >> $GITHUB_OUTPUT
 
-          MAJOR_VERSION=$(pnpm run command get-major-version $VERSION)
+          MAJOR_VERSION=$(pnpm run command-no-build get-major-version $VERSION)
           echo "major_version=$MAJOR_VERSION" >> $GITHUB_OUTPUT
 
-          MINOR_VERSION=$(pnpm run command get-minor-version $VERSION)
+          MINOR_VERSION=$(pnpm run command-no-build get-minor-version $VERSION)
           echo "minor_version=$MINOR_VERSION" >> $GITHUB_OUTPUT
 
-          VERSION_TYPE=$(pnpm run command get-version-type "$VERSION")
+          VERSION_TYPE=$(pnpm run command-no-build get-version-type "$VERSION")
           echo "version_type=$VERSION_TYPE" >> $GITHUB_OUTPUT
 
           RELEASE_DOC_PATH=docs/releases/$MAJOR_VERSION/$MINOR_VERSION/$VERSION.md

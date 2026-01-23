@@ -61,13 +61,13 @@ jobs:
           VERSION_TYPE: ${{ env.VERSION_TYPE }}
         id: get_next_version
         run: |
-          NEXT_VERSION=$(pnpm run command increment-version $VERSION $VERSION_TYPE)
+          NEXT_VERSION=$(pnpm run command-no-build increment-version $VERSION $VERSION_TYPE)
           echo "next_version=$NEXT_VERSION" >> $GITHUB_OUTPUT
 
-          MAJOR_VERSION=$(pnpm run command get-major-version $NEXT_VERSION)
+          MAJOR_VERSION=$(pnpm run command-no-build get-major-version $NEXT_VERSION)
           echo "major_version=$MAJOR_VERSION" >> $GITHUB_OUTPUT
 
-          MINOR_VERSION=$(pnpm run command get-minor-version $NEXT_VERSION)
+          MINOR_VERSION=$(pnpm run command-no-build get-minor-version $NEXT_VERSION)
           echo "minor_version=$MINOR_VERSION" >> $GITHUB_OUTPUT
 
       - name: Find release document
@@ -142,7 +142,7 @@ jobs:
       - name: Change the status in the release document
         env:
           RELEASE_DOC_PATH: ${{ env.RELEASE_DOC_PATH }}
-        run: pnpm run command set-release-status-2 "$RELEASE_DOC_PATH"
+        run: pnpm run command-no-build set-release-status-2 "$RELEASE_DOC_PATH"
 
       - name: Mint GitHub App token
         id: app-token
