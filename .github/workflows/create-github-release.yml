@@ -1,5 +1,7 @@
 name: Create GitHub Release
 on:
+  push:
+    branches: ["main"]
   workflow_call:
     secrets:
       APP_ID:
@@ -35,9 +37,6 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install
-
-      - name: Build
-        run: pnpm run build
 
       - name: Fetch tags from main
         run: git fetch --tags origin
