@@ -2,38 +2,15 @@ name: Commit a version change
 on:
   push:
     branches: ["main"]
-  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
 
 jobs:
-  check-major-version:
-    permissions:
-      contents: write
-      pull-requests: write
-    uses: ./.github/workflows/_commit-version-change.yml
-    with:
-      version-type: major
-    secrets:
-      APP_ID: ${{ secrets.ALEX_UP_BOT_APP_ID }}
-      APP_PRIVATE_KEY: ${{ secrets.ALEX_UP_BOT_PRIVATE_KEY }}
-
-  check-minor-version:
-    permissions:
-      contents: write
-      pull-requests: write
-    uses: ./.github/workflows/_commit-version-change.yml
-    with:
-      version-type: minor
-    secrets:
-      APP_ID: ${{ secrets.ALEX_UP_BOT_APP_ID }}
-      APP_PRIVATE_KEY: ${{ secrets.ALEX_UP_BOT_PRIVATE_KEY }}
-
-  check-patch-version:
-    permissions:
-      contents: write
-      pull-requests: write
-    uses: ./.github/workflows/_commit-version-change.yml
-    with:
-      version-type: patch
+  commit-version-change:
+    if: ${{ github.repository == 'alextheman231/alex-c-line' }}
+    uses: alextheman231/github-actions/.github/workflows/commit-version-change.yml@e549458ca0a641e030d97cf7817f8b619b1ebb18 # v7.2.5
     secrets:
       APP_ID: ${{ secrets.ALEX_UP_BOT_APP_ID }}
       APP_PRIVATE_KEY: ${{ secrets.ALEX_UP_BOT_PRIVATE_KEY }}
