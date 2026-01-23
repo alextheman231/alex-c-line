@@ -65,34 +65,34 @@
     "use-local-utility": "pnpm run prepare-local-utility"
   },
   "dependencies": {
-    "@alextheman/utility": "^4.10.0",
+    "@alextheman/utility": "^4.10.2",
     "commander": "^14.0.2",
     "dotenv": "^17.2.3",
     "dotenv-stringify": "^3.0.1",
     "execa": "^9.6.1",
     "gray-matter": "^4.0.3",
-    "libsodium-wrappers": "^0.8.0",
+    "libsodium-wrappers": "^0.8.1",
     "update-notifier": "^7.3.1",
-    "zod": "^4.3.5"
+    "zod": "^4.3.6"
   },
   "devDependencies": {
     "@alextheman/eslint-plugin": "^5.4.3",
     "@commander-js/extra-typings": "^14.0.0",
     "@types/eslint": "^9.6.1",
     "@types/libsodium-wrappers": "^0.7.14",
-    "@types/node": "^25.0.9",
+    "@types/node": "^25.0.10",
     "@types/update-notifier": "^6.0.8",
     "dotenv-cli": "^11.0.0",
     "eslint": "^9.39.2",
-    "eslint-plugin-perfectionist": "^5.3.1",
+    "eslint-plugin-perfectionist": "^5.4.0",
     "husky": "^9.1.7",
-    "prettier": "^3.8.0",
-    "tempy": "^3.1.0",
+    "prettier": "^3.8.1",
+    "tempy": "^3.1.1",
     "ts-node": "^10.9.2",
     "tsdown": "^0.18.4",
     "typescript": "^5.9.3",
     "vite-tsconfig-paths": "^6.0.4",
-    "vitest": "^4.0.17"
+    "vitest": "^4.0.18"
   },
   "packageManager": "pnpm@10.28.1+sha512.7d7dbbca9e99447b7c3bf7a73286afaaf6be99251eb9498baefa7d406892f67b879adb3a1d7e687fc4ccc1a388c7175fbaae567a26ab44d1067b54fcb0d6a316",
   "engines": {
