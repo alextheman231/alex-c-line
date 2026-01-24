@@ -1,4 +1,4 @@
-import { encryptWithKey } from "@alextheman/utility";
+import { encryptWithKey, getPublicAndPrivateKey } from "@alextheman/utility";
 import { ExecaError } from "execa";
 import sodium from "libsodium-wrappers";
 import { beforeAll, describe, expect, test } from "vitest";
@@ -15,7 +15,7 @@ function runTests(command: CommandName) {
     });
 
     test("Encrypts the value and decrypts to the same thing the utility function decrypts to", async () => {
-      const { publicKey, privateKey } = sodium.crypto_box_keypair();
+      const { publicKey, privateKey } = getPublicAndPrivateKey();
 
       const publicKeyBase64 = sodium.to_base64(publicKey, sodium.base64_variants.ORIGINAL);
       const plaintextValue = "Hello world";
@@ -28,22 +28,20 @@ function runTests(command: CommandName) {
       expect(normaliseStdout(stderr)).not.toContain(plaintextValue);
 
       const utilityEncryptedValue = await encryptWithKey(publicKeyBase64, plaintextValue);
-      const utilityDecryptedValue = sodium.to_string(
-        sodium.crypto_box_seal_open(
-          sodium.from_base64(utilityEncryptedValue, sodium.base64_variants.ORIGINAL),
-          publicKey,
-          privateKey,
-        ),
+      const utilityDecryptedValue = sodium.crypto_box_seal_open(
+        sodium.from_base64(utilityEncryptedValue, sodium.base64_variants.ORIGINAL),
+        publicKey,
+        privateKey,
+        "text",
       );
 
       const commandEncryptedValue = normaliseStdout(stdout);
       expect(commandEncryptedValue).not.toContain(plaintextValue);
-      const commandDecryptedValue = sodium.to_string(
-        sodium.crypto_box_seal_open(
-          sodium.from_base64(commandEncryptedValue, sodium.base64_variants.ORIGINAL),
-          publicKey,
-          privateKey,
-        ),
+      const commandDecryptedValue = sodium.crypto_box_seal_open(
+        sodium.from_base64(commandEncryptedValue, sodium.base64_variants.ORIGINAL),
+        publicKey,
+        privateKey,
+        "text",
       );
 
       expect(utilityDecryptedValue).toBe(commandDecryptedValue);
@@ -51,7 +49,7 @@ function runTests(command: CommandName) {
     });
 
     test("Encrypts the value and does NOT respond with the plaintext", async () => {
-      const { publicKey } = sodium.crypto_box_keypair();
+      const { publicKey } = getPublicAndPrivateKey();
 
       const publicKeyBase64 = sodium.to_base64(publicKey, sodium.base64_variants.ORIGINAL);
       const plaintextValue = "Hello world";
