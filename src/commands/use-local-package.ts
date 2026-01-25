@@ -72,7 +72,7 @@ function useLocalPackage(program: Command) {
         ),
       }[dependencyGroup];
 
-      if (!dependencies[packageName]) {
+      if (!dependencies[packageName] && packageName !== "alex-c-line") {
         program.error("Could not find package in your package.json.", {
           exitCode: 1,
           code: "PACKAGE_NOT_FOUND",
