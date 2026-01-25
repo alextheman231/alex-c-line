@@ -1,6 +1,6 @@
 import type { Command } from "commander";
 
-import { parseZodSchema } from "@alextheman/utility";
+import { normaliseIndents, parseZodSchema } from "@alextheman/utility";
 import { execa } from "execa";
 import z from "zod";
 
@@ -8,14 +8,21 @@ import path from "node:path";
 
 import { PrivateConfigFileName } from "src/configs/types/ConfigFileName";
 import loadAlexCLinePrivateConfig from "src/utility/configLoaders/loadAlexCLinePrivateConfig";
+import experimentalHeader from "src/utility/constants/experimentalHeader";
 import findAlexCLineConfig from "src/utility/findAlexCLineConfig";
 import findTgzFile from "src/utility/findTgzFile";
 import getPackageJsonContents from "src/utility/getPackageJsonContents";
+import removeAllTarballs from "src/utility/removeAllTarballs";
 
 function useLocalPackage(program: Command) {
   program
     .command("use-local-package")
-    .description("Prepare and use a local version of a given package.")
+    .description(
+      normaliseIndents`
+      ${experimentalHeader}
+      
+      Prepare and use a local version of a given package.`,
+    )
     .argument("<packageName>", "The name of the package to use locally.")
     .option("--reverse", "Reverse back to the live version of the package", false)
     .argument("[args...]", "Extra arguments to pass if local package name is alex-c-line")
@@ -91,9 +98,7 @@ function useLocalPackage(program: Command) {
             cwd: localPackageFullPath,
           })`${packageManager} run ${prepareScript}`;
           if (!keepOldTarballs) {
-            await execa({
-              cwd: localPackageFullPath,
-            })`rm -f ${(packageName.startsWith("@") ? packageName.slice(1) : packageName).replaceAll("/", "-")}-*.tgz`;
+            await removeAllTarballs(localPackageFullPath, packageName);
           }
           await execa({
             cwd: localPackageFullPath,
