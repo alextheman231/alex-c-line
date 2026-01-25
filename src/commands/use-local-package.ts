@@ -118,14 +118,22 @@ function useLocalPackage(program: Command) {
       if (packageName === "alex-c-line") {
         await execa({ cwd: localPackageFullPath })`${packageManager} run ${prepareScript}`;
         console.info(`Command output from ${localPackageFullPath}:`);
-        await execa(
+        const { exitCode } = await execa(
           process.execPath,
           [path.join(localPackageFullPath, "dist", "index.js"), ...args],
           {
             cwd: process.cwd(),
             stdio: "inherit",
+            reject: false,
           },
         );
+
+        if (exitCode !== 0 && args.length !== 0) {
+          program.error("❌ ERROR: An error occurred during the local `alex-c-line` run.", {
+            exitCode: 1,
+            code: "LOCAL_ALEX_C_LINE_ERROR",
+          });
+        }
       } else {
         if (!reverse) {
           await execa({
