@@ -3,3 +3,4 @@ node_modules
 .env
 dist
 .alex-c-line.private.config.js
+alex-c-line-*.tgz
