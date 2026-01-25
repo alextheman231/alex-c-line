@@ -1,12 +1,11 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 
-async function getPackageJson(directory: string): Promise<Record<string, string> | null> {
+async function getPackageJsonContents(directory: string): Promise<Record<string, string> | null> {
   try {
     return JSON.parse(
       await readFile(
-        path.join(
-          process.cwd(),
+        path.resolve(
           ...(directory.endsWith("package.json") ? [directory] : [directory, "package.json"]),
         ),
         "utf-8",
@@ -20,4 +19,4 @@ async function getPackageJson(directory: string): Promise<Record<string, string>
   }
 }
 
-export default getPackageJson;
+export default getPackageJsonContents;

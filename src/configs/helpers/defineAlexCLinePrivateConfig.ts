@@ -3,6 +3,7 @@ import type { AlexCLinePrivateConfig } from "src/configs/types/AlexCLinePrivateC
 import { parseZodSchema } from "@alextheman/utility";
 import z from "zod";
 
+import { DependencyGroup } from "src/configs/types";
 import { PackageManager } from "src/configs/types/PreCommitConfig";
 
 export const alexCLinePrivateConfigSchema = z.object({
@@ -13,6 +14,8 @@ export const alexCLinePrivateConfigSchema = z.object({
         packageManager: z.enum(PackageManager),
         path: z.string(),
         prepareScript: z.string().optional(),
+        dependencyGroup: z.enum(DependencyGroup).optional(),
+        keepOldTarballs: z.boolean().optional(),
       }),
     ),
   }),

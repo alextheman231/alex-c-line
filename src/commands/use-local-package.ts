@@ -1,20 +1,25 @@
 import type { Command } from "commander";
 
+import { parseZodSchema } from "@alextheman/utility";
 import { execa } from "execa";
+import z from "zod";
 
 import path from "node:path";
 
 import { PrivateConfigFileName } from "src/configs/types/ConfigFileName";
 import loadAlexCLinePrivateConfig from "src/utility/configLoaders/loadAlexCLinePrivateConfig";
 import findAlexCLineConfig from "src/utility/findAlexCLineConfig";
+import findTgzFile from "src/utility/findTgzFile";
+import getPackageJsonContents from "src/utility/getPackageJsonContents";
 
 function useLocalPackage(program: Command) {
   program
     .command("use-local-package")
     .description("Prepare and use a local version of a given package.")
     .argument("<packageName>", "The name of the package to use locally.")
+    .option("--reverse", "Reverse back to the live version of the package", false)
     .argument("[args...]", "Extra arguments to pass if local package name is alex-c-line")
-    .action(async (packageName, args) => {
+    .action(async (packageName, args, { reverse }) => {
       const configPath = await findAlexCLineConfig(process.cwd(), [
         PrivateConfigFileName.COMMON_JS_JAVASCRIPT,
         PrivateConfigFileName.ES_MODULES_JAVASCRIPT,
@@ -37,21 +42,40 @@ function useLocalPackage(program: Command) {
 
       const localPackage = localPackages[packageName];
       if (!localPackage) {
-        program.error("Could not find package path in your private config.", {
+        program.error("Could not find package in your private config.", {
           exitCode: 1,
           code: "PACKAGE_NOT_FOUND",
         });
       }
 
-      const prepareScript = localPackage.prepareScript ?? "create-local-package";
+      const {
+        packageManager,
+        prepareScript = "build",
+        dependencyGroup = "dependencies",
+        keepOldTarballs,
+      } = localPackage;
+
+      const packageInfo = await getPackageJsonContents(process.cwd());
+
+      const dependencies = {
+        dependencies: parseZodSchema(z.record(z.string(), z.string()), packageInfo?.dependencies),
+        devDependencies: parseZodSchema(
+          z.record(z.string(), z.string()),
+          packageInfo?.devDependencies,
+        ),
+      }[dependencyGroup];
+
+      if (!dependencies[packageName]) {
+        program.error("Could not find package in your package.json.", {
+          exitCode: 1,
+          code: "PACKAGE_NOT_FOUND",
+        });
+      }
+
       const localPackageFullPath = path.resolve(process.cwd(), localPackage.path);
 
-      await execa({
-        cwd: localPackageFullPath,
-      })`${localPackage.packageManager} run ${prepareScript}`;
-
       if (packageName === "alex-c-line") {
-        console.info();
+        await execa({ cwd: localPackageFullPath })`${packageManager} run ${prepareScript}`;
         console.info(`Command output from ${localPackageFullPath}:`);
         await execa(
           process.execPath,
@@ -62,12 +86,36 @@ function useLocalPackage(program: Command) {
           },
         );
       } else {
-        program.error(
-          "This will be the error for packages that can't be found, but as of now, alex-c-line is the only package being supported for the time being.",
-          {
-            exitCode: 1,
-            code: "PACKAGE_NOT_FOUND",
-          },
+        if (!reverse) {
+          await execa({
+            cwd: localPackageFullPath,
+          })`${packageManager} run ${prepareScript}`;
+          if (!keepOldTarballs) {
+            await execa({
+              cwd: localPackageFullPath,
+            })`rm -f ${(packageName.startsWith("@") ? packageName.slice(1) : packageName).replaceAll("/", "-")}-*.tgz`;
+          }
+          await execa({
+            cwd: localPackageFullPath,
+          })`${packageManager} pack`;
+        }
+
+        await execa({
+          cwd: process.cwd(),
+          stdio: "inherit",
+        })`${packageManager} uninstall ${packageName}`;
+        await execa(
+          packageManager,
+          [
+            "install",
+            dependencyGroup === "devDependencies" ? "--save-dev" : undefined,
+            reverse
+              ? packageName
+              : `file:${path.join(localPackageFullPath, await findTgzFile(localPackageFullPath, packageManager))}`,
+          ].filter((arg) => {
+            return arg !== undefined;
+          }),
+          { cwd: process.cwd(), stdio: "inherit" },
         );
       }
     });
