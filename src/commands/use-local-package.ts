@@ -1,6 +1,6 @@
 import type { Command } from "commander";
 
-import { normaliseIndents, parseZodSchema } from "@alextheman/utility";
+import { DataError, normaliseIndents, parseZodSchema } from "@alextheman/utility";
 import { execa } from "execa";
 import z from "zod";
 
@@ -35,7 +35,7 @@ function useLocalPackage(program: Command) {
 
       if (!configPath) {
         program.error(
-          "Could not find the path to the alex-c-line private config file. Does it exist?",
+          "Could not find the path to the alex-c-line private config file (should be `.alex-c-line.private.config.js`). Does it exist?",
           {
             exitCode: 1,
             code: "ALEX_C_LINE_PRIVATE_CONFIG_NOT_FOUND",
@@ -49,10 +49,11 @@ function useLocalPackage(program: Command) {
 
       const localPackage = localPackages[packageName];
       if (!localPackage) {
-        program.error("Could not find package in your private config.", {
-          exitCode: 1,
-          code: "PACKAGE_NOT_FOUND",
-        });
+        throw new DataError(
+          { packageName, configPath },
+          "PACKAGE_NOT_FOUND",
+          `Could not find ${packageName} in your private config.`,
+        );
       }
 
       const {
@@ -73,10 +74,11 @@ function useLocalPackage(program: Command) {
       }[dependencyGroup];
 
       if (!dependencies[packageName] && packageName !== "alex-c-line") {
-        program.error("Could not find package in your package.json.", {
-          exitCode: 1,
-          code: "PACKAGE_NOT_FOUND",
-        });
+        throw new DataError(
+          { packageName, dependencyGroup, packagePath: process.cwd() },
+          "PACKAGE_NOT_FOUND",
+          `Could not find ${packageName} in the ${dependencyGroup} of your package.json.`,
+        );
       }
 
       const localPackageFullPath = path.resolve(process.cwd(), localPackage.path);
