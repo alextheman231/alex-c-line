@@ -65,11 +65,19 @@ function useLocalPackage(program: Command) {
 
       const packageInfo = await getPackageJsonContents(process.cwd());
 
+      if (packageInfo === null) {
+        throw new DataError(
+          { currentDirectory: process.cwd() },
+          "MISSING_CURRENT_REPOSITORY_PACKAGE_JSON",
+          "Could not find package.json in the current location",
+        );
+      }
+
       const dependencies = {
-        dependencies: parseZodSchema(z.record(z.string(), z.string()), packageInfo?.dependencies),
+        dependencies: parseZodSchema(z.record(z.string(), z.string()), packageInfo.dependencies),
         devDependencies: parseZodSchema(
           z.record(z.string(), z.string()),
-          packageInfo?.devDependencies,
+          packageInfo.devDependencies,
         ),
       }[dependencyGroup];
 
@@ -82,6 +90,30 @@ function useLocalPackage(program: Command) {
       }
 
       const localPackageFullPath = path.resolve(process.cwd(), localPackage.path);
+
+      const localPackageInfo = await getPackageJsonContents(localPackageFullPath);
+
+      if (localPackageInfo === null) {
+        throw new DataError(
+          { localPackageFullPath },
+          "MISSING_PACKAGE_REPOSITORY_PACKAGE_JSON",
+          "Could not find package.json in the package repository.",
+        );
+      }
+
+      const localPackageRepositoryName = parseZodSchema(z.string(), localPackageInfo.name);
+
+      if (localPackageRepositoryName !== packageName) {
+        throw new DataError(
+          {
+            providedPackageName: packageName,
+            localPackagePath: localPackageFullPath,
+            localPackageRepositoryName,
+          },
+          "PACKAGE_NAME_MISMATCH",
+          "The `name` field in package repository does not match the package name provided.",
+        );
+      }
 
       if (packageName === "alex-c-line") {
         await execa({ cwd: localPackageFullPath })`${packageManager} run ${prepareScript}`;
