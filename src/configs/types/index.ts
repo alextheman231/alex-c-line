@@ -1,4 +1,4 @@
-export { default as ConfigFileName } from "src/configs/types/ConfigFileName";
+export { ConfigFileName } from "src/configs/types/ConfigFileName";
 export { default as PullRequestTemplateCategory } from "src/configs/types/PullRequestTemplateCategory";
 
 export type * from "src/configs/types/AlexCLineConfig";
