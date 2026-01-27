@@ -42,7 +42,7 @@ function gitPostMergeCleanup(program: Command) {
           exitCode: 1,
           code: "INVALID_BRANCH",
         });
-      }
+      } //
       const runCommandAndLogToConsole = createExecaClientWithDefaultOptions({
         stdio: "inherit",
       });
