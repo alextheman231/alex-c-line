@@ -1,8 +1,18 @@
-import { VersionNumber } from "@alextheman/utility";
-import { ExecaError } from "execa";
-import { describe, expect, test } from "vitest";
+import type { VersionType } from "@alextheman/utility";
 
-import alexCLineTestClient from "tests/test-clients/alex-c-line-test-client";
+import { parseZodSchema, VersionNumber } from "@alextheman/utility";
+import { execa, ExecaError } from "execa";
+import { temporaryDirectoryTask } from "tempy";
+import { describe, expect, test } from "vitest";
+import z from "zod";
+
+import path from "node:path";
+
+import alexCLineTestClient, {
+  createAlexCLineTestClientInDirectory,
+} from "tests/test-clients/alex-c-line-test-client";
+
+import getPackageJsonContents from "src/utility/getPackageJsonContents";
 
 import { version } from "package.json" with { type: "json" };
 
@@ -75,4 +85,46 @@ describe("incrementVersion", () => {
       new VersionNumber(version).increment("major").toString({ omitPrefix: true }),
     );
   });
+
+  test.each<VersionType>(["major", "minor", "patch"])(
+    "Resolves to the same result as `npm version %s`",
+    async (versionType) => {
+      await temporaryDirectoryTask(async (temporaryPath) => {
+        const stdoutSchema = z.object({
+          exitCode: z.int(),
+          stdout: z.string().transform((rawValue) => {
+            return new VersionNumber(rawValue);
+          }),
+        });
+
+        // lol this is cursed
+        await execa({ cwd: temporaryPath })`git clone https://github.com/alextheman231/alex-c-line`;
+        const repositoryPath = path.join(temporaryPath, "alex-c-line");
+
+        const execaInDirectory = execa({ cwd: repositoryPath });
+        const alexCLineTestClient = createAlexCLineTestClientInDirectory(repositoryPath);
+        const { version } = parseZodSchema(
+          z.object({
+            version: z.string().transform((rawValue) => {
+              return new VersionNumber(rawValue);
+            }),
+          }),
+          await getPackageJsonContents(repositoryPath),
+        );
+
+        const { exitCode: alexCLineExitCode, stdout: newAlexCLineVersion } = parseZodSchema(
+          stdoutSchema,
+          await alexCLineTestClient("increment-version", [version.toString(), versionType]),
+        );
+        expect(alexCLineExitCode).toBe(0);
+        const { exitCode: npmExitCode, stdout: newNpmVersion } = parseZodSchema(
+          stdoutSchema,
+          await execaInDirectory`npm version ${versionType} --no-git-tag-version`,
+        );
+        expect(npmExitCode).toBe(0);
+
+        expect(VersionNumber.isEqual(newAlexCLineVersion, newNpmVersion)).toBe(true);
+      });
+    },
+  );
 });
