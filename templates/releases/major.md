@@ -8,10 +8,11 @@ placeholders:
 - migrationNotes
 - additionalNotes
 ---
-
 # {{versionNumber}} (Major Release)
 
+<!-- alex-c-line-start-release-status -->
 **Status**: {{status}}
+<!-- alex-c-line-end-release-status -->
 
 <!-- alex-c-line-start-release-summary -->
 This is a new major release of the `{{projectName}}` package. It has the potential to introduce breaking changes that may require a large amount of refactoring. Please read the description of changes and migration notes below for more information.

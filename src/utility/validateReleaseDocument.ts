@@ -1,6 +1,6 @@
 import type { VersionNumber } from "@alextheman/utility";
 
-import { DataError, kebabToCamel, normaliseIndents } from "@alextheman/utility";
+import { DataError, kebabToCamel, normaliseIndents, removeDuplicates } from "@alextheman/utility";
 
 import { readFile } from "node:fs/promises";
 import path from "node:path";
@@ -8,6 +8,8 @@ import { fileURLToPath } from "node:url";
 
 import findPackageRoot from "src/utility/findPackageRoot";
 import getMarkdownBlock from "src/utility/getMarkdownBlock";
+import { ReleaseStatus } from "src/utility/getReleaseNoteTemplateFromMarkdown";
+import getReleaseStatus from "src/utility/getReleaseStatus";
 import normaliseMarkdown from "src/utility/normaliseMarkdown";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -16,26 +18,39 @@ async function validateReleaseDocument(
   projectName: string,
   version: VersionNumber,
   content: string,
+  allowedReleaseStatuses: ReleaseStatus | ReleaseStatus[] = ["In progress", "Released"],
 ): Promise<void> {
   if (
     !normaliseMarkdown(content).startsWith(
       normaliseMarkdown(normaliseIndents`
             # ${version} (${kebabToCamel(version.type, { startWithUpper: true })} Release)
-            
-            **Status**: In progress
             `),
     )
   ) {
     throw new DataError(
       content.split("\n").slice(0, 3).join("\n"),
-      "INVALID_HEADER",
+      "INVALID_HEADING",
       normaliseIndents`
-                Expected header to be:
+                Expected heading to be:
 
                 # ${version} (${kebabToCamel(version.type, { startWithUpper: true })} Release)
-            
-                **Status**: In progress
               `,
+    );
+  }
+
+  const releaseStatus = getReleaseStatus(content);
+
+  if (
+    !removeDuplicates(
+      Array.isArray(allowedReleaseStatuses) ? allowedReleaseStatuses : [allowedReleaseStatuses],
+    ).includes(releaseStatus)
+  ) {
+    throw new DataError(
+      { releaseStatus },
+      "INVALID_RELEASE_STATUS",
+      `Invalid release status. Expected one of: ${Object.values(ReleaseStatus).map((status) => {
+        return `"${status}"`;
+      })}`,
     );
   }
 
