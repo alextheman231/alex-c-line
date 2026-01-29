@@ -8,6 +8,7 @@ import path from "node:path";
 
 import { createAlexCLineTestClientInDirectory } from "tests/test-clients/alex-c-line-test-client";
 
+import getMarkdownBlock from "src/utility/getMarkdownBlock";
 import getReleaseNoteTemplateFromMarkdown from "src/utility/getReleaseNoteTemplateFromMarkdown";
 import getReleaseSummary, { getMajorReleaseSummary } from "src/utility/getReleaseSummary";
 
@@ -94,12 +95,17 @@ describe("set-release-status-2", () => {
         "utf-8",
       );
       expect(
-        fileContentsAfterWrite.startsWith(normaliseIndents`
-            # v${version} (${kebabToCamel(versionType, { startWithUpper: true })} Release)
-
-            **Status**: Released
-        `),
+        fileContentsAfterWrite.startsWith(
+          `# v${version} (${kebabToCamel(versionType, { startWithUpper: true })} Release)`,
+        ),
       ).toBe(true);
+      expect(
+        getMarkdownBlock(
+          fileContentsAfterWrite,
+          "<!-- alex-c-line-start-release-status -->",
+          "<!-- alex-c-line-end-release-status -->",
+        ),
+      );
       expect(fileContentsAfterWrite).toContain("**Status**: In progress");
     });
   });
