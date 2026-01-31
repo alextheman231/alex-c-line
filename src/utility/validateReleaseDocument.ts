@@ -49,9 +49,11 @@ async function validateReleaseDocument(
     throw new DataError(
       { releaseStatus },
       "INVALID_RELEASE_STATUS",
-      `Invalid release status. Expected one of: ${allowedReleaseStatuses.map((status) => {
-        return `"${status}"`;
-      })}`,
+      `Invalid release status. Received "${releaseStatus}" but expected one of: ${allowedReleaseStatuses.map(
+        (status) => {
+          return `"${status}"`;
+        },
+      )}`,
     );
   }
 
