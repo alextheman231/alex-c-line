@@ -1,4 +1,4 @@
-import { encryptWithKey, getPublicAndPrivateKey } from "@alextheman/utility";
+import { encryptWithKey } from "@alextheman/utility";
 import { ExecaError } from "execa";
 import sodium from "libsodium-wrappers";
 import { beforeAll, describe, expect, test } from "vitest";
@@ -15,7 +15,7 @@ function runTests(command: CommandName) {
     });
 
     test("Encrypts the value and decrypts to the same thing the utility function decrypts to", async () => {
-      const { publicKey, privateKey } = getPublicAndPrivateKey();
+      const { publicKey, privateKey } = sodium.crypto_box_keypair();
 
       const publicKeyBase64 = sodium.to_base64(publicKey, sodium.base64_variants.ORIGINAL);
       const plaintextValue = "Hello world";
@@ -49,7 +49,7 @@ function runTests(command: CommandName) {
     });
 
     test("Encrypts the value and does NOT respond with the plaintext", async () => {
-      const { publicKey } = getPublicAndPrivateKey();
+      const { publicKey } = sodium.crypto_box_keypair();
 
       const publicKeyBase64 = sodium.to_base64(publicKey, sodium.base64_variants.ORIGINAL);
       const plaintextValue = "Hello world";
