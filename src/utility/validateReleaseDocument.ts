@@ -1,5 +1,7 @@
 import type { VersionNumber } from "@alextheman/utility";
 
+import type { ReleaseStatus } from "src/utility/getReleaseNoteTemplateFromMarkdown";
+
 import { DataError, kebabToCamel, normaliseIndents, removeDuplicates } from "@alextheman/utility";
 
 import { readFile } from "node:fs/promises";
@@ -8,7 +10,6 @@ import { fileURLToPath } from "node:url";
 
 import findPackageRoot from "src/utility/findPackageRoot";
 import getMarkdownBlock from "src/utility/getMarkdownBlock";
-import { ReleaseStatus } from "src/utility/getReleaseNoteTemplateFromMarkdown";
 import getReleaseStatus from "src/utility/getReleaseStatus";
 import normaliseMarkdown from "src/utility/normaliseMarkdown";
 
@@ -18,7 +19,7 @@ async function validateReleaseDocument(
   projectName: string,
   version: VersionNumber,
   content: string,
-  allowedReleaseStatuses: ReleaseStatus | ReleaseStatus[] = ["In progress", "Released"],
+  allowedReleaseStatus: ReleaseStatus | ReleaseStatus[] = ["In progress", "Released"],
 ): Promise<void> {
   if (
     !normaliseMarkdown(content).startsWith(
@@ -40,15 +41,15 @@ async function validateReleaseDocument(
 
   const releaseStatus = getReleaseStatus(content);
 
-  if (
-    !removeDuplicates(
-      Array.isArray(allowedReleaseStatuses) ? allowedReleaseStatuses : [allowedReleaseStatuses],
-    ).includes(releaseStatus)
-  ) {
+  const allowedReleaseStatuses = removeDuplicates(
+    Array.isArray(allowedReleaseStatus) ? allowedReleaseStatus : [allowedReleaseStatus],
+  );
+
+  if (!allowedReleaseStatuses.includes(releaseStatus)) {
     throw new DataError(
       { releaseStatus },
       "INVALID_RELEASE_STATUS",
-      `Invalid release status. Expected one of: ${Object.values(ReleaseStatus).map((status) => {
+      `Invalid release status. Expected one of: ${allowedReleaseStatuses.map((status) => {
         return `"${status}"`;
       })}`,
     );

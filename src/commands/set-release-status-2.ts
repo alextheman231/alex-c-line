@@ -1,12 +1,13 @@
 import type { Command } from "commander";
 
-import { DataError, parseZodSchema, VersionNumber } from "@alextheman/utility";
+import { parseZodSchema, VersionNumber } from "@alextheman/utility";
 import z from "zod";
 
 import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
 import { ReleaseStatus } from "src/utility/getReleaseNoteTemplateFromMarkdown";
+import parseReleaseStatus from "src/utility/parseReleaseStatus";
 import validateReleaseDocument from "src/utility/validateReleaseDocument";
 
 function setReleaseStatus2(program: Command) {
@@ -19,20 +20,7 @@ function setReleaseStatus2(program: Command) {
     .argument(
       "[status]",
       "The status to set the document to",
-      (rawValue) => {
-        const choice = Object.keys(ReleaseStatus).includes(rawValue.toUpperCase())
-          ? ReleaseStatus[rawValue as keyof typeof ReleaseStatus]
-          : rawValue;
-        return parseZodSchema(
-          z.enum(ReleaseStatus),
-          choice,
-          new DataError(
-            choice,
-            "INVALID_RELEASE_STATUS",
-            'Invalid release status. The release status must be one of "In progress" or "Released"',
-          ),
-        );
-      },
+      parseReleaseStatus,
       ReleaseStatus.RELEASED,
     )
     .action(async (documentPath, status) => {
