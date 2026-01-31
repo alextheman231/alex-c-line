@@ -6,6 +6,7 @@ import { temporaryDirectoryTask } from "tempy";
 import { describe, expect, test } from "vitest";
 import z from "zod";
 
+import { writeFile } from "node:fs/promises";
 import path from "node:path";
 
 import alexCLineTestClient, {
@@ -14,7 +15,7 @@ import alexCLineTestClient, {
 
 import getPackageJsonContents from "src/utility/getPackageJsonContents";
 
-import { version } from "package.json" with { type: "json" };
+import packageInfo, { version } from "package.json" with { type: "json" };
 
 describe("incrementVersion", () => {
   describe("Provides the incremented version in stdout", () => {
@@ -93,23 +94,27 @@ describe("incrementVersion", () => {
         const stdoutSchema = z.object({
           exitCode: z.int(),
           stdout: z.string().transform((rawValue) => {
-            return new VersionNumber(rawValue);
+            return new VersionNumber(rawValue.trim());
           }),
         });
 
-        // lol this is cursed
-        await execa({ cwd: temporaryPath })`git clone https://github.com/alextheman231/alex-c-line`;
-        const repositoryPath = path.join(temporaryPath, "alex-c-line");
+        await writeFile(path.join(temporaryPath, "package.json"), JSON.stringify(packageInfo));
 
-        const execaInDirectory = execa({ cwd: repositoryPath });
-        const alexCLineTestClient = createAlexCLineTestClientInDirectory(repositoryPath);
+        const execaInDirectory = execa({ cwd: temporaryPath });
+        await execaInDirectory`git init`;
+        await execaInDirectory`git config user.email ${"alex-up-bot@bot.com"}`;
+        await execaInDirectory`git config user.name ${"alex-up-bot"}`;
+        await execaInDirectory`git add .`;
+        await execaInDirectory`git commit -m ${"Initial commit"}`;
+
+        const alexCLineTestClient = createAlexCLineTestClientInDirectory(temporaryPath);
         const { version } = parseZodSchema(
           z.object({
             version: z.string().transform((rawValue) => {
-              return new VersionNumber(rawValue);
+              return new VersionNumber(rawValue.trim());
             }),
           }),
-          await getPackageJsonContents(repositoryPath),
+          await getPackageJsonContents(temporaryPath),
         );
 
         const { exitCode: alexCLineExitCode, stdout: newAlexCLineVersion } = parseZodSchema(
@@ -123,7 +128,10 @@ describe("incrementVersion", () => {
         );
         expect(npmExitCode).toBe(0);
 
-        expect(VersionNumber.isEqual(newAlexCLineVersion, newNpmVersion)).toBe(true);
+        expect(
+          VersionNumber.isEqual(newAlexCLineVersion, newNpmVersion),
+          JSON.stringify({ versionType, newAlexCLineVersion, newNpmVersion }, null, 2),
+        ).toBe(true);
       });
     },
   );
