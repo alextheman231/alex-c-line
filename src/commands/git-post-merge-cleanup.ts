@@ -6,8 +6,6 @@ import { readFile } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 
-import { createExecaClientWithDefaultOptions } from "src/utility/execa-helpers";
-
 interface Options {
   rebase?: boolean;
 }
@@ -43,17 +41,17 @@ function gitPostMergeCleanup(program: Command) {
           code: "INVALID_BRANCH",
         });
       }
-      const runCommandAndLogToConsole = createExecaClientWithDefaultOptions({
+      const runCommandAndLogToConsole = execa({
         stdio: "inherit",
       });
 
       if (rebase) {
-        await runCommandAndLogToConsole("git", ["fetch", "origin", branch]);
-        await runCommandAndLogToConsole("git", ["pull", "origin", branch]);
+        await runCommandAndLogToConsole`git fetch origin ${branch}`;
+        await runCommandAndLogToConsole`git pull origin ${branch}`;
       }
-      await runCommandAndLogToConsole("git", ["checkout", branch]);
-      await runCommandAndLogToConsole("git", ["pull", "origin", branch]);
-      await runCommandAndLogToConsole("git", ["fetch", "--prune"]);
+      await runCommandAndLogToConsole`git checkout ${branch}`;
+      await runCommandAndLogToConsole`git pull origin ${branch}`;
+      await runCommandAndLogToConsole`git fetch --prune`;
       if (rebase) {
         const { stdout: changes } = await execa`git diff ${branch}..${currentBranch}`;
         if (changes) {
@@ -63,7 +61,7 @@ function gitPostMergeCleanup(program: Command) {
             code: "CHANGES_NOT_MERGED",
           });
         }
-        await runCommandAndLogToConsole("git", ["branch", "-D", currentBranch]);
+        await runCommandAndLogToConsole`git branch -D currentBranch`;
       } else {
         try {
           /* This is needed so that if the command errors, it doesn't log the error to the console

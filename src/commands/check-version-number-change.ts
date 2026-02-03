@@ -6,8 +6,6 @@ import { execa } from "execa";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 
-import { execaNoFail } from "src/utility/execa-helpers";
-
 function checkVersionNumberChange(program: Command) {
   program
     .command("check-version-number-change")
@@ -16,13 +14,10 @@ function checkVersionNumberChange(program: Command) {
     )
     .action(async () => {
       console.info("Checking for version change...");
+      const execaNoFail = execa({ reject: false });
 
-      const { exitCode } = await execaNoFail("git", [
-        "diff",
-        "origin/main...HEAD",
-        "--quiet",
-        "src/*",
-      ]);
+      const { exitCode } = await execaNoFail`git diff origin/main...HEAD --quiet src/*`;
+
       if (exitCode === 0) {
         console.info("No source code changes found. Version does not need changing.");
         return;

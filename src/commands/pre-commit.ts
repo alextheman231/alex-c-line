@@ -1,9 +1,8 @@
 import type { Command } from "commander";
 
 import { DataError, normaliseIndents, parseZodSchema } from "@alextheman/utility";
+import { execa } from "execa";
 import z from "zod";
-
-import { execaNoFail } from "src/utility/execa-helpers";
 
 interface PreCommitOptions {
   build?: boolean;
@@ -51,11 +50,9 @@ function preCommit(program: Command) {
             )
           : undefined;
 
-        const { exitCode: diffExitCode } = await execaNoFail("git", [
-          "diff",
-          "--cached",
-          "--quiet",
-        ]);
+        const execaNoFail = execa({ reject: false });
+
+        const { exitCode: diffExitCode } = await execaNoFail`git diff --cached --quiet`;
 
         switch (diffExitCode) {
           case 128:

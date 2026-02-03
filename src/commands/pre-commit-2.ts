@@ -1,6 +1,7 @@
 import type { Command } from "commander";
 
 import { DataError, parseZodSchema } from "@alextheman/utility";
+import { execa } from "execa";
 import z from "zod";
 
 import { readFile } from "node:fs/promises";
@@ -8,7 +9,6 @@ import path from "node:path";
 
 import { PackageManager } from "src/configs/types/PreCommitConfig";
 import loadAlexCLineConfig from "src/utility/configLoaders/loadAlexCLineConfig";
-import { execaNoFail } from "src/utility/execa-helpers";
 import findAlexCLineConfig from "src/utility/findAlexCLineConfig";
 
 function preCommit2(program: Command) {
@@ -33,7 +33,9 @@ function preCommit2(program: Command) {
         });
       }
 
-      const { exitCode: diffExitCode } = await execaNoFail("git", ["diff", "--cached", "--quiet"]);
+      const execaNoFail = execa({ reject: false });
+
+      const { exitCode: diffExitCode } = await execaNoFail`git diff --cached --quiet`;
 
       switch (diffExitCode) {
         case 128:
