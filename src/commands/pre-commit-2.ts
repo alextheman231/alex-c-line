@@ -1,6 +1,7 @@
 import type { Command } from "commander";
+import type { Result, TemplateExpression } from "execa";
 
-import { DataError, parseZodSchema } from "@alextheman/utility";
+import { DataError, interpolate, parseZodSchema } from "@alextheman/utility";
 import { execa } from "execa";
 import z from "zod";
 
@@ -34,6 +35,7 @@ function preCommit2(program: Command) {
       }
 
       const execaNoFail = execa({ reject: false });
+      const runCommandAndLogToConsole = execa({ reject: false, stdio: "inherit" });
 
       const { exitCode: diffExitCode } = await execaNoFail`git diff --cached --quiet`;
 
@@ -53,15 +55,39 @@ function preCommit2(program: Command) {
           return;
       }
 
-      async function runCommandAndLogToConsole(command: string, args?: string[] | undefined) {
-        const result = await execaNoFail(command, args, { stdio: "inherit" });
+      async function stepRunner(
+        command: string,
+        args?: readonly string[] | undefined,
+      ): Promise<Result>;
+      async function stepRunner(
+        strings: TemplateStringsArray,
+        ...interpolations: TemplateExpression[]
+      ): Promise<Result>;
+      async function stepRunner(
+        first: string | TemplateStringsArray,
+        ...second: unknown[]
+      ): Promise<Result> {
+        const result =
+          typeof first === "string"
+            ? await runCommandAndLogToConsole(first, second[0] as string[] | undefined)
+            : await runCommandAndLogToConsole(
+                first as TemplateStringsArray,
+                ...(second as TemplateExpression[]),
+              );
 
         if (result.exitCode !== 0) {
-          program.error(`Command failed: ${command}${args?.length ? ` ${args.join(" ")}` : ""}`, {
+          const errorMessage =
+            typeof first === "string"
+              ? `${first}${Array.isArray(second[0]) && second[0].length ? ` ${(second[0] as string[]).join(" ")}` : ""}`
+              : interpolate(first, ...(second as TemplateExpression[]));
+
+          program.error(`Command failed: ${errorMessage}`, {
             exitCode: result.exitCode ?? 1,
             code: "PRE_COMMIT_FAILED",
           });
         }
+
+        return result;
       }
 
       const { packageManager: packagePackageManager, scripts } = JSON.parse(
@@ -101,19 +127,16 @@ function preCommit2(program: Command) {
 
       for (const step of preCommitConfig.steps) {
         if (typeof step === "function") {
-          await step(runCommandAndLogToConsole);
+          await step(stepRunner);
         } else if (typeof step === "string") {
-          await runCommandAndLogToConsole(packageManager, getCommandArguments(step));
+          await stepRunner(packageManager, getCommandArguments(step));
         } else {
           const [script, options] = step;
-          await runCommandAndLogToConsole(
-            packageManager,
-            getCommandArguments(script, options.arguments),
-          );
+          await stepRunner(packageManager, getCommandArguments(script, options.arguments));
         }
       }
 
-      await execaNoFail("git", ["update-index", "--again"]);
+      await stepRunner`git update-index --again`;
     });
 }
 
