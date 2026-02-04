@@ -61,7 +61,7 @@ function gitPostMergeCleanup(program: Command) {
             code: "CHANGES_NOT_MERGED",
           });
         }
-        await runCommandAndLogToConsole`git branch -D currentBranch`;
+        await runCommandAndLogToConsole`git branch -D ${currentBranch}`;
       } else {
         try {
           /* This is needed so that if the command errors, it doesn't log the error to the console
