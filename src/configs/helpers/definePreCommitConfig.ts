@@ -18,7 +18,7 @@ export const preCommitConfigSchema = z.strictObject({
         input: [
           z.function({
             input: [z.string(), z.array(z.string()).optional()],
-            output: z.promise(z.void()),
+            output: z.promise(z.unknown()),
           }),
         ],
         output: z.any(),
