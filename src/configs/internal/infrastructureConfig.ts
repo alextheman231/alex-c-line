@@ -10,7 +10,7 @@ const infrastructureConfig: AlexCLineConfig<"format" | "lint"> = {
     packageManager: "pnpm",
     steps: [
       async (stepRunner) => {
-        await stepRunner("terraform", ["init"]);
+        await stepRunner`terraform init`;
       },
       "format",
       "lint",
