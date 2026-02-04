@@ -74,10 +74,13 @@ function useLocalPackage(program: Command) {
       }
 
       const dependencies = {
-        dependencies: parseZodSchema(z.record(z.string(), z.string()), packageInfo.dependencies),
+        dependencies: parseZodSchema(
+          z.record(z.string(), z.string()),
+          packageInfo.dependencies ?? {},
+        ),
         devDependencies: parseZodSchema(
           z.record(z.string(), z.string()),
-          packageInfo.devDependencies,
+          packageInfo.devDependencies ?? {},
         ),
       }[dependencyGroup];
 
