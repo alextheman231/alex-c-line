@@ -18,34 +18,16 @@ import getPackageJsonContents from "src/utility/getPackageJsonContents";
 import packageInfo, { version } from "package.json" with { type: "json" };
 
 describe("incrementVersion", () => {
-  describe("Provides the incremented version in stdout", () => {
-    test("Major", async () => {
-      const { exitCode: majorExitCode, stdout: newMajorVersion } = await alexCLineTestClient(
-        "increment-version",
-        [version, "major"],
-      );
-      expect(majorExitCode).toBe(0);
-      expect(newMajorVersion).toBe(new VersionNumber(version).increment("major").toString());
-    });
-
-    test("Minor", async () => {
-      const { exitCode: minorExitCode, stdout: newMinorVersion } = await alexCLineTestClient(
-        "increment-version",
-        [version, "minor"],
-      );
-      expect(minorExitCode).toBe(0);
-      expect(newMinorVersion).toBe(new VersionNumber(version).increment("minor").toString());
-    });
-
-    test("Patch", async () => {
-      const { exitCode: patchExitCode, stdout: newPatchVersion } = await alexCLineTestClient(
-        "increment-version",
-        [version, "patch"],
-      );
-      expect(patchExitCode).toBe(0);
-      expect(newPatchVersion).toBe(new VersionNumber(version).increment("patch").toString());
-    });
-  });
+  test.each<VersionType>(["major", "minor", "patch"])(
+    "Provides the incremented %s version in stdout",
+    async (versionType) => {
+      const { exitCode, stdout: newVersion } = await alexCLineTestClient({
+        cwd: process.cwd(),
+      })`increment-version ${version} ${versionType}`;
+      expect(exitCode).toBe(0);
+      expect(newVersion).toBe(new VersionNumber(version).increment(versionType).toString());
+    },
+  );
 
   test("Fails on invalid version number", async () => {
     try {
