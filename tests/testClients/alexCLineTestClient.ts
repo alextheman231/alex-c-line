@@ -1,6 +1,10 @@
 import type { Options, Result, TemplateExpression } from "execa";
 
-import { createTemplateStringsArray, getInterpolations } from "@alextheman/utility";
+import {
+  createTemplateStringsArray,
+  getStringsAndInterpolations,
+  isTemplateStringsArray,
+} from "@alextheman/utility";
 import { execa } from "execa";
 
 import path from "node:path";
@@ -14,26 +18,20 @@ export interface AlexCLineTestClient<ExecaOptions extends Options = Options> {
   (command: string, args?: string[], options?: ExecaOptions): Promise<Result<ExecaOptions>>;
 }
 
-function isTemplateStringsArray(input: unknown): input is TemplateStringsArray {
-  return typeof input === "object" && input !== null && "raw" in input;
-}
-
 function resolveAsTemplate<ExecaOptions extends Options = Options>(
   strings: TemplateStringsArray,
   interpolations: TemplateExpression[],
   options?: ExecaOptions,
 ) {
-  const [newStrings, newInterpolations] = getInterpolations(
+  const args = getStringsAndInterpolations<TemplateExpression[]>(
     createTemplateStringsArray([
       `${process.execPath} ${entryPoint} ${strings[0]}`,
       ...strings.slice(1),
     ]),
     ...interpolations,
-  ) as [TemplateStringsArray, TemplateExpression[]];
+  );
 
-  return options
-    ? execa(options)(...[createTemplateStringsArray(newStrings), ...newInterpolations])
-    : execa(...[createTemplateStringsArray(newStrings), ...newInterpolations]);
+  return options ? execa(options)(...args) : execa(...args);
 }
 
 function resolveAsCommandArgs<ExecaOptions extends Options = Options>(
@@ -48,18 +46,18 @@ function bindAlexCLineClient<ExecaOptions extends Options = Options>(
   boundOptions: ExecaOptions,
 ): AlexCLineTestClient<ExecaOptions> {
   function client(first: unknown, ...second: unknown[]): unknown {
-    if (typeof first === "object" && first !== null && !isTemplateStringsArray(first)) {
-      return bindAlexCLineClient({ ...boundOptions, ...(first as Options) } as ExecaOptions);
+    if (typeof first === "string") {
+      return resolveAsCommandArgs(first as string, (second[0] as string[]) ?? [], {
+        ...boundOptions,
+        ...(second[1] as Options | undefined),
+      });
     }
 
     if (isTemplateStringsArray(first)) {
       return resolveAsTemplate(first, second as TemplateExpression[], boundOptions);
     }
 
-    return resolveAsCommandArgs(first as string, (second[0] as string[]) ?? [], {
-      ...boundOptions,
-      ...(second[1] as Options | undefined),
-    });
+    return bindAlexCLineClient({ ...boundOptions, ...(first as Options) } as ExecaOptions);
   }
 
   return client as AlexCLineTestClient<ExecaOptions>;
