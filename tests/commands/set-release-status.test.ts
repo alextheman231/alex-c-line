@@ -6,7 +6,8 @@ import { describe, expect, test } from "vitest";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
-import { createAlexCLineTestClientInDirectory } from "tests/testClients/alexCLineTestClient";
+import setDirectory from "tests/helpers/setDirectory";
+import createAlexCLineTestClient from "tests/testClients/alexCLineTestClient";
 
 import getReleaseNoteTemplate from "src/utility/getReleaseNoteTemplate";
 import getReleaseSummary, { getMajorReleaseSummary } from "src/utility/getReleaseSummary";
@@ -16,7 +17,7 @@ import { name, version } from "package.json" with { type: "json" };
 describe("set-release-status", () => {
   test("Takes a file path to a valid release note and sets the status to released", async () => {
     await temporaryDirectoryTask(async (temporaryPath) => {
-      const alexCLineTestClient = createAlexCLineTestClientInDirectory(temporaryPath);
+      const alexCLineTestClient = createAlexCLineTestClient(setDirectory(temporaryPath));
       const versionNumber = new VersionNumber(version);
 
       await writeFile(
@@ -54,7 +55,7 @@ describe("set-release-status", () => {
 
   test("Only replaces the first occurrence of the status", async () => {
     await temporaryDirectoryTask(async (temporaryPath) => {
-      const alexCLineTestClient = createAlexCLineTestClientInDirectory(temporaryPath);
+      const alexCLineTestClient = createAlexCLineTestClient(setDirectory(temporaryPath));
       const versionType = new VersionNumber(version).type;
       const documentPath = `docs/releases/${versionType}/v${version}.md`;
 
@@ -144,7 +145,7 @@ describe("set-release-status", () => {
     ],
   ])("Does not operate on invalid markdown (%s)", async (_: string, documentContents: string) => {
     await temporaryDirectoryTask(async (temporaryPath) => {
-      const alexCLineTestClient = createAlexCLineTestClientInDirectory(temporaryPath);
+      const alexCLineTestClient = createAlexCLineTestClient(setDirectory(temporaryPath));
       const versionType = new VersionNumber(version).type;
       const documentPath = `docs/releases/${versionType}/v${version}.md`;
 

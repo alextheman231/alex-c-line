@@ -5,12 +5,13 @@ import { describe, expect, test } from "vitest";
 import { writeFile } from "node:fs/promises";
 import path from "node:path";
 
-import { createAlexCLineTestClientInDirectory } from "tests/testClients/alexCLineTestClient";
+import setDirectory from "tests/helpers/setDirectory";
+import createAlexCLineTestClient from "tests/testClients/alexCLineTestClient";
 
 describe("check-for-file-dependencies", () => {
   test("Exits with exit code 0 if no file dependencies found", async () => {
     await temporaryDirectoryTask(async (temporaryDirectory) => {
-      const alexCLineTestClient = createAlexCLineTestClientInDirectory(temporaryDirectory);
+      const alexCLineTestClient = createAlexCLineTestClient(setDirectory(temporaryDirectory));
       await writeFile(
         path.join(temporaryDirectory, "package.json"),
         JSON.stringify({
@@ -39,7 +40,7 @@ describe("check-for-file-dependencies", () => {
   describe("devDependencies and/or peerDependencies can be left out", async () => {
     test("Leaving out devDependencies", async () => {
       await temporaryDirectoryTask(async (temporaryDirectory) => {
-        const alexCLineTestClient = createAlexCLineTestClientInDirectory(temporaryDirectory);
+        const alexCLineTestClient = createAlexCLineTestClient(setDirectory(temporaryDirectory));
         await writeFile(
           path.join(temporaryDirectory, "package.json"),
           JSON.stringify({
@@ -63,7 +64,7 @@ describe("check-for-file-dependencies", () => {
     });
     test("Leaving out peerDependencies", async () => {
       await temporaryDirectoryTask(async (temporaryDirectory) => {
-        const alexCLineTestClient = createAlexCLineTestClientInDirectory(temporaryDirectory);
+        const alexCLineTestClient = createAlexCLineTestClient(setDirectory(temporaryDirectory));
         await writeFile(
           path.join(temporaryDirectory, "package.json"),
           JSON.stringify({
@@ -88,7 +89,7 @@ describe("check-for-file-dependencies", () => {
     });
     test("Dependencies only", async () => {
       await temporaryDirectoryTask(async (temporaryDirectory) => {
-        const alexCLineTestClient = createAlexCLineTestClientInDirectory(temporaryDirectory);
+        const alexCLineTestClient = createAlexCLineTestClient(setDirectory(temporaryDirectory));
         await writeFile(
           path.join(temporaryDirectory, "package.json"),
           JSON.stringify({
@@ -117,7 +118,7 @@ describe("check-for-file-dependencies", () => {
   });
   test("Succeeds if package.json is completely empty", async () => {
     await temporaryDirectoryTask(async (temporaryDirectory) => {
-      const alexCLineTestClient = createAlexCLineTestClientInDirectory(temporaryDirectory);
+      const alexCLineTestClient = createAlexCLineTestClient(setDirectory(temporaryDirectory));
       await writeFile(path.join(temporaryDirectory, "package.json"), JSON.stringify({}));
 
       const { stdout: message, exitCode } = await alexCLineTestClient(
@@ -130,7 +131,7 @@ describe("check-for-file-dependencies", () => {
   });
   test("Exit with exit code 1 if file dependencies found", async () => {
     await temporaryDirectoryTask(async (temporaryDirectory) => {
-      const alexCLineTestClient = createAlexCLineTestClientInDirectory(temporaryDirectory);
+      const alexCLineTestClient = createAlexCLineTestClient(setDirectory(temporaryDirectory));
       await writeFile(
         path.join(temporaryDirectory, "package.json"),
         JSON.stringify({
@@ -178,7 +179,7 @@ describe("check-for-file-dependencies", () => {
   describe("devDependencies and/or peerDependencies can be left out even if error code is 1", () => {
     test("Leaving out devDependencies on error code 1", async () => {
       await temporaryDirectoryTask(async (temporaryDirectory) => {
-        const alexCLineTestClient = createAlexCLineTestClientInDirectory(temporaryDirectory);
+        const alexCLineTestClient = createAlexCLineTestClient(setDirectory(temporaryDirectory));
         await writeFile(
           path.join(temporaryDirectory, "package.json"),
           JSON.stringify({
@@ -220,7 +221,7 @@ describe("check-for-file-dependencies", () => {
     });
     test("Leaving out peerDependencies on error code 1", async () => {
       await temporaryDirectoryTask(async (temporaryDirectory) => {
-        const alexCLineTestClient = createAlexCLineTestClientInDirectory(temporaryDirectory);
+        const alexCLineTestClient = createAlexCLineTestClient(setDirectory(temporaryDirectory));
         await writeFile(
           path.join(temporaryDirectory, "package.json"),
           JSON.stringify({
@@ -263,7 +264,7 @@ describe("check-for-file-dependencies", () => {
     });
     test("Dependencies only on error code 1", async () => {
       await temporaryDirectoryTask(async (temporaryDirectory) => {
-        const alexCLineTestClient = createAlexCLineTestClientInDirectory(temporaryDirectory);
+        const alexCLineTestClient = createAlexCLineTestClient(setDirectory(temporaryDirectory));
         await writeFile(
           path.join(temporaryDirectory, "package.json"),
           JSON.stringify({

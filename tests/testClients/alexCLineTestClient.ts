@@ -94,16 +94,4 @@ function alexCLineTestClient<ExecaOptions extends Options = Options>(
   return bindAlexCLineClient(first);
 }
 
-export function createAlexCLineTestClientInDirectory(directory: string) {
-  return async (command: string, args?: string[], options?: Omit<Options, "cwd">) => {
-    return await alexCLineTestClient(command, args, {
-      ...options,
-      cwd: directory,
-      env: {
-        HOME: directory.split("/").slice(0, -1).join("/"),
-      },
-    });
-  };
-}
-
 export default alexCLineTestClient;
