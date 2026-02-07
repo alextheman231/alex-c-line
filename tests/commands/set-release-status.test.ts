@@ -6,7 +6,7 @@ import { describe, expect, test } from "vitest";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
-import { createAlexCLineTestClientInDirectory } from "tests/test-clients/alex-c-line-test-client";
+import { createAlexCLineTestClientInDirectory } from "tests/testClients/alexCLineTestClient";
 
 import getReleaseNoteTemplate from "src/utility/getReleaseNoteTemplate";
 import getReleaseSummary, { getMajorReleaseSummary } from "src/utility/getReleaseSummary";

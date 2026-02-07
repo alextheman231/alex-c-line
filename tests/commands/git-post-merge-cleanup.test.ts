@@ -5,14 +5,14 @@ import { describe, expect, test } from "vitest";
 import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
-import { createAlexCLineTestClientInDirectory } from "tests/test-clients/alex-c-line-test-client";
+import { createAlexCLineTestClientInDirectory } from "tests/testClients/alexCLineTestClient";
 import {
   createGitTestClient,
   mergeChangesIntoMain,
   rebaseChangesOntoMain,
   setupOrigin,
   setupRepository,
-} from "tests/test-clients/git-testing-utilities";
+} from "tests/testClients/git-testing-utilities";
 
 // This test always takes quite a long time to complete due to the huge amounts of integration needed. Hence it has been decided that such extensive testing for a command this small is probably not worth it.
 // eslint-disable-next-line @alextheman/no-skipped-tests

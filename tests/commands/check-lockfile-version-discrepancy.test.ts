@@ -5,7 +5,7 @@ import { describe, expect, test } from "vitest";
 import { writeFile } from "node:fs/promises";
 import path from "node:path";
 
-import alexCLineTestClient from "tests/test-clients/alex-c-line-test-client";
+import alexCLineTestClient from "tests/testClients/alexCLineTestClient";
 
 describe("check-lockfile-version-discrepancy", () => {
   test("Succeed if version numbers in package.json and package-lock.json are successful", async () => {
