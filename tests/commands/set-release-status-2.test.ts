@@ -6,7 +6,8 @@ import { describe, expect, test } from "vitest";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
-import { createAlexCLineTestClientInDirectory } from "tests/testClients/alexCLineTestClient";
+import setDirectory from "tests/helpers/setDirectory";
+import createAlexCLineTestClient from "tests/testClients/alexCLineTestClient";
 
 import getMarkdownBlock from "src/utility/getMarkdownBlock";
 import getReleaseNoteTemplateFromMarkdown from "src/utility/getReleaseNoteTemplateFromMarkdown";
@@ -17,7 +18,7 @@ import { name, version } from "package.json" with { type: "json" };
 describe("set-release-status-2", () => {
   test("Takes a file path to a valid release note and sets the status to released", async () => {
     await temporaryDirectoryTask(async (temporaryPath) => {
-      const alexCLineTestClient = createAlexCLineTestClientInDirectory(temporaryPath);
+      const alexCLineTestClient = createAlexCLineTestClient(setDirectory(temporaryPath));
       const versionNumber = new VersionNumber(version);
 
       await writeFile(
@@ -58,7 +59,7 @@ describe("set-release-status-2", () => {
 
   test("Only replaces the first occurrence of the status", async () => {
     await temporaryDirectoryTask(async (temporaryPath) => {
-      const alexCLineTestClient = createAlexCLineTestClientInDirectory(temporaryPath);
+      const alexCLineTestClient = createAlexCLineTestClient(setDirectory(temporaryPath));
       const versionNumber = new VersionNumber(version);
 
       const versionType = new VersionNumber(version).type;
@@ -162,7 +163,7 @@ describe("set-release-status-2", () => {
     ],
   ])("Does not operate on invalid markdown (%s)", async (_: string, documentContents: string) => {
     await temporaryDirectoryTask(async (temporaryPath) => {
-      const alexCLineTestClient = createAlexCLineTestClientInDirectory(temporaryPath);
+      const alexCLineTestClient = createAlexCLineTestClient(setDirectory(temporaryPath));
       const versionNumber = new VersionNumber(version);
       const documentPath = path.join(
         "docs",

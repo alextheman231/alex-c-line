@@ -8,14 +8,15 @@ import { describe, expect, test } from "vitest";
 import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
-import { createAlexCLineTestClientInDirectory } from "tests/testClients/alexCLineTestClient";
+import setDirectory from "tests/helpers/setDirectory";
+import createAlexCLineTestClient from "tests/testClients/alexCLineTestClient";
 
 import { name, version } from "package.json" with { type: "json" };
 
 describe("create-release-note-2", () => {
   test("The resulting release notes at least has the version number and description of changes", async () => {
     await temporaryDirectoryTask(async (temporaryPath) => {
-      const alexCLineTestClient = createAlexCLineTestClientInDirectory(temporaryPath);
+      const alexCLineTestClient = createAlexCLineTestClient(setDirectory(temporaryPath));
       const versionNumber = new VersionNumber(version);
 
       await writeFile(
@@ -46,7 +47,7 @@ describe("create-release-note-2", () => {
   });
   test("A major version change is contained in docs/releases/vX/vX.Y/vX.Y.Z.md and must have migration notes", async () => {
     await temporaryDirectoryTask(async (temporaryPath) => {
-      const alexCLineTestClient = createAlexCLineTestClientInDirectory(temporaryPath);
+      const alexCLineTestClient = createAlexCLineTestClient(setDirectory(temporaryPath));
       await writeFile(
         path.join(temporaryPath, "package.json"),
         JSON.stringify({
@@ -73,7 +74,7 @@ describe("create-release-note-2", () => {
     "A %s version change is contained in docs/releases/vX/vX.Y/vX.Y.Z.md",
     async (_, versionNumber) => {
       await temporaryDirectoryTask(async (temporaryPath) => {
-        const alexCLineTestClient = createAlexCLineTestClientInDirectory(temporaryPath);
+        const alexCLineTestClient = createAlexCLineTestClient(setDirectory(temporaryPath));
         await writeFile(
           path.join(temporaryPath, "package.json"),
           JSON.stringify({
@@ -104,7 +105,7 @@ describe("create-release-note-2", () => {
   );
   test("Errors if the release note already exists", async () => {
     await temporaryDirectoryTask(async (temporaryPath) => {
-      const alexCLineTestClient = createAlexCLineTestClientInDirectory(temporaryPath);
+      const alexCLineTestClient = createAlexCLineTestClient(setDirectory(temporaryPath));
       await writeFile(
         path.join(temporaryPath, "package.json"),
         JSON.stringify({
@@ -129,7 +130,7 @@ describe("create-release-note-2", () => {
     async (versionType) => {
       await temporaryDirectoryTask(async (temporaryPath) => {
         const version = new VersionNumber([1, 2, 3]);
-        const alexCLineTestClient = createAlexCLineTestClientInDirectory(temporaryPath);
+        const alexCLineTestClient = createAlexCLineTestClient(setDirectory(temporaryPath));
         await writeFile(
           path.join(temporaryPath, "package.json"),
           JSON.stringify({

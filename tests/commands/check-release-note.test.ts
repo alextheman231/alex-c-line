@@ -7,7 +7,8 @@ import { describe, expect, test } from "vitest";
 import { writeFile } from "node:fs/promises";
 import path from "node:path";
 
-import { createAlexCLineTestClientInDirectory } from "tests/testClients/alexCLineTestClient";
+import setDirectory from "tests/helpers/setDirectory";
+import createAlexCLineTestClient from "tests/testClients/alexCLineTestClient";
 
 import getReleaseNotePath from "src/utility/getReleaseNotePath";
 import { ReleaseStatus } from "src/utility/getReleaseNoteTemplateFromMarkdown";
@@ -20,11 +21,9 @@ describe("check-release-note", () => {
     async (versionType) => {
       await temporaryDirectoryTask(async (temporaryPath) => {
         await writeFile(path.join(temporaryPath, "package.json"), JSON.stringify(packageInfo));
-        const alexCLineTestClient = createAlexCLineTestClientInDirectory(temporaryPath);
-        const { exitCode: createReleaseNoteExitCode } = await alexCLineTestClient(
-          "create-release-note-2",
-          [versionType],
-        );
+        const alexCLineTestClient = createAlexCLineTestClient(setDirectory(temporaryPath));
+        const { exitCode: createReleaseNoteExitCode } =
+          await alexCLineTestClient`create-release-note-2 ${versionType}`;
         expect(createReleaseNoteExitCode).toBe(0);
 
         const versionNumber = new VersionNumber(packageInfo.version).increment(versionType);
@@ -46,7 +45,7 @@ describe("check-release-note", () => {
       const invalidFilePath = path.join(temporaryPath, "v1.2.3.md");
       await writeFile(invalidFilePath, "This is not valid");
 
-      const alexCLineTestClient = createAlexCLineTestClientInDirectory(temporaryPath);
+      const alexCLineTestClient = createAlexCLineTestClient(setDirectory(temporaryPath));
 
       const { exitCode: checkReleaseNoteExitCode } = await alexCLineTestClient(
         "check-release-note",
@@ -64,7 +63,7 @@ describe("check-release-note", () => {
         // Write actual package.json contents to directory
         await writeFile(path.join(temporaryPath, "package.json"), JSON.stringify(packageInfo));
 
-        const alexCLineTestClient = createAlexCLineTestClientInDirectory(temporaryPath);
+        const alexCLineTestClient = createAlexCLineTestClient(setDirectory(temporaryPath));
 
         // Create an actually valid release note using the existing command.
         const { exitCode: createReleaseNoteExitCode } = await alexCLineTestClient(
@@ -120,7 +119,7 @@ describe("check-release-note", () => {
       const invalidFilePath = path.join(temporaryPath, "v1.2.3.md");
       await writeFile(invalidFilePath, "This is not valid");
 
-      const alexCLineTestClient = createAlexCLineTestClientInDirectory(temporaryPath);
+      const alexCLineTestClient = createAlexCLineTestClient(setDirectory(temporaryPath));
 
       const { exitCode: checkReleaseNoteExitCode, stderr: errorMessage } =
         await alexCLineTestClient("check-release-note", ["v1.2.3.md"], { reject: false });

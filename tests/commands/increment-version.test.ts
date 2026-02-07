@@ -9,9 +9,8 @@ import z from "zod";
 import { writeFile } from "node:fs/promises";
 import path from "node:path";
 
-import alexCLineTestClient, {
-  createAlexCLineTestClientInDirectory,
-} from "tests/testClients/alexCLineTestClient";
+import setDirectory from "tests/helpers/setDirectory";
+import alexCLineTestClient from "tests/testClients/alexCLineTestClient";
 
 import getPackageJsonContents from "src/utility/getPackageJsonContents";
 
@@ -89,7 +88,7 @@ describe("incrementVersion", () => {
         await execaInDirectory`git add .`;
         await execaInDirectory`git commit -m ${"Initial commit"}`;
 
-        const alexCLineTestClient = createAlexCLineTestClientInDirectory(temporaryPath);
+        const alexCLine = alexCLineTestClient(setDirectory(temporaryPath));
         const { version } = parseZodSchema(
           z.object({
             version: z.string().transform((rawValue) => {
@@ -101,7 +100,7 @@ describe("incrementVersion", () => {
 
         const { exitCode: alexCLineExitCode, stdout: newAlexCLineVersion } = parseZodSchema(
           stdoutSchema,
-          await alexCLineTestClient("increment-version", [version.toString(), versionType]),
+          await alexCLine("increment-version", [version.toString(), versionType]),
         );
         expect(alexCLineExitCode).toBe(0);
         const { exitCode: npmExitCode, stdout: newNpmVersion } = parseZodSchema(

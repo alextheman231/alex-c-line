@@ -6,14 +6,15 @@ import { describe, expect, test } from "vitest";
 import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
-import { createAlexCLineTestClientInDirectory } from "tests/testClients/alexCLineTestClient";
+import setDirectory from "tests/helpers/setDirectory";
+import createAlexCLineTestClient from "tests/testClients/alexCLineTestClient";
 
 import { name, version } from "package.json" with { type: "json" };
 
 describe("create-release-notes", () => {
   test("The resulting release notes at least has the version number and description of changes", async () => {
     await temporaryDirectoryTask(async (temporaryPath) => {
-      const alexCLineTestClient = createAlexCLineTestClientInDirectory(temporaryPath);
+      const alexCLineTestClient = createAlexCLineTestClient(setDirectory(temporaryPath));
       const versionType = new VersionNumber(version).type;
 
       await writeFile(
@@ -37,7 +38,7 @@ describe("create-release-notes", () => {
   });
   test("A major version change is contained in docs/releases/major/vX.Y.Z.md and must have migration notes", async () => {
     await temporaryDirectoryTask(async (temporaryPath) => {
-      const alexCLineTestClient = createAlexCLineTestClientInDirectory(temporaryPath);
+      const alexCLineTestClient = createAlexCLineTestClient(setDirectory(temporaryPath));
       await writeFile(
         path.join(temporaryPath, "package.json"),
         JSON.stringify({
@@ -59,7 +60,7 @@ describe("create-release-notes", () => {
   });
   test("A minor version change is contained in docs/releases/minor/vX.Y.Z.", async () => {
     await temporaryDirectoryTask(async (temporaryPath) => {
-      const alexCLineTestClient = createAlexCLineTestClientInDirectory(temporaryPath);
+      const alexCLineTestClient = createAlexCLineTestClient(setDirectory(temporaryPath));
       await writeFile(
         path.join(temporaryPath, "package.json"),
         JSON.stringify({
@@ -80,7 +81,7 @@ describe("create-release-notes", () => {
   });
   test("A patch version change is contained in docs/releases/patch/vX.Y.Z.", async () => {
     await temporaryDirectoryTask(async (temporaryPath) => {
-      const alexCLineTestClient = createAlexCLineTestClientInDirectory(temporaryPath);
+      const alexCLineTestClient = createAlexCLineTestClient(setDirectory(temporaryPath));
       await writeFile(
         path.join(temporaryPath, "package.json"),
         JSON.stringify({
@@ -101,7 +102,7 @@ describe("create-release-notes", () => {
   });
   test("Errors if the release note already exists", async () => {
     await temporaryDirectoryTask(async (temporaryPath) => {
-      const alexCLineTestClient = createAlexCLineTestClientInDirectory(temporaryPath);
+      const alexCLineTestClient = createAlexCLineTestClient(setDirectory(temporaryPath));
       await writeFile(
         path.join(temporaryPath, "package.json"),
         JSON.stringify({
@@ -123,7 +124,7 @@ describe("create-release-notes", () => {
   });
   test("Allows an option for major, minor, or patch to be passed in as an argument", async () => {
     await temporaryDirectoryTask(async (temporaryPath) => {
-      const alexCLineTestClient = createAlexCLineTestClientInDirectory(temporaryPath);
+      const alexCLineTestClient = createAlexCLineTestClient(setDirectory(temporaryPath));
       await writeFile(
         path.join(temporaryPath, "package.json"),
         JSON.stringify({

@@ -5,7 +5,8 @@ import { describe, expect, test } from "vitest";
 import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
-import { createAlexCLineTestClientInDirectory } from "tests/testClients/alexCLineTestClient";
+import setDirectory from "tests/helpers/setDirectory";
+import createAlexCLineTestClient from "tests/testClients/alexCLineTestClient";
 import {
   createGitTestClient,
   mergeChangesIntoMain,
@@ -30,7 +31,7 @@ describe.skip("git-post-merge-cleanup", () => {
       expect(fileContentsBefore).toBe("");
 
       const gitTestClient = createGitTestClient(testRepository);
-      const alexCLineTestClient = createAlexCLineTestClientInDirectory(testRepository);
+      const alexCLineTestClient = createAlexCLineTestClient(setDirectory(testRepository));
 
       // Setup test file
       await gitTestClient("git", ["checkout", "-b", "test-branch"]);
@@ -60,7 +61,7 @@ describe.skip("git-post-merge-cleanup", () => {
         "test-file.js",
       );
 
-      const alexCLineTestClient = createAlexCLineTestClientInDirectory(testRepository);
+      const alexCLineTestClient = createAlexCLineTestClient(setDirectory(testRepository));
 
       try {
         await alexCLineTestClient("git-post-merge-cleanup");
@@ -89,7 +90,7 @@ describe.skip("git-post-merge-cleanup", () => {
       expect(fileContentsBefore).toBe("");
 
       const gitTestClient = createGitTestClient(testRepository);
-      const alexCLineTestClient = createAlexCLineTestClientInDirectory(testRepository);
+      const alexCLineTestClient = createAlexCLineTestClient(setDirectory(testRepository));
 
       // Setup test file
       await gitTestClient("git", ["checkout", "-b", "test-branch"]);
@@ -128,7 +129,7 @@ describe.skip("git-post-merge-cleanup", () => {
       expect(fileContentsBefore).toBe("");
 
       const gitTestClient = createGitTestClient(testRepository);
-      const alexCLineTestClient = createAlexCLineTestClientInDirectory(testRepository);
+      const alexCLineTestClient = createAlexCLineTestClient(setDirectory(testRepository));
 
       // Setup an actual test file
       await gitTestClient("git", ["checkout", "-b", "test-branch"]);
@@ -156,7 +157,7 @@ describe.skip("git-post-merge-cleanup", () => {
       );
 
       const gitTestClient = createGitTestClient(testRepository);
-      const alexCLineTestClient = createAlexCLineTestClientInDirectory(testRepository);
+      const alexCLineTestClient = createAlexCLineTestClient(setDirectory(testRepository));
 
       await gitTestClient("git", ["checkout", "-b", "test-branch"]);
       await writeFile(testFilePath, 'console.log("This is a test");');
@@ -192,7 +193,7 @@ describe.skip("git-post-merge-cleanup", () => {
       );
 
       const gitTestClient = createGitTestClient(testRepository);
-      const alexCLineTestClient = createAlexCLineTestClientInDirectory(testRepository);
+      const alexCLineTestClient = createAlexCLineTestClient(setDirectory(testRepository));
 
       await gitTestClient("git", ["checkout", "-b", "test-branch"]);
       await writeFile(testFilePath, 'console.log("This is a test");');
@@ -229,7 +230,7 @@ describe.skip("git-post-merge-cleanup", () => {
       );
 
       const gitTestClient = createGitTestClient(testRepository);
-      const alexCLineTestClient = createAlexCLineTestClientInDirectory(testRepository);
+      const alexCLineTestClient = createAlexCLineTestClient(setDirectory(testRepository));
 
       // Create a change on test-branch-1
       await gitTestClient("git", ["checkout", "-b", "test-branch-1"]);
@@ -285,7 +286,7 @@ describe.skip("git-post-merge-cleanup", () => {
       expect(fileContentsBefore).toBe("");
 
       const gitTestClient = createGitTestClient(testRepository);
-      const alexCLineTestClient = createAlexCLineTestClientInDirectory(testRepository);
+      const alexCLineTestClient = createAlexCLineTestClient(setDirectory(testRepository));
 
       // Setup an actual test file
       await gitTestClient("git", ["checkout", "-b", "test-branch"]);
@@ -319,7 +320,7 @@ describe.skip("git-post-merge-cleanup", () => {
       expect(fileContentsBefore).toBe("");
 
       const gitTestClient = createGitTestClient(testRepository);
-      const alexCLineTestClient = createAlexCLineTestClientInDirectory(testRepository);
+      const alexCLineTestClient = createAlexCLineTestClient(setDirectory(testRepository));
 
       // Setup test file
       await gitTestClient("git", ["checkout", "-b", "test-branch"]);
