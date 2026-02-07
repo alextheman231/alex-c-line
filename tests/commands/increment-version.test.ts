@@ -11,7 +11,7 @@ import path from "node:path";
 
 import alexCLineTestClient, {
   createAlexCLineTestClientInDirectory,
-} from "tests/test-clients/alex-c-line-test-client";
+} from "tests/testClients/alexCLineTestClient";
 
 import getPackageJsonContents from "src/utility/getPackageJsonContents";
 

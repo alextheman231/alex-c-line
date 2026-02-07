@@ -5,7 +5,7 @@ import { describe, expect, test } from "vitest";
 import { writeFile } from "node:fs/promises";
 import path from "node:path";
 
-import { createAlexCLineTestClientInDirectory } from "tests/test-clients/alex-c-line-test-client";
+import { createAlexCLineTestClientInDirectory } from "tests/testClients/alexCLineTestClient";
 
 describe("check-for-file-dependencies", () => {
   test("Exits with exit code 0 if no file dependencies found", async () => {

@@ -6,7 +6,7 @@ import { describe, expect, test } from "vitest";
 import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
-import { createAlexCLineTestClient } from "tests/test-clients/alex-c-line-test-client";
+import { createAlexCLineTestClient } from "tests/testClients/alexCLineTestClient";
 
 describe("edit-env", () => {
   test("Adds property to .env", async () => {

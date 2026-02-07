@@ -3,8 +3,8 @@ import { ExecaError } from "execa";
 import sodium from "libsodium-wrappers";
 import { beforeAll, describe, expect, test } from "vitest";
 
-import alexCLineTestClient from "tests/test-clients/alex-c-line-test-client";
-import normaliseStdout from "tests/test-clients/normaliseStdout";
+import normaliseStdout from "tests/helpers/normaliseStdout";
+import alexCLineTestClient from "tests/testClients/alexCLineTestClient";
 
 type CommandName = "encrypt-with-key" | "encrypt";
 

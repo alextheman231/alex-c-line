@@ -2,7 +2,7 @@ import { VersionNumber } from "@alextheman/utility";
 import { ExecaError } from "execa";
 import { describe, expect, test } from "vitest";
 
-import alexCLineTestClient from "tests/test-clients/alex-c-line-test-client";
+import alexCLineTestClient from "tests/testClients/alexCLineTestClient";
 
 import { version } from "package.json" with { type: "json" };
 

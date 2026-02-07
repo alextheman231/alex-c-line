@@ -12,7 +12,6 @@ function normaliseStdout(
   }
 
   if (Array.isArray(stdout)) {
-    // assume line-based output; stringify defensively
     return stdout.map(String).join("\n");
   }
 
