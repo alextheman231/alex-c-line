@@ -1,5 +1,5 @@
+import { stringifyDotenv } from "@alextheman/utility";
 import dotenv from "dotenv";
-import dotenvStringify from "dotenv-stringify";
 import { temporaryDirectoryTask } from "tempy";
 import { describe, expect, test } from "vitest";
 
@@ -13,10 +13,7 @@ describe("edit-env", () => {
     await temporaryDirectoryTask(async (temporaryPath) => {
       const alexCLineTestClient = createAlexCLineTestClient({ cwd: temporaryPath });
 
-      await alexCLineTestClient("edit-env", [
-        "DATABASE_URL",
-        "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-      ]);
+      await alexCLineTestClient`edit-env DATABASE_URL ${"https://www.youtube.com/watch?v=dQw4w9WgXcQ"}`;
       const envFileContents = await readFile(path.join(temporaryPath, ".env"), "utf-8");
       expect(envFileContents.endsWith("\n")).toBe(true);
     });
@@ -25,7 +22,7 @@ describe("edit-env", () => {
     await temporaryDirectoryTask(async (temporaryPath) => {
       const alexCLineTestClient = createAlexCLineTestClient({ cwd: temporaryPath });
 
-      await alexCLineTestClient("edit-env", ["PROPERTY", "hello"]);
+      await alexCLineTestClient`edit-env PROPERTY hello`;
       const envFileContents = dotenv.parse(
         await readFile(path.join(temporaryPath, ".env"), "utf-8"),
       );
@@ -37,10 +34,10 @@ describe("edit-env", () => {
       const alexCLineTestClient = createAlexCLineTestClient({ cwd: temporaryPath });
       await writeFile(
         path.join(temporaryPath, ".env"),
-        dotenvStringify({ DATABASE_URL: "https://www.youtube.com/watch?v=dQw4w9WgXcQ" }),
+        stringifyDotenv({ DATABASE_URL: "https://www.youtube.com/watch?v=dQw4w9WgXcQ" }),
       );
 
-      await alexCLineTestClient("edit-env", ["PROPERTY", "test"]);
+      await alexCLineTestClient`edit-env PROPERTY test`;
       const envFileContents = dotenv.parse(
         await readFile(path.join(temporaryPath, ".env"), "utf-8"),
       );
@@ -53,13 +50,13 @@ describe("edit-env", () => {
       const alexCLineTestClient = createAlexCLineTestClient({ cwd: temporaryPath });
       await writeFile(
         path.join(temporaryPath, ".env"),
-        dotenvStringify({
+        stringifyDotenv({
           DATABASE_URL: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
           PROPERTY: "test",
         }),
       );
 
-      await alexCLineTestClient("edit-env", ["PROPERTY", "hello"]);
+      await alexCLineTestClient`edit-env PROPERTY hello`;
       const envFileContents = dotenv.parse(
         await readFile(path.join(temporaryPath, ".env"), "utf-8"),
       );
@@ -72,14 +69,14 @@ describe("edit-env", () => {
       const alexCLineTestClient = createAlexCLineTestClient({ cwd: temporaryPath });
       await writeFile(
         path.join(temporaryPath, ".env"),
-        dotenvStringify({
+        stringifyDotenv({
           DATABASE_URL: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
           PROPERTY: "test",
         }),
       );
 
       // Get de-rickrolled but keep the DATABASE_URL property around
-      await alexCLineTestClient("edit-env", ["DATABASE_URL"]);
+      await alexCLineTestClient`edit-env DATABASE_URL`;
       const envFileContents = dotenv.parse(
         await readFile(path.join(temporaryPath, ".env"), "utf-8"),
       );
@@ -92,14 +89,14 @@ describe("edit-env", () => {
       const alexCLineTestClient = createAlexCLineTestClient({ cwd: temporaryPath });
       await writeFile(
         path.join(temporaryPath, ".env"),
-        dotenvStringify({
+        stringifyDotenv({
           DATABASE_URL: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
           PROPERTY: "test",
         }),
       );
 
       // Get de-rickrolled but keep the DATABASE_URL property around
-      await alexCLineTestClient("edit-env", ["DATABASE_URL", ""]);
+      await alexCLineTestClient`edit-env DATABASE_URL ${""}`;
       const envFileContents = dotenv.parse(
         await readFile(path.join(temporaryPath, ".env"), "utf-8"),
       );
@@ -112,25 +109,20 @@ describe("edit-env", () => {
       const alexCLineTestClient = createAlexCLineTestClient({ cwd: temporaryPath });
       await writeFile(
         path.join(temporaryPath, ".env.test"),
-        dotenvStringify({
+        stringifyDotenv({
           DATABASE_URL: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
           ENV: "test",
         }),
       );
       await writeFile(
         path.join(temporaryPath, ".env"),
-        dotenvStringify({
+        stringifyDotenv({
           DATABASE_URL: "do-not-use-or-you-will-be.fired",
           ENV: "production",
         }),
       );
 
-      await alexCLineTestClient("edit-env", [
-        "DATABASE_URL",
-        "https://youtu.be/jKUgVR29PJs?si=XUHJdBKR3pwWCncz",
-        "--file",
-        ".env.test",
-      ]);
+      await alexCLineTestClient`edit-env DATABASE_URL ${"https://youtu.be/jKUgVR29PJs?si=XUHJdBKR3pwWCncz"} --file .env.test`;
       const testEnvFileContents = dotenv.parse(
         await readFile(path.join(temporaryPath, ".env.test"), "utf-8"),
       );
@@ -151,14 +143,14 @@ describe("edit-env", () => {
       const alexCLineTestClient = createAlexCLineTestClient({ cwd: temporaryPath });
       await writeFile(
         path.join(temporaryPath, ".env.test"),
-        dotenvStringify({
+        stringifyDotenv({
           DATABASE_URL: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
           ENV: "test",
         }),
       );
 
       // De-rickroll command incoming!
-      await alexCLineTestClient("edit-env", ["DATABASE_URL", "--file", ".env.test"]);
+      await alexCLineTestClient`edit-env DATABASE_URL --file .env.test`;
       const envFileContents = dotenv.parse(
         await readFile(path.join(temporaryPath, ".env.test"), "utf-8"),
       );

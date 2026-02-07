@@ -20,9 +20,8 @@ describe("incrementVersion", () => {
   test.each<VersionType>(["major", "minor", "patch"])(
     "Provides the incremented %s version in stdout",
     async (versionType) => {
-      const { exitCode, stdout: newVersion } = await alexCLineTestClient({
-        cwd: process.cwd(),
-      })`increment-version ${version} ${versionType}`;
+      const { exitCode, stdout: newVersion } =
+        await alexCLineTestClient`increment-version ${version} ${versionType}`;
       expect(exitCode).toBe(0);
       expect(newVersion).toBe(new VersionNumber(version).increment(versionType).toString());
     },
@@ -30,7 +29,7 @@ describe("incrementVersion", () => {
 
   test("Fails on invalid version number", async () => {
     try {
-      await alexCLineTestClient("increment-version", ["hello", "minor"]);
+      await alexCLineTestClient`increment-version hello minor`;
     } catch (error) {
       if (error instanceof ExecaError) {
         const { stderr, exitCode } = error;
@@ -44,7 +43,7 @@ describe("incrementVersion", () => {
 
   test("Fails on invalid version type", async () => {
     try {
-      await alexCLineTestClient("increment-version", [version, "hello"]);
+      await alexCLineTestClient`increment-version ${version} hello`;
     } catch (error) {
       if (error instanceof ExecaError) {
         const { stderr, exitCode } = error;
@@ -57,11 +56,8 @@ describe("incrementVersion", () => {
   });
 
   test('Does not include "v" prefix if --no-prefix provided', async () => {
-    const { exitCode, stdout: newVersion } = await alexCLineTestClient("increment-version", [
-      version,
-      "major",
-      "--no-prefix",
-    ]);
+    const { exitCode, stdout: newVersion } =
+      await alexCLineTestClient`increment-version ${version} major --no-prefix`;
     expect(exitCode).toBe(0);
     expect(newVersion).toBe(
       new VersionNumber(version).increment("major").toString({ omitPrefix: true }),
@@ -88,7 +84,7 @@ describe("incrementVersion", () => {
         await execaInDirectory`git add .`;
         await execaInDirectory`git commit -m ${"Initial commit"}`;
 
-        const alexCLine = alexCLineTestClient(setDirectory(temporaryPath));
+        const alexCLineInDirectory = alexCLineTestClient(setDirectory(temporaryPath));
         const { version } = parseZodSchema(
           z.object({
             version: z.string().transform((rawValue) => {
@@ -100,7 +96,7 @@ describe("incrementVersion", () => {
 
         const { exitCode: alexCLineExitCode, stdout: newAlexCLineVersion } = parseZodSchema(
           stdoutSchema,
-          await alexCLine("increment-version", [version.toString(), versionType]),
+          await alexCLineInDirectory`increment-version ${version.toString()} ${versionType}`,
         );
         expect(alexCLineExitCode).toBe(0);
         const { exitCode: npmExitCode, stdout: newNpmVersion } = parseZodSchema(

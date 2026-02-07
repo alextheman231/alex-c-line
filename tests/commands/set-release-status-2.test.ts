@@ -10,6 +10,7 @@ import setDirectory from "tests/helpers/setDirectory";
 import createAlexCLineTestClient from "tests/testClients/alexCLineTestClient";
 
 import getMarkdownBlock from "src/utility/getMarkdownBlock";
+import getReleaseNotePath from "src/utility/getReleaseNotePath";
 import getReleaseNoteTemplateFromMarkdown from "src/utility/getReleaseNoteTemplateFromMarkdown";
 import getReleaseSummary, { getMajorReleaseSummary } from "src/utility/getReleaseSummary";
 
@@ -63,13 +64,7 @@ describe("set-release-status-2", () => {
       const versionNumber = new VersionNumber(version);
 
       const versionType = new VersionNumber(version).type;
-      const documentPath = path.join(
-        "docs",
-        "releases",
-        `v${versionNumber.major}`,
-        `v${versionNumber.major}.${versionNumber.minor}`,
-        `${versionNumber}.md`,
-      );
+      const documentPath = getReleaseNotePath(versionNumber);
 
       await writeFile(
         path.join(temporaryPath, "package.json"),
@@ -88,7 +83,7 @@ describe("set-release-status-2", () => {
         }),
       );
 
-      const { exitCode } = await alexCLineTestClient("set-release-status-2", [documentPath]);
+      const { exitCode } = await alexCLineTestClient`set-release-status-2 ${documentPath}`;
       expect(exitCode).toBe(0);
 
       const fileContentsAfterWrite = await readFile(
@@ -165,13 +160,7 @@ describe("set-release-status-2", () => {
     await temporaryDirectoryTask(async (temporaryPath) => {
       const alexCLineTestClient = createAlexCLineTestClient(setDirectory(temporaryPath));
       const versionNumber = new VersionNumber(version);
-      const documentPath = path.join(
-        "docs",
-        "releases",
-        `v${versionNumber.major}`,
-        `v${versionNumber.major}.${versionNumber.minor}`,
-        `${versionNumber}.md`,
-      );
+      const documentPath = getReleaseNotePath(versionNumber);
 
       await writeFile(
         path.join(temporaryPath, "package.json"),
@@ -185,7 +174,7 @@ describe("set-release-status-2", () => {
       await writeFile(path.join(temporaryPath, documentPath), documentContents);
 
       try {
-        await alexCLineTestClient("set-release-status-2", [documentPath]);
+        await alexCLineTestClient`set-release-status-2 ${documentPath}`;
         throw new Error("DID_NOT_THROW");
       } catch (error) {
         if (error instanceof ExecaError) {

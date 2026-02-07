@@ -5,6 +5,7 @@ import { describe, expect, test } from "vitest";
 import { writeFile } from "node:fs/promises";
 import path from "node:path";
 
+import setDirectory from "tests/helpers/setDirectory";
 import alexCLineTestClient from "tests/testClients/alexCLineTestClient";
 
 describe("check-lockfile-version-discrepancy", () => {
@@ -16,12 +17,8 @@ describe("check-lockfile-version-discrepancy", () => {
       await writeFile(packagePath, JSON.stringify({ version: "1.0.0" }, null, 2));
       await writeFile(packageLockPath, JSON.stringify({ version: "1.0.0" }, null, 2));
 
-      const { stdout: output, exitCode } = await alexCLineTestClient(
+      const { stdout: output, exitCode } = await alexCLineTestClient(setDirectory(tempDirectory))(
         "check-lockfile-version-discrepancy",
-        undefined,
-        {
-          cwd: tempDirectory,
-        },
       );
       expect(exitCode).toBe(0);
       expect(output).toContain("package.json and package-lock.json versions in sync.");
@@ -36,9 +33,9 @@ describe("check-lockfile-version-discrepancy", () => {
       await writeFile(packageLockPath, JSON.stringify({ version: "1.0.1" }, null, 2));
 
       try {
-        await alexCLineTestClient("check-lockfile-version-discrepancy", undefined, {
-          cwd: tempDirectory,
-        });
+        await alexCLineTestClient(setDirectory(tempDirectory))(
+          "check-lockfile-version-discrepancy",
+        );
         throw new Error("TEST_FAILED");
       } catch (error: unknown) {
         if (error instanceof ExecaError) {
