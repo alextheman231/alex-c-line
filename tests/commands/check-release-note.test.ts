@@ -29,16 +29,14 @@ describe("check-release-note", () => {
         const versionNumber = new VersionNumber(packageInfo.version).increment(versionType);
         const releaseNotePath = getReleaseNotePath(versionNumber);
 
-        const { exitCode: checkReleaseNoteExitCode } = await alexCLineTestClient(
-          "check-release-note",
-          [releaseNotePath],
-        );
+        const { exitCode: checkReleaseNoteExitCode } =
+          await alexCLineTestClient`check-release-note ${releaseNotePath}`;
         expect(checkReleaseNoteExitCode).toBe(0);
       });
     },
   );
 
-  test("Exit code 1 on invalid release note", async () => {
+  test("Exit code 1 on invalid release note and does not expose DataError", async () => {
     await temporaryDirectoryTask(async (temporaryPath) => {
       await writeFile(path.join(temporaryPath, "package.json"), JSON.stringify(packageInfo));
 
@@ -47,12 +45,12 @@ describe("check-release-note", () => {
 
       const alexCLineTestClient = createAlexCLineTestClient(setDirectory(temporaryPath));
 
-      const { exitCode: checkReleaseNoteExitCode } = await alexCLineTestClient(
-        "check-release-note",
-        ["v1.2.3.md"],
-        { reject: false },
-      );
+      const { exitCode: checkReleaseNoteExitCode, stderr: errorMessage } =
+        await alexCLineTestClient({
+          reject: false,
+        })`check-release-note ${invalidFilePath}`;
       expect(checkReleaseNoteExitCode).toBe(1);
+      expect(errorMessage).not.toContain("DataError");
     });
   });
 
@@ -66,10 +64,8 @@ describe("check-release-note", () => {
         const alexCLineTestClient = createAlexCLineTestClient(setDirectory(temporaryPath));
 
         // Create an actually valid release note using the existing command.
-        const { exitCode: createReleaseNoteExitCode } = await alexCLineTestClient(
-          "create-release-note-2",
-          [versionType],
-        );
+        const { exitCode: createReleaseNoteExitCode } =
+          await alexCLineTestClient`create-release-note-2 ${versionType}`;
         expect(createReleaseNoteExitCode).toBe(0);
 
         // Get the expected version number and path of the release note.
@@ -77,55 +73,28 @@ describe("check-release-note", () => {
         const releaseNotePath = getReleaseNotePath(versionNumber);
 
         // Verify the release note status is currently 'In progress' and not 'Released'.
-        const { exitCode: checkReleaseNoteInProgressBeforeExitCode } = await alexCLineTestClient(
-          "check-release-note",
-          [releaseNotePath, "--expected-release-status", ReleaseStatus.IN_PROGRESS],
-        );
+        const { exitCode: checkReleaseNoteInProgressBeforeExitCode } =
+          await alexCLineTestClient`check-release-note ${releaseNotePath} --expected-release-status ${ReleaseStatus.IN_PROGRESS}`;
         expect(checkReleaseNoteInProgressBeforeExitCode).toBe(0);
-        const { exitCode: checkReleaseNoteReleasedBeforeExitCode } = await alexCLineTestClient(
-          "check-release-note",
-          [releaseNotePath, "--expected-release-status", ReleaseStatus.RELEASED],
-          { reject: false },
-        );
+        const { exitCode: checkReleaseNoteReleasedBeforeExitCode } = await alexCLineTestClient({
+          reject: false,
+        })`check-release-note ${releaseNotePath} --expected-release-status ${ReleaseStatus.RELEASED}`;
         expect(checkReleaseNoteReleasedBeforeExitCode).toBe(1);
 
         // Release the release note
-        const { exitCode: setReleaseStatusExitCode } = await alexCLineTestClient(
-          "set-release-status-2",
-          [releaseNotePath, ReleaseStatus.RELEASED],
-        );
+        const { exitCode: setReleaseStatusExitCode } =
+          await alexCLineTestClient`set-release-status-2 ${releaseNotePath} ${ReleaseStatus.RELEASED}`;
         expect(setReleaseStatusExitCode).toBe(0);
 
         // Verify the release note status is currently 'Released' and not 'In progress'.
-        const { exitCode: checkReleaseNoteReleasedAfterExitCode } = await alexCLineTestClient(
-          "check-release-note",
-          [releaseNotePath, "--expected-release-status", ReleaseStatus.RELEASED],
-        );
+        const { exitCode: checkReleaseNoteReleasedAfterExitCode } =
+          await alexCLineTestClient`check-release-note ${releaseNotePath} --expected-release-status ${ReleaseStatus.RELEASED}`;
         expect(checkReleaseNoteReleasedAfterExitCode).toBe(0);
-        const { exitCode: checkReleaseNoteInProgressAfterExitCode } = await alexCLineTestClient(
-          "check-release-note",
-          [releaseNotePath, "--expected-release-status", ReleaseStatus.IN_PROGRESS],
-          { reject: false },
-        );
+        const { exitCode: checkReleaseNoteInProgressAfterExitCode } = await alexCLineTestClient({
+          reject: false,
+        })`check-release-note ${releaseNotePath} --expected-release-status ${ReleaseStatus.IN_PROGRESS}`;
         expect(checkReleaseNoteInProgressAfterExitCode).toBe(1);
       });
     },
   );
-
-  test("Gives a program.error() on invalid rather than a DataError", async () => {
-    await temporaryDirectoryTask(async (temporaryPath) => {
-      await writeFile(path.join(temporaryPath, "package.json"), JSON.stringify(packageInfo));
-
-      const invalidFilePath = path.join(temporaryPath, "v1.2.3.md");
-      await writeFile(invalidFilePath, "This is not valid");
-
-      const alexCLineTestClient = createAlexCLineTestClient(setDirectory(temporaryPath));
-
-      const { exitCode: checkReleaseNoteExitCode, stderr: errorMessage } =
-        await alexCLineTestClient("check-release-note", ["v1.2.3.md"], { reject: false });
-      expect(checkReleaseNoteExitCode).toBe(1);
-
-      expect(errorMessage).not.toContain("DataError");
-    });
-  });
 });

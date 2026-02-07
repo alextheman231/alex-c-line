@@ -11,6 +11,8 @@ import path from "node:path";
 import setDirectory from "tests/helpers/setDirectory";
 import createAlexCLineTestClient from "tests/testClients/alexCLineTestClient";
 
+import getReleaseNotePath from "src/utility/getReleaseNotePath";
+
 import { name, version } from "package.json" with { type: "json" };
 
 describe("create-release-note-2", () => {
@@ -31,14 +33,7 @@ describe("create-release-note-2", () => {
 
       expect(exitCode).toBe(0);
       const fileContents = await readFile(
-        path.join(
-          temporaryPath,
-          "docs",
-          "releases",
-          `v${versionNumber.major}`,
-          `v${versionNumber.major}.${versionNumber.minor}`,
-          `${versionNumber}.md`,
-        ),
+        path.join(temporaryPath, getReleaseNotePath(versionNumber)),
         "utf-8",
       );
       expect(fileContents).toContain(versionNumber.toString());
@@ -86,14 +81,7 @@ describe("create-release-note-2", () => {
         const { exitCode } = await alexCLineTestClient("create-release-note-2");
         expect(exitCode).toBe(0);
         const fileContents = await readFile(
-          path.join(
-            temporaryPath,
-            "docs",
-            "releases",
-            `v${versionNumber.major}`,
-            `v${versionNumber.major}.${versionNumber.minor}`,
-            `${versionNumber}.md`,
-          ),
+          path.join(temporaryPath, getReleaseNotePath(versionNumber)),
           "utf-8",
         );
 
@@ -140,17 +128,10 @@ describe("create-release-note-2", () => {
         );
         const incrementedVersion = version.increment(versionType);
 
-        const { exitCode } = await alexCLineTestClient("create-release-note-2", [versionType]);
+        const { exitCode } = await alexCLineTestClient`create-release-note-2 ${versionType}`;
         expect(exitCode).toBe(0);
         const fileContents = await readFile(
-          path.join(
-            temporaryPath,
-            "docs",
-            "releases",
-            `v${incrementedVersion.major}`,
-            `v${incrementedVersion.major}.${incrementedVersion.minor}`,
-            `${incrementedVersion}.md`,
-          ),
+          path.join(temporaryPath, getReleaseNotePath(incrementedVersion)),
           "utf-8",
         );
 

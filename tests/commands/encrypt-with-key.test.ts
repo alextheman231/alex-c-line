@@ -20,10 +20,8 @@ function runTests(command: CommandName) {
       const publicKeyBase64 = sodium.to_base64(publicKey, sodium.base64_variants.ORIGINAL);
       const plaintextValue = "Hello world";
 
-      const { stdout, stderr, exitCode } = await alexCLineTestClient(command, [
-        publicKeyBase64,
-        plaintextValue,
-      ]);
+      const { stdout, stderr, exitCode } =
+        await alexCLineTestClient`${command} ${publicKeyBase64} ${plaintextValue}`;
       expect(exitCode).toBe(0);
       expect(normaliseStdout(stderr)).not.toContain(plaintextValue);
 
@@ -75,7 +73,7 @@ function runTests(command: CommandName) {
         exitCode: firstExitCode,
         stdout: firstStdout,
         stderr: firstStderr,
-      } = await alexCLineTestClient(command, [publicKeyBase64, plaintextValue]);
+      } = await alexCLineTestClient`${command} ${publicKeyBase64} ${plaintextValue}`;
       expect(firstExitCode).toBe(0);
       const firstEncryptedValue = normaliseStdout(firstStdout);
       expect(firstEncryptedValue).not.toContain(plaintextValue);
@@ -85,7 +83,7 @@ function runTests(command: CommandName) {
         exitCode: secondExitCode,
         stdout: secondStdout,
         stderr: secondStderr,
-      } = await alexCLineTestClient(command, [publicKeyBase64, plaintextValue]);
+      } = await alexCLineTestClient`${command} ${publicKeyBase64} ${plaintextValue}`;
       expect(secondExitCode).toBe(0);
       const secondEncryptedValue = normaliseStdout(secondStdout);
       expect(secondEncryptedValue).not.toContain(plaintextValue);
@@ -96,7 +94,7 @@ function runTests(command: CommandName) {
     test("If any of this errors, the error message MUST NOT display the plaintext value", async () => {
       const plaintextValue = "gdfssdehrhrt";
       try {
-        await alexCLineTestClient(command, ["Invalid public key", plaintextValue]);
+        await alexCLineTestClient`${command} ${"Invalid public key"} ${plaintextValue}`;
         throw new Error("DID_NOT_THROW");
       } catch (error) {
         if (error instanceof ExecaError) {
