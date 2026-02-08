@@ -2,15 +2,41 @@ name: Commit a version change
 on:
   push:
     branches: ["main"]
-
-permissions:
-  contents: write
-  pull-requests: write
+  workflow_dispatch:
 
 jobs:
-  commit-version-change:
-    if: ${{ github.repository == 'alextheman231/alex-c-line' }}
-    uses: alextheman231/github-actions/.github/workflows/commit-version-change.yml@3db51f2a57ee95cda50310b3856cfdc0ae171cf7 # v8.3.3
+  check-major-version:
+    permissions:
+      contents: write
+      pull-requests: write
+    uses: alextheman231/github-actions/.github/workflows/_commit-version-change.yml@3db51f2a57ee95cda50310b3856cfdc0ae171cf7 # v8.3.3
+    with:
+      version-type: major
+      create-feature-docs: false
     secrets:
       APP_ID: ${{ secrets.ALEX_UP_BOT_APP_ID }}
-      APP_PRIVATE_KEY: ${{ secrets.ALEX_UP_BOT_PRIVATE_KEY }}
+      APP_PRIVATE_KEY: ${{ secrets.ALEX_UP_BOT_PRIVATE_KEY}}
+
+  check-minor-version:
+    permissions:
+      contents: write
+      pull-requests: write
+    uses: alextheman231/github-actions/.github/workflows/_commit-version-change.yml@3db51f2a57ee95cda50310b3856cfdc0ae171cf7 # v8.3.3
+    with:
+      version-type: minor
+      create-feature-docs: false
+    secrets:
+      APP_ID: ${{ secrets.ALEX_UP_BOT_APP_ID }}
+      APP_PRIVATE_KEY: ${{ secrets.ALEX_UP_BOT_PRIVATE_KEY}}
+
+  check-patch-version:
+    permissions:
+      contents: write
+      pull-requests: write
+    uses: alextheman231/github-actions/.github/workflows/_commit-version-change.yml@3db51f2a57ee95cda50310b3856cfdc0ae171cf7 # v8.3.3
+    with:
+      version-type: patch
+      create-feature-docs: false
+    secrets:
+      APP_ID: ${{ secrets.ALEX_UP_BOT_APP_ID }}
+      APP_PRIVATE_KEY: ${{ secrets.ALEX_UP_BOT_PRIVATE_KEY}}
