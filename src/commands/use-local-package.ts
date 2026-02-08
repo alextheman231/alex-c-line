@@ -127,7 +127,7 @@ function useLocalPackage(program: Command) {
           {
             cwd: process.cwd(),
             stdio: "inherit",
-            reject: false,
+            // reject: false,
           },
         );
 
