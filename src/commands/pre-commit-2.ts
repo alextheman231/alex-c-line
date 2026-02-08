@@ -9,8 +9,8 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 
 import { PackageManager } from "src/configs/types/PreCommitConfig";
-import loadAlexCLineConfig from "src/utility/configLoaders/loadAlexCLineConfig";
-import findAlexCLineConfig from "src/utility/findAlexCLineConfig";
+import findAlexCLineConfig from "src/utility/configs/findAlexCLineConfig";
+import loadAlexCLineConfig from "src/utility/configs/loadAlexCLineConfig";
 
 function preCommit2(program: Command) {
   program

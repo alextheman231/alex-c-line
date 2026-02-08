@@ -3,7 +3,7 @@ import type { PrivateConfigFileName } from "src/configs/types/ConfigFileName";
 import path from "node:path";
 
 import { ConfigFileName } from "src/configs/types/ConfigFileName";
-import doesFileExist from "src/utility/doesFileExist";
+import doesFileExist from "src/utility/fileSystem/doesFileExist";
 
 async function findAlexCLineConfig(
   cwd: string,

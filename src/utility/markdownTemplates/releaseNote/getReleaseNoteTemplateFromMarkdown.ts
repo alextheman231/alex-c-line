@@ -1,4 +1,6 @@
-import type { CreateEnumType, VersionNumber } from "@alextheman/utility";
+import type { VersionNumber } from "@alextheman/utility";
+
+import type { ReleaseStatus } from "src/utility/markdownTemplates/releaseNote/types/ReleaseStatus";
 
 import { DataError, parseZodSchema } from "@alextheman/utility";
 import matter from "gray-matter";
@@ -8,14 +10,7 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
-import findPackageRoot from "src/utility/findPackageRoot";
-
-export const ReleaseStatus = {
-  IN_PROGRESS: "In progress",
-  RELEASED: "Released",
-} as const;
-// eslint-disable-next-line @typescript-eslint/no-redeclare
-export type ReleaseStatus = CreateEnumType<typeof ReleaseStatus>;
+import findPackageRoot from "src/utility/fileSystem/findPackageRoot";
 
 interface ReleaseNoteData {
   status?: ReleaseStatus;

@@ -12,7 +12,7 @@ import z from "zod";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
-import getReleaseNoteTemplateFromMarkdown from "src/utility/getReleaseNoteTemplateFromMarkdown";
+import getReleaseNoteTemplateFromMarkdown from "src/utility/markdownTemplates/releaseNote/getReleaseNoteTemplateFromMarkdown";
 
 function createReleaseNote2(program: Command) {
   program

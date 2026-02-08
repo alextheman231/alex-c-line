@@ -8,9 +8,9 @@ import path from "node:path";
 
 import { PullRequestTemplateCategory } from "src/configs";
 import { parseCreatePullRequestTemplateConfig } from "src/configs/helpers/defineCreatePullRequestTemplateConfig";
-import loadAlexCLineConfig from "src/utility/configLoaders/loadAlexCLineConfig";
-import findAlexCLineConfig from "src/utility/findAlexCLineConfig";
-import getPullRequestTemplatesFromMarkdown from "src/utility/getPullRequestTemplatesFromMarkdown";
+import findAlexCLineConfig from "src/utility/configs/findAlexCLineConfig";
+import loadAlexCLineConfig from "src/utility/configs/loadAlexCLineConfig";
+import getPullRequestTemplatesFromMarkdown from "src/utility/markdownTemplates/pullRequest/getPullRequestTemplatesFromMarkdown";
 
 function createPullRequestTemplate(program: Command) {
   program

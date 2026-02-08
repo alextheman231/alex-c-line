@@ -1,6 +1,6 @@
 import type { VersionNumber } from "@alextheman/utility";
 
-import type { ReleaseStatus } from "src/utility/getReleaseNoteTemplateFromMarkdown";
+import type { ReleaseStatus } from "src/utility/markdownTemplates/releaseNote/types/ReleaseStatus";
 
 import { DataError, kebabToCamel, normaliseIndents, removeDuplicates } from "@alextheman/utility";
 
@@ -8,10 +8,10 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
-import findPackageRoot from "src/utility/findPackageRoot";
-import getMarkdownBlock from "src/utility/getMarkdownBlock";
-import getReleaseStatus from "src/utility/getReleaseStatus";
-import normaliseMarkdown from "src/utility/normaliseMarkdown";
+import findPackageRoot from "src/utility/fileSystem/findPackageRoot";
+import getMarkdownBlock from "src/utility/markdownTemplates/getMarkdownBlock";
+import normaliseMarkdown from "src/utility/markdownTemplates/normaliseMarkdown";
+import getReleaseStatus from "src/utility/markdownTemplates/releaseNote/getReleaseStatus";
 
 const __filename = fileURLToPath(import.meta.url);
 

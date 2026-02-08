@@ -5,7 +5,7 @@ import { parseVersionType, VersionNumber } from "@alextheman/utility";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
-import getReleaseNoteTemplate from "src/utility/getReleaseNoteTemplate";
+import getReleaseNoteTemplate from "src/utility/deprecated/getReleaseNoteTemplate";
 
 function createReleaseNote(program: Command) {
   program

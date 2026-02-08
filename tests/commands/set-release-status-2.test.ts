@@ -6,13 +6,13 @@ import { describe, expect, test } from "vitest";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
+import getReleaseSummary, { getMajorReleaseSummary } from "tests/helpers/getReleaseSummary";
 import setDirectory from "tests/helpers/setDirectory";
 import createAlexCLineTestClient from "tests/testClients/alexCLineTestClient";
 
-import getMarkdownBlock from "src/utility/getMarkdownBlock";
-import getReleaseNotePath from "src/utility/getReleaseNotePath";
-import getReleaseNoteTemplateFromMarkdown from "src/utility/getReleaseNoteTemplateFromMarkdown";
-import getReleaseSummary, { getMajorReleaseSummary } from "src/utility/getReleaseSummary";
+import getMarkdownBlock from "src/utility/markdownTemplates/getMarkdownBlock";
+import getReleaseNotePath from "src/utility/markdownTemplates/releaseNote/getReleaseNotePath";
+import getReleaseNoteTemplateFromMarkdown from "src/utility/markdownTemplates/releaseNote/getReleaseNoteTemplateFromMarkdown";
 
 import { name, version } from "package.json" with { type: "json" };
 

@@ -8,7 +8,7 @@ import { readdir, readFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
-import findPackageRoot from "src/utility/findPackageRoot";
+import findPackageRoot from "src/utility/fileSystem/findPackageRoot";
 
 const __filename = fileURLToPath(import.meta.url);
 

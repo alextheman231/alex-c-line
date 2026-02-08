@@ -7,12 +7,12 @@ import z from "zod";
 import path from "node:path";
 
 import { PrivateConfigFileName } from "src/configs/types/ConfigFileName";
-import loadAlexCLinePrivateConfig from "src/utility/configLoaders/loadAlexCLinePrivateConfig";
+import findAlexCLineConfig from "src/utility/configs/findAlexCLineConfig";
+import loadAlexCLinePrivateConfig from "src/utility/configs/loadAlexCLinePrivateConfig";
 import experimentalHeader from "src/utility/constants/experimentalHeader";
-import findAlexCLineConfig from "src/utility/findAlexCLineConfig";
-import findTgzFile from "src/utility/findTgzFile";
-import getPackageJsonContents from "src/utility/getPackageJsonContents";
-import removeAllTarballs from "src/utility/removeAllTarballs";
+import findTgzFile from "src/utility/fileSystem/findTgzFile";
+import getPackageJsonContents from "src/utility/fileSystem/getPackageJsonContents";
+import removeAllTarballs from "src/utility/miscellaneous/removeAllTarballs";
 
 function useLocalPackage(program: Command) {
   program

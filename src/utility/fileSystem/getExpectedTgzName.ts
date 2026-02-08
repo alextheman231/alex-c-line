@@ -2,7 +2,7 @@ import { DataError, parseZodSchema } from "@alextheman/utility";
 import { execa } from "execa";
 import z from "zod";
 
-import parseJsonFromStdout from "src/utility/parseJSONFromStdout";
+import parseJsonFromStdout from "src/utility/miscellaneous/parseJSONFromStdout";
 
 async function getExpectedTgzName(packagePath: string, packageManager: string) {
   const { stdout: rawPackedTgzData } = await execa({

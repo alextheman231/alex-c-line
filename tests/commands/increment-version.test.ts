@@ -12,7 +12,7 @@ import path from "node:path";
 import setDirectory from "tests/helpers/setDirectory";
 import alexCLineTestClient from "tests/testClients/alexCLineTestClient";
 
-import getPackageJsonContents from "src/utility/getPackageJsonContents";
+import getPackageJsonContents from "src/utility/fileSystem/getPackageJsonContents";
 
 import packageInfo, { version } from "package.json" with { type: "json" };
 
