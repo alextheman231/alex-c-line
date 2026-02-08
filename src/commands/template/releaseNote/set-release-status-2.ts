@@ -6,9 +6,9 @@ import z from "zod";
 import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
-import { ReleaseStatus } from "src/utility/getReleaseNoteTemplateFromMarkdown";
-import parseReleaseStatus from "src/utility/parseReleaseStatus";
-import validateReleaseDocument from "src/utility/validateReleaseDocument";
+import parseReleaseStatus from "src/utility/markdownTemplates/releaseNote/parseReleaseStatus";
+import { ReleaseStatus } from "src/utility/markdownTemplates/releaseNote/types/ReleaseStatus";
+import validateReleaseDocument from "src/utility/markdownTemplates/releaseNote/validateReleaseDocument";
 
 function setReleaseStatus2(program: Command) {
   program

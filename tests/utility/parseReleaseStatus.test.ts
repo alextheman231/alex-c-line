@@ -1,7 +1,7 @@
 import { describe, expect, test } from "vitest";
 
-import { ReleaseStatus } from "src/utility/getReleaseNoteTemplateFromMarkdown";
-import parseReleaseStatus from "src/utility/parseReleaseStatus";
+import parseReleaseStatus from "src/utility/markdownTemplates/releaseNote/parseReleaseStatus";
+import { ReleaseStatus } from "src/utility/markdownTemplates/releaseNote/types/ReleaseStatus";
 
 describe("parseReleaseStatus", () => {
   test("Is successful when input is a valid release status", () => {

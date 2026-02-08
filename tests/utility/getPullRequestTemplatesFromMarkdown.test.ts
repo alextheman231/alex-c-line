@@ -1,7 +1,7 @@
 import { DataError } from "@alextheman/utility";
 import { describe, expect, test } from "vitest";
 
-import getPullRequestTemplatesFromMarkdown from "src/utility/getPullRequestTemplatesFromMarkdown";
+import getPullRequestTemplatesFromMarkdown from "src/utility/markdownTemplates/pullRequest/getPullRequestTemplatesFromMarkdown";
 
 describe("getPullRequestTemplatesFromMarkdown", () => {
   test("Gets the correct templates", async () => {

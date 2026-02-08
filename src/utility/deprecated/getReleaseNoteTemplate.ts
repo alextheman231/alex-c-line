@@ -6,8 +6,9 @@ import {
   getMajorReleaseSummary,
   getMinorReleaseSummary,
   getPatchReleaseSummary,
-} from "src/utility/getReleaseSummary";
+} from "tests/helpers/getReleaseSummary";
 
+/** @deprecated Please use ReleaseStatus from src/utility/releaseNoteHelpers/ReleaseStatus instead. */
 export type ReleaseStatus = "In progress" | "Released";
 
 export interface ReleaseNoteContents {

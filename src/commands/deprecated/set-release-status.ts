@@ -5,7 +5,7 @@ import { VersionNumber } from "@alextheman/utility";
 import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
-import isValidReleaseDocument from "src/utility/isValidReleaseDocument";
+import isValidReleaseDocument from "src/utility/deprecated/isValidReleaseDocument";
 
 function setReleaseStatus(program: Command) {
   program

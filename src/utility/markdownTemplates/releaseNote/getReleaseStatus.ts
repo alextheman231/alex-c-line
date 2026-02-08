@@ -1,9 +1,9 @@
 import { DataError, parseZodSchema } from "@alextheman/utility";
 import z from "zod";
 
-import getMarkdownBlock from "src/utility/getMarkdownBlock";
-import { ReleaseStatus } from "src/utility/getReleaseNoteTemplateFromMarkdown";
-import normaliseMarkdown from "src/utility/normaliseMarkdown";
+import getMarkdownBlock from "src/utility/markdownTemplates/getMarkdownBlock";
+import normaliseMarkdown from "src/utility/markdownTemplates/normaliseMarkdown";
+import { ReleaseStatus } from "src/utility/markdownTemplates/releaseNote/types/ReleaseStatus";
 
 function getReleaseStatus(content: string): ReleaseStatus {
   const releaseStatus = getMarkdownBlock(

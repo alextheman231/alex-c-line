@@ -1,6 +1,6 @@
 import { DataError } from "@alextheman/utility";
 
-import { ReleaseStatus } from "src/utility/getReleaseNoteTemplateFromMarkdown";
+import { ReleaseStatus } from "src/utility/markdownTemplates/releaseNote/types/ReleaseStatus";
 
 function parseReleaseStatus(data: unknown): ReleaseStatus {
   const stringifiedData = typeof data === "string" ? data : String(data);

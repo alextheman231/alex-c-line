@@ -3,7 +3,7 @@ import { Command } from "commander";
 import updateNotifier from "update-notifier";
 
 import createCommands from "src/commands";
-import formatError from "src/utility/formatError";
+import formatError from "src/utility/errors/formatError";
 
 import packageInfo from "package.json" with { type: "json" };
 

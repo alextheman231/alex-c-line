@@ -11,7 +11,7 @@ import path from "node:path";
 import setDirectory from "tests/helpers/setDirectory";
 import createAlexCLineTestClient from "tests/testClients/alexCLineTestClient";
 
-import getReleaseNotePath from "src/utility/getReleaseNotePath";
+import getReleaseNotePath from "src/utility/markdownTemplates/releaseNote/getReleaseNotePath";
 
 import { name, version } from "package.json" with { type: "json" };
 

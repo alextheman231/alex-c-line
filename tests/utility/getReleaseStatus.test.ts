@@ -1,8 +1,8 @@
 import { normaliseIndents } from "@alextheman/utility";
 import { describe, expect, test } from "vitest";
 
-import { ReleaseStatus } from "src/utility/getReleaseNoteTemplateFromMarkdown";
-import getReleaseStatus from "src/utility/getReleaseStatus";
+import getReleaseStatus from "src/utility/markdownTemplates/releaseNote/getReleaseStatus";
+import { ReleaseStatus } from "src/utility/markdownTemplates/releaseNote/types/ReleaseStatus";
 
 describe("getReleaseStatus", () => {
   test.each([

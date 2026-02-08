@@ -1,14 +1,14 @@
 import type { Command } from "commander";
 
-import type { PullRequestTemplate } from "src/utility/getPullRequestTemplates";
+import type { PullRequestTemplate } from "src/utility/deprecated/getPullRequestTemplates";
 
 import { normaliseIndents } from "@alextheman/utility";
 
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
-import basePullRequestTemplate from "src/utility/basePullRequestTemplate";
-import getPullRequestTemplates from "src/utility/getPullRequestTemplates";
+import basePullRequestTemplate from "src/utility/deprecated/basePullRequestTemplate";
+import getPullRequestTemplates from "src/utility/deprecated/getPullRequestTemplates";
 
 const deprecationMessage =
   "[DEPRECATED]: This command does not support the new markdown-native templates and alex-c-line config system. Please use `pre-commit-2` instead.";

@@ -6,9 +6,9 @@ import z from "zod";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 
-import getPackageJsonContents from "src/utility/getPackageJsonContents";
-import parseReleaseStatus from "src/utility/parseReleaseStatus";
-import validateReleaseDocument from "src/utility/validateReleaseDocument";
+import getPackageJsonContents from "src/utility/fileSystem/getPackageJsonContents";
+import parseReleaseStatus from "src/utility/markdownTemplates/releaseNote/parseReleaseStatus";
+import validateReleaseDocument from "src/utility/markdownTemplates/releaseNote/validateReleaseDocument";
 
 function checkReleaseNote(program: Command) {
   program

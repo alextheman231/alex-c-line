@@ -2,27 +2,27 @@ import type { Command } from "commander";
 
 import checkForFileDependencies from "src/commands/check-for-file-dependencies";
 import checkLockfileVersionDiscrepancy from "src/commands/check-lockfile-version-discrepancy";
-import checkReleaseNote from "src/commands/check-release-note";
-import checkVersionNumberChange from "src/commands/check-version-number-change";
-import createPullRequestTemplate from "src/commands/create-pull-request-template-2";
-import createPullRequestTemplates from "src/commands/create-pull-request-templates";
-import createReleaseNote from "src/commands/create-release-note";
-import createReleaseNote2 from "src/commands/create-release-note-2";
-import editEnv from "src/commands/edit-env";
+import checkVersionNumberChange from "src/commands/deprecated/check-version-number-change";
+import createPullRequestTemplates from "src/commands/deprecated/create-pull-request-templates";
+import createReleaseNote from "src/commands/deprecated/create-release-note";
+import editEnv from "src/commands/deprecated/edit-env";
+import preCommit from "src/commands/deprecated/pre-commit";
+import setReleaseStatus from "src/commands/deprecated/set-release-status";
 import encryptWithKey from "src/commands/encrypt-with-key";
-import getMajorVersion from "src/commands/get-major-version";
-import getMinorVersion from "src/commands/get-minor-version";
-import getVersionType from "src/commands/get-version-type";
 import gitPostMergeCleanup from "src/commands/git-post-merge-cleanup";
-import incrementVersion from "src/commands/increment-version";
-import migrateReleaseNotes from "src/commands/migrate-release-notes";
-import preCommit from "src/commands/pre-commit";
 import preCommit2 from "src/commands/pre-commit-2";
 import sayHello from "src/commands/say-hello";
-import setReleaseStatus from "src/commands/set-release-status";
-import setReleaseStatus2 from "src/commands/set-release-status-2";
+import createPullRequestTemplate from "src/commands/template/pullRequest/create-pull-request-template-2";
+import checkReleaseNote from "src/commands/template/releaseNote/check-release-note";
+import createReleaseNote2 from "src/commands/template/releaseNote/create-release-note-2";
+import migrateReleaseNotes from "src/commands/template/releaseNote/migrate-release-notes";
+import setReleaseStatus2 from "src/commands/template/releaseNote/set-release-status-2";
 import useLocalPackage from "src/commands/use-local-package";
-import loadCommands from "src/utility/loadCommands";
+import getMajorVersion from "src/commands/versioning/get-major-version";
+import getMinorVersion from "src/commands/versioning/get-minor-version";
+import getVersionType from "src/commands/versioning/get-version-type";
+import incrementVersion from "src/commands/versioning/increment-version";
+import loadCommands from "src/utility/miscellaneous/loadCommands";
 
 function createCommands(program: Command) {
   loadCommands(program, {

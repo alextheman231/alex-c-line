@@ -10,8 +10,8 @@ import path from "node:path";
 import setDirectory from "tests/helpers/setDirectory";
 import createAlexCLineTestClient from "tests/testClients/alexCLineTestClient";
 
-import getReleaseNotePath from "src/utility/getReleaseNotePath";
-import { ReleaseStatus } from "src/utility/getReleaseNoteTemplateFromMarkdown";
+import getReleaseNotePath from "src/utility/markdownTemplates/releaseNote/getReleaseNotePath";
+import { ReleaseStatus } from "src/utility/markdownTemplates/releaseNote/types/ReleaseStatus";
 
 import packageInfo from "package.json" with { type: "json" };
 
