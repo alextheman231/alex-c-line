@@ -8,7 +8,8 @@ export interface CreateAlexCLineArtworkOptions {
   includeColors?: boolean;
 }
 
-async function createAlexCLineArtwork({ includeColors }: CreateAlexCLineArtworkOptions) {
+async function createAlexCLineArtwork(options?: CreateAlexCLineArtworkOptions) {
+  const { includeColors = true } = options ?? {};
   const title = await figlet("alex-c-line");
 
   const titleWidth = Math.max(
