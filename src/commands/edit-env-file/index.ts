@@ -1,5 +1,6 @@
 import type { Command } from "commander";
 
+import { normaliseIndents } from "@alextheman/utility";
 import { select } from "@inquirer/prompts";
 import chalk from "chalk";
 
@@ -14,14 +15,22 @@ function editEnvFile(program: Command) {
     .command("edit-env-file")
     .description("Edit properties in a .env file")
     .option("--interactive", "Enable interactive mode", true) // will be false in future updates
-    .action(async ({ interactive }) => {
+    .option(
+      "--file <filePath>",
+      "The path to the .env file you want to edit, relative to the working directory this command is run",
+      ".env",
+    )
+    .action(async ({ interactive, file }) => {
       if (interactive) {
         let exitInteractiveMode = false;
         while (!exitInteractiveMode) {
-          const envFileContents = await parseDotenvFile(".env");
+          const envFileContents = await parseDotenvFile(file);
 
           const variableToEdit = await select({
-            message: "Please select the environment variable you wish to edit",
+            message: normaliseIndents`
+            Please select the environment variable you wish to edit
+            Currently editing file: ${file}
+            `,
             choices: [
               ...Object.keys(envFileContents).map((key) => {
                 return {
@@ -45,13 +54,13 @@ function editEnvFile(program: Command) {
 
           switch (variableToEdit) {
             case "Add new":
-              await addVariable(program, envFileContents);
+              await addVariable(program, envFileContents, file);
               break;
             case "Exit editor":
               exitInteractiveMode = true;
               break;
             default:
-              await changeExistingVariable(envFileContents, variableToEdit);
+              await changeExistingVariable(envFileContents, variableToEdit, file);
           }
         }
       }
