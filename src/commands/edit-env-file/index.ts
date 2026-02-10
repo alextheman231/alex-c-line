@@ -27,7 +27,7 @@ function editEnvFile(program: Command) {
                 return {
                   name: key,
                   value: key,
-                  description: "<redacted for safety>",
+                  description: envFileContents[key] === "" ? "<empty>" : "<redacted for safety>",
                 };
               }),
               {
