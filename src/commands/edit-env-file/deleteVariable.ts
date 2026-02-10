@@ -3,7 +3,7 @@ import type { DotenvParseOutput } from "dotenv";
 import { omitProperties } from "@alextheman/utility";
 import { confirm } from "@inquirer/prompts";
 
-import upsertDotenvFile from "src/utility/upsertDotenvFile";
+import upsertDotenvFile from "src/utility/envFile/upsertDotenvFile";
 
 async function deleteVariable<EnvContents extends DotenvParseOutput>(
   envFileContents: EnvContents,

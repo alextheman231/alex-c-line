@@ -5,7 +5,7 @@ import { normaliseIndents } from "@alextheman/utility";
 import { input, password } from "@inquirer/prompts";
 
 import errorPrefix from "src/utility/constants/errorPrefix";
-import upsertDotenvFile from "src/utility/upsertDotenvFile";
+import upsertDotenvFile from "src/utility/envFile/upsertDotenvFile";
 
 async function addVariable<EnvContents extends DotenvParseOutput>(
   program: Command,
