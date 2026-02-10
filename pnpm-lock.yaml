@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@alextheman/utility':
-        specifier: ^4.14.0
-        version: 4.14.0
+        specifier: ^4.15.0
+        version: 4.15.0
       '@inquirer/prompts':
         specifier: ^8.2.0
         version: 8.2.0(@types/node@25.2.1)
@@ -126,8 +126,8 @@ packages:
       vite-tsconfig-paths: '>=5.1.4'
       vitest: '>=4.0.13'
 
-  '@alextheman/utility@4.14.0':
-    resolution: {integrity: sha512-Bj82TuGHf7HLtiZ1H76EYQAQzrIkuYopQWaN5kfX0lBroFJ30uVKy4xXGeeLcM8vV2LdsFs/gXCcU6AIIDZuRg==}
+  '@alextheman/utility@4.15.0':
+    resolution: {integrity: sha512-C2dNt3RmOiOKCWFp7a22TWcR8Hl0O9v3Jf2kB6w5m6mqrH25+GF6U6s5Gfxx/Lb1dR2u3jUAl6leS1G72lRszw==}
     engines: {node: '>=22.3.0'}
 
   '@altano/repository-tools@2.0.1':
@@ -3207,7 +3207,7 @@ snapshots:
 
   '@alextheman/eslint-plugin@5.6.2(99325eae95911b1b9c4a2d7f2671dfc5)':
     dependencies:
-      '@alextheman/utility': 4.14.0
+      '@alextheman/utility': 4.15.0
       '@eslint/compat': 2.0.2(eslint@10.0.0(supports-color@10.2.2))
       '@eslint/js': 10.0.1(eslint@10.0.0(supports-color@10.2.2))
       '@typescript-eslint/types': 8.55.0
@@ -3238,7 +3238,7 @@ snapshots:
       - supports-color
       - typescript
 
-  '@alextheman/utility@4.14.0':
+  '@alextheman/utility@4.15.0':
     dependencies:
       dotenv: 17.2.4
       libsodium-wrappers: 0.8.2
