@@ -1,16 +1,19 @@
 import type { Command } from "commander";
 
-import { DataError, normaliseIndents, parseZodSchema } from "@alextheman/utility";
+import { DataError, normaliseIndents, omitProperties, parseZodSchema } from "@alextheman/utility";
 import { execa } from "execa";
 import z from "zod";
 
 import path from "node:path";
 
 import { PrivateConfigFileName } from "src/configs/types/ConfigFileName";
+import createAlexCLineCache from "src/utility/cache/createAlexCLineCache";
+import loadAlexCLineCache from "src/utility/cache/loadAlexCLineCache";
 import findAlexCLineConfig from "src/utility/configs/findAlexCLineConfig";
 import loadAlexCLinePrivateConfig from "src/utility/configs/loadAlexCLinePrivateConfig";
 import experimentalHeader from "src/utility/constants/experimentalHeader";
 import findTgzFile from "src/utility/fileSystem/findTgzFile";
+import getDependenciesFromGroup from "src/utility/fileSystem/getDependenciesFromPackageInfo";
 import getPackageJsonContents from "src/utility/fileSystem/getPackageJsonContents";
 import removeAllTarballs from "src/utility/miscellaneous/removeAllTarballs";
 
@@ -73,18 +76,9 @@ function useLocalPackage(program: Command) {
         );
       }
 
-      const dependencies = {
-        dependencies: parseZodSchema(
-          z.record(z.string(), z.string()),
-          packageInfo.dependencies ?? {},
-        ),
-        devDependencies: parseZodSchema(
-          z.record(z.string(), z.string()),
-          packageInfo.devDependencies ?? {},
-        ),
-      }[dependencyGroup];
+      const dependencies = getDependenciesFromGroup(packageInfo, dependencyGroup);
 
-      if (!dependencies[packageName] && packageName !== "alex-c-line") {
+      if (!(packageName in dependencies) && packageName !== "alex-c-line") {
         throw new DataError(
           { packageName, dependencyGroup, packagePath: process.cwd() },
           "PACKAGE_NOT_FOUND",
@@ -92,13 +86,13 @@ function useLocalPackage(program: Command) {
         );
       }
 
-      const localPackageFullPath = path.resolve(process.cwd(), localPackage.path);
+      const localPackagePath = path.resolve(process.cwd(), localPackage.path);
 
-      const localPackageInfo = await getPackageJsonContents(localPackageFullPath);
+      const localPackageInfo = await getPackageJsonContents(localPackagePath);
 
       if (localPackageInfo === null) {
         throw new DataError(
-          { localPackageFullPath },
+          { localPackagePath },
           "MISSING_PACKAGE_REPOSITORY_PACKAGE_JSON",
           "Could not find package.json in the package repository.",
         );
@@ -110,7 +104,7 @@ function useLocalPackage(program: Command) {
         throw new DataError(
           {
             providedPackageName: packageName,
-            localPackagePath: localPackageFullPath,
+            localPackagePath,
             localPackageRepositoryName,
           },
           "PACKAGE_NAME_MISMATCH",
@@ -120,12 +114,12 @@ function useLocalPackage(program: Command) {
 
       if (packageName === "alex-c-line") {
         if (prepareScript) {
-          await execa({ cwd: localPackageFullPath })`${packageManager} run ${prepareScript}`;
+          await execa({ cwd: localPackagePath })`${packageManager} run ${prepareScript}`;
         }
-        console.info(`Command output from ${localPackageFullPath}:`);
+        console.info(`Command output from ${localPackagePath}:`);
         const { exitCode } = await execa(
           process.execPath,
-          [path.join(localPackageFullPath, "dist", "index.js"), ...args],
+          [path.join(localPackagePath, "dist", "index.js"), ...args],
           {
             cwd: process.cwd(),
             stdio: "inherit",
@@ -140,22 +134,29 @@ function useLocalPackage(program: Command) {
           });
         }
       } else {
+        const cacheContents = await loadAlexCLineCache();
+
         if (!reverse) {
           if (prepareScript) {
             await execa({
-              cwd: localPackageFullPath,
+              cwd: localPackagePath,
             })`${packageManager} run ${prepareScript}`;
           }
 
           if (!keepOldTarballs) {
-            await removeAllTarballs(localPackageFullPath, packageName);
+            await removeAllTarballs(localPackagePath, packageName);
           }
 
           await execa({
-            cwd: localPackageFullPath,
+            cwd: localPackagePath,
           })`${packageManager} pack`;
         }
 
+        const { previousVersion, dependencyGroup: cachedDependencyGroup } =
+          cacheContents?.useLocalPackage?.dependencies?.[packageName] ?? {};
+        const resolvedDependencyGroup = reverse
+          ? (cachedDependencyGroup ?? dependencyGroup)
+          : dependencyGroup;
         await execa({
           cwd: process.cwd(),
           stdio: "inherit",
@@ -164,15 +165,49 @@ function useLocalPackage(program: Command) {
           packageManager,
           [
             "install",
-            dependencyGroup === "devDependencies" ? "--save-dev" : undefined,
+            resolvedDependencyGroup === "devDependencies" ? "--save-dev" : undefined,
             reverse
-              ? packageName
-              : `file:${path.join(localPackageFullPath, await findTgzFile(localPackageFullPath, packageManager))}`,
+              ? previousVersion
+                ? `${packageName}@${previousVersion}`
+                : packageName
+              : `file:${path.join(localPackagePath, await findTgzFile(localPackagePath, packageManager))}`,
           ].filter((arg) => {
             return arg !== undefined;
           }),
           { cwd: process.cwd(), stdio: "inherit" },
         );
+
+        if (!reverse) {
+          const packageCacheData = {
+            ...(cacheContents?.useLocalPackage?.dependencies?.[packageName] ?? {}),
+            previousVersion: dependencies[packageName],
+            dependencyGroup,
+            currentVersion: getDependenciesFromGroup(
+              (await getPackageJsonContents(process.cwd())) ?? {},
+              dependencyGroup,
+            )[packageName],
+          };
+          await createAlexCLineCache({
+            ...(cacheContents ?? {}),
+            useLocalPackage: {
+              ...cacheContents?.useLocalPackage,
+              dependencies: {
+                ...cacheContents?.useLocalPackage?.dependencies,
+                [packageName]: packageCacheData,
+              },
+            },
+          });
+        } else {
+          await createAlexCLineCache({
+            ...(cacheContents ?? {}),
+            useLocalPackage: {
+              ...cacheContents?.useLocalPackage,
+              dependencies: {
+                ...omitProperties(cacheContents?.useLocalPackage?.dependencies ?? {}, packageName),
+              },
+            },
+          });
+        }
       }
     });
 }
