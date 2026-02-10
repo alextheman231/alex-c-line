@@ -119,7 +119,9 @@ function useLocalPackage(program: Command) {
       }
 
       if (packageName === "alex-c-line") {
-        await execa({ cwd: localPackageFullPath })`${packageManager} run ${prepareScript}`;
+        if (prepareScript) {
+          await execa({ cwd: localPackageFullPath })`${packageManager} run ${prepareScript}`;
+        }
         console.info(`Command output from ${localPackageFullPath}:`);
         const { exitCode } = await execa(
           process.execPath,
@@ -127,7 +129,7 @@ function useLocalPackage(program: Command) {
           {
             cwd: process.cwd(),
             stdio: "inherit",
-            // reject: false,
+            reject: false,
           },
         );
 
@@ -139,12 +141,16 @@ function useLocalPackage(program: Command) {
         }
       } else {
         if (!reverse) {
-          await execa({
-            cwd: localPackageFullPath,
-          })`${packageManager} run ${prepareScript}`;
+          if (prepareScript) {
+            await execa({
+              cwd: localPackageFullPath,
+            })`${packageManager} run ${prepareScript}`;
+          }
+
           if (!keepOldTarballs) {
             await removeAllTarballs(localPackageFullPath, packageName);
           }
+
           await execa({
             cwd: localPackageFullPath,
           })`${packageManager} pack`;
