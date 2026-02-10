@@ -6,6 +6,7 @@ import { normaliseIndents } from "@alextheman/utility";
 import { select } from "@inquirer/prompts";
 
 import deleteVariable from "src/commands/edit-env-file/deleteVariable";
+import editVariable from "src/commands/edit-env-file/editVariable";
 import redact from "src/utility/redact";
 
 async function changeExistingVariable(envFileContents: DotenvParseOutput, variableToEdit: string) {
@@ -29,7 +30,7 @@ async function changeExistingVariable(envFileContents: DotenvParseOutput, variab
 
   switch (editMode) {
     case "edit":
-      // TODO: Implement this
+      await editVariable(envFileContents, variableToEdit);
       break;
     case "delete":
       await deleteVariable(envFileContents, variableToEdit);

@@ -5,10 +5,6 @@ import { select } from "@inquirer/prompts";
 import changeExistingVariable from "src/commands/edit-env-file/changeExistingVariable";
 import parseDotenvFile from "src/utility/parseDotenvFile";
 
-export interface EditEnv2Options {
-  interactive?: boolean;
-}
-
 export type EditMode = "edit" | "delete";
 
 function editEnvFile(program: Command) {
@@ -16,7 +12,7 @@ function editEnvFile(program: Command) {
     .command("edit-env-file")
     .description("Edit properties in a .env file")
     .option("--interactive", "Enable interactive mode", true) // will be false in future updates
-    .action(async ({ interactive }: EditEnv2Options) => {
+    .action(async ({ interactive }) => {
       if (interactive) {
         const envFileContents = await parseDotenvFile(".env");
 
