@@ -16,30 +16,43 @@ function editEnvFile(program: Command) {
     .option("--interactive", "Enable interactive mode", true) // will be false in future updates
     .action(async ({ interactive }) => {
       if (interactive) {
-        const envFileContents = await parseDotenvFile(".env");
+        let exitInteractiveMode = false;
+        while (!exitInteractiveMode) {
+          const envFileContents = await parseDotenvFile(".env");
 
-        const variableToEdit = await select({
-          message: "Please select the environment variable you wish to edit",
-          choices: [
-            ...Object.keys(envFileContents).map((key) => {
-              return {
-                name: key,
-                value: key,
-                description: "<redacted for safety>",
-              };
-            }),
-            {
-              name: `${chalk.green("+")} Add new environment variable`,
-              value: "Add new",
-              description: `Add a new environment variable to .env.`,
-            },
-          ],
-        });
+          const variableToEdit = await select({
+            message: "Please select the environment variable you wish to edit",
+            choices: [
+              ...Object.keys(envFileContents).map((key) => {
+                return {
+                  name: key,
+                  value: key,
+                  description: "<redacted for safety>",
+                };
+              }),
+              {
+                name: `${chalk.green("+")} Add new environment variable`,
+                value: "Add new",
+                description: `Add a new environment variable to .env.`,
+              },
+              {
+                name: `${chalk.dim("⏎")} Exit editor`,
+                value: "Exit editor",
+                description: "Exit the .env file interactive editor.",
+              },
+            ],
+          });
 
-        if (variableToEdit === "Add new") {
-          await addVariable(program, envFileContents);
-        } else {
-          await changeExistingVariable(envFileContents, variableToEdit);
+          switch (variableToEdit) {
+            case "Add new":
+              await addVariable(program, envFileContents);
+              break;
+            case "Exit editor":
+              exitInteractiveMode = true;
+              break;
+            default:
+              await changeExistingVariable(envFileContents, variableToEdit);
+          }
         }
       }
     });
