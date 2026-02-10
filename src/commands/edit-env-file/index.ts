@@ -1,7 +1,9 @@
 import type { Command } from "commander";
 
 import { select } from "@inquirer/prompts";
+import chalk from "chalk";
 
+import addVariable from "src/commands/edit-env-file/addVariable";
 import changeExistingVariable from "src/commands/edit-env-file/changeExistingVariable";
 import parseDotenvFile from "src/utility/parseDotenvFile";
 
@@ -27,14 +29,16 @@ function editEnvFile(program: Command) {
               };
             }),
             {
-              name: "Add new environment variable",
+              name: `${chalk.green("+")} Add new environment variable`,
               value: "Add new",
               description: `Add a new environment variable to .env.`,
             },
           ],
         });
 
-        if (variableToEdit !== "Add new") {
+        if (variableToEdit === "Add new") {
+          await addVariable(program, envFileContents);
+        } else {
           await changeExistingVariable(envFileContents, variableToEdit);
         }
       }
