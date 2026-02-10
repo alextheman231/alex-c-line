@@ -10,6 +10,7 @@ import upsertDotenvFile from "src/utility/upsertDotenvFile";
 async function addVariable<EnvContents extends DotenvParseOutput>(
   program: Command,
   envFileContents: EnvContents,
+  file: string,
 ) {
   const newVariableName = await input({
     message: "Please enter the name of the environment variable you would like to add.",
@@ -42,7 +43,7 @@ async function addVariable<EnvContents extends DotenvParseOutput>(
   }
 
   const newValue = await password({ message: `Please enter the new value for ${newVariableName}` });
-  await upsertDotenvFile({ ...envFileContents, [newVariableName]: newValue }, ".env");
+  await upsertDotenvFile({ ...envFileContents, [newVariableName]: newValue }, file);
   console.info(`${newVariableName} successfully added.`);
 }
 

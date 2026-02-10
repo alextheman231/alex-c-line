@@ -9,7 +9,11 @@ import deleteVariable from "src/commands/edit-env-file/deleteVariable";
 import editVariable from "src/commands/edit-env-file/editVariable";
 import redact from "src/utility/redact";
 
-async function changeExistingVariable(envFileContents: DotenvParseOutput, variableToEdit: string) {
+async function changeExistingVariable(
+  envFileContents: DotenvParseOutput,
+  variableToEdit: string,
+  file: string,
+) {
   const editMode = await select<EditMode>({
     message: normaliseIndents`
                 ${variableToEdit}: ${redact(envFileContents[variableToEdit])}
@@ -30,10 +34,10 @@ async function changeExistingVariable(envFileContents: DotenvParseOutput, variab
 
   switch (editMode) {
     case "edit":
-      await editVariable(envFileContents, variableToEdit);
+      await editVariable(envFileContents, variableToEdit, file);
       break;
     case "delete":
-      await deleteVariable(envFileContents, variableToEdit);
+      await deleteVariable(envFileContents, variableToEdit, file);
       break;
     default:
       // Will most likely never get there as inquirer should never give an unrecognised option, but it's here just in case.

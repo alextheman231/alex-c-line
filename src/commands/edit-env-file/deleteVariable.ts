@@ -8,6 +8,7 @@ import upsertDotenvFile from "src/utility/upsertDotenvFile";
 async function deleteVariable<EnvContents extends DotenvParseOutput>(
   envFileContents: EnvContents,
   variableToEdit: keyof EnvContents,
+  file: string,
 ) {
   const deleteConfirmation = await confirm({
     message: `Are you sure you want to delete \`${String(variableToEdit)}\`?`,
@@ -18,7 +19,7 @@ async function deleteVariable<EnvContents extends DotenvParseOutput>(
     return;
   }
 
-  await upsertDotenvFile(omitProperties(envFileContents, variableToEdit), ".env");
+  await upsertDotenvFile(omitProperties(envFileContents, variableToEdit), file);
   console.info(`${String(variableToEdit)} successfully deleted.`);
 }
 
