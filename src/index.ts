@@ -15,7 +15,6 @@ import packageInfo from "package.json" with { type: "json" };
     program.name("alex-c-line").description("CLI tool built by Alex").version(packageInfo.version);
 
     const notifier = updateNotifier({ pkg: packageInfo });
-    await notifier.fetchInfo();
 
     if (notifier.update) {
       notifier.notify({
