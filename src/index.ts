@@ -12,7 +12,10 @@ import packageInfo from "package.json" with { type: "json" };
 (async () => {
   try {
     const program = new Command();
-    program.name("alex-c-line").description("CLI tool built by Alex").version(packageInfo.version);
+    program
+      .name(packageInfo.name)
+      .description(packageInfo.description)
+      .version(packageInfo.version);
 
     const notifier = updateNotifier({ pkg: packageInfo });
 
