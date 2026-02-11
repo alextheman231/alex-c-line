@@ -17,17 +17,14 @@ import packageInfo from "package.json" with { type: "json" };
       .description(packageInfo.description)
       .version(packageInfo.version);
 
-    const notifier = updateNotifier({ pkg: packageInfo });
-
-    if (notifier.update) {
-      notifier.notify({
-        message: `${await createAlexCLineArtwork({ includeColors: Boolean(supportsColor.stdout) })}
+    updateNotifier({ pkg: packageInfo }).notify({
+      message: `
+${await createAlexCLineArtwork({ includeColors: Boolean(supportsColor.stdout) })}
 A new update of \`alex-c-line\` is available!
   {currentVersion} → {latestVersion}
 Run \`{updateCommand}\` to update.
 `,
-      });
-    }
+    });
 
     createCommands(program);
     await program.parseAsync(process.argv);
