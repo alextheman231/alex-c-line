@@ -1,15 +1,15 @@
-import type { AlexCLineCache } from "src/utility/cache/parseAlexCLineCache";
+import type { AlexCLineProjectCache } from "src/cache/project/types/AlexCLineProjectCache";
 
 import { DataError } from "@alextheman/utility";
 import { describe, expect, test } from "vitest";
 
-import parseAlexCLineCache from "src/utility/cache/parseAlexCLineCache";
+import parseAlexCLineProjectCache from "src/cache/project/parseAlexCLineCache";
 
 import { version } from "package.json" with { type: "json" };
 
-describe("parseAlexCLineCache", () => {
+describe("parseAlexCLineProjectCache", () => {
   test("Is successful when input corresponds to a valid cache file", () => {
-    const input: AlexCLineCache = {
+    const input: AlexCLineProjectCache = {
       useLocalPackage: {
         dependencies: {
           "@alextheman/utility": {
@@ -26,7 +26,7 @@ describe("parseAlexCLineCache", () => {
       },
     };
 
-    const parsedInput = parseAlexCLineCache(input);
+    const parsedInput = parseAlexCLineProjectCache(input);
     expect(parsedInput).toEqual(input);
   });
 
@@ -42,7 +42,7 @@ describe("parseAlexCLineCache", () => {
       },
     };
     try {
-      parseAlexCLineCache(input);
+      parseAlexCLineProjectCache(input);
     } catch (error) {
       if (error instanceof DataError) {
         expect(error.data).toEqual(input);

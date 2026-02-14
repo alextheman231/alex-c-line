@@ -1,9 +1,9 @@
-import { parseZodSchema, VersionNumber } from "@alextheman/utility";
+import { VersionNumber } from "@alextheman/utility";
 import z from "zod";
 
 import { DependencyGroup } from "src/configs";
 
-const alexCLineCacheSchema = z
+export const alexCLineProjectCacheSchema = z
   .object({
     useLocalPackage: z
       .object({
@@ -25,10 +25,5 @@ const alexCLineCacheSchema = z
       .partial(),
   })
   .partial();
-export type AlexCLineCache = z.infer<typeof alexCLineCacheSchema>;
 
-function parseAlexCLineCache(data: unknown): AlexCLineCache {
-  return parseZodSchema(alexCLineCacheSchema, data);
-}
-
-export default parseAlexCLineCache;
+export type AlexCLineProjectCache = z.infer<typeof alexCLineProjectCacheSchema>;
