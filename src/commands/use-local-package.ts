@@ -6,9 +6,9 @@ import z from "zod";
 
 import path from "node:path";
 
+import createAlexCLineProjectCache from "src/cache/project/createAlexCLineProjectCache";
+import loadAlexCLineProjectCache from "src/cache/project/loadAlexCLineProjectCache";
 import { PrivateConfigFileName } from "src/configs/types/ConfigFileName";
-import createAlexCLineCache from "src/utility/cache/createAlexCLineCache";
-import loadAlexCLineCache from "src/utility/cache/loadAlexCLineCache";
 import findAlexCLineConfig from "src/utility/configs/findAlexCLineConfig";
 import loadAlexCLinePrivateConfig from "src/utility/configs/loadAlexCLinePrivateConfig";
 import experimentalHeader from "src/utility/constants/experimentalHeader";
@@ -134,7 +134,7 @@ function useLocalPackage(program: Command) {
           });
         }
       } else {
-        const cacheContents = await loadAlexCLineCache();
+        const cacheContents = await loadAlexCLineProjectCache();
 
         if (!reverse) {
           if (prepareScript) {
@@ -187,7 +187,7 @@ function useLocalPackage(program: Command) {
               dependencyGroup,
             )[packageName],
           };
-          await createAlexCLineCache({
+          await createAlexCLineProjectCache({
             ...(cacheContents ?? {}),
             useLocalPackage: {
               ...cacheContents?.useLocalPackage,
@@ -198,7 +198,7 @@ function useLocalPackage(program: Command) {
             },
           });
         } else {
-          await createAlexCLineCache({
+          await createAlexCLineProjectCache({
             ...(cacheContents ?? {}),
             useLocalPackage: {
               ...cacheContents?.useLocalPackage,
