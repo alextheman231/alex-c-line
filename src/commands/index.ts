@@ -19,6 +19,7 @@ import checkReleaseNote from "src/commands/template/releaseNote/check-release-no
 import createReleaseNote2 from "src/commands/template/releaseNote/create-release-note-2";
 import migrateReleaseNotes from "src/commands/template/releaseNote/migrate-release-notes";
 import setReleaseStatus2 from "src/commands/template/releaseNote/set-release-status-2";
+import update from "src/commands/update";
 import useLocalPackage from "src/commands/use-local-package";
 import getMajorVersion from "src/commands/versioning/get-major-version";
 import getMinorVersion from "src/commands/versioning/get-minor-version";
@@ -51,6 +52,7 @@ function createCommands(program: Command) {
     sayHello,
     setReleaseStatus,
     setReleaseStatus2,
+    update,
     useLocalPackage,
   });
 }
