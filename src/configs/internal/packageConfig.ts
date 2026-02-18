@@ -1,9 +1,14 @@
-import type { PreCommitSteps } from "src/configs/internal/PreCommitSteps";
-import type { AlexCLineConfig } from "src/configs/types";
+import type { PreCommitStep } from "src/configs/internal/PreCommitStep";
+import type { AlexCLineConfig, PreCommitStepOptions, StepFunction } from "src/configs/types";
 
-function packageConfig(
-  steps: PreCommitSteps[] = ["build", "format", "lint", "test"],
-): AlexCLineConfig<PreCommitSteps> {
+function packageConfig<ScriptName extends string = PreCommitStep>(
+  steps: (
+    | StepFunction
+    | ScriptName
+    | PreCommitStep
+    | [ScriptName | PreCommitStep, PreCommitStepOptions]
+  )[] = ["build", "format", "lint", "test"],
+): AlexCLineConfig<PreCommitStep> {
   return {
     createPullRequestTemplate: {
       category: "general",
@@ -11,7 +16,7 @@ function packageConfig(
     },
     preCommit: {
       packageManager: "pnpm",
-      steps,
+      steps: steps as PreCommitStep[],
     },
   };
 }
