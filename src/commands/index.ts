@@ -12,7 +12,7 @@ import setReleaseStatus from "src/commands/deprecated/set-release-status";
 import editEnvFile from "src/commands/edit-env-file";
 import encryptWithKey from "src/commands/encrypt-with-key";
 import gitPostMergeCleanup from "src/commands/git-post-merge-cleanup";
-import preCommit2 from "src/commands/pre-commit-2";
+import preCommit2 from "src/commands/pre-commit/pre-commit-2";
 import sayHello from "src/commands/say-hello";
 import createPullRequestTemplate from "src/commands/template/pullRequest/create-pull-request-template-2";
 import checkReleaseNote from "src/commands/template/releaseNote/check-release-note";
