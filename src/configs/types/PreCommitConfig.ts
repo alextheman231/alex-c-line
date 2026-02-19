@@ -1,5 +1,6 @@
 import type { CreateEnumType } from "@alextheman/utility";
-import type { Result, TemplateExpression } from "execa";
+
+import type { StepRunner } from "src/commands/pre-commit/createStepRunner";
 
 export const PackageManager = {
   NPM: "npm",
@@ -13,10 +14,6 @@ export interface PreCommitStepOptions {
   arguments?: string[];
 }
 
-export interface StepRunner {
-  (command: string, args?: readonly string[]): Promise<Result>;
-  (strings: TemplateStringsArray, ...interpolations: TemplateExpression[]): Promise<Result>;
-}
 export type StepFunction = (stepRunner: StepRunner) => void | Promise<void>;
 
 export interface PreCommitConfig<ScriptName extends string = string> {

@@ -1,13 +1,14 @@
 import type { Command } from "commander";
-import type { Result, TemplateExpression } from "execa";
 
-import { DataError, interpolate, parseZodSchema } from "@alextheman/utility";
+import { DataError, parseZodSchema } from "@alextheman/utility";
 import { execa } from "execa";
 import z from "zod";
 
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 
+import createStepRunner from "src/commands/pre-commit/createStepRunner";
+import getCommandArguments from "src/commands/pre-commit/getCommandArguments";
 import { PackageManager } from "src/configs/types/PreCommitConfig";
 import findAlexCLineConfig from "src/utility/configs/findAlexCLineConfig";
 import loadAlexCLineConfig from "src/utility/configs/loadAlexCLineConfig";
@@ -35,7 +36,6 @@ function preCommit2(program: Command) {
       }
 
       const execaNoFail = execa({ reject: false });
-      const runCommandAndLogToConsole = execa({ reject: false, stdio: "inherit" });
 
       const { exitCode: diffExitCode } = await execaNoFail`git diff --cached --quiet`;
 
@@ -53,41 +53,6 @@ function preCommit2(program: Command) {
           }
           console.info("No staged changes found. Use --allow-no-staged-changes to run anyway.");
           return;
-      }
-
-      async function stepRunner(
-        command: string,
-        args?: readonly string[] | undefined,
-      ): Promise<Result>;
-      async function stepRunner(
-        strings: TemplateStringsArray,
-        ...interpolations: TemplateExpression[]
-      ): Promise<Result>;
-      async function stepRunner(
-        first: string | TemplateStringsArray,
-        ...second: unknown[]
-      ): Promise<Result> {
-        const result =
-          typeof first === "string"
-            ? await runCommandAndLogToConsole(first, second[0] as string[] | undefined)
-            : await runCommandAndLogToConsole(
-                first as TemplateStringsArray,
-                ...(second as TemplateExpression[]),
-              );
-
-        if (result.exitCode !== 0) {
-          const errorMessage =
-            typeof first === "string"
-              ? `${first}${Array.isArray(second[0]) && second[0].length ? ` ${(second[0] as string[]).join(" ")}` : ""}`
-              : interpolate(first, ...(second as TemplateExpression[]));
-
-          program.error(`Command failed: ${errorMessage}`, {
-            exitCode: result.exitCode ?? 1,
-            code: "PRE_COMMIT_FAILED",
-          });
-        }
-
-        return result;
       }
 
       const { packageManager: packagePackageManager, scripts } = JSON.parse(
@@ -109,30 +74,19 @@ function preCommit2(program: Command) {
         ),
       );
 
-      function getCommandArguments(script: string, args?: string[]): string[] {
-        if (!(script in (scripts ?? {}))) {
-          program.error(`Could not find script \`${script}\` in package.json.`, {
-            exitCode: 1,
-            code: "SCRIPT_NOT_FOUND",
-          });
-        }
-        const result = script === "test" ? [script] : ["run", script];
-
-        if (args) {
-          result.push(...args);
-        }
-
-        return result;
-      }
+      const stepRunner = createStepRunner(program);
 
       for (const step of preCommitConfig.steps) {
         if (typeof step === "function") {
           await step(stepRunner);
         } else if (typeof step === "string") {
-          await stepRunner(packageManager, getCommandArguments(step));
+          await stepRunner(packageManager, getCommandArguments(program, step, scripts));
         } else {
           const [script, options] = step;
-          await stepRunner(packageManager, getCommandArguments(script, options.arguments));
+          await stepRunner(
+            packageManager,
+            getCommandArguments(program, script, scripts, options.arguments),
+          );
         }
       }
 
