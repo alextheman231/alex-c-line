@@ -1,13 +1,6 @@
-import type { CreateEnumType } from "@alextheman/utility";
+import type { PackageManager } from "@alextheman/utility/internal";
 
 import type { StepRunner } from "src/commands/pre-commit/createStepRunner";
-
-export const PackageManager = {
-  NPM: "npm",
-  PNPM: "pnpm",
-} as const;
-
-export type PackageManager = CreateEnumType<typeof PackageManager>;
 
 export interface PreCommitStepOptions {
   /** Arguments to pass to the given script */

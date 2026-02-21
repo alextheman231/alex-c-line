@@ -1,6 +1,7 @@
 import type { Command } from "commander";
 
 import { DataError, normaliseIndents, omitProperties, parseZodSchema } from "@alextheman/utility";
+import { getDependenciesFromGroup, getPackageJsonContents } from "@alextheman/utility/internal";
 import { execa } from "execa";
 import z from "zod";
 
@@ -13,8 +14,6 @@ import findAlexCLineConfig from "src/utility/configs/findAlexCLineConfig";
 import loadAlexCLinePrivateConfig from "src/utility/configs/loadAlexCLinePrivateConfig";
 import experimentalHeader from "src/utility/constants/experimentalHeader";
 import findTgzFile from "src/utility/fileSystem/findTgzFile";
-import getDependenciesFromGroup from "src/utility/fileSystem/getDependenciesFromPackageInfo";
-import getPackageJsonContents from "src/utility/fileSystem/getPackageJsonContents";
 import removeAllTarballs from "src/utility/miscellaneous/removeAllTarballs";
 
 function useLocalPackage(program: Command) {

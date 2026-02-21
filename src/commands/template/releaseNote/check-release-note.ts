@@ -1,13 +1,13 @@
 import type { Command } from "commander";
 
 import { DataError, parseZodSchema, VersionNumber } from "@alextheman/utility";
+import { getPackageJsonContents } from "@alextheman/utility/internal";
 import { parseFilePath } from "@alextheman/utility/node";
 import z from "zod";
 
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 
-import getPackageJsonContents from "src/utility/fileSystem/getPackageJsonContents";
 import parseReleaseStatus from "src/utility/markdownTemplates/releaseNote/parseReleaseStatus";
 import validateReleaseDocument from "src/utility/markdownTemplates/releaseNote/validateReleaseDocument";
 

@@ -1,9 +1,8 @@
 import type { PreCommitConfig } from "src/configs/types/PreCommitConfig";
 
 import { parseZodSchemaAsync } from "@alextheman/utility";
+import { PackageManager } from "@alextheman/utility/internal";
 import z from "zod";
-
-import { PackageManager } from "src/configs/types/PreCommitConfig";
 
 export const preCommitStepOptionsSchema = z.strictObject({
   arguments: z.array(z.string()).optional(),

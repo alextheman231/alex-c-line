@@ -1,10 +1,9 @@
-import type { PackageManager } from "src/configs";
+import type { PackageManager } from "@alextheman/utility/internal";
 
 import { DataError } from "@alextheman/utility";
+import { getExpectedTgzName } from "@alextheman/utility/internal";
 
 import { readdir } from "node:fs/promises";
-
-import getExpectedTgzName from "src/utility/fileSystem/getExpectedTgzName";
 
 async function findTgzFile(packagePath: string, packageManager: PackageManager): Promise<string> {
   const packageRootFiles = await readdir(packagePath);
