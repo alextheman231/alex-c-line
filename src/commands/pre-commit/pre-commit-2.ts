@@ -1,6 +1,7 @@
 import type { Command } from "commander";
 
 import { DataError, parseZodSchema } from "@alextheman/utility";
+import { PackageManager } from "@alextheman/utility/internal";
 import { execa } from "execa";
 import z from "zod";
 
@@ -9,7 +10,6 @@ import path from "node:path";
 
 import createStepRunner from "src/commands/pre-commit/createStepRunner";
 import getCommandArguments from "src/commands/pre-commit/getCommandArguments";
-import { PackageManager } from "src/configs/types/PreCommitConfig";
 import findAlexCLineConfig from "src/utility/configs/findAlexCLineConfig";
 import loadAlexCLineConfig from "src/utility/configs/loadAlexCLineConfig";
 

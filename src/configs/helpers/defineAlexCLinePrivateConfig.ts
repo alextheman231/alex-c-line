@@ -1,10 +1,10 @@
 import type { AlexCLinePrivateConfig } from "src/configs/types/AlexCLinePrivateConfig";
 
 import { parseZodSchema } from "@alextheman/utility";
+import { PackageManager } from "@alextheman/utility/internal";
 import z from "zod";
 
 import { DependencyGroup } from "src/configs/types";
-import { PackageManager } from "src/configs/types/PreCommitConfig";
 
 export const alexCLinePrivateConfigSchema = z.object({
   useLocalPackage: z.strictObject({

@@ -1,6 +1,7 @@
 import type { VersionType } from "@alextheman/utility";
 
 import { parseZodSchema, VersionNumber } from "@alextheman/utility";
+import { getPackageJsonContents } from "@alextheman/utility/internal";
 import { execa, ExecaError } from "execa";
 import { temporaryDirectoryTask } from "tempy";
 import { describe, expect, test } from "vitest";
@@ -11,8 +12,6 @@ import path from "node:path";
 
 import setDirectory from "tests/helpers/setDirectory";
 import alexCLineTestClient from "tests/testClients/alexCLineTestClient";
-
-import getPackageJsonContents from "src/utility/fileSystem/getPackageJsonContents";
 
 import packageInfo, { version } from "package.json" with { type: "json" };
 
