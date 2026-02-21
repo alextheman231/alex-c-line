@@ -42,7 +42,7 @@ async function getPullRequestTemplatesFromMarkdown(
   const templatesDirectory = await readdir(templatesPath);
   if (!templatesDirectory.includes(category)) {
     throw new DataError(
-      category,
+      { category },
       "CATEGORY_NOT_FOUND",
       "Category folder not found in the templates folder.",
     );
@@ -67,7 +67,7 @@ async function getPullRequestTemplatesFromMarkdown(
     for (const placeholder of placeholders) {
       if (!(placeholder in templateVariables)) {
         throw new DataError(
-          placeholder,
+          { placeholder },
           "INVALID_PLACEHOLDER",
           "The placeholder found in frontmatter can not be found in the metadata.",
         );

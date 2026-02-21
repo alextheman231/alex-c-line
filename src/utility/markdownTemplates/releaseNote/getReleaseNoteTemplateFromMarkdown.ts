@@ -57,7 +57,7 @@ async function getReleaseNoteTemplateFromMarkdown(
   for (const placeholder of placeholders) {
     if (!(placeholder in templateVariables)) {
       throw new DataError(
-        placeholder,
+        { placeholder },
         "INVALID_PLACEHOLDER",
         "The placeholder found in frontmatter can not be found in the metadata.",
       );

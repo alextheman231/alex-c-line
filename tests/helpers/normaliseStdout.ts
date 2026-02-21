@@ -4,7 +4,7 @@ function normaliseStdout(
   stdout: string | string[] | unknown[] | Uint8Array<ArrayBufferLike> | undefined | null,
 ): string {
   if (stdout === undefined || stdout === null) {
-    throw new DataError(stdout, "NO_STDOUT", "No stdout returned.");
+    throw new DataError({ stdout }, "NO_STDOUT", "No stdout returned.");
   }
 
   if (typeof stdout === "string") {

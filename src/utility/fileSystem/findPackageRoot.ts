@@ -25,7 +25,7 @@ async function findPackageRoot(startDirectory: string, packageName: string) {
   }
 
   throw new DataError(
-    packageName,
+    { packageName },
     "PACKAGE_ROOT_NOT_FOUND",
     `Could not find package root for ${packageName}`,
   );

@@ -29,7 +29,7 @@ async function validateReleaseDocument(
     )
   ) {
     throw new DataError(
-      content.split("\n").slice(0, 3).join("\n"),
+      { heading: content.split("\n").slice(0, 3).join("\n") },
       "INVALID_HEADING",
       normaliseIndents`
                 Expected heading to be:
@@ -81,7 +81,7 @@ async function validateReleaseDocument(
   // This should never trigger in practice because I expect all my templates to have summaries, but this is there in case I forget.
   if (!templateSummary) {
     throw new DataError(
-      templateContent,
+      { templateContent },
       "SUMMARY_NOT_FOUND",
       "Expected to find a release summary but it was not found.",
     );
@@ -89,7 +89,7 @@ async function validateReleaseDocument(
 
   if (!summary) {
     throw new DataError(
-      content,
+      { content },
       "SUMMARY_NOT_FOUND",
       normaliseIndents`
       Expected to find a release summary but it was not found. Expected release summary to be:
@@ -101,7 +101,7 @@ async function validateReleaseDocument(
 
   if (normaliseMarkdown(summary) !== normaliseMarkdown(templateSummary)) {
     throw new DataError(
-      summary,
+      { summary },
       "INVALID_SUMMARY",
       normaliseIndents`
       Summary does not match what was expected. Expected release summary to be:
@@ -113,7 +113,7 @@ async function validateReleaseDocument(
 
   if (!content.includes("## Description of Changes")) {
     throw new DataError(
-      content,
+      { content },
       "DESCRIPTION_NOT_FOUND",
       "Expected to find a description of changes but it was not found.",
     );
@@ -121,7 +121,7 @@ async function validateReleaseDocument(
 
   if (version.type === "major" && !content.includes("## Migration Notes")) {
     throw new DataError(
-      content,
+      { content },
       "MIGRATION_NOTES_NOT_FOUND",
       "Major version notes must have migration notes as major versions are expected to be breaking changes that require users to migrate and refactor their code.",
     );

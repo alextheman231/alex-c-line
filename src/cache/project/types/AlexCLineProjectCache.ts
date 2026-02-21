@@ -14,9 +14,7 @@ export const alexCLineProjectCacheSchema = z
             previousVersion: z
               .union([z.instanceof(VersionNumber), z.string()])
               .transform((value) => {
-                return value instanceof VersionNumber
-                  ? value.toString({ omitPrefix: true })
-                  : value;
+                return value instanceof VersionNumber ? value.format({ omitPrefix: true }) : value;
               }),
             dependencyGroup: z.enum(DependencyGroup),
           }),

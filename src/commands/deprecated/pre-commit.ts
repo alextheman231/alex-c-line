@@ -43,7 +43,7 @@ function preCommit(program: Command) {
               z.enum(["turborepo"]),
               rawRepositoryManager?.toLowerCase(),
               new DataError(
-                rawRepositoryManager,
+                { repositoryManager: rawRepositoryManager },
                 "INVALID_REPOSITORY_MANAGER",
                 "The repository manager provided does not exist or is not currently supported. We currently support the following: `turborepo`.",
               ),

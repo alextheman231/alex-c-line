@@ -9,7 +9,7 @@ import { version } from "package.json" with { type: "json" };
 const versionNumber = new VersionNumber(version);
 
 describe("get-version-type", () => {
-  test.each([versionNumber.toString(), versionNumber.toString({ omitPrefix: true })])(
+  test.each([versionNumber.toString(), versionNumber.format({ omitPrefix: true })])(
     "Gets the type of the given input version",
     async (versionString) => {
       const { stdout: versionType, exitCode } =
