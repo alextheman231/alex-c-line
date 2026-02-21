@@ -19,9 +19,11 @@ import packageInfo from "package.json" with { type: "json" };
       .version(packageInfo.version);
 
     if (
-      process.env.NODE_ENV !== "test" ||
-      !parseBoolean(process.env.RUN_END_TO_END ?? "false") ||
-      !parseBoolean(process.env.CI ?? "false")
+      !(
+        process.env.NODE_ENV === "test" ||
+        parseBoolean(process.env.RUN_END_TO_END ?? "false") ||
+        parseBoolean(process.env.CI ?? "false")
+      )
     ) {
       updateNotifier({ pkg: packageInfo }).notify({
         message: `
