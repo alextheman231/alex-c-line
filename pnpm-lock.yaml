@@ -55,8 +55,8 @@ importers:
         version: 4.3.6
     devDependencies:
       '@alextheman/eslint-plugin':
-        specifier: ^5.7.1
-        version: 5.7.1(a3d8ec31cf11880e3824b9c9ea4ceadc)
+        specifier: ^5.8.1
+        version: 5.8.1(a3d8ec31cf11880e3824b9c9ea4ceadc)
       '@commander-js/extra-typings':
         specifier: ^14.0.0
         version: 14.0.0(commander@14.0.3)
@@ -105,8 +105,8 @@ importers:
 
 packages:
 
-  '@alextheman/eslint-plugin@5.7.1':
-    resolution: {integrity: sha512-UGFS9gQVtBFU/BbmtRiEwnu3j6kTFuDi69yrFSd0AQVlwY9gswSnvFmv8NGLS11krcLN8jFq9t1aE/zsOZVRPQ==}
+  '@alextheman/eslint-plugin@5.8.1':
+    resolution: {integrity: sha512-buWDFexxEAfVzr537sNJpCXBJ4s03aRWDXkpLkFcTieUsEQkSE9OTh7ioxlqeBXD55Ry32nXfNgUHUbf8Gkqew==}
     peerDependencies:
       '@eslint/js': '>=9.0.0'
       eslint: '>=9.0.0'
@@ -128,10 +128,6 @@ packages:
       typescript-eslint: '>=8.0.0'
       vite-tsconfig-paths: '>=5.1.4'
       vitest: '>=4.0.13'
-
-  '@alextheman/utility@4.17.0':
-    resolution: {integrity: sha512-Qjg1kt5E9gcAnrJt0j+Z9zU7BQdoSU5LY8gpoWrxU/A5AnQQzpLt5czM91bdCC1Gd6O4RHZrizBP2lOE00uwGQ==}
-    engines: {node: '>=22.3.0'}
 
   '@alextheman/utility@5.1.3':
     resolution: {integrity: sha512-1eiPZ3vGLHR6+2Qfe8CLBudsAY/V08HeLd7yPR4sVc3Q+Wy7rhi2nsLrjDpjMublkDwhpy0SjaeMoCBtp9QbJw==}
@@ -2712,8 +2708,8 @@ packages:
   spdx-expression-parse@4.0.0:
     resolution: {integrity: sha512-Clya5JIij/7C6bRR22+tnGXbc4VKlibKSVj2iHvVeX5iMW7s1SIQlqu699JkODJJIhh/pUu8L0/VLh8xflD+LQ==}
 
-  spdx-license-ids@3.0.22:
-    resolution: {integrity: sha512-4PRT4nh1EImPbt2jASOKHX7PB7I+e4IWNLvkKFDxNhJlfjbYlleYQh285Z/3mPTHSAK/AvdMmw5BNNuYH8ShgQ==}
+  spdx-license-ids@3.0.23:
+    resolution: {integrity: sha512-CWLcCCH7VLu13TgOH+r8p1O/Znwhqv/dbb6lqWy67G+pT1kHmeD/+V36AVb/vq8QMIQwVShJ6Ssl5FPh0fuSdw==}
 
   sprintf-js@1.0.3:
     resolution: {integrity: sha512-D9cPgkvLlV3t3IzL0D0YLvGA9Ahk4PcvVwUbN0dSGr1aP0Nrt4AEnTUbuGvquEC0mA64Gqt1fzirlRs5ibXx8g==}
@@ -3224,9 +3220,9 @@ packages:
 
 snapshots:
 
-  '@alextheman/eslint-plugin@5.7.1(a3d8ec31cf11880e3824b9c9ea4ceadc)':
+  '@alextheman/eslint-plugin@5.8.1(a3d8ec31cf11880e3824b9c9ea4ceadc)':
     dependencies:
-      '@alextheman/utility': 4.17.0
+      '@alextheman/utility': 5.1.3
       '@eslint/compat': 2.0.2(eslint@10.0.1(supports-color@10.2.2))
       '@eslint/js': 10.0.1(eslint@10.0.1(supports-color@10.2.2))
       '@typescript-eslint/types': 8.56.0
@@ -3256,12 +3252,6 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
       - typescript
-
-  '@alextheman/utility@4.17.0':
-    dependencies:
-      dotenv: 17.3.1
-      libsodium-wrappers: 0.8.2
-      zod: 4.3.6
 
   '@alextheman/utility@5.1.3':
     dependencies:
@@ -5903,21 +5893,21 @@ snapshots:
   spdx-correct@3.2.0:
     dependencies:
       spdx-expression-parse: 3.0.1
-      spdx-license-ids: 3.0.22
+      spdx-license-ids: 3.0.23
 
   spdx-exceptions@2.5.0: {}
 
   spdx-expression-parse@3.0.1:
     dependencies:
       spdx-exceptions: 2.5.0
-      spdx-license-ids: 3.0.22
+      spdx-license-ids: 3.0.23
 
   spdx-expression-parse@4.0.0:
     dependencies:
       spdx-exceptions: 2.5.0
-      spdx-license-ids: 3.0.22
+      spdx-license-ids: 3.0.23
 
-  spdx-license-ids@3.0.22: {}
+  spdx-license-ids@3.0.23: {}
 
   sprintf-js@1.0.3: {}
 

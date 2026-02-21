@@ -6,7 +6,9 @@
     "type": "git",
     "url": "git+https://github.com/alextheman231/alex-c-line.git"
   },
-  "sideEffects": ["./dist/index.js"],
+  "sideEffects": [
+    "./dist/index.js"
+  ],
   "license": "MIT",
   "author": "alextheman",
   "type": "module",
@@ -84,7 +86,7 @@
     "zod": "^4.3.6"
   },
   "devDependencies": {
-    "@alextheman/eslint-plugin": "^5.7.1",
+    "@alextheman/eslint-plugin": "^5.8.1",
     "@commander-js/extra-typings": "^14.0.0",
     "@types/eslint": "^9.6.1",
     "@types/node": "^25.3.0",
