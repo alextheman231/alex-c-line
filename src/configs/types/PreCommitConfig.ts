@@ -16,4 +16,6 @@ export interface PreCommitConfig<ScriptName extends string = string> {
   allowNoStagedChanges?: boolean;
   /** The steps to run in the pre-commit hook. */
   steps: (StepFunction | ScriptName | [ScriptName, PreCommitStepOptions])[];
+  /** Update the git index after the run */
+  updateIndex?: boolean;
 }
