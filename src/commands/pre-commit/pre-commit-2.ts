@@ -68,7 +68,7 @@ function preCommit2(program: Command) {
         z.enum(PackageManager),
         rawPackageManager,
         new DataError(
-          rawPackageManager,
+          { packageManager: rawPackageManager },
           "UNSUPPORTED_PACKAGE_MANAGER",
           `This package manager is not currently supported. Only the following are supported: ${Object.values(PackageManager).join(", ")}`,
         ),

@@ -1,6 +1,7 @@
 import type { Command } from "commander";
 
-import { DataError, parseFilePath, parseZodSchema, VersionNumber } from "@alextheman/utility";
+import { DataError, parseZodSchema, VersionNumber } from "@alextheman/utility";
+import { parseFilePath } from "@alextheman/utility/node";
 import z from "zod";
 
 import { readFile } from "node:fs/promises";

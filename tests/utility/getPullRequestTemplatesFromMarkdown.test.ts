@@ -64,7 +64,7 @@ describe("getPullRequestTemplatesFromMarkdown", () => {
       throw new Error("DID_NOT_THROW");
     } catch (error) {
       if (DataError.check(error)) {
-        expect(error.data).toBe("hi");
+        expect(error.data.category).toBe("hi");
         expect(error.code).toBe("CATEGORY_NOT_FOUND");
       } else {
         throw error;

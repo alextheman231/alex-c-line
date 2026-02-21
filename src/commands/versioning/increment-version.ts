@@ -26,7 +26,7 @@ function incrementVersion(program: Command) {
       "Whether to add the `v` prefix from the output version or not (defaults to true).",
     )
     .action((version, incrementType, { prefix }) => {
-      console.info(version.increment(incrementType).toString({ omitPrefix: !prefix }));
+      console.info(version.increment(incrementType).format({ omitPrefix: !prefix }));
     });
 }
 

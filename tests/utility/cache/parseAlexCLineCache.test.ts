@@ -45,7 +45,7 @@ describe("parseAlexCLineProjectCache", () => {
       parseAlexCLineProjectCache(input);
     } catch (error) {
       if (error instanceof DataError) {
-        expect(error.data).toEqual(input);
+        expect(error.data.input).toEqual(input);
         expect(error.code).toContain("INVALID_TYPE");
       } else {
         throw error;

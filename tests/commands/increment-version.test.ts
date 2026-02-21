@@ -60,7 +60,7 @@ describe("incrementVersion", () => {
       await alexCLineTestClient`increment-version ${version} major --no-prefix`;
     expect(exitCode).toBe(0);
     expect(newVersion).toBe(
-      new VersionNumber(version).increment("major").toString({ omitPrefix: true }),
+      new VersionNumber(version).increment("major").format({ omitPrefix: true }),
     );
   });
 
