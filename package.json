@@ -6,6 +6,7 @@
     "type": "git",
     "url": "git+https://github.com/alextheman231/alex-c-line.git"
   },
+  "sideEffects": ["./dist/index.js"],
   "license": "MIT",
   "author": "alextheman",
   "type": "module",
