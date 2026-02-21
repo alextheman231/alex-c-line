@@ -18,7 +18,9 @@ function preCommit2(program: Command) {
     .command("pre-commit-2")
     .description("Run the pre-commit scripts specified in the alex-c-line config (v2 experiment).")
     .option("--allow-no-staged-changes", "Run even if nothing is staged")
-    .action(async ({ allowNoStagedChanges }) => {
+    .option("--no-update-index")
+    .option("--update-index", "Update the git index after the run")
+    .action(async (options) => {
       const configPath = await findAlexCLineConfig(process.cwd());
       if (!configPath) {
         program.error("Could not find the path to the alex-c-line config file. Does it exist?", {
@@ -34,6 +36,11 @@ function preCommit2(program: Command) {
           code: "PRE_COMMIT_CONFIG_NOT_FOUND",
         });
       }
+
+      const {
+        allowNoStagedChanges = options?.allowNoStagedChanges,
+        updateIndex = options?.updateIndex,
+      } = preCommitConfig;
 
       const execaNoFail = execa({ reject: false });
 
@@ -90,7 +97,9 @@ function preCommit2(program: Command) {
         }
       }
 
-      await stepRunner`git update-index --again`;
+      if (updateIndex) {
+        await stepRunner`git update-index --again`;
+      }
     });
 }
 

@@ -10,6 +10,7 @@ const alexCLineConfig: AlexCLineConfig<keyof typeof scripts> = {
   preCommit: {
     packageManager: "pnpm",
     steps: ["format", "lint", "test"],
+    updateIndex: true,
   },
 };
 

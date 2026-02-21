@@ -21,6 +21,7 @@ export const preCommitConfigSchema = z.strictObject({
       z.tuple([z.string(), preCommitStepOptionsSchema]),
     ]),
   ),
+  updateIndex: z.boolean().optional(),
 });
 
 export async function parsePreCommitConfig(input: unknown): Promise<PreCommitConfig> {
