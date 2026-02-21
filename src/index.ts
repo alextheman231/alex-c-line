@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import { parseBoolean } from "@alextheman/utility";
 import { Command } from "commander";
 import supportsColor from "supports-color";
 import updateNotifier from "update-notifier";
@@ -17,7 +18,11 @@ import packageInfo from "package.json" with { type: "json" };
       .description(packageInfo.description)
       .version(packageInfo.version);
 
-    if (process.env.NODE_ENV !== "test") {
+    if (
+      process.env.NODE_ENV !== "test" ||
+      !parseBoolean(process.env.RUN_END_TO_END ?? "false") ||
+      !parseBoolean(process.env.CI ?? "false")
+    ) {
       updateNotifier({ pkg: packageInfo }).notify({
         message: `
   ${await createAlexCLineArtwork({ includeColors: Boolean(supportsColor.stdout) })}

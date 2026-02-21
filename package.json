@@ -26,11 +26,8 @@
       "default": "./dist/configs/internal/index.js"
     }
   },
-  "main": "dist/index.js",
-  "module": "dist/index.cjs",
-  "types": "dist/index.d.ts",
   "bin": {
-    "alex-c-line": "dist/index.js"
+    "alex-c-line": "./dist/index.js"
   },
   "files": [
     "dist",
