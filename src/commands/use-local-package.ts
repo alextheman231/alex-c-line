@@ -46,7 +46,7 @@ function useLocalPackage(program: Command) {
       }
 
       const {
-        useLocalPackage: { localPackages },
+        useLocalPackage: { enableCache, localPackages },
       } = await loadAlexCLinePrivateConfig(configPath);
 
       const localPackage = localPackages[packageName];
@@ -133,7 +133,7 @@ function useLocalPackage(program: Command) {
           });
         }
       } else {
-        const cacheContents = await loadAlexCLineProjectCache();
+        const cacheContents = enableCache ? await loadAlexCLineProjectCache() : {};
 
         if (!reverse) {
           if (prepareScript) {
@@ -176,7 +176,7 @@ function useLocalPackage(program: Command) {
           { cwd: process.cwd(), stdio: "inherit" },
         );
 
-        if (!reverse) {
+        if (!reverse && enableCache) {
           const packageCacheData = {
             ...(cacheContents?.useLocalPackage?.dependencies?.[packageName] ?? {}),
             previousVersion: dependencies[packageName],
@@ -196,7 +196,7 @@ function useLocalPackage(program: Command) {
               },
             },
           });
-        } else {
+        } else if (enableCache) {
           await createAlexCLineProjectCache({
             ...(cacheContents ?? {}),
             useLocalPackage: {
