@@ -3,7 +3,7 @@ import type { AlexCLineProjectCache } from "src/cache/project/types/AlexCLinePro
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 
-import parseAlexCLineProjectCache from "src/cache/project/parseAlexCLineCache";
+import parseAlexCLineProjectCache from "src/cache/project/parseAlexCLineProjectCache";
 
 async function loadAlexCLineProjectCache(
   cachePath: string = path.join(".alex-c-line", "cache.json"),
