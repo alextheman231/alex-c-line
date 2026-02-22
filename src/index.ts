@@ -1,12 +1,10 @@
 #!/usr/bin/env node
 import { parseBoolean } from "@alextheman/utility";
 import { Command } from "commander";
-import supportsColor from "supports-color";
-import updateNotifier from "update-notifier";
 
 import createCommands from "src/commands";
 import formatError from "src/utility/errors/formatError";
-import createAlexCLineArtwork from "src/utility/miscellaneous/createAlexCLineArtwork";
+import runAutomatedUpdateCheck from "src/utility/updates/runAutomatedUpdateCheck";
 
 import packageInfo from "package.json" with { type: "json" };
 
@@ -25,14 +23,7 @@ import packageInfo from "package.json" with { type: "json" };
         parseBoolean(process.env.CI ?? "false")
       )
     ) {
-      updateNotifier({ pkg: packageInfo }).notify({
-        message: `
-  ${await createAlexCLineArtwork({ includeColors: Boolean(supportsColor.stdout) })}
-  A new update of \`alex-c-line\` is available!
-    {currentVersion} → {latestVersion}
-  Run \`{updateCommand}\` to update.
-  `,
-      });
+      await runAutomatedUpdateCheck();
     }
 
     createCommands(program);

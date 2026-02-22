@@ -20,7 +20,7 @@ function update(program: Command) {
       const options = parseZodSchemaForProgram(program.error, optionsSchema, rawOptions);
 
       if (options.check) {
-        await checkUpdate(program, { logSuccess: true });
+        await checkUpdate({ program, logNoUpdates: true });
       } else {
         console.info("Unsupported option. Expected `--check`.");
       }
