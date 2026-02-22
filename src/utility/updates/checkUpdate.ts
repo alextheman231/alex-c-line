@@ -10,7 +10,11 @@ import createAlexCLineArtwork from "src/utility/miscellaneous/createAlexCLineArt
 
 import { version } from "package.json" with { type: "json" };
 
-async function checkUpdate(program?: Command) {
+export interface CheckUpdateOptions {
+  logSuccess?: boolean;
+}
+
+async function checkUpdate(program?: Command, options?: CheckUpdateOptions) {
   const currentVersion = new VersionNumber(version);
   const { stdout: npmViewResult } = await execa`npm view alex-c-line version`;
   const latestVersion = new VersionNumber(npmViewResult.trim());
@@ -46,7 +50,7 @@ async function checkUpdate(program?: Command) {
     } else {
       console.info(messageWithArtwork);
     }
-  } else {
+  } else if (options?.logSuccess) {
     console.info(`alex-c-line is up to date (${currentVersion}).`);
   }
 }
