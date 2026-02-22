@@ -16,6 +16,8 @@ export interface LocalPackage<ScriptName extends string = string> {
 }
 
 export interface UseLocalPackageConfig<ScriptName extends string = string> {
+  /** Enable caching of the previous version number. */
+  enableCache?: boolean;
   /** A record of all packages that we may want to consider using locally. */
   localPackages: Record<string, LocalPackage<ScriptName>>;
 }
