@@ -1,6 +1,7 @@
 import type { Command } from "commander";
 
 import artwork from "src/commands/artwork";
+import cachePath from "src/commands/cache-path";
 import checkForFileDependencies from "src/commands/check-for-file-dependencies";
 import checkLockfileVersionDiscrepancy from "src/commands/check-lockfile-version-discrepancy";
 import checkVersionNumberChange from "src/commands/deprecated/check-version-number-change";
@@ -30,6 +31,7 @@ import loadCommands from "src/utility/miscellaneous/loadCommands";
 function createCommands(program: Command) {
   loadCommands(program, {
     artwork,
+    cachePath,
     checkForFileDependencies,
     checkLockfileVersionDiscrepancy,
     checkReleaseNote,
