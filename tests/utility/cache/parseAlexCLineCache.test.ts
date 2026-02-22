@@ -3,7 +3,7 @@ import type { AlexCLineProjectCache } from "src/cache/project/types/AlexCLinePro
 import { DataError } from "@alextheman/utility";
 import { describe, expect, test } from "vitest";
 
-import parseAlexCLineProjectCache from "src/cache/project/parseAlexCLineCache";
+import parseAlexCLineProjectCache from "src/cache/project/parseAlexCLineProjectCache";
 
 import { version } from "package.json" with { type: "json" };
 
