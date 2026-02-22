@@ -75,6 +75,7 @@
     "commander": "^14.0.3",
     "dotenv": "^17.3.1",
     "dotenv-stringify": "^3.0.1",
+    "env-paths": "^4.0.0",
     "execa": "^9.6.1",
     "figlet": "^1.10.0",
     "gray-matter": "^4.0.3",
