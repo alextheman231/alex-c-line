@@ -9,7 +9,7 @@ export interface FileMetadata {
   height?: number;
   backgroundColor?: string;
   titleColor?: string;
-  subtitleColor?: string;
+  subtitleColor?: "green" | "white";
   fontSize?: number;
   fontFamily?: string[];
   subtitleLineCount?: number;
@@ -22,10 +22,13 @@ async function asciiToPng(ascii: string, options?: FileMetadata) {
     height = 3000,
     backgroundColor = "#0b1020",
     titleColor = "#facc15",
-    subtitleColor = "#22c55e",
+    subtitleColor = {
+      green: "#22c55e",
+      white: "#ffffff",
+    }[options?.subtitleColor ?? "green"],
     fontSize = 48,
     fontFamily = ["Menlo", "Monaco", "Consolas", "monospace"],
-    subtitleLineCount = 1,
+    subtitleLineCount = options?.subtitleLineCount ?? 1,
   } = options ?? {};
 
   const canvas = createCanvas(width, height);

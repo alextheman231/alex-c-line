@@ -1,5 +1,6 @@
 import type { Command } from "commander";
 
+import { DataError } from "@alextheman/utility";
 import chalk from "chalk";
 
 import asciiToPng from "src/utility/miscellaneous/asciiToPng";
@@ -10,23 +11,30 @@ function artwork(program: Command) {
     .command("artwork")
     .description("Create the artwork for alex-c-line")
     .option("--subtitle-text <subtitleText>", "Customise the subtitle text")
-    .option("--subtitle-color <subtitleColor>", "Customise the subtitle color", (subtitleColor) => {
-      return {
-        green: chalk.green,
-        white: chalk.white,
-      }[subtitleColor];
-    })
+    .option("--subtitle-color <subtitleColor>", "Customise the subtitle color")
     .option(
       "--save-png [fileName]",
       "Save the artwork as a PNG file, optionally specifying the path",
     )
     .action(async ({ savePng: fileName, subtitleText, subtitleColor }) => {
+      if (subtitleColor !== "green" && subtitleColor !== "white") {
+        throw new DataError(
+          { subtitleColor },
+          "INVALID_SUBTITLE_COLOR",
+          "Subtitle color must either be green or white.",
+        );
+      }
+
+      const chalkColour = {
+        green: chalk.green,
+        white: chalk.white,
+      }[subtitleColor ?? "green"];
       console.info(
         await createAlexCLineArtwork({
           includeBox: true,
           includeColors: true,
           subtitleText,
-          subtitleColor,
+          subtitleColor: chalkColour,
         }),
       );
 
@@ -36,11 +44,12 @@ function artwork(program: Command) {
             includeBox: false,
             includeColors: false,
             subtitleText,
-            subtitleColor,
           }),
           {
             fileName: typeof fileName === "string" ? fileName : undefined,
             fontSize: 90,
+            subtitleColor,
+            subtitleLineCount: subtitleText?.split("\n").length,
           },
         );
       }
