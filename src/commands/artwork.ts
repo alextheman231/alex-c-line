@@ -26,10 +26,13 @@ function artwork(program: Command) {
       );
 
       if (fileName) {
-        await asciiToPng(await createAlexCLineArtwork({ includeColors: false }), {
-          fileName: typeof fileName === "string" ? fileName : undefined,
-          fontSize: 90,
-        });
+        await asciiToPng(
+          await createAlexCLineArtwork({ includeColors: false, subtitleText, subtitleColor }),
+          {
+            fileName: typeof fileName === "string" ? fileName : undefined,
+            fontSize: 90,
+          },
+        );
       }
     });
 }
