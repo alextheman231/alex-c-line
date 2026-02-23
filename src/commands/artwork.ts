@@ -16,7 +16,7 @@ function artwork(program: Command) {
       "--save-png [fileName]",
       "Save the artwork as a PNG file, optionally specifying the path",
     )
-    .action(async ({ savePng: fileName, subtitleText, subtitleColor }) => {
+    .action(async ({ savePng: fileName, subtitleText, subtitleColor = "green" }) => {
       if (subtitleColor !== "green" && subtitleColor !== "white") {
         throw new DataError(
           { subtitleColor },
@@ -28,7 +28,7 @@ function artwork(program: Command) {
       const chalkColour = {
         green: chalk.green,
         white: chalk.white,
-      }[subtitleColor ?? "green"];
+      }[subtitleColor];
       console.info(
         await createAlexCLineArtwork({
           includeBox: true,
