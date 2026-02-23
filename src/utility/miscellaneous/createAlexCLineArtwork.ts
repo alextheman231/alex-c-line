@@ -7,6 +7,7 @@ import figlet from "figlet";
 import centerLine from "src/utility/miscellaneous/centerLine";
 
 export interface CreateAlexCLineArtworkOptions {
+  includeBox?: boolean;
   includeColors?: boolean;
   subtitleColor?: ChalkInstance;
   subtitleText?: string;
@@ -14,6 +15,7 @@ export interface CreateAlexCLineArtworkOptions {
 
 async function createAlexCLineArtwork(options?: CreateAlexCLineArtworkOptions) {
   const {
+    includeBox = true,
     includeColors = true,
     subtitleColor = chalk.green,
     subtitleText = "say my name and I'll assist ✓",
@@ -32,11 +34,13 @@ async function createAlexCLineArtwork(options?: CreateAlexCLineArtworkOptions) {
     ? [chalk.yellow(title), subtitleColor(subtitle)].join("\n")
     : [title, subtitle].join("\n");
 
-  return boxen(output, {
-    padding: { top: 1, bottom: 1, left: 2, right: 2 },
-    borderStyle: "round",
-    borderColor: "cyanBright",
-  });
+  return includeBox
+    ? boxen(output, {
+        padding: { top: 1, bottom: 1, left: 2, right: 2 },
+        borderStyle: "round",
+        borderColor: "cyanBright",
+      })
+    : output;
 }
 
 export default createAlexCLineArtwork;

@@ -22,12 +22,22 @@ function artwork(program: Command) {
     )
     .action(async ({ savePng: fileName, subtitleText, subtitleColor }) => {
       console.info(
-        await createAlexCLineArtwork({ includeColors: true, subtitleText, subtitleColor }),
+        await createAlexCLineArtwork({
+          includeBox: true,
+          includeColors: true,
+          subtitleText,
+          subtitleColor,
+        }),
       );
 
       if (fileName) {
         await asciiToPng(
-          await createAlexCLineArtwork({ includeColors: false, subtitleText, subtitleColor }),
+          await createAlexCLineArtwork({
+            includeBox: false,
+            includeColors: false,
+            subtitleText,
+            subtitleColor,
+          }),
           {
             fileName: typeof fileName === "string" ? fileName : undefined,
             fontSize: 90,
