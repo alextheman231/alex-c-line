@@ -2,7 +2,7 @@
 import { parseBoolean } from "@alextheman/utility";
 import { Command } from "commander";
 
-import createCommands from "src/commands";
+import createCommands from "src/cli/commands";
 import formatError from "src/utility/errors/formatError";
 import runAutomatedUpdateCheck from "src/utility/updates/runAutomatedUpdateCheck";
 
