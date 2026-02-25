@@ -1,12 +1,12 @@
 import type { DotenvParseOutput } from "dotenv";
 
-import type { EditMode } from "src/commands/edit-env-file";
+import type { EditMode } from "src/cli/commands/edit-env-file";
 
 import { normaliseIndents } from "@alextheman/utility";
 import { select } from "@inquirer/prompts";
 
-import deleteVariable from "src/commands/edit-env-file/deleteVariable";
-import editVariable from "src/commands/edit-env-file/editVariable";
+import deleteVariable from "src/cli/commands/edit-env-file/deleteVariable";
+import editVariable from "src/cli/commands/edit-env-file/editVariable";
 import redact from "src/utility/envFile/redact";
 
 async function changeExistingVariable(

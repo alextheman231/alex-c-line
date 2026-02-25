@@ -4,8 +4,8 @@ import { normaliseIndents } from "@alextheman/utility";
 import { select } from "@inquirer/prompts";
 import chalk from "chalk";
 
-import addVariable from "src/commands/edit-env-file/addVariable";
-import changeExistingVariable from "src/commands/edit-env-file/changeExistingVariable";
+import addVariable from "src/cli/commands/edit-env-file/addVariable";
+import changeExistingVariable from "src/cli/commands/edit-env-file/changeExistingVariable";
 import parseDotenvFile from "src/utility/envFile/parseDotenvFile";
 
 export type EditMode = "edit" | "delete";

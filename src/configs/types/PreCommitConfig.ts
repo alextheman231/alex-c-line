@@ -1,6 +1,6 @@
 import type { PackageManager } from "@alextheman/utility/internal";
 
-import type { StepRunner } from "src/commands/pre-commit/createStepRunner";
+import type { StepRunner } from "src/cli/commands/pre-commit/createStepRunner";
 
 export interface PreCommitStepOptions {
   /** Arguments to pass to the given script */
