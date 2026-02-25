@@ -22,6 +22,7 @@ import migrateReleaseNotes from "src/cli/commands/template/releaseNote/migrate-r
 import setReleaseStatus2 from "src/cli/commands/template/releaseNote/set-release-status-2";
 import update from "src/cli/commands/update";
 import useLocalPackage from "src/cli/commands/use-local-package";
+import uuid from "src/cli/commands/uuid";
 import getMajorVersion from "src/cli/commands/versioning/get-major-version";
 import getMinorVersion from "src/cli/commands/versioning/get-minor-version";
 import getVersionType from "src/cli/commands/versioning/get-version-type";
@@ -56,6 +57,7 @@ function createCommands(program: Command) {
     setReleaseStatus2,
     update,
     useLocalPackage,
+    uuid,
   });
 }
 
