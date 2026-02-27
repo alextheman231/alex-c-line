@@ -67,8 +67,8 @@
     "use-local-utility": "pnpm run prepare-local-utility"
   },
   "dependencies": {
-    "@alextheman/utility": "^5.4.1",
-    "@inquirer/prompts": "^8.2.1",
+    "@alextheman/utility": "^5.5.0",
+    "@inquirer/prompts": "^8.3.0",
     "boxen": "^8.0.1",
     "canvas": "^3.2.1",
     "chalk": "^5.6.2",
@@ -84,20 +84,20 @@
     "zod": "^4.3.6"
   },
   "devDependencies": {
-    "@alextheman/eslint-plugin": "^5.8.1",
+    "@alextheman/eslint-plugin": "^5.9.0",
     "@commander-js/extra-typings": "^14.0.0",
     "@types/eslint": "^9.6.1",
-    "@types/node": "^25.3.0",
+    "@types/node": "^25.3.2",
     "@types/update-notifier": "^6.0.8",
     "dotenv-cli": "^11.0.0",
-    "eslint": "^10.0.1",
+    "eslint": "^10.0.2",
     "husky": "^9.1.7",
     "prettier": "^3.8.1",
     "tempy": "^3.2.0",
     "ts-node": "^10.9.2",
-    "tsdown": "^0.20.3",
+    "tsdown": "0.21.0-beta.2",
     "typescript": "^5.9.3",
-    "typescript-eslint": "^8.56.0",
+    "typescript-eslint": "^8.56.1",
     "vite-tsconfig-paths": "^6.1.1",
     "vitest": "^4.0.18"
   },
