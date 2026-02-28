@@ -29,6 +29,8 @@ import getVersionType from "src/cli/commands/versioning/get-version-type";
 import incrementVersion from "src/cli/commands/versioning/increment-version";
 import loadCommands from "src/utility/miscellaneous/loadCommands";
 
+import packageJson from "src/cli/commands/package-json";
+
 function createCommands(program: Command) {
   loadCommands(program, {
     artwork,
@@ -58,6 +60,7 @@ function createCommands(program: Command) {
     update,
     useLocalPackage,
     uuid,
+    packageJson,
   });
 }
 

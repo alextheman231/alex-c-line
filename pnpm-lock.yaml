@@ -50,6 +50,9 @@ importers:
       libsodium-wrappers:
         specifier: ^0.8.2
         version: 0.8.2
+      semver:
+        specifier: ^7.7.4
+        version: 7.7.4
       supports-color:
         specifier: ^10.2.2
         version: 10.2.2
@@ -69,6 +72,9 @@ importers:
       '@types/node':
         specifier: ^25.3.2
         version: 25.3.2
+      '@types/semver':
+        specifier: ^7.7.1
+        version: 7.7.1
       '@types/update-notifier':
         specifier: ^6.0.8
         version: 6.0.8
@@ -1039,6 +1045,9 @@ packages:
 
   '@types/node@25.3.2':
     resolution: {integrity: sha512-RpV6r/ij22zRRdyBPcxDeKAzH43phWVKEjL2iksqo1Vz3CuBUrgmPpPhALKiRfU7OMCmeeO9vECBMsV0hMTG8Q==}
+
+  '@types/semver@7.7.1':
+    resolution: {integrity: sha512-FmgJfu+MOcQ370SD0ev7EI8TlCAfKYU+B4m5T3yXc1CiRN94g/SZPtsCkk506aUDtlMnFZvasDwHHUcZUEaYuA==}
 
   '@types/unist@3.0.3':
     resolution: {integrity: sha512-ko/gIFJRv177XgZsZcBwnqJN5x/Gien8qNOn0D5bQU/zAzVf9Zt3BlcUiLqhV9y4ARk0GbT3tnUiPNgnTXzc/Q==}
@@ -3971,6 +3980,8 @@ snapshots:
   '@types/node@25.3.2':
     dependencies:
       undici-types: 7.18.2
+
+  '@types/semver@7.7.1': {}
 
   '@types/unist@3.0.3': {}
 
