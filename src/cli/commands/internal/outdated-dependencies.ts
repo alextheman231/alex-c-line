@@ -19,6 +19,10 @@ function outdatedDependencies(program: Command) {
 
     const outdatedDependencies: Record<string, Record<string, string>> = JSON.parse(stdout.trim());
 
+    if (Object.keys(outdatedDependencies).length === 0) {
+      console.info("NO_OUTDATED_DEPENDENCIES_FOUND");
+    }
+
     const outdatedTemplatesPath = path.join(await alexCLinePackageRoot, "templates", "outdated");
 
     const tableTemplate = await readFile(path.join(outdatedTemplatesPath, "table.html"), "utf-8");
