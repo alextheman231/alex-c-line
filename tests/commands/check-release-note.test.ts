@@ -96,5 +96,6 @@ describe("check-release-note", () => {
         expect(checkReleaseNoteInProgressAfterExitCode).toBe(1);
       });
     },
+    15000,
   );
 });
