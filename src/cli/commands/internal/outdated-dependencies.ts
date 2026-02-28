@@ -21,6 +21,7 @@ function outdatedDependencies(program: Command) {
 
     if (Object.keys(outdatedDependencies).length === 0) {
       console.info("NO_OUTDATED_DEPENDENCIES_FOUND");
+      return;
     }
 
     const outdatedTemplatesPath = path.join(await alexCLinePackageRoot, "templates", "outdated");
