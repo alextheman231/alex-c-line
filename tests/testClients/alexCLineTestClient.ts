@@ -1,10 +1,6 @@
 import type { Options, Result, TemplateExpression } from "execa";
 
-import {
-  createTemplateStringsArray,
-  getStringsAndInterpolations,
-  isTemplateStringsArray,
-} from "@alextheman/utility";
+import { isTemplateStringsArray } from "@alextheman/utility";
 import { execa } from "execa";
 
 import path from "node:path";
@@ -18,20 +14,32 @@ export interface AlexCLineTestClient<ExecaOptions extends Options = Options> {
   (command: string, args?: string[], options?: ExecaOptions): Promise<Result<ExecaOptions>>;
 }
 
+function resolveTemplateToArgs(
+  strings: TemplateStringsArray,
+  ...interpolations: TemplateExpression[]
+): string[] {
+  const result: string[] = [];
+
+  for (let i = 0; i < strings.length; i++) {
+    const parts = strings[i].trim().split(/\s+/).filter(Boolean);
+    result.push(...parts);
+
+    if (i < interpolations.length) {
+      result.push(String(interpolations[i]));
+    }
+  }
+
+  return result;
+}
+
 function resolveAsTemplate<ExecaOptions extends Options = Options>(
   strings: TemplateStringsArray,
   interpolations: TemplateExpression[],
   options?: ExecaOptions,
 ) {
-  const args = getStringsAndInterpolations<TemplateExpression[]>(
-    createTemplateStringsArray([
-      `${process.execPath} ${entryPoint} ${strings[0]}`,
-      ...strings.slice(1),
-    ]),
-    ...interpolations,
-  );
+  const args = resolveTemplateToArgs(strings, ...interpolations);
 
-  return options ? execa(options)(...args) : execa(...args);
+  return execa(process.execPath, [entryPoint, ...args], options);
 }
 
 function resolveAsCommandArgs<ExecaOptions extends Options = Options>(
