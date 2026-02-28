@@ -13,6 +13,7 @@ import setReleaseStatus from "src/cli/commands/deprecated/set-release-status";
 import editEnvFile from "src/cli/commands/edit-env-file";
 import encryptWithKey from "src/cli/commands/encrypt-with-key";
 import gitPostMergeCleanup from "src/cli/commands/git-post-merge-cleanup";
+import internal from "src/cli/commands/internal";
 import preCommit2 from "src/cli/commands/pre-commit/pre-commit-2";
 import sayHello from "src/cli/commands/say-hello";
 import createPullRequestTemplate from "src/cli/commands/template/pullRequest/create-pull-request-template-2";
@@ -61,6 +62,7 @@ function createCommands(program: Command) {
     useLocalPackage,
     uuid,
     packageJson,
+    internal,
   });
 }
 
