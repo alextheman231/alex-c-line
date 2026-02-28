@@ -12,7 +12,7 @@ permissions:
 jobs:
   create-pull-request-templates:
     if: ${{ github.repository == 'alextheman231/alex-c-line' }}
-    uses: alextheman231/github-actions/.github/workflows/create-pull-request-templates.yml@3db51f2a57ee95cda50310b3856cfdc0ae171cf7 # v8.3.3
+    uses: alextheman231/github-actions/.github/workflows/create-pull-request-templates.yml@a00c59786bf2f81fe88d9084008fc05452dc45b2 # v9.0.2
     secrets:
       APP_ID: ${{ secrets.ALEX_UP_BOT_APP_ID }}
       APP_PRIVATE_KEY: ${{ secrets.ALEX_UP_BOT_PRIVATE_KEY }}

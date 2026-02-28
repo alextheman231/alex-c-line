@@ -10,14 +10,14 @@ jobs:
     permissions:
       id-token: write
     if: ${{ github.repository == 'alextheman231/alex-c-line' }}
-    uses: alextheman231/github-actions/.github/workflows/npm-registry-publish.yml@3db51f2a57ee95cda50310b3856cfdc0ae171cf7 # v8.3.3
+    uses: alextheman231/github-actions/.github/workflows/npm-registry-publish.yml@a00c59786bf2f81fe88d9084008fc05452dc45b2 # v9.0.2
 
   create-github-release:
     needs: npm-registry-publish
     permissions:
       contents: write
     if: needs.npm-registry-publish.outputs.did_publish == 'true'
-    uses: alextheman231/github-actions/.github/workflows/create-github-release.yml@3db51f2a57ee95cda50310b3856cfdc0ae171cf7 # v8.3.3
+    uses: alextheman231/github-actions/.github/workflows/create-github-release.yml@a00c59786bf2f81fe88d9084008fc05452dc45b2 # v9.0.2
     secrets:
       APP_ID: ${{ secrets.ALEX_UP_BOT_APP_ID }}
       APP_PRIVATE_KEY: ${{ secrets.ALEX_UP_BOT_PRIVATE_KEY }}
