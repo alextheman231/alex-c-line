@@ -20,36 +20,36 @@ function editEnvFile(program: Command) {
       "The path to the .env file you want to edit, relative to the working directory this command is run",
       ".env",
     )
-    .action(async ({ interactive, file }) => {
+    .action(async ({ file, interactive }) => {
       if (interactive) {
         let exitInteractiveMode = false;
         while (!exitInteractiveMode) {
           const envFileContents = await parseDotenvFile(file);
 
           const variableToEdit = await select({
+            choices: [
+              ...Object.keys(envFileContents).map((key) => {
+                return {
+                  description: envFileContents[key] === "" ? "<empty>" : "<redacted for safety>",
+                  name: key,
+                  value: key,
+                };
+              }),
+              {
+                description: `Add a new environment variable to .env.`,
+                name: `${chalk.green("+")} Add new environment variable`,
+                value: "Add new",
+              },
+              {
+                description: "Exit the .env file interactive editor.",
+                name: `${chalk.dim("⏎")} Exit editor`,
+                value: "Exit editor",
+              },
+            ],
             message: normaliseIndents`
             Please select the environment variable you wish to edit
             Currently editing file: ${file}
             `,
-            choices: [
-              ...Object.keys(envFileContents).map((key) => {
-                return {
-                  name: key,
-                  value: key,
-                  description: envFileContents[key] === "" ? "<empty>" : "<redacted for safety>",
-                };
-              }),
-              {
-                name: `${chalk.green("+")} Add new environment variable`,
-                value: "Add new",
-                description: `Add a new environment variable to .env.`,
-              },
-              {
-                name: `${chalk.dim("⏎")} Exit editor`,
-                value: "Exit editor",
-                description: "Exit the .env file interactive editor.",
-              },
-            ],
           });
 
           switch (variableToEdit) {

@@ -52,7 +52,9 @@ function createCommands(program: Command) {
     getVersionType,
     gitPostMergeCleanup,
     incrementVersion,
+    internal,
     migrateReleaseNotes,
+    packageJson,
     preCommit,
     preCommit2,
     sayHello,
@@ -61,8 +63,6 @@ function createCommands(program: Command) {
     update,
     useLocalPackage,
     uuid,
-    packageJson,
-    internal,
   });
 }
 
