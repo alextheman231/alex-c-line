@@ -12,8 +12,8 @@ importers:
   .:
     dependencies:
       '@alextheman/utility':
-        specifier: ^5.5.0
-        version: 5.5.0
+        specifier: ^5.6.0
+        version: 5.6.0
       '@inquirer/prompts':
         specifier: ^8.3.0
         version: 8.3.0(@types/node@25.3.2)
@@ -141,8 +141,8 @@ packages:
       vite-tsconfig-paths: '>=5.1.4'
       vitest: '>=4.0.13'
 
-  '@alextheman/utility@5.5.0':
-    resolution: {integrity: sha512-5YMpCT98L49Yh1C0QKJ60bE2lleWMqCEpCqHvmYWG1glWY0WVG5B3UHXVc9x9XMO0iS96KAHKvqSj+Cxua0/Xw==}
+  '@alextheman/utility@5.6.0':
+    resolution: {integrity: sha512-Wac6jkFioLGP5SVBmukjXdNuckN9Mh+XWS/ZA7h9zXJoTf36cuK8HtD78IRPwW5PhGUbYR1yJraUbCqNNsmuhg==}
     engines: {node: '>=22.3.0'}
 
   '@altano/repository-tools@2.0.1':
@@ -1429,8 +1429,8 @@ packages:
     resolution: {integrity: sha512-8WB3Jcas3swSvjIeA2yvCJ+Miyz5l1ZmB6HFb9R1317dt9LCQoswg/BGrmAmkWVEszSrrg4RwmO46qIm2OEnSA==}
     engines: {node: '>=16'}
 
-  caniuse-lite@1.0.30001774:
-    resolution: {integrity: sha512-DDdwPGz99nmIEv216hKSgLD+D4ikHQHjBC/seF98N9CPqRX4M5mSxT9eTV6oyisnJcuzxtZy4n17yKKQYmYQOA==}
+  caniuse-lite@1.0.30001775:
+    resolution: {integrity: sha512-s3Qv7Lht9zbVKE9XoTyRG6wVDCKdtOFIjBGg3+Yhn6JaytuNKPIjBMTMIY1AnOH3seL5mvF+x33oGAyK3hVt3A==}
 
   canvas@3.2.1:
     resolution: {integrity: sha512-ej1sPFR5+0YWtaVp6S1N1FVz69TQCqmrkGeRvQxZeAB1nAIcjNTHVwrZtYtWFFBmQsF40/uDLehsW5KuYC99mg==}
@@ -3243,7 +3243,7 @@ snapshots:
 
   '@alextheman/eslint-plugin@5.9.1(50790b0e15c4e8d327f7827dc947dc34)':
     dependencies:
-      '@alextheman/utility': 5.5.0
+      '@alextheman/utility': 5.6.0
       '@eslint/compat': 2.0.2(eslint@10.0.2(supports-color@10.2.2))
       '@eslint/js': 10.0.1(eslint@10.0.2(supports-color@10.2.2))
       '@typescript-eslint/types': 8.56.1
@@ -3274,7 +3274,7 @@ snapshots:
       - supports-color
       - typescript
 
-  '@alextheman/utility@5.5.0':
+  '@alextheman/utility@5.6.0':
     dependencies:
       dotenv: 17.3.1
       execa: 9.6.1
@@ -4361,7 +4361,7 @@ snapshots:
   browserslist@4.28.1:
     dependencies:
       baseline-browser-mapping: 2.10.0
-      caniuse-lite: 1.0.30001774
+      caniuse-lite: 1.0.30001775
       electron-to-chromium: 1.5.302
       node-releases: 2.0.27
       update-browserslist-db: 1.2.3(browserslist@4.28.1)
@@ -4394,7 +4394,7 @@ snapshots:
 
   camelcase@8.0.0: {}
 
-  caniuse-lite@1.0.30001774: {}
+  caniuse-lite@1.0.30001775: {}
 
   canvas@3.2.1:
     dependencies:

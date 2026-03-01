@@ -1,5 +1,7 @@
 import type { Command } from "commander";
 
+import checkLockfileVersionDiscrepancy from "src/cli/commands/internal/check-lockfile-version-discrepancy";
+import gitPostMergeCleanup from "src/cli/commands/internal/git-post-merge-cleanup";
 import outdatedDependencies from "src/cli/commands/internal/outdated-dependencies";
 import loadCommands from "src/utility/miscellaneous/loadCommands";
 
@@ -11,6 +13,8 @@ function internal(program: Command) {
     );
 
   loadCommands(internalProgram, {
+    checkLockfileVersionDiscrepancy,
+    gitPostMergeCleanup,
     outdatedDependencies,
   });
 }
