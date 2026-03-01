@@ -2,9 +2,9 @@ import type { Command } from "commander";
 
 import { VersionNumber } from "@alextheman/utility";
 
-function getVersionType(program: Command) {
+function versionType(program: Command) {
   program
-    .command("get-version-type")
+    .command("type")
     .description("Gets the version type of the given version number.")
     .argument(
       "<version>",
@@ -18,4 +18,4 @@ function getVersionType(program: Command) {
     });
 }
 
-export default getVersionType;
+export default versionType;

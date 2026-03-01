@@ -2,9 +2,9 @@ import type { Command } from "commander";
 
 import { normaliseIndents, parseVersionType, VersionNumber } from "@alextheman/utility";
 
-function incrementVersion(program: Command) {
+function versionIncrement(program: Command) {
   program
-    .command("increment-version")
+    .command("increment")
     .description("Increments the given input version depending on the given increment type.")
     .argument("<version>", "The version to increment", (rawVersion: string) => {
       return new VersionNumber(rawVersion);
@@ -20,14 +20,11 @@ function incrementVersion(program: Command) {
         `,
       parseVersionType,
     )
-    .option("--no-prefix")
-    .option(
-      "--prefix",
-      "Whether to add the `v` prefix from the output version or not (defaults to true).",
-    )
+    .option("--no-prefix", "Omit the `v` prefix from the output.")
+    .option("--prefix")
     .action((version, incrementType, { prefix }) => {
       console.info(version.increment(incrementType).format({ omitPrefix: !prefix }));
     });
 }
 
-export default incrementVersion;
+export default versionIncrement;

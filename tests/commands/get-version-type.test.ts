@@ -8,12 +8,12 @@ import { version } from "package.json" with { type: "json" };
 
 const versionNumber = new VersionNumber(version);
 
-describe("get-version-type", () => {
+describe("version type", () => {
   test.each([versionNumber.toString(), versionNumber.format({ omitPrefix: true })])(
     "Gets the type of the given input version",
     async (versionString) => {
       const { stdout: versionType, exitCode } =
-        await alexCLineTestClient`get-version-type ${versionString}`;
+        await alexCLineTestClient`version type ${versionString}`;
       expect(exitCode).toBe(0);
       expect(versionType).toBe(versionNumber.type);
     },
@@ -21,7 +21,7 @@ describe("get-version-type", () => {
 
   test("Fails on invalid version number", async () => {
     try {
-      await alexCLineTestClient`get-version-type hello`;
+      await alexCLineTestClient`version type hello`;
     } catch (error) {
       if (error instanceof ExecaError) {
         const { stderr, exitCode } = error;

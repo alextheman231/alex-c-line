@@ -20,7 +20,7 @@ describe("incrementVersion", () => {
     "Provides the incremented %s version in stdout",
     async (versionType) => {
       const { exitCode, stdout: newVersion } =
-        await alexCLineTestClient`increment-version ${version} ${versionType}`;
+        await alexCLineTestClient`version increment ${version} ${versionType}`;
       expect(exitCode).toBe(0);
       expect(newVersion).toBe(new VersionNumber(version).increment(versionType).toString());
     },
@@ -28,7 +28,7 @@ describe("incrementVersion", () => {
 
   test("Fails on invalid version number", async () => {
     try {
-      await alexCLineTestClient`increment-version hello minor`;
+      await alexCLineTestClient`version increment hello minor`;
     } catch (error) {
       if (error instanceof ExecaError) {
         const { stderr, exitCode } = error;
@@ -42,7 +42,7 @@ describe("incrementVersion", () => {
 
   test("Fails on invalid version type", async () => {
     try {
-      await alexCLineTestClient`increment-version ${version} hello`;
+      await alexCLineTestClient`version increment ${version} hello`;
     } catch (error) {
       if (error instanceof ExecaError) {
         const { stderr, exitCode } = error;
@@ -56,7 +56,7 @@ describe("incrementVersion", () => {
 
   test('Does not include "v" prefix if --no-prefix provided', async () => {
     const { exitCode, stdout: newVersion } =
-      await alexCLineTestClient`increment-version ${version} major --no-prefix`;
+      await alexCLineTestClient`version increment ${version} major --no-prefix`;
     expect(exitCode).toBe(0);
     expect(newVersion).toBe(
       new VersionNumber(version).increment("major").format({ omitPrefix: true }),
@@ -95,7 +95,7 @@ describe("incrementVersion", () => {
 
         const { exitCode: alexCLineExitCode, stdout: newAlexCLineVersion } = parseZodSchema(
           stdoutSchema,
-          await alexCLineInDirectory`increment-version ${version.toString()} ${versionType}`,
+          await alexCLineInDirectory`version increment ${version.toString()} ${versionType}`,
         );
         expect(alexCLineExitCode).toBe(0);
         const { exitCode: npmExitCode, stdout: newNpmVersion } = parseZodSchema(

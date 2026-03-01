@@ -7,10 +7,10 @@ export interface ConvertDataErrorToProgramErrorOptions {
 
 function convertDataErrorToProgramError(
   dataError: DataError,
-  programError: Command["error"],
+  program: Command,
   options?: ConvertDataErrorToProgramErrorOptions,
 ) {
-  programError(dataError.message, {
+  program.error(dataError.message, {
     exitCode: options?.exitCode ?? 1,
     code: dataError.code,
   });

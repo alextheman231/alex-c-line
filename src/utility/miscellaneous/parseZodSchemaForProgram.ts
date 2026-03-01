@@ -7,7 +7,7 @@ import { DataError, parseZodSchema } from "@alextheman/utility";
 import convertDataErrorToProgramError from "src/utility/errors/convertDataErrorToProgramError";
 
 function parseZodSchemaForProgram<SchemaType extends ZodType>(
-  programError: Command["error"],
+  program: Command,
   schema: SchemaType,
   data: unknown,
 ): z.infer<SchemaType> {
@@ -15,7 +15,7 @@ function parseZodSchemaForProgram<SchemaType extends ZodType>(
     return parseZodSchema<SchemaType>(schema, data);
   } catch (error) {
     if (DataError.check(error)) {
-      convertDataErrorToProgramError(error, programError);
+      convertDataErrorToProgramError(error, program);
     }
     throw error;
   }
