@@ -8,8 +8,8 @@ import z from "zod";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 
-import createStepRunner from "src/cli/commands/pre-commit/createStepRunner";
-import getCommandArguments from "src/cli/commands/pre-commit/getCommandArguments";
+import createStepRunner from "src/cli/commands/root/pre-commit/createStepRunner";
+import getCommandArguments from "src/cli/commands/root/pre-commit/getCommandArguments";
 import findAlexCLineConfig from "src/utility/configs/findAlexCLineConfig";
 import loadAlexCLineConfig from "src/utility/configs/loadAlexCLineConfig";
 
