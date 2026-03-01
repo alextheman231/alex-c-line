@@ -1,4 +1,4 @@
-name: Comment outdated dependencies (Internal)
+name: Comment outdated dependencies
 
 on:
   pull_request:
