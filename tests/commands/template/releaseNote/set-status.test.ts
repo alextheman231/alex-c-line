@@ -16,7 +16,7 @@ import getReleaseNoteTemplateFromMarkdown from "src/utility/markdownTemplates/re
 
 import { name, version } from "package.json" with { type: "json" };
 
-describe("set-release-status-2", () => {
+describe("template release-note set-status", () => {
   test("Takes a file path to a valid release note and sets the status to released", async () => {
     await temporaryDirectoryTask(async (temporaryPath) => {
       const alexCLineTestClient = createAlexCLineTestClient(setDirectory(temporaryPath));
@@ -31,7 +31,7 @@ describe("set-release-status-2", () => {
       );
 
       const { exitCode: createReleaseNoteExitCode } =
-        await alexCLineTestClient("create-release-note-2");
+        await alexCLineTestClient`template release-note create`;
       expect(createReleaseNoteExitCode).toBe(0);
 
       const documentPath = path.join(
@@ -47,10 +47,8 @@ describe("set-release-status-2", () => {
       expect(fileContentsBeforeWrite).toContain(versionNumber.toString());
       expect(fileContentsBeforeWrite).toContain("**Status**: In progress");
 
-      const { exitCode: setReleaseStatusExitCode } = await alexCLineTestClient(
-        "set-release-status-2",
-        [path.relative(temporaryPath, documentPath)],
-      );
+      const { exitCode: setReleaseStatusExitCode } =
+        await alexCLineTestClient`template release-note set-status ${path.relative(temporaryPath, documentPath)}`;
       expect(setReleaseStatusExitCode).toBe(0);
 
       const fileContentsAfterWrite = await readFile(documentPath, "utf-8");
@@ -83,7 +81,8 @@ describe("set-release-status-2", () => {
         }),
       );
 
-      const { exitCode } = await alexCLineTestClient`set-release-status-2 ${documentPath}`;
+      const { exitCode } =
+        await alexCLineTestClient`template release-note set-status ${documentPath}`;
       expect(exitCode).toBe(0);
 
       const fileContentsAfterWrite = await readFile(
@@ -174,7 +173,7 @@ describe("set-release-status-2", () => {
       await writeFile(path.join(temporaryPath, documentPath), documentContents);
 
       try {
-        await alexCLineTestClient`set-release-status-2 ${documentPath}`;
+        await alexCLineTestClient`template release-note set-status ${documentPath}`;
         throw new Error("DID_NOT_THROW");
       } catch (error) {
         if (error instanceof ExecaError) {

@@ -5,9 +5,9 @@ import { normaliseIndents, VersionNumber, VersionType } from "@alextheman/utilit
 import { mkdir, readdir, rename, rmdir } from "node:fs/promises";
 import path from "node:path";
 
-function migrateReleaseNotes(program: Command) {
+function templateReleaseNoteMigrate(program: Command) {
   program
-    .command("migrate-release-notes")
+    .command("migrate")
     .description(
       normaliseIndents`
         Migrate the docs/releases folder generated from \`create-release-note\` to be more compatible with v2.
@@ -95,4 +95,4 @@ function migrateReleaseNotes(program: Command) {
     });
 }
 
-export default migrateReleaseNotes;
+export default templateReleaseNoteMigrate;
