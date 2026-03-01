@@ -1,0 +1,20 @@
+name: Comment outdated dependencies (Internal)
+
+on:
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  comment-outdated:
+    uses: alextheman231/github-actions/.github/workflows/comment-outdated.yml@a00c59786bf2f81fe88d9084008fc05452dc45b2 # v9.0.2
+    if: ${{ github.head_ref == 'alex-up-bot/update-dependencies' }}
+    permissions:
+      actions: read
+      checks: write
+      contents: read
+      pull-requests: write
+    with:
+      pull-request-number: ${{ github.event.pull_request.number }}
+    secrets:
+      APP_ID: ${{ secrets.ALEX_UP_BOT_APP_ID }}
+      APP_PRIVATE_KEY: ${{ secrets.ALEX_UP_BOT_PRIVATE_KEY }}
