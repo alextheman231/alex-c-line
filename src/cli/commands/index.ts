@@ -16,10 +16,7 @@ import migrateReleaseNotes from "src/cli/commands/template/releaseNote/migrate-r
 import setReleaseStatus2 from "src/cli/commands/template/releaseNote/set-release-status-2";
 import update from "src/cli/commands/update";
 import uuid from "src/cli/commands/uuid";
-import getMajorVersion from "src/cli/commands/versioning/get-major-version";
-import getMinorVersion from "src/cli/commands/versioning/get-minor-version";
-import getVersionType from "src/cli/commands/versioning/get-version-type";
-import incrementVersion from "src/cli/commands/versioning/increment-version";
+import version from "src/cli/commands/version";
 import loadCommands from "src/utility/miscellaneous/loadCommands";
 
 import packageJson from "src/cli/commands/package-json";
@@ -34,10 +31,6 @@ function createCommands(program: Command) {
     createReleaseNote,
     createReleaseNote2,
     editEnv,
-    getMajorVersion,
-    getMinorVersion,
-    getVersionType,
-    incrementVersion,
     internal,
     migrateReleaseNotes,
     packageJson,
@@ -47,6 +40,7 @@ function createCommands(program: Command) {
     setReleaseStatus2,
     update,
     uuid,
+    version,
   });
 }
 
