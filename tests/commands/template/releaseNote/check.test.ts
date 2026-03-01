@@ -15,7 +15,7 @@ import { ReleaseStatus } from "src/utility/markdownTemplates/releaseNote/types/R
 
 import packageInfo from "package.json" with { type: "json" };
 
-describe("check-release-note", () => {
+describe("template release-note check", () => {
   test.each<VersionType>(["major", "minor", "patch"])(
     "Exit code 0 on valid %s release note",
     async (versionType) => {
@@ -23,14 +23,14 @@ describe("check-release-note", () => {
         await writeFile(path.join(temporaryPath, "package.json"), JSON.stringify(packageInfo));
         const alexCLineTestClient = createAlexCLineTestClient(setDirectory(temporaryPath));
         const { exitCode: createReleaseNoteExitCode } =
-          await alexCLineTestClient`create-release-note-2 ${versionType}`;
+          await alexCLineTestClient`template release-note create ${versionType}`;
         expect(createReleaseNoteExitCode).toBe(0);
 
         const versionNumber = new VersionNumber(packageInfo.version).increment(versionType);
         const releaseNotePath = getReleaseNotePath(versionNumber);
 
         const { exitCode: checkReleaseNoteExitCode } =
-          await alexCLineTestClient`check-release-note ${releaseNotePath}`;
+          await alexCLineTestClient`template release-note check ${releaseNotePath}`;
         expect(checkReleaseNoteExitCode).toBe(0);
       });
     },
@@ -48,7 +48,7 @@ describe("check-release-note", () => {
       const { exitCode: checkReleaseNoteExitCode, stderr: errorMessage } =
         await alexCLineTestClient({
           reject: false,
-        })`check-release-note ${invalidFilePath}`;
+        })`template release-note check ${invalidFilePath}`;
       expect(checkReleaseNoteExitCode).toBe(1);
       expect(errorMessage).not.toContain("DataError");
     });
@@ -65,7 +65,7 @@ describe("check-release-note", () => {
 
         // Create an actually valid release note using the existing command.
         const { exitCode: createReleaseNoteExitCode } =
-          await alexCLineTestClient`create-release-note-2 ${versionType}`;
+          await alexCLineTestClient`template release-note create ${versionType}`;
         expect(createReleaseNoteExitCode).toBe(0);
 
         // Get the expected version number and path of the release note.
@@ -74,25 +74,25 @@ describe("check-release-note", () => {
 
         // Verify the release note status is currently 'In progress' and not 'Released'.
         const { exitCode: checkReleaseNoteInProgressBeforeExitCode } =
-          await alexCLineTestClient`check-release-note ${releaseNotePath} --expected-release-status ${ReleaseStatus.IN_PROGRESS}`;
+          await alexCLineTestClient`template release-note check ${releaseNotePath} --expected-release-status ${ReleaseStatus.IN_PROGRESS}`;
         expect(checkReleaseNoteInProgressBeforeExitCode).toBe(0);
         const { exitCode: checkReleaseNoteReleasedBeforeExitCode } = await alexCLineTestClient({
           reject: false,
-        })`check-release-note ${releaseNotePath} --expected-release-status ${ReleaseStatus.RELEASED}`;
+        })`template release-note check ${releaseNotePath} --expected-release-status ${ReleaseStatus.RELEASED}`;
         expect(checkReleaseNoteReleasedBeforeExitCode).toBe(1);
 
         // Release the release note
         const { exitCode: setReleaseStatusExitCode } =
-          await alexCLineTestClient`set-release-status-2 ${releaseNotePath} ${ReleaseStatus.RELEASED}`;
+          await alexCLineTestClient`template release-note set-status ${releaseNotePath} ${ReleaseStatus.RELEASED}`;
         expect(setReleaseStatusExitCode).toBe(0);
 
         // Verify the release note status is currently 'Released' and not 'In progress'.
         const { exitCode: checkReleaseNoteReleasedAfterExitCode } =
-          await alexCLineTestClient`check-release-note ${releaseNotePath} --expected-release-status ${ReleaseStatus.RELEASED}`;
+          await alexCLineTestClient`template release-note check ${releaseNotePath} --expected-release-status ${ReleaseStatus.RELEASED}`;
         expect(checkReleaseNoteReleasedAfterExitCode).toBe(0);
         const { exitCode: checkReleaseNoteInProgressAfterExitCode } = await alexCLineTestClient({
           reject: false,
-        })`check-release-note ${releaseNotePath} --expected-release-status ${ReleaseStatus.IN_PROGRESS}`;
+        })`template release-note check ${releaseNotePath} --expected-release-status ${ReleaseStatus.IN_PROGRESS}`;
         expect(checkReleaseNoteInProgressAfterExitCode).toBe(1);
       });
     },

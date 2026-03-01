@@ -10,9 +10,9 @@ import parseReleaseStatus from "src/utility/markdownTemplates/releaseNote/parseR
 import { ReleaseStatus } from "src/utility/markdownTemplates/releaseNote/types/ReleaseStatus";
 import validateReleaseDocument from "src/utility/markdownTemplates/releaseNote/validateReleaseDocument";
 
-function setReleaseStatus2(program: Command) {
+function templateReleaseNoteSetStatus(program: Command) {
   program
-    .command("set-release-status-2")
+    .command("set-status")
     .description(
       "Change the release status on a given release document initially generated from the `create-release-note` command.",
     )
@@ -66,4 +66,4 @@ function setReleaseStatus2(program: Command) {
     });
 }
 
-export default setReleaseStatus2;
+export default templateReleaseNoteSetStatus;

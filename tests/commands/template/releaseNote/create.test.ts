@@ -15,7 +15,7 @@ import getReleaseNotePath from "src/utility/markdownTemplates/releaseNote/getRel
 
 import { name, version } from "package.json" with { type: "json" };
 
-describe("create-release-note-2", () => {
+describe("template release-note create", () => {
   test("The resulting release notes at least has the version number and description of changes", async () => {
     await temporaryDirectoryTask(async (temporaryPath) => {
       const alexCLineTestClient = createAlexCLineTestClient(setDirectory(temporaryPath));
@@ -29,7 +29,7 @@ describe("create-release-note-2", () => {
         }),
       );
 
-      const { exitCode } = await alexCLineTestClient("create-release-note-2");
+      const { exitCode } = await alexCLineTestClient`template release-note create`;
 
       expect(exitCode).toBe(0);
       const fileContents = await readFile(
@@ -51,7 +51,7 @@ describe("create-release-note-2", () => {
         }),
       );
 
-      const { exitCode } = await alexCLineTestClient("create-release-note-2");
+      const { exitCode } = await alexCLineTestClient`template release-note create`;
       expect(exitCode).toBe(0);
       const fileContents = await readFile(
         path.join(temporaryPath, "docs", "releases", "v2", "v2.0", "v2.0.0.md"),
@@ -78,7 +78,7 @@ describe("create-release-note-2", () => {
           }),
         );
 
-        const { exitCode } = await alexCLineTestClient("create-release-note-2");
+        const { exitCode } = await alexCLineTestClient`template release-note create`;
         expect(exitCode).toBe(0);
         const fileContents = await readFile(
           path.join(temporaryPath, getReleaseNotePath(versionNumber)),
@@ -103,7 +103,7 @@ describe("create-release-note-2", () => {
       );
 
       try {
-        await alexCLineTestClient("create-release-note-2");
+        await alexCLineTestClient`template release-note create`;
       } catch (error) {
         if (error instanceof ExecaError) {
           const { stderr: errorMessage, exitCode } = error;
@@ -128,7 +128,7 @@ describe("create-release-note-2", () => {
         );
         const incrementedVersion = version.increment(versionType);
 
-        const { exitCode } = await alexCLineTestClient`create-release-note-2 ${versionType}`;
+        const { exitCode } = await alexCLineTestClient`template release-note create ${versionType}`;
         expect(exitCode).toBe(0);
         const fileContents = await readFile(
           path.join(temporaryPath, getReleaseNotePath(incrementedVersion)),

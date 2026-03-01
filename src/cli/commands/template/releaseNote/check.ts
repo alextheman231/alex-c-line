@@ -11,9 +11,9 @@ import path from "node:path";
 import parseReleaseStatus from "src/utility/markdownTemplates/releaseNote/parseReleaseStatus";
 import validateReleaseDocument from "src/utility/markdownTemplates/releaseNote/validateReleaseDocument";
 
-function checkReleaseNote(program: Command) {
+function templateReleaseNoteCheck(program: Command) {
   program
-    .command("check-release-note")
+    .command("check")
     .argument("<documentPath>", "The path to the document", parseFilePath)
     .option(
       "--expected-release-status <expectedReleaseStatus>",
@@ -56,4 +56,4 @@ function checkReleaseNote(program: Command) {
     });
 }
 
-export default checkReleaseNote;
+export default templateReleaseNoteCheck;

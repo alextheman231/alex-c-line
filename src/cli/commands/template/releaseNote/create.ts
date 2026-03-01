@@ -14,9 +14,9 @@ import path from "node:path";
 
 import getReleaseNoteTemplateFromMarkdown from "src/utility/markdownTemplates/releaseNote/getReleaseNoteTemplateFromMarkdown";
 
-function createReleaseNote2(program: Command) {
+function templateReleaseNoteCreate(program: Command) {
   program
-    .command("create-release-note-2")
+    .command("create")
     .argument(
       "[createFor]",
       normaliseIndents`
@@ -91,4 +91,4 @@ function createReleaseNote2(program: Command) {
     });
 }
 
-export default createReleaseNote2;
+export default templateReleaseNoteCreate;
