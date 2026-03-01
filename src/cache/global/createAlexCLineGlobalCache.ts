@@ -9,7 +9,7 @@ import {
 
 async function createAlexCLineGlobalCache(cacheData: AlexCLineGlobalCache) {
   await mkdir(ALEX_C_LINE_GLOBAL_CACHE_DIRECTORY, { recursive: true });
-  await writeFile(ALEX_C_LINE_GLOBAL_CACHE_PATH, JSON.stringify(cacheData, null, 2));
+  await writeFile(ALEX_C_LINE_GLOBAL_CACHE_PATH, `${JSON.stringify(cacheData, null, 2)}\n`);
 }
 
 export default createAlexCLineGlobalCache;
