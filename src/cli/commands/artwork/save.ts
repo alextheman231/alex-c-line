@@ -1,22 +1,24 @@
 import type { Command } from "commander";
 
 import { DataError } from "@alextheman/utility";
-import chalk from "chalk";
+
+import path from "node:path";
 
 import asciiToPng from "src/utility/miscellaneous/asciiToPng";
 import createAlexCLineArtwork from "src/utility/miscellaneous/createAlexCLineArtwork";
 
-function artwork(program: Command) {
+function artworkSave(program: Command) {
   program
-    .command("artwork")
+    .command("save")
     .description("Create the artwork for alex-c-line")
     .option("--subtitle-text <subtitleText>", "Customise the subtitle text")
     .option("--subtitle-color <subtitleColor>", "Customise the subtitle color")
     .option(
-      "--save-png [fileName]",
+      "--file-path <filePath>",
       "Save the artwork as a PNG file, optionally specifying the path",
+      "artwork/alex-c-line.png",
     )
-    .action(async ({ savePng: fileName, subtitleText, subtitleColor = "green" }) => {
+    .action(async ({ filePath, subtitleText, subtitleColor = "green" }) => {
       if (subtitleColor !== "green" && subtitleColor !== "white") {
         throw new DataError(
           { subtitleColor },
@@ -25,35 +27,23 @@ function artwork(program: Command) {
         );
       }
 
-      const chalkColour = {
-        green: chalk.green,
-        white: chalk.white,
-      }[subtitleColor];
-      console.info(
+      await asciiToPng(
         await createAlexCLineArtwork({
-          includeBox: true,
-          includeColors: true,
+          includeBox: false,
+          includeColors: false,
           subtitleText,
-          subtitleColor: chalkColour,
         }),
+        {
+          filePath,
+          fontSize: 90,
+          subtitleColor,
+          subtitleLineCount: subtitleText?.split("\n").length,
+        },
       );
-
-      if (fileName) {
-        await asciiToPng(
-          await createAlexCLineArtwork({
-            includeBox: false,
-            includeColors: false,
-            subtitleText,
-          }),
-          {
-            fileName: typeof fileName === "string" ? fileName : undefined,
-            fontSize: 90,
-            subtitleColor,
-            subtitleLineCount: subtitleText?.split("\n").length,
-          },
-        );
-      }
+      console.info(
+        `Artwork saved successfully to ${path.resolve(filePath.endsWith(".png") ? filePath : `${filePath}.png`)}`,
+      );
     });
 }
 
-export default artwork;
+export default artworkSave;

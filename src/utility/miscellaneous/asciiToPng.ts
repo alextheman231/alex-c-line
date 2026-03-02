@@ -4,7 +4,7 @@ import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 
 export interface FileMetadata {
-  fileName?: string;
+  filePath?: string;
   width?: number;
   height?: number;
   backgroundColor?: string;
@@ -17,7 +17,7 @@ export interface FileMetadata {
 
 async function asciiToPng(ascii: string, options?: FileMetadata) {
   const {
-    fileName = "artwork/alex-c-line",
+    filePath = "artwork/alex-c-line",
     width = 3000,
     height = 3000,
     backgroundColor = "#0b1020",
@@ -58,7 +58,7 @@ async function asciiToPng(ascii: string, options?: FileMetadata) {
     context.fillText(line, x, y);
   });
 
-  const outputPath = path.resolve(fileName.endsWith(".png") ? fileName : `${fileName}.png`);
+  const outputPath = path.resolve(filePath.endsWith(".png") ? filePath : `${filePath}.png`);
   await mkdir(path.dirname(outputPath), { recursive: true });
   await writeFile(outputPath, canvas.toBuffer("image/png"));
 }

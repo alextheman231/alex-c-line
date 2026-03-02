@@ -81,7 +81,7 @@ describe.each<Entrypoint>([Entrypoint.ROOT, Entrypoint.CONFIGS, Entrypoint.CONFI
 
             testPackageInfo.scripts = {
               ...(testPackageInfo.scripts ?? {}),
-              artwork: "alex-c-line artwork",
+              artwork: "alex-c-line artwork log",
               "pre-commit": "alex-c-line pre-commit",
             };
 
