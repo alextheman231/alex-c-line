@@ -1,9 +1,10 @@
 import type { Command } from "commander";
 
 import { DataError, parseZodSchema, removeUndefinedFromObject } from "@alextheman/utility";
+import { getPackageJsonContents } from "@alextheman/utility/internal";
 import z from "zod";
 
-import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 
 import { PullRequestTemplateCategory } from "src/configs";
@@ -12,10 +13,9 @@ import findAlexCLineConfig from "src/utility/configs/findAlexCLineConfig";
 import loadAlexCLineConfig from "src/utility/configs/loadAlexCLineConfig";
 import getPullRequestTemplatesFromMarkdown from "src/utility/markdownTemplates/pullRequest/getPullRequestTemplatesFromMarkdown";
 
-function createPullRequestTemplate(program: Command) {
+function templatePullRequestCreate(program: Command) {
   program
-    .command("create-pull-request-template")
-    .alias("create-pull-request-template-2")
+    .command("create")
     .option(
       "--category <category>",
       "The category of pull request templates to get (can be either `general` or `infrastructure`)",
@@ -52,9 +52,7 @@ function createPullRequestTemplate(program: Command) {
         ? await loadAlexCLineConfig(configPath)
         : {};
 
-      const packageInfo = JSON.parse(
-        await readFile(path.join(process.cwd(), "package.json"), "utf-8"),
-      );
+      const packageInfo = await getPackageJsonContents(process.cwd());
 
       const { name: projectName } =
         commandLineOptions.projectName || config?.projectName
@@ -118,4 +116,4 @@ function createPullRequestTemplate(program: Command) {
     });
 }
 
-export default createPullRequestTemplate;
+export default templatePullRequestCreate;
