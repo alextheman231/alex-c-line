@@ -5,7 +5,7 @@ import { execa } from "execa";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 
-import alexCLinePackageRoot from "src/utility/constants/alexCLinePackageRoot";
+import ALEX_C_LINE_PACKAGE_ROOT from "src/utility/constants/alexCLinePackageRoot";
 
 function outdatedDependencies(program: Command) {
   program.command("outdated-dependencies").action(async () => {
@@ -24,7 +24,11 @@ function outdatedDependencies(program: Command) {
       return;
     }
 
-    const outdatedTemplatesPath = path.join(await alexCLinePackageRoot, "templates", "outdated");
+    const outdatedTemplatesPath = path.join(
+      await ALEX_C_LINE_PACKAGE_ROOT,
+      "templates",
+      "outdated",
+    );
 
     const tableTemplate = await readFile(path.join(outdatedTemplatesPath, "table.html"), "utf-8");
     const tableRowTemplate = await readFile(

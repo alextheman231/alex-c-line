@@ -7,11 +7,13 @@ import {
   parseZodSchema,
   VersionNumber,
 } from "@alextheman/utility";
+import { getPackageJsonContents } from "@alextheman/utility/internal";
 import z from "zod";
 
-import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 
+import getReleaseNotePath from "src/utility/markdownTemplates/releaseNote/getReleaseNotePath";
 import getReleaseNoteTemplateFromMarkdown from "src/utility/markdownTemplates/releaseNote/getReleaseNoteTemplateFromMarkdown";
 
 function templateReleaseNoteCreate(program: Command) {
@@ -37,9 +39,7 @@ function templateReleaseNoteCreate(program: Command) {
     )
     .description("Create release notes based on the current version in package.json.")
     .action(async (target) => {
-      const packageInfo = JSON.parse(
-        await readFile(path.join(process.cwd(), "package.json"), "utf-8"),
-      );
+      const packageInfo = await getPackageJsonContents(process.cwd());
 
       const { name, version: packageVersion } = parseZodSchema(
         z.object({ name: z.string(), version: z.string() }),
@@ -59,14 +59,7 @@ function templateReleaseNoteCreate(program: Command) {
             ? new VersionNumber(packageVersion).increment(target)
             : new VersionNumber(packageVersion);
 
-      const releaseNotePath = path.join(
-        process.cwd(),
-        "docs",
-        "releases",
-        `v${versionNumber.major}`,
-        `v${versionNumber.major}.${versionNumber.minor}`,
-        `${versionNumber}.md`,
-      );
+      const releaseNotePath = getReleaseNotePath(versionNumber);
 
       const releaseNoteTemplate = await getReleaseNoteTemplateFromMarkdown(name, versionNumber, {
         status: "In progress",

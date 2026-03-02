@@ -4,8 +4,7 @@ placeholders:
 - versionNumber
 - projectName
 - status
-- descriptionOfChanges
-- additionalNotes
+- editableSection
 ---
 # {{versionNumber}} (Patch Release)
 
@@ -19,9 +18,6 @@ This is a new patch release of the `{{projectName}}` package. It fixes issues wi
 
 ## Description of Changes
 
-{{descriptionOfChanges}}
-
-## Additional Notes
-
-{{additionalNotes}}
-
+<!-- user-editable-section-start -->
+{{editableSection}}
+<!-- user-editable-section-end -->
