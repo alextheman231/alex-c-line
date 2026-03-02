@@ -35,7 +35,7 @@ jobs:
       VERSION_TYPE: ${{ inputs.version-type }}
     outputs:
       release_doc_path: ${{ steps.release_document_path.outputs.path }}
-      should_change_version: ${{ steps.release_document_path.outputs.should_change_version }}
+      should_change_version: ${{ steps.find_document.outputs.should_change_version }}
     steps:
       - name: Checkout the repository
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
@@ -74,12 +74,18 @@ jobs:
           NEXT_VERSION=$(node dist/index.js version increment $VERSION $VERSION_TYPE)
           echo "next_version=$NEXT_VERSION" >> $GITHUB_OUTPUT
 
-      - name: Find release document
+      - name: Get release note path
         id: release_document_path
-        env:
-          NEXT_VERSION: ${{ steps.get_next_version.outputs.next_version }}
         run: |
           RELEASE_DOC_PATH="node dist/index.js template release-note path $NEXT_VERSION"
+          echo "path=$RELEASE_DOC_PATH" >> $GITHUB_OUTPUT
+
+      - name: Find release document
+        id: find_document
+        env:
+          NEXT_VERSION: ${{ steps.get_next_version.outputs.next_version }}
+          RELEASE_DOC_PATH: ${{ steps.release_document_path.outputs.path }}
+        run: |
           if [[ -f "$RELEASE_DOC_PATH" ]]; then
             echo "Release document found. Continuing..."
             echo "path=$RELEASE_DOC_PATH" >> $GITHUB_OUTPUT
