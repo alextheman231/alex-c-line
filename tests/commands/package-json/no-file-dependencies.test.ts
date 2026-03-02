@@ -26,7 +26,7 @@ describe("package-json no-file-dependencies", () => {
       );
 
       const { stdout: message, exitCode } =
-        await alexCLineTestClient`package-json --rules no-file-dependencies`;
+        await alexCLineTestClient`package-json check --rules no-file-dependencies`;
       expect(exitCode).toBe(0);
       expect(message).toContain("Checking for file dependencies...");
       expect(message).toContain("No file dependencies found!");
@@ -47,7 +47,7 @@ describe("package-json no-file-dependencies", () => {
         );
 
         const { stdout: message, exitCode } =
-          await alexCLineTestClient`package-json --rules no-file-dependencies`;
+          await alexCLineTestClient`package-json check --rules no-file-dependencies`;
         expect(exitCode).toBe(0);
         expect(message).toContain("Checking for file dependencies...");
         expect(message).toContain("No file dependencies found!");
@@ -73,7 +73,7 @@ test("Dependencies only", async () => {
     );
 
     const { stdout: message, exitCode } =
-      await alexCLineTestClient`package-json --rules no-file-dependencies`;
+      await alexCLineTestClient`package-json check --rules no-file-dependencies`;
     expect(exitCode).toBe(0);
     expect(message).toContain("Checking for file dependencies...");
     expect(message).toContain("No file dependencies found!");
@@ -85,7 +85,7 @@ test("Succeeds if package.json is completely empty", async () => {
     await writeFile(getPackageJsonPath(temporaryDirectory), JSON.stringify({}));
 
     const { stdout: message, exitCode } =
-      await alexCLineTestClient`package-json --rules no-file-dependencies`;
+      await alexCLineTestClient`package-json check --rules no-file-dependencies`;
     expect(exitCode).toBe(0);
     expect(message).toContain("Checking for file dependencies...");
     expect(message).toContain("No file dependencies found!");
@@ -113,7 +113,9 @@ test("Exit with exit code 2 if file dependencies found", async () => {
       exitCode,
       stdout: message,
       stderr: errorMessage,
-    } = await alexCLineTestClient({ reject: false })`package-json --rules no-file-dependencies`;
+    } = await alexCLineTestClient({
+      reject: false,
+    })`package-json check --rules no-file-dependencies`;
     expect(exitCode).toBe(2);
     expect(message).toContain("Checking for file dependencies...");
     expect(errorMessage).toContain("ERROR: File dependencies found:");
@@ -147,7 +149,9 @@ describe("devDependencies can be left out even if error code is 2", () => {
         exitCode,
         stdout: message,
         stderr: errorMessage,
-      } = await alexCLineTestClient({ reject: false })`package-json --rules no-file-dependencies`;
+      } = await alexCLineTestClient({
+        reject: false,
+      })`package-json check --rules no-file-dependencies`;
 
       expect(exitCode).toBe(2);
       expect(message).toContain("Checking for file dependencies...");
@@ -181,7 +185,9 @@ describe("devDependencies can be left out even if error code is 2", () => {
         exitCode,
         stdout: message,
         stderr: errorMessage,
-      } = await alexCLineTestClient({ reject: false })`package-json --rules no-file-dependencies`;
+      } = await alexCLineTestClient({
+        reject: false,
+      })`package-json check --rules no-file-dependencies`;
 
       expect(exitCode).toBe(2);
       expect(message).toContain("Checking for file dependencies...");
