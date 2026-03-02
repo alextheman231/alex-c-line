@@ -37,7 +37,7 @@
     "build": "tsdown",
     "command": "bash -c 'pnpm run build && echo && echo \"Command output:\" && node dist/index.js \"$@\"' --",
     "create-local-package": "pnpm run build && rm -f alex-c-line-*.tgz && pnpm pack",
-    "create-release-note": "bash -c 'git pull origin main && pnpm run command create-release-note-2 $@' --",
+    "create-release-note": "bash -c 'git pull origin main && pnpm run command template release-note create $@' --",
     "format": "pnpm run format-prettier && pnpm run format-eslint",
     "format-eslint": "eslint --fix --suppress-all \"package.json\" \"src/**/*.ts\" \"tests/**/*.ts\" && rm -f eslint-suppressions.json",
     "format-prettier": "pnpm run format-prettier-typescript && pnpm run format-prettier-javascript && pnpm run format-prettier-yml && pnpm run format-prettier-html",
