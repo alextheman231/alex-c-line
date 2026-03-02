@@ -10,13 +10,15 @@ function packageConfig<ScriptName extends string = PreCommitStep>(
   )[] = ["build", "format", "lint", "test"],
 ): AlexCLineConfig<PreCommitStep> {
   return {
-    createPullRequestTemplate: {
-      category: "general",
-      projectType: "package",
-    },
     preCommit: {
       packageManager: "pnpm",
       steps: steps as PreCommitStep[],
+    },
+    template: {
+      pullRequest: {
+        category: "general",
+        projectType: "package",
+      },
     },
   };
 }

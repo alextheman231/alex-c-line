@@ -1,16 +1,16 @@
-export interface CreatePullRequestTemplateBaseConfig {
+export interface TemplatePullRequestBaseConfig {
   /** The name of the project. */
   projectName?: string;
 }
 
-export interface CreatePullRequestTemplateGeneralConfig extends CreatePullRequestTemplateBaseConfig {
+export interface TemplatePullRequestGeneralConfig extends TemplatePullRequestBaseConfig {
   /** The category of pull requests to get. */
   category: "general";
   /** The type of the project (this is what will be used as the noun in the pull request templates themselves). */
   projectType: string;
 }
 
-export interface CreatePullRequestTemplateInfrastructureConfig extends CreatePullRequestTemplateBaseConfig {
+export interface TemplatePullRequestInfrastructureConfig extends TemplatePullRequestBaseConfig {
   /** The category of pull requests to get. */
   category: "infrastructure";
   /** The provider of the infrastructure */
@@ -19,6 +19,6 @@ export interface CreatePullRequestTemplateInfrastructureConfig extends CreatePul
   requireConfirmationFrom: string;
 }
 
-export type CreatePullRequestTemplateConfig =
-  | CreatePullRequestTemplateGeneralConfig
-  | CreatePullRequestTemplateInfrastructureConfig;
+export type TemplatePullRequestConfig =
+  | TemplatePullRequestGeneralConfig
+  | TemplatePullRequestInfrastructureConfig;

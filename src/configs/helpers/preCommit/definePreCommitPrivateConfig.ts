@@ -1,4 +1,4 @@
-import type { PreCommitPrivateConfig } from "src/configs/types/PreCommitPrivateConfig";
+import type { PreCommitPrivateConfig } from "src/configs/types/preCommit/PreCommitPrivateConfig";
 
 import { parseZodSchema } from "@alextheman/utility";
 import z from "zod";

@@ -1,4 +1,4 @@
-import type { PreCommitConfig } from "src/configs/types/PreCommitConfig";
+import type { PreCommitConfig } from "src/configs/types/preCommit/PreCommitConfig";
 
 import { parseZodSchemaAsync } from "@alextheman/utility";
 import { PackageManager } from "@alextheman/utility/internal";

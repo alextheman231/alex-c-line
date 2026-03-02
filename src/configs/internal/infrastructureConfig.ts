@@ -1,11 +1,6 @@
 import type { AlexCLineConfig } from "src/configs/types";
 
 const infrastructureConfig: AlexCLineConfig<"format" | "lint"> = {
-  createPullRequestTemplate: {
-    category: "infrastructure",
-    infrastructureProvider: "Terraform",
-    requireConfirmationFrom: "AlexMan123456",
-  },
   preCommit: {
     packageManager: "pnpm",
     steps: [
@@ -15,6 +10,13 @@ const infrastructureConfig: AlexCLineConfig<"format" | "lint"> = {
       "format",
       "lint",
     ],
+  },
+  template: {
+    pullRequest: {
+      category: "infrastructure",
+      infrastructureProvider: "Terraform",
+      requireConfirmationFrom: "AlexMan123456",
+    },
   },
 };
 

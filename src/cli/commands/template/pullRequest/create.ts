@@ -8,7 +8,7 @@ import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 
 import { PullRequestTemplateCategory } from "src/configs";
-import { parseCreatePullRequestTemplateConfig } from "src/configs/helpers/defineCreatePullRequestTemplateConfig";
+import { parseTemplatePullRequestConfig } from "src/configs/helpers/template/pullRequest/defineTemplatePullRequestSchema";
 import findAlexCLineConfig from "src/utility/configs/findAlexCLineConfig";
 import loadAlexCLineConfig from "src/utility/configs/loadAlexCLineConfig";
 import getPullRequestTemplatesFromMarkdown from "src/utility/markdownTemplates/pullRequest/getPullRequestTemplatesFromMarkdown";
@@ -48,7 +48,7 @@ function templatePullRequestCreate(program: Command) {
     )
     .action(async (commandLineOptions) => {
       const configPath = await findAlexCLineConfig(process.cwd());
-      const { createPullRequestTemplate: config } = configPath
+      const { template: { pullRequest: config } = {} } = configPath
         ? await loadAlexCLineConfig(configPath)
         : {};
 
@@ -72,7 +72,7 @@ function templatePullRequestCreate(program: Command) {
         );
       }
 
-      const parsedOptions = parseCreatePullRequestTemplateConfig(
+      const parsedOptions = parseTemplatePullRequestConfig(
         removeUndefinedFromObject({
           category: commandLineOptions.category ?? config?.category ?? "general",
           projectType:

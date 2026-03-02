@@ -1,6 +1,4 @@
-import type { PackageManager } from "@alextheman/utility/internal";
-
-import type { DependencyGroup } from "src/configs/types/DependencyGroup";
+import type { DependencyGroup, PackageManager } from "@alextheman/utility/internal";
 
 export interface LocalPackage<ScriptName extends string = string> {
   /** The name of the package manager being used (can choose from `npm` or `pnpm`). If not provided, can be inferred from the packageManager field in package.json. */
@@ -23,5 +21,5 @@ export interface UseLocalPackageConfig<ScriptName extends string = string> {
 }
 
 export interface AlexCLinePrivateConfig<ScriptName extends string = string> {
-  useLocalPackage: UseLocalPackageConfig<ScriptName>;
+  localPackage: UseLocalPackageConfig<ScriptName>;
 }
