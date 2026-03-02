@@ -8,13 +8,13 @@ placeholders:
 ---
 # {{versionNumber}} (Patch Release)
 
-<!-- alex-c-line-start-release-status -->
+<!-- alex-c-line-release-status-start -->
 **Status**: {{status}}
-<!-- alex-c-line-end-release-status -->
+<!-- alex-c-line-release-status-end -->
 
-<!-- alex-c-line-start-release-summary -->
+<!-- alex-c-line-release-summary-start -->
 This is a new patch release of the `{{projectName}}` package. It fixes issues with the package and should require no refactoring. Please read the description of changes below.
-<!-- alex-c-line-end-release-summary -->
+<!-- alex-c-line-release-summary-end -->
 
 ## Description of Changes
 

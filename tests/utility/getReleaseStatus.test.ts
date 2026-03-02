@@ -1,25 +1,29 @@
 import { normaliseIndents } from "@alextheman/utility";
 import { describe, expect, test } from "vitest";
 
+import createMarkdownCommentPair from "src/utility/markdownTemplates/createMarkdownCommentPair";
 import getReleaseStatus from "src/utility/markdownTemplates/releaseNote/getReleaseStatus";
 import { ReleaseStatus } from "src/utility/markdownTemplates/releaseNote/types/ReleaseStatus";
 
 describe("getReleaseStatus", () => {
+  const [releaseStatusStart, releaseStatusEnd] = createMarkdownCommentPair(
+    "alex-c-line-release-status",
+  );
   test.each([
     [
       ReleaseStatus.IN_PROGRESS,
       normaliseIndents`
-            <!-- alex-c-line-start-release-status -->
+            ${releaseStatusStart}
             **Status**: In progress
-            <!-- alex-c-line-end-release-status -->
+            ${releaseStatusEnd}
         `,
     ],
     [
       ReleaseStatus.RELEASED,
       normaliseIndents`
-            <!-- alex-c-line-start-release-status -->
+            ${releaseStatusStart}
             **Status**: Released
-            <!-- alex-c-line-end-release-status -->
+            ${releaseStatusEnd}
         `,
     ],
   ])("Returns the current release status when it is %s", (expectedStatus, markdownStatus) => {

@@ -9,6 +9,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 import findPackageRoot from "src/utility/fileSystem/findPackageRoot";
+import createMarkdownCommentPair from "src/utility/markdownTemplates/createMarkdownCommentPair";
 import getMarkdownBlock from "src/utility/markdownTemplates/getMarkdownBlock";
 import normaliseMarkdown from "src/utility/markdownTemplates/normaliseMarkdown";
 import getReleaseStatus from "src/utility/markdownTemplates/releaseNote/getReleaseStatus";
@@ -57,11 +58,9 @@ async function validateReleaseDocument(
     );
   }
 
-  const summary = getMarkdownBlock(
-    content,
-    "<!-- alex-c-line-start-release-summary -->",
-    "<!-- alex-c-line-end-release-summary -->",
-  );
+  const releaseSummaryHeaders = createMarkdownCommentPair("alex-c-line-release-summary");
+
+  const summary = getMarkdownBlock(content, ...releaseSummaryHeaders);
 
   const templateContent = await readFile(
     path.join(
@@ -72,11 +71,10 @@ async function validateReleaseDocument(
     ),
     "utf-8",
   );
-  const templateSummary = getMarkdownBlock(
-    templateContent,
-    "<!-- alex-c-line-start-release-summary -->",
-    "<!-- alex-c-line-end-release-summary -->",
-  )?.replaceAll(`{{projectName}}`, projectName);
+  const templateSummary = getMarkdownBlock(templateContent, ...releaseSummaryHeaders)?.replaceAll(
+    `{{projectName}}`,
+    projectName,
+  );
 
   // This should never trigger in practice because I expect all my templates to have summaries, but this is there in case I forget.
   if (!templateSummary) {

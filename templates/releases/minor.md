@@ -8,13 +8,13 @@ placeholders:
 ---
 # {{versionNumber}} (Minor Release)
 
-<!-- alex-c-line-start-release-status -->
+<!-- alex-c-line-release-status-start -->
 **Status**: {{status}}
-<!-- alex-c-line-end-release-status -->
+<!-- alex-c-line-release-status-end -->
 
-<!-- alex-c-line-start-release-summary -->
+<!-- alex-c-line-release-summary-start -->
 This is a new minor release of the `{{projectName}}` package. It introduces new features in a backwards-compatible way and should require very little refactoring, if any. Please read the description of changes below.
-<!-- alex-c-line-end-release-summary -->
+<!-- alex-c-line-release-summary-end -->
 
 ## Description of Changes
 

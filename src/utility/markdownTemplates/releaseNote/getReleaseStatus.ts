@@ -1,6 +1,7 @@
 import { DataError, parseZodSchema } from "@alextheman/utility";
 import z from "zod";
 
+import createMarkdownCommentPair from "src/utility/markdownTemplates/createMarkdownCommentPair";
 import getMarkdownBlock from "src/utility/markdownTemplates/getMarkdownBlock";
 import normaliseMarkdown from "src/utility/markdownTemplates/normaliseMarkdown";
 import { ReleaseStatus } from "src/utility/markdownTemplates/releaseNote/types/ReleaseStatus";
@@ -8,8 +9,7 @@ import { ReleaseStatus } from "src/utility/markdownTemplates/releaseNote/types/R
 function getReleaseStatus(content: string): ReleaseStatus {
   const releaseStatus = getMarkdownBlock(
     content,
-    "<!-- alex-c-line-start-release-status -->",
-    "<!-- alex-c-line-end-release-status -->",
+    ...createMarkdownCommentPair("alex-c-line-release-status"),
   );
 
   if (releaseStatus === null) {
