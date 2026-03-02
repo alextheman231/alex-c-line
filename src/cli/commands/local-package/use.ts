@@ -40,7 +40,7 @@ function localPackageUse(program: Command) {
       }
 
       const {
-        useLocalPackage: { enableCache, localPackages },
+        localPackage: { enableCache, localPackages },
       } = await loadAlexCLinePrivateConfig(configPath);
 
       const localPackage = localPackages[packageName];

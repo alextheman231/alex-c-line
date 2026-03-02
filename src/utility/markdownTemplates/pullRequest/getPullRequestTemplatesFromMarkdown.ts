@@ -1,4 +1,4 @@
-import type { CreatePullRequestTemplateConfig } from "src/configs";
+import type { TemplatePullRequestConfig } from "src/configs";
 
 import { DataError, parseZodSchema } from "@alextheman/utility";
 import matter from "gray-matter";
@@ -12,9 +12,7 @@ import findPackageRoot from "src/utility/fileSystem/findPackageRoot";
 
 const __filename = fileURLToPath(import.meta.url);
 
-function getTemplateVariables(
-  config: Required<CreatePullRequestTemplateConfig>,
-): Record<string, string> {
+function getTemplateVariables(config: Required<TemplatePullRequestConfig>): Record<string, string> {
   if (config.category === "general") {
     return {
       projectName: config.projectName,
@@ -28,9 +26,7 @@ function getTemplateVariables(
   };
 }
 
-async function getPullRequestTemplatesFromMarkdown(
-  config: Required<CreatePullRequestTemplateConfig>,
-) {
+async function getPullRequestTemplatesFromMarkdown(config: Required<TemplatePullRequestConfig>) {
   const templateVariables = getTemplateVariables(config);
   const { category } = config;
 

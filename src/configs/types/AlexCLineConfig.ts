@@ -1,7 +1,12 @@
-import type { CreatePullRequestTemplateConfig } from "src/configs/types/CreatePullRequestTemplateConfig";
-import type { PreCommitConfig } from "src/configs/types/PreCommitConfig";
+import type { PreCommitConfig } from "src/configs/types/preCommit/PreCommitConfig";
+import type { TemplatePullRequestConfig } from "src/configs/types/template/pullRequest/TemplatePullRequestConfig";
 
 export interface AlexCLineConfig<ScriptName extends string = string> {
-  createPullRequestTemplate?: CreatePullRequestTemplateConfig;
+  /** Configure settings related to the `alex-c-line` templates. */
+  template?: {
+    /** Configure settings related to the pull request templates. */
+    pullRequest?: TemplatePullRequestConfig;
+  };
+  /** Configure the behaviour of the pre-commit command. */
   preCommit?: PreCommitConfig<ScriptName>;
 }

@@ -3,13 +3,15 @@ import type { AlexCLineConfig } from "src/configs/types/AlexCLineConfig";
 import { parseZodSchemaAsync } from "@alextheman/utility";
 import z from "zod";
 
-import { createPullRequestTemplateSchema } from "src/configs/helpers/defineCreatePullRequestTemplateConfig";
-import { preCommitConfigSchema } from "src/configs/helpers/definePreCommitConfig";
+import { preCommitConfigSchema } from "src/configs/helpers/preCommit/definePreCommitConfig";
+import { templatePullRequestSchema } from "src/configs/helpers/template/pullRequest/defineTemplatePullRequestSchema";
 
 const alexCLineConfigSchema = z
   .strictObject({
     preCommit: preCommitConfigSchema,
-    createPullRequestTemplate: createPullRequestTemplateSchema,
+    template: z.object({
+      pullRequest: templatePullRequestSchema,
+    }),
   })
   .partial();
 

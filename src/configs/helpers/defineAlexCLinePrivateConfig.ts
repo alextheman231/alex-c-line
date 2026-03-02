@@ -7,7 +7,7 @@ import z from "zod";
 import { DependencyGroup } from "src/configs/types";
 
 export const alexCLinePrivateConfigSchema = z.object({
-  useLocalPackage: z.strictObject({
+  localPackage: z.strictObject({
     enableCache: z.boolean().optional(),
     localPackages: z.record(
       z.string(),
