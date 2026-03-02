@@ -6,6 +6,7 @@ import createReleaseNote from "src/cli/commands/deprecated/create-release-note";
 import editEnv from "src/cli/commands/deprecated/edit-env";
 import preCommit from "src/cli/commands/deprecated/pre-commit";
 import setReleaseStatus from "src/cli/commands/deprecated/set-release-status";
+import envFile from "src/cli/commands/env-file";
 import internal from "src/cli/commands/internal";
 import root from "src/cli/commands/root";
 import template from "src/cli/commands/template";
@@ -22,6 +23,7 @@ function createCommands(program: Command) {
     checkVersionNumberChange,
     createReleaseNote,
     editEnv,
+    envFile,
     internal,
     packageJson,
     preCommit,

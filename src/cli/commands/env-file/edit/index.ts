@@ -4,15 +4,15 @@ import { normaliseIndents } from "@alextheman/utility";
 import { select } from "@inquirer/prompts";
 import chalk from "chalk";
 
-import addVariable from "src/cli/commands/root/edit-env-file/addVariable";
-import changeExistingVariable from "src/cli/commands/root/edit-env-file/changeExistingVariable";
+import addVariable from "src/cli/commands/env-file/edit/addVariable";
+import changeExistingVariable from "src/cli/commands/env-file/edit/changeExistingVariable";
 import parseDotenvFile from "src/utility/envFile/parseDotenvFile";
 
 export type EditMode = "edit" | "delete";
 
-function editEnvFile(program: Command) {
+function envFileEdit(program: Command) {
   program
-    .command("edit-env-file")
+    .command("edit")
     .description("Edit properties in a .env file")
     .option("--interactive", "Enable interactive mode", true) // will be false in future updates
     .option(
@@ -67,4 +67,4 @@ function editEnvFile(program: Command) {
     });
 }
 
-export default editEnvFile;
+export default envFileEdit;
