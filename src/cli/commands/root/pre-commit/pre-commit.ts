@@ -13,9 +13,9 @@ import getCommandArguments from "src/cli/commands/root/pre-commit/getCommandArgu
 import findAlexCLineConfig from "src/utility/configs/findAlexCLineConfig";
 import loadAlexCLineConfig from "src/utility/configs/loadAlexCLineConfig";
 
-function preCommit2(program: Command) {
+function preCommit(program: Command) {
   program
-    .command("pre-commit-2")
+    .command("pre-commit")
     .description("Run the pre-commit scripts specified in the alex-c-line config (v2 experiment).")
     .option("--allow-no-staged-changes", "Run even if nothing is staged")
     .option("--no-update-index")
@@ -103,4 +103,4 @@ function preCommit2(program: Command) {
     });
 }
 
-export default preCommit2;
+export default preCommit;
