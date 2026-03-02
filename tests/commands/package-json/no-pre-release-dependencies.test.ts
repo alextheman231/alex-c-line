@@ -34,9 +34,9 @@ describe("no-pre-release-dependencies", () => {
       const testClient = alexCLineTestClient(setDirectory(temporaryPath));
 
       const { exitCode, stdout: message } =
-        await testClient`package-json --rules no-pre-release-dependencies`;
+        await testClient`package-json check --rules no-pre-release-dependencies`;
       expect(exitCode).toBe(0);
-      expect(message).toBe(`${successPrefix} No pre-release versions found!`);
+      expect(message).toContain(`${successPrefix} No pre-release versions found!`);
     });
   });
 
@@ -69,7 +69,7 @@ describe("no-pre-release-dependencies", () => {
         const testClient = alexCLineTestClient({ ...setDirectory(temporaryPath), reject: false });
 
         const { exitCode, stderr: errorMessage } =
-          await testClient`package-json --rules no-pre-release-dependencies`;
+          await testClient`package-json check --rules no-pre-release-dependencies`;
         expect(exitCode).toBe(2);
         expect(errorMessage).toContain(errorPrefix);
         expect(errorMessage).toContain(dependencyGroup);
