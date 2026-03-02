@@ -16,6 +16,7 @@ describe("getPullRequestTemplatesFromMarkdown", () => {
       "new_feature",
       "bug_fix",
       "tooling_change",
+      "internal_change",
       "documentation_change",
       "refactor",
       "miscellaneous",

@@ -15,6 +15,7 @@ Please select the option that best describes your changes to `{{projectName}}`:
 - [Bug Fix](?template=bug_fix.md) - For changes that fix a bug in the {{projectType}}.
 - [Tooling Change](?template=tooling_change.md) - For changes to the {{projectType}}'s tooling (dependencies, devDependencies, configs...).
 - [Documentation Change](?template=documentation_change.md) - For changes that affect the way that information about the {{projectType}} is presented to users.
+- [Internal Change](?template=internal_change.md) - For changes to internal features that are technically accessible but not recommended for public usage.
 - [Refactor](?template=refactor.md) - For changes that improve code quality and structure without affecting user-facing behaviour.
 - [Miscellaneous](?template=miscellaneous.md) - For changes that do not fit cleanly into any of the above categories.
 
