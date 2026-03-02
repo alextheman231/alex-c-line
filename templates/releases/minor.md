@@ -4,8 +4,7 @@ placeholders:
 - versionNumber
 - projectName
 - status
-- descriptionOfChanges
-- additionalNotes
+- editableSection
 ---
 # {{versionNumber}} (Minor Release)
 
@@ -19,8 +18,6 @@ This is a new minor release of the `{{projectName}}` package. It introduces new 
 
 ## Description of Changes
 
-{{descriptionOfChanges}}
-
-## Additional Notes
-
-{{additionalNotes}}
+<!-- user-editable-section-start -->
+{{editableSection}}
+<!-- user-editable-section-end -->

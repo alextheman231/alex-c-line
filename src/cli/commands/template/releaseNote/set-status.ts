@@ -1,11 +1,15 @@
 import type { Command } from "commander";
 
-import { parseZodSchema, VersionNumber } from "@alextheman/utility";
+import { DataError, parseZodSchema, VersionNumber } from "@alextheman/utility";
+import { getPackageJsonContents } from "@alextheman/utility/internal";
 import z from "zod";
 
 import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
+import createMarkdownCommentPair from "src/utility/markdownTemplates/createMarkdownCommentPair";
+import getMarkdownBlock from "src/utility/markdownTemplates/getMarkdownBlock";
+import getReleaseNoteTemplateFromMarkdown from "src/utility/markdownTemplates/releaseNote/getReleaseNoteTemplateFromMarkdown";
 import parseReleaseStatus from "src/utility/markdownTemplates/releaseNote/parseReleaseStatus";
 import { ReleaseStatus } from "src/utility/markdownTemplates/releaseNote/types/ReleaseStatus";
 import validateReleaseDocument from "src/utility/markdownTemplates/releaseNote/validateReleaseDocument";
@@ -24,16 +28,17 @@ function templateReleaseNoteSetStatus(program: Command) {
       ReleaseStatus.RELEASED,
     )
     .action(async (documentPath, status) => {
-      const packageInfo = JSON.parse(
-        await readFile(path.join(process.cwd(), "package.json"), "utf-8"),
-      );
+      const packageInfo = await getPackageJsonContents(process.cwd());
 
-      const { name } = parseZodSchema(z.object({ name: z.string() }), packageInfo, () => {
-        program.error(
+      const { name } = parseZodSchema(
+        z.object({ name: z.string() }),
+        packageInfo,
+        new DataError(
+          { name: packageInfo?.name },
+          "INVALID_PACKAGE_JSON",
           "Invalid package.json - expected package.json to contain a `name` property.",
-          { exitCode: 1, code: "INVALID_PACKAGE_JSON" },
-        );
-      });
+        ),
+      );
 
       if (!documentPath.endsWith("md")) {
         program.error("❌ ERROR: Invalid file path. Path must lead to a .md file.", {
@@ -56,10 +61,26 @@ function templateReleaseNoteSetStatus(program: Command) {
 
       await validateReleaseDocument(name, versionNumber, initialDocument);
 
-      const newDocument = initialDocument.replace(
-        /^\*\*Status\*\*:\s*(.+)$/m,
-        `**Status**: ${status}`,
+      const [userEditableSectionStart, userEditableSectionEnd] =
+        createMarkdownCommentPair("user-editable-section");
+      const editableSection = getMarkdownBlock(
+        initialDocument,
+        userEditableSectionStart,
+        userEditableSectionEnd,
       );
+
+      if (editableSection === null) {
+        throw new DataError(
+          { startMarker: userEditableSectionStart, endMarker: userEditableSectionEnd },
+          "EDITABLE_SECTION_NOT_FOUND",
+          "Could not find editable section in the provided document.",
+        );
+      }
+
+      const newDocument = await getReleaseNoteTemplateFromMarkdown(name, versionNumber, {
+        status,
+        editableSection,
+      });
 
       await writeFile(fullDocumentPath, newDocument);
       console.info(`Setting the status of ${documentPath} to "${status}"`);

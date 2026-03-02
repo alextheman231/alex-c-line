@@ -4,9 +4,7 @@ placeholders:
 - versionNumber
 - projectName
 - status
-- descriptionOfChanges
-- migrationNotes
-- additionalNotes
+- editableSection
 ---
 # {{versionNumber}} (Major Release)
 
@@ -20,12 +18,6 @@ This is a new major release of the `{{projectName}}` package. It has the potenti
 
 ## Description of Changes
 
-{{descriptionOfChanges}}
-
-## Migration Notes
-
-{{migrationNotes}}
-
-## Additional Notes
-
-{{additionalNotes}}
+<!-- user-editable-section-start -->
+{{editableSection}}
+<!-- user-editable-section-end -->
