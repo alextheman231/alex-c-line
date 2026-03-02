@@ -10,6 +10,7 @@ import getReleaseSummary, { getMajorReleaseSummary } from "tests/helpers/getRele
 import setDirectory from "tests/helpers/setDirectory";
 import createAlexCLineTestClient from "tests/testClients/alexCLineTestClient";
 
+import createMarkdownCommentPair from "src/utility/markdownTemplates/createMarkdownCommentPair";
 import getMarkdownBlock from "src/utility/markdownTemplates/getMarkdownBlock";
 import getReleaseNotePath from "src/utility/markdownTemplates/releaseNote/getReleaseNotePath";
 import getReleaseNoteTemplateFromMarkdown from "src/utility/markdownTemplates/releaseNote/getReleaseNoteTemplateFromMarkdown";
@@ -97,8 +98,7 @@ describe("template release-note set-status", () => {
       expect(
         getMarkdownBlock(
           fileContentsAfterWrite,
-          "<!-- alex-c-line-start-release-status -->",
-          "<!-- alex-c-line-end-release-status -->",
+          ...createMarkdownCommentPair("alex-c-line-release-status"),
         ),
       );
       expect(fileContentsAfterWrite).toContain("**Status**: In progress");
