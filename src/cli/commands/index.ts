@@ -2,10 +2,6 @@ import type { Command } from "commander";
 
 import artwork from "src/cli/commands/artwork";
 import cache from "src/cli/commands/cache";
-import checkVersionNumberChange from "src/cli/commands/deprecated/check-version-number-change";
-import createReleaseNote from "src/cli/commands/deprecated/create-release-note";
-import editEnv from "src/cli/commands/deprecated/edit-env";
-import setReleaseStatus from "src/cli/commands/deprecated/set-release-status";
 import envFile from "src/cli/commands/env-file";
 import internal from "src/cli/commands/internal";
 import localPackage from "src/cli/commands/local-package";
@@ -22,15 +18,11 @@ function createCommands(program: Command) {
   loadCommands(program, {
     artwork,
     cache,
-    checkVersionNumberChange,
-    createReleaseNote,
-    editEnv,
     envFile,
     internal,
     localPackage,
     packageJson,
     root,
-    setReleaseStatus,
     template,
     update,
     uuid,
