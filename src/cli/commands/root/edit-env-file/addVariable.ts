@@ -23,7 +23,7 @@ async function addVariable<EnvContents extends DotenvParseOutput>(
             Variable name already exists. If you wish to edit this variable, please select it from the initial menu instead.
             `,
       {
-        exitCode: 1,
+        exitCode: 2,
         code: "DUPLICATE_ENVIRONMENT_VARIABLE_NAME",
       },
     );
@@ -36,7 +36,7 @@ async function addVariable<EnvContents extends DotenvParseOutput>(
             Environment variables are not allowed to have whitespace.
             `,
       {
-        exitCode: 1,
+        exitCode: 2,
         code: "INVALID_VARIABLE_NAME",
       },
     );
