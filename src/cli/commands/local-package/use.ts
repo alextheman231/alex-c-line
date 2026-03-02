@@ -1,6 +1,6 @@
 import type { Command } from "commander";
 
-import { DataError, normaliseIndents, omitProperties, parseZodSchema } from "@alextheman/utility";
+import { DataError, omitProperties, parseZodSchema } from "@alextheman/utility";
 import { getDependenciesFromGroup, getPackageJsonContents } from "@alextheman/utility/internal";
 import { execa } from "execa";
 import z from "zod";
@@ -12,19 +12,13 @@ import loadAlexCLineProjectCache from "src/cache/project/loadAlexCLineProjectCac
 import { PrivateConfigFileName } from "src/configs/types/ConfigFileName";
 import findAlexCLineConfig from "src/utility/configs/findAlexCLineConfig";
 import loadAlexCLinePrivateConfig from "src/utility/configs/loadAlexCLinePrivateConfig";
-import experimentalHeader from "src/utility/constants/experimentalHeader";
 import findTgzFile from "src/utility/fileSystem/findTgzFile";
 import removeAllTarballs from "src/utility/miscellaneous/removeAllTarballs";
 
-function useLocalPackage(program: Command) {
+function localPackageUse(program: Command) {
   program
-    .command("use-local-package")
-    .description(
-      normaliseIndents`
-      ${experimentalHeader}
-      
-      Prepare and use a local version of a given package.`,
-    )
+    .command("use")
+    .description("Prepare and use a local version of a given package.")
     .argument("<packageName>", "The name of the package to use locally.")
     .option("--reverse", "Reverse back to the live version of the package", false)
     .argument("[args...]", "Extra arguments to pass if local package name is alex-c-line")
@@ -111,11 +105,14 @@ function useLocalPackage(program: Command) {
         );
       }
 
+      const prepareMessage = `Preparing local package \`${packageName}\` in \`${localPackagePath}\`...`;
+
       if (packageName === "alex-c-line") {
         if (prepareScript) {
+          console.info(prepareMessage);
           await execa({ cwd: localPackagePath })`${packageManager} run ${prepareScript}`;
         }
-        console.info(`Command output from ${localPackagePath}:`);
+        console.info(`Command output from \`${localPackagePath}\`:`);
         const { exitCode } = await execa(
           process.execPath,
           [path.join(localPackagePath, "dist", "index.js"), ...args],
@@ -137,6 +134,7 @@ function useLocalPackage(program: Command) {
 
         if (!reverse) {
           if (prepareScript) {
+            console.info(prepareMessage);
             await execa({
               cwd: localPackagePath,
             })`${packageManager} run ${prepareScript}`;
@@ -211,4 +209,4 @@ function useLocalPackage(program: Command) {
     });
 }
 
-export default useLocalPackage;
+export default localPackageUse;

@@ -7,6 +7,7 @@ import editEnv from "src/cli/commands/deprecated/edit-env";
 import setReleaseStatus from "src/cli/commands/deprecated/set-release-status";
 import envFile from "src/cli/commands/env-file";
 import internal from "src/cli/commands/internal";
+import localPackage from "src/cli/commands/local-package";
 import root from "src/cli/commands/root";
 import template from "src/cli/commands/template";
 import update from "src/cli/commands/update";
@@ -24,6 +25,7 @@ function createCommands(program: Command) {
     editEnv,
     envFile,
     internal,
+    localPackage,
     packageJson,
     root,
     setReleaseStatus,
