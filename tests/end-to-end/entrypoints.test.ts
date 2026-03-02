@@ -82,7 +82,7 @@ describe.each<Entrypoint>([Entrypoint.ROOT, Entrypoint.CONFIGS, Entrypoint.CONFI
             testPackageInfo.scripts = {
               ...(testPackageInfo.scripts ?? {}),
               artwork: "alex-c-line artwork",
-              "pre-commit": "alex-c-line pre-commit-2",
+              "pre-commit": "alex-c-line pre-commit",
             };
 
             if (packageManager === PackageManager.PNPM) {
