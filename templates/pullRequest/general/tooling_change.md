@@ -5,7 +5,6 @@ placeholders:
 - projectName
 - projectType
 ---
-
 # Tooling Change
 
 This is a change to the tooling of `{{projectName}}`. It changes the internal workings of the {{projectType}} and should have no noticeable effect on users.

@@ -5,7 +5,6 @@ placeholders:
 - projectName
 - projectType
 ---
-
 # Bug Fix
 
 This is a bug fix for `{{projectName}}`. It fixes an unintended side-effect of the {{projectType}}.

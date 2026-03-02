@@ -5,7 +5,6 @@ placeholders:
 - projectName
 - projectType
 ---
-
 # Select a Template
 
 Please select the option that best describes your changes to `{{projectName}}`:
@@ -19,6 +18,6 @@ Please select the option that best describes your changes to `{{projectName}}`:
 - [Refactor](?template=refactor.md) - For changes that improve code quality and structure without affecting user-facing behaviour.
 - [Miscellaneous](?template=miscellaneous.md) - For changes that do not fit cleanly into any of the above categories.
 
-In some cases, your pull request may be doing more than one of these. In this case, please select a template from the top-down.
+In some cases, your pull request may be doing more than one of these. In that case, please select a template from the top-down.
 For example, if you are introducing a new feature but also making changes to tooling, please select `New Feature` as that comes before tooling in the list.
 This ensures that the most impactful aspect of the change is reflected.

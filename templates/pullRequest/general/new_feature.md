@@ -5,7 +5,6 @@ placeholders:
 - projectName
 - projectType
 ---
-
 # New Feature
 
 This is a new feature for `{{projectName}}`. It adds new functionality to the {{projectType}}.
