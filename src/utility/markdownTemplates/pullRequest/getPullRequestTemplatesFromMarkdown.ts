@@ -76,7 +76,7 @@ async function getPullRequestTemplatesFromMarkdown(
       finalContent = finalContent.replaceAll(`{{${placeholder}}}`, templateVariables[placeholder]);
     }
 
-    allTemplates[templateName] = finalContent.trimStart();
+    allTemplates[templateName] = finalContent;
   }
   return allTemplates;
 }

@@ -5,7 +5,6 @@ placeholders:
 - projectName
 - projectType
 ---
-
 # Breaking Change
 
 This is a change to `{{projectName}}` that will cause breaking changes in how the {{projectType}} is used and/or deployed.
