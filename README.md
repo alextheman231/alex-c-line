@@ -104,3 +104,9 @@ Private configs can be treated in the same way, except the type would be `AlexCL
 ## Documentation
 
 A full documentation site is coming soon. In the meantime, you may run `alex-c-line --help` for more information about how to use all commands.
+
+## The Official `alex-c-line` Theme Song
+
+Here's the official lyric video for the `alex-c-line` theme song:
+
+[![Watch on YouTube](https://img.youtube.com/vi/GNCaywHm88s/maxresdefault.jpg)](https://www.youtube.com/watch?v=GNCaywHm88s)
