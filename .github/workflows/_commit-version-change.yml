@@ -76,8 +76,6 @@ jobs:
 
       - name: Get release note path
         id: release_document_path
-        env:
-          NEXT_VERSION: ${{ steps.get_next_version.outputs.next_version }}
         run: |
           RELEASE_DOC_PATH=$(node dist/index.js template release-note path $NEXT_VERSION)
           echo "path=$RELEASE_DOC_PATH" >> $GITHUB_OUTPUT
