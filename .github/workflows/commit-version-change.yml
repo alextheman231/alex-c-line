@@ -9,34 +9,34 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
-    uses: ./.github/workflows/_commit-version-change.yml
+    uses: alextheman231/github-actions/.github/workflows/commit-version-change.yml@a00c59786bf2f81fe88d9084008fc05452dc45b2 # v9.0.2
     with:
       version-type: major
       create-feature-docs: false
     secrets:
       APP_ID: ${{ secrets.ALEX_UP_BOT_APP_ID }}
-      APP_PRIVATE_KEY: ${{ secrets.ALEX_UP_BOT_PRIVATE_KEY }}
+      APP_PRIVATE_KEY: ${{ secrets.ALEX_UP_BOT_PRIVATE_KEY}}
 
   check-minor-version:
     permissions:
       contents: write
       pull-requests: write
-    uses: ./.github/workflows/_commit-version-change.yml
+    uses: alextheman231/github-actions/.github/workflows/commit-version-change.yml@a00c59786bf2f81fe88d9084008fc05452dc45b2 # v9.0.2
     with:
       version-type: minor
       create-feature-docs: false
     secrets:
       APP_ID: ${{ secrets.ALEX_UP_BOT_APP_ID }}
-      APP_PRIVATE_KEY: ${{ secrets.ALEX_UP_BOT_PRIVATE_KEY }}
+      APP_PRIVATE_KEY: ${{ secrets.ALEX_UP_BOT_PRIVATE_KEY}}
 
   check-patch-version:
     permissions:
       contents: write
       pull-requests: write
-    uses: ./.github/workflows/_commit-version-change.yml
+    uses: alextheman231/github-actions/.github/workflows/commit-version-change.yml@a00c59786bf2f81fe88d9084008fc05452dc45b2 # v9.0.2
     with:
       version-type: patch
       create-feature-docs: false
     secrets:
       APP_ID: ${{ secrets.ALEX_UP_BOT_APP_ID }}
-      APP_PRIVATE_KEY: ${{ secrets.ALEX_UP_BOT_PRIVATE_KEY }}
+      APP_PRIVATE_KEY: ${{ secrets.ALEX_UP_BOT_PRIVATE_KEY}}
