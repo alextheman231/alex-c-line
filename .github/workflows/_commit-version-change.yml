@@ -59,27 +59,10 @@ jobs:
       - name: Build alex-c-line
         run: pnpm run build
 
-      - name: Get the current version number
-        id: get_current_version
-        run: |
-          VERSION=v$(jq -r ".version" package.json)
-          echo "version=$VERSION" >> $GITHUB_OUTPUT
-
-      - name: Get next version
-        env:
-          VERSION: ${{ steps.get_current_version.outputs.version }}
-          VERSION_TYPE: ${{ inputs.version-type }}
-        id: get_next_version
-        run: |
-          NEXT_VERSION=$(alex-c-line increment-version $VERSION $VERSION_TYPE)
-          echo "next_version=$NEXT_VERSION" >> $GITHUB_OUTPUT
-
       - name: Find release document
         id: release_document_path
-        env:
-          NEXT_VERSION: ${{ steps.get_next_version.outputs.next_version }}
         run: |
-          RELEASE_DOC_PATH="node dist/index.js template release-note path $NEXT_VERSION"
+          RELEASE_DOC_PATH="node dist/index.js template release-note path"
           if [[ -f "$RELEASE_DOC_PATH" ]]; then
             echo "Release document found. Continuing..."
             echo "path=$RELEASE_DOC_PATH" >> $GITHUB_OUTPUT
