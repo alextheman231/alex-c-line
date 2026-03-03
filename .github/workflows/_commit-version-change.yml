@@ -77,7 +77,7 @@ jobs:
       - name: Get release note path
         id: release_document_path
         run: |
-          RELEASE_DOC_PATH=$(node dist/index.js template release-note path $NEXT_VERSION)
+          RELEASE_DOC_PATH="node dist/index.js template release-note path $NEXT_VERSION"
           echo "path=$RELEASE_DOC_PATH" >> $GITHUB_OUTPUT
 
       - name: Find release document
