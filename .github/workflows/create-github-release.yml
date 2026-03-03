@@ -1,0 +1,15 @@
+name: Create GitHub Release
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  create-github-release:
+    if: ${{ github.repository == 'alextheman231/alex-c-line' }}
+    uses: alextheman231/github-actions/.github/workflows/create-github-release.yml@06984a14da9331ddb4f308379582012bce780b0c # v10.0.0
+    secrets:
+      APP_ID: ${{ secrets.ALEX_UP_BOT_APP_ID }}
+      APP_PRIVATE_KEY: ${{ secrets.ALEX_UP_BOT_PRIVATE_KEY }}
