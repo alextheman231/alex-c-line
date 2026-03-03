@@ -13,12 +13,12 @@ permissions:
 
 jobs:
   package-ci:
-    uses: alextheman231/github-actions/.github/workflows/package-ci.yml@a00c59786bf2f81fe88d9084008fc05452dc45b2 # v9.0.2
+    uses: alextheman231/github-actions/.github/workflows/package-ci.yml@06984a14da9331ddb4f308379582012bce780b0c # v10.0.0
     with:
       os: '["ubuntu-latest", "windows-latest", "macos-latest"]'
 
   actions-ci:
-    uses: alextheman231/github-actions/.github/workflows/actions-ci.yml@a00c59786bf2f81fe88d9084008fc05452dc45b2 # v9.0.2
+    uses: alextheman231/github-actions/.github/workflows/actions-ci.yml@06984a14da9331ddb4f308379582012bce780b0c # v10.0.0
 
   end-to-end-ci-steps:
     if: ${{ github.head_ref != 'alex-up-bot/change-major-version' && github.head_ref != 'alex-up-bot/change-minor-version' && github.head_ref != 'alex-up-bot/change-patch-version' }}
