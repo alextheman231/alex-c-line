@@ -53,9 +53,6 @@ jobs:
           node-version: 22
           cache: "pnpm"
 
-      - name: Install dependencies
-        run: pnpm install
-
       - name: Build alex-c-line
         run: pnpm run build
 
