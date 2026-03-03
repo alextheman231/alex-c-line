@@ -16,7 +16,7 @@ function artworkSave(program: Command) {
     .option(
       "--file-path <filePath>",
       "Save the artwork as a PNG file, optionally specifying the path",
-      "artwork/alex-c-line.png",
+      "media/alex-c-line.png",
     )
     .action(async ({ filePath, subtitleText, subtitleColor = "green" }) => {
       if (subtitleColor !== "green" && subtitleColor !== "white") {

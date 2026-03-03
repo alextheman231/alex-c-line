@@ -17,7 +17,7 @@ export interface FileMetadata {
 
 async function asciiToPng(ascii: string, options?: FileMetadata) {
   const {
-    filePath = "artwork/alex-c-line",
+    filePath = "media/alex-c-line",
     width = 3000,
     height = 3000,
     backgroundColor = "#0b1020",
