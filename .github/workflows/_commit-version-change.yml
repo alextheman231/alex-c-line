@@ -71,7 +71,7 @@ jobs:
           VERSION_TYPE: ${{ inputs.version-type }}
         id: get_next_version
         run: |
-          NEXT_VERSION=$(node dist/index.js version increment $VERSION $VERSION_TYPE)
+          NEXT_VERSION=$(alex-c-line increment-version $VERSION $VERSION_TYPE)
           echo "next_version=$NEXT_VERSION" >> $GITHUB_OUTPUT
 
       - name: Find release document
