@@ -7,7 +7,7 @@ import doesFileExist from "src/utility/fileSystem/doesFileExist";
 
 async function findAlexCLineConfig(
   cwd: string,
-  validConfigFileNames: (ConfigFileName | PrivateConfigFileName)[] = [
+  validConfigFileNames: Array<ConfigFileName | PrivateConfigFileName> = [
     ConfigFileName.ES_MODULES_JAVASCRIPT,
     ConfigFileName.STANDARD_JAVASCRIPT,
     ConfigFileName.COMMON_JS_JAVASCRIPT,

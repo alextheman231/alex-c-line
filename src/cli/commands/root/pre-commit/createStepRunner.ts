@@ -17,10 +17,10 @@ interface BaseOptions {
 
 export interface StepRunner<ExecaOptions extends Options = BaseOptions> {
   <NewOpts extends Options>(options: NewOpts): StepRunner<ExecaOptions & NewOpts>;
-  (command: string, args?: readonly string[]): Promise<Result<ExecaOptions>>;
+  (command: string, args?: ReadonlyArray<string>): Promise<Result<ExecaOptions>>;
   (
     strings: TemplateStringsArray,
-    ...interpolations: TemplateExpression[]
+    ...interpolations: Array<TemplateExpression>
   ): Promise<Result<ExecaOptions>>;
 }
 
@@ -45,10 +45,10 @@ function bindStepRunner<ExecaOptions extends Options>(
   program: Command,
   boundOptions: ExecaOptions,
 ): StepRunner<ExecaOptions> {
-  function stepRunner(first: unknown, ...second: unknown[]): unknown {
+  function stepRunner(first: unknown, ...second: Array<unknown>): unknown {
     if (typeof first === "string") {
       const command = first as string;
-      const args = (second[0] as readonly string[] | undefined) ?? [];
+      const args = (second[0] as ReadonlyArray<string> | undefined) ?? [];
       const client = runCommandAndLogToConsole(boundOptions);
       return evaluateResult(
         program,
@@ -58,9 +58,9 @@ function bindStepRunner<ExecaOptions extends Options>(
     }
 
     if (isTemplateStringsArray(first)) {
-      const args = getStringsAndInterpolations<TemplateExpression[]>(
+      const args = getStringsAndInterpolations<Array<TemplateExpression>>(
         first,
-        ...(second as TemplateExpression[]),
+        ...(second as Array<TemplateExpression>),
       );
       const client = runCommandAndLogToConsole(boundOptions);
       return evaluateResult(program, client(...args), interpolate(...args));

@@ -20,7 +20,7 @@ async function validateReleaseDocument(
   projectName: string,
   version: VersionNumber,
   content: string,
-  allowedReleaseStatus: ReleaseStatus | ReleaseStatus[] = ["In progress", "Released"],
+  allowedReleaseStatus: ReleaseStatus | Array<ReleaseStatus> = ["In progress", "Released"],
 ): Promise<void> {
   if (
     !normaliseMarkdown(content).startsWith(
