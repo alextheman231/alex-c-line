@@ -40,24 +40,24 @@ alex-c-line say-hello
 Some commands may even take extra arguments. For example:
 
 ```bash
-alex-c-line increment-version v1.2.3 major
+alex-c-line version increment v1.2.3 major
 ```
 
 Flags may also be passed through in the following way.
 
 ```bash
-alex-c-line increment-version v1.2.3 major --no-prefix
+alex-c-line version increment v1.2.3 major --no-prefix
 ```
 
-Note that for `use-local-package` specifically, you will need to add `--` before the local `alex-c-line` arguments to ensure that all flags get passed through correctly. Example:
+Note that for `local-package use` specifically, you will need to add `--` before the local `alex-c-line` arguments to ensure that all flags get passed through correctly. Example:
 
 ```bash
-alex-c-line use-local-package alex-c-line -- increment-version v1.2.3 major --no-prefix
+alex-c-line local-package use alex-c-line -- version increment v1.2.3 major --no-prefix
 ```
 
 ## Configs
 
-Some commands also support usage of the config system. For example, `pre-commit-2` supports the `alex-c-line.config.js` file, and `use-local-package` supports the more user-specific `.alex-c-line.private.config.js` file. `alex-c-line.config.js` is intended for shared configurations per repository, whereas `.alex-c-line.private.config.js` are for configurations specific to the user's usage.
+Some commands also support usage of the config system. For example, `pre-commit` supports the `alex-c-line.config.js` file, and `local-package use` supports the more user-specific `.alex-c-line.private.config.js` file. `alex-c-line.config.js` is intended for shared configurations per repository, whereas `.alex-c-line.private.config.js` are for configurations specific to the user's usage.
 
 The `configs` subpath provides some helper functions and types that may be helpful when constructing these configs. Namely, `defineAlexCLineConfig` can be used as a type helper, so that you get better type hints in the editor.
 
@@ -65,9 +65,11 @@ The `configs` subpath provides some helper functions and types that may be helpf
 import { defineAlexCLineConfig } from "alex-c-line/configs";
 
 export default defineAlexCLineConfig({
-  createPullRequestTemplate: {
-    category: "general",
-    projectType: "package",
+  template: {
+    pullRequest: {
+      category: "general",
+      projectType: "package",
+    }
   },
   preCommit: {
     packageManager: "pnpm",
@@ -84,9 +86,11 @@ import type { AlexCLineConfig } from "alex-c-line/configs";
 import { scripts } from "./package.json" with { type: "json" };
 
 const alexCLineConfig: AlexCLineConfig<keyof typeof scripts> = {
-  createPullRequestTemplate: {
-    category: "general",
-    projectType: "package",
+  template: {
+    pullRequest: {
+      category: "general",
+      projectType: "package",
+    }
   },
   preCommit: {
     packageManager: "pnpm",
