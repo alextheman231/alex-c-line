@@ -15,7 +15,7 @@ jobs:
       create-feature-docs: false
     secrets:
       APP_ID: ${{ secrets.ALEX_UP_BOT_APP_ID }}
-      APP_PRIVATE_KEY: ${{ secrets.ALEX_UP_BOT_PRIVATE_KEY}}
+      APP_PRIVATE_KEY: ${{ secrets.ALEX_UP_BOT_PRIVATE_KEY }}
 
   check-minor-version:
     permissions:
@@ -27,7 +27,7 @@ jobs:
       create-feature-docs: false
     secrets:
       APP_ID: ${{ secrets.ALEX_UP_BOT_APP_ID }}
-      APP_PRIVATE_KEY: ${{ secrets.ALEX_UP_BOT_PRIVATE_KEY}}
+      APP_PRIVATE_KEY: ${{ secrets.ALEX_UP_BOT_PRIVATE_KEY }}
 
   check-patch-version:
     permissions:
@@ -39,4 +39,4 @@ jobs:
       create-feature-docs: false
     secrets:
       APP_ID: ${{ secrets.ALEX_UP_BOT_APP_ID }}
-      APP_PRIVATE_KEY: ${{ secrets.ALEX_UP_BOT_PRIVATE_KEY}}
+      APP_PRIVATE_KEY: ${{ secrets.ALEX_UP_BOT_PRIVATE_KEY }}
