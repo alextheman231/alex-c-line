@@ -11,7 +11,7 @@ export interface FileMetadata {
   titleColor?: string;
   subtitleColor?: "green" | "white";
   fontSize?: number;
-  fontFamily?: string[];
+  fontFamily?: Array<string>;
   subtitleLineCount?: number;
 }
 

@@ -6,7 +6,7 @@ import { writeFile } from "node:fs/promises";
 import path from "node:path";
 
 export function createGitTestClient(repository: string) {
-  return async (command: string, args?: string[], options?: Omit<Options, "cwd">) => {
+  return async (command: string, args?: Array<string>, options?: Omit<Options, "cwd">) => {
     await execa("git", ["config", "--global", "user.email", "test@example.com"], {
       env: {
         HOME: repository.split("/").slice(0, -1).join("/"),

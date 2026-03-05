@@ -4,7 +4,7 @@ import type { StepRunner } from "src/cli/commands/root/pre-commit/createStepRunn
 
 export interface PreCommitStepOptions {
   /** Arguments to pass to the given script */
-  arguments?: string[];
+  arguments?: Array<string>;
 }
 
 export type StepFunction = (stepRunner: StepRunner) => void | Promise<void>;
@@ -15,7 +15,7 @@ export interface PreCommitConfig<ScriptName extends string = string> {
   /** Allow the hook to run even if there are no staged changes. */
   allowNoStagedChanges?: boolean;
   /** The steps to run in the pre-commit hook. */
-  steps: (StepFunction | ScriptName | [ScriptName, PreCommitStepOptions])[];
+  steps: Array<StepFunction | ScriptName | [ScriptName, PreCommitStepOptions]>;
   /** Update the git index after the run */
   updateIndex?: boolean;
 }

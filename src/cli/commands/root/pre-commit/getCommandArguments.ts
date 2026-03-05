@@ -6,8 +6,8 @@ function getCommandArguments(
   program: Command,
   script: string,
   scripts?: Record<string, string>,
-  args?: string[],
-): string[] {
+  args?: Array<string>,
+): Array<string> {
   if (!(script in (scripts ?? {}))) {
     program.error(`${errorPrefix} Could not find script \`${script}\` in package.json.`, {
       exitCode: 1,
