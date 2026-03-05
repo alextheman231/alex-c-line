@@ -8,6 +8,8 @@ import path from "node:path";
 import setDirectory from "tests/helpers/setDirectory";
 import alexCLineTestClient from "tests/testClients/alexCLineTestClient";
 
+import errorPrefix from "src/utility/constants/errorPrefix";
+
 describe("check-lockfile-version-discrepancy", () => {
   test("Succeed if version numbers in package.json and package-lock.json are successful", async () => {
     await temporaryDirectoryTask(async (tempDirectory) => {
@@ -42,7 +44,7 @@ describe("check-lockfile-version-discrepancy", () => {
           const { stderr: errorMessage, exitCode } = error;
           expect(exitCode).toBe(1);
           expect(errorMessage).toBe(
-            "❌ ERROR: package.json and package-lock.json out of sync. Please run `npm install` to fix this.",
+            `${errorPrefix} package.json and package-lock.json out of sync. Please run \`npm install\` to fix this.`,
           );
         }
       }
