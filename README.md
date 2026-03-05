@@ -7,7 +7,7 @@
 [![CI](https://github.com/alextheman231/alex-c-line/actions/workflows/ci.yml/badge.svg)](https://github.com/alextheman231/alex-c-line/actions/workflows/ci.yml)
 [![Publish to NPM Registry and GitHub Releases](https://github.com/alextheman231/alex-c-line/actions/workflows/publish.yml/badge.svg)](https://github.com/alextheman231/alex-c-line/actions/workflows/publish.yml)
 
-<img src="./artwork/alex-c-line.png" alt="alex-c-line artwork" width=250 height=250>
+<img src="./media/alex-c-line.png" alt="alex-c-line artwork" width=250 height=250>
 
 This is my command-line tool, which serves as a developer toolkit that can be used in any repository to streamline the developer workflow. It provides a flexible configuration system so you can customise its behaviour to match your workflow.
 
