@@ -46,7 +46,7 @@ async function noFileDependencies(program: Command) {
 
   if (Object.keys(allFileDependencies).length !== 0) {
     program.error(
-      `${errorPrefix}: File dependencies found:\n\n${JSON.stringify(allFileDependencies, undefined, 2)}
+      `${errorPrefix} File dependencies found:\n\n${JSON.stringify(allFileDependencies, undefined, 2)}
           `,
       { exitCode: 2, code: "FILE_DEPENDENCIES_FOUND" },
     );

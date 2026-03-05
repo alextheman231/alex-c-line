@@ -1,3 +1,3 @@
-const errorPrefix: string = "❌ ERROR";
+const errorPrefix: string = "❌ ERROR:";
 
 export default errorPrefix;

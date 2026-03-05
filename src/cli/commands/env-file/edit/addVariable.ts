@@ -19,7 +19,7 @@ async function addVariable<EnvContents extends DotenvParseOutput>(
   if (newVariableName in envFileContents) {
     program.error(
       `
-            ${errorPrefix}: Error with chosen environment variable name ${newVariableName}.
+            ${errorPrefix} Error with chosen environment variable name ${newVariableName}.
             Variable name already exists. If you wish to edit this variable, please select it from the initial menu instead.
             `,
       {
@@ -32,7 +32,7 @@ async function addVariable<EnvContents extends DotenvParseOutput>(
   if (/[ \t\r\n]/.test(newVariableName)) {
     program.error(
       normaliseIndents`
-            ${errorPrefix}: Error with chosen environment variable name ${newVariableName}.
+            ${errorPrefix} Error with chosen environment variable name ${newVariableName}.
             Environment variables are not allowed to have whitespace.
             `,
       {

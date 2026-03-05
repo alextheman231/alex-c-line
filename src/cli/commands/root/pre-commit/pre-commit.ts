@@ -12,6 +12,7 @@ import createStepRunner from "src/cli/commands/root/pre-commit/createStepRunner"
 import getCommandArguments from "src/cli/commands/root/pre-commit/getCommandArguments";
 import findAlexCLineConfig from "src/utility/configs/findAlexCLineConfig";
 import loadAlexCLineConfig from "src/utility/configs/loadAlexCLineConfig";
+import errorPrefix from "src/utility/constants/errorPrefix";
 
 function preCommit(program: Command) {
   program
@@ -23,18 +24,20 @@ function preCommit(program: Command) {
     .action(async (options) => {
       const configPath = await findAlexCLineConfig(process.cwd());
       if (!configPath) {
-        program.error("Could not find the path to the alex-c-line config file. Does it exist?", {
-          exitCode: 1,
-          code: "ALEX_C_LINE_CONFIG_NOT_FOUND",
-        });
+        throw new DataError(
+          { configPath },
+          "ALEX_C_LINE_CONFIG_NOT_FOUND",
+          "Could not find the path to the alex-c-line config file. Does it exist?",
+        );
       }
       const { preCommit: preCommitConfig } = await loadAlexCLineConfig(configPath);
 
       if (!preCommitConfig) {
-        program.error("Could not find the pre-commit config in alex-c-line config.", {
-          exitCode: 1,
-          code: "PRE_COMMIT_CONFIG_NOT_FOUND",
-        });
+        throw new DataError(
+          { configPath, preCommitConfig },
+          "PRE_COMMIT_CONFIG_NOT_FOUND",
+          "Could not find the pre-commit config in alex-c-line config.",
+        );
       }
 
       const {
@@ -48,7 +51,7 @@ function preCommit(program: Command) {
 
       switch (diffExitCode) {
         case 128:
-          program.error("Not currently in a Git repository", {
+          program.error(`${errorPrefix} Not currently in a Git repository`, {
             exitCode: 1,
             code: "GIT_DIFF_FAILED",
           });

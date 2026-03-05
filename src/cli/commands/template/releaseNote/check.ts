@@ -8,8 +8,8 @@ import z from "zod";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 
-import errorPrefix from "src/utility/constants/errorPrefix";
 import successPrefix from "src/utility/constants/successPrefix";
+import convertDataErrorToProgramError from "src/utility/errors/convertDataErrorToProgramError";
 import parseReleaseStatus from "src/utility/markdownTemplates/releaseNote/parseReleaseStatus";
 import validateReleaseDocument from "src/utility/markdownTemplates/releaseNote/validateReleaseDocument";
 
@@ -50,7 +50,7 @@ function templateReleaseNoteCheck(program: Command) {
         console.info(`${successPrefix} Release document is valid!`);
       } catch (error) {
         if (DataError.check(error)) {
-          program.error(`${errorPrefix}: ${error.message}`, { exitCode: 1, code: error.code });
+          convertDataErrorToProgramError(error, program, { exitCode: 2 });
         } else {
           throw error;
         }
