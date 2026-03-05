@@ -2,6 +2,8 @@ import type { Command } from "commander";
 
 import { encryptWithKey as encryptWithKeyUtility } from "@alextheman/utility";
 
+import errorPrefix from "src/utility/constants/errorPrefix";
+
 function encryptWithKey(program: Command) {
   program
     .command("encrypt-with-key")
@@ -14,7 +16,7 @@ function encryptWithKey(program: Command) {
         console.info(await encryptWithKeyUtility(publicKey, plaintextValue));
       } catch {
         program.error(
-          "Encryption failed. Please double-check that the given key is a valid base 64 string.",
+          `${errorPrefix} Encryption failed. Please double-check that the given key is a valid base 64 string.`,
           { exitCode: 1, code: "ENCRYPTION_FAILED" },
         );
       }

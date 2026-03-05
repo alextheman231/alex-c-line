@@ -55,7 +55,7 @@ describe("template release-note check", () => {
   });
 
   test.each<VersionType>(["major", "minor", "patch"])(
-    "Exit code 1 on unexpected release status, and exit code 0 on expected release status (when version type is %s)",
+    "Exit code 2 on unexpected release status, and exit code 0 on expected release status (when version type is %s)",
     async (versionType) => {
       await temporaryDirectoryTask(async (temporaryPath) => {
         // Write actual package.json contents to directory
@@ -79,7 +79,7 @@ describe("template release-note check", () => {
         const { exitCode: checkReleaseNoteReleasedBeforeExitCode } = await alexCLineTestClient({
           reject: false,
         })`template release-note check ${releaseNotePath} --expected-release-status ${ReleaseStatus.RELEASED}`;
-        expect(checkReleaseNoteReleasedBeforeExitCode).toBe(1);
+        expect(checkReleaseNoteReleasedBeforeExitCode).toBe(2);
 
         // Release the release note
         const { exitCode: setReleaseStatusExitCode } =
@@ -93,7 +93,7 @@ describe("template release-note check", () => {
         const { exitCode: checkReleaseNoteInProgressAfterExitCode } = await alexCLineTestClient({
           reject: false,
         })`template release-note check ${releaseNotePath} --expected-release-status ${ReleaseStatus.IN_PROGRESS}`;
-        expect(checkReleaseNoteInProgressAfterExitCode).toBe(1);
+        expect(checkReleaseNoteInProgressAfterExitCode).toBe(2);
       });
     },
     15000,

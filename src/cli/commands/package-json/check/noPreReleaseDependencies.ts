@@ -46,7 +46,7 @@ async function noPreReleaseDependencies(program: Command): Promise<void> {
   ) {
     program.error(
       normaliseIndents`
-            ${errorPrefix}: Pre-release version pinning is not allowed. Found the following violations:
+            ${errorPrefix} Pre-release version pinning is not allowed. Found the following violations:
 
         ` +
         JSON.stringify(

@@ -57,12 +57,7 @@ function templatePullRequestCreate(program: Command) {
       const { name: projectName } =
         commandLineOptions.projectName || config?.projectName
           ? { name: commandLineOptions.projectName ?? config?.projectName }
-          : parseZodSchema(z.object({ name: z.string() }), packageInfo, () => {
-              program.error(
-                "Invalid package.json - expected package.json to contain a `name` property.",
-                { exitCode: 1, code: "INVALID_PACKAGE_JSON" },
-              );
-            });
+          : parseZodSchema(z.object({ name: z.string() }), packageInfo);
 
       if (!projectName) {
         throw new DataError(

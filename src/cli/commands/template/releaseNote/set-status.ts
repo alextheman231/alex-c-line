@@ -41,10 +41,11 @@ function templateReleaseNoteSetStatus(program: Command) {
       );
 
       if (!documentPath.endsWith("md")) {
-        program.error("❌ ERROR: Invalid file path. Path must lead to a .md file.", {
-          exitCode: 1,
-          code: "INVALID_FILE_PATH",
-        });
+        throw new DataError(
+          { documentPath },
+          "INVALID_FILE_PATH",
+          "Invalid file path. Path must lead to a .md file.",
+        );
       }
 
       const fileBasename = path

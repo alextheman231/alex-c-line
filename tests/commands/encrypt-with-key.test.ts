@@ -6,6 +6,8 @@ import { beforeAll, describe, expect, test } from "vitest";
 import normaliseStdout from "tests/helpers/normaliseStdout";
 import alexCLineTestClient from "tests/testClients/alexCLineTestClient";
 
+import errorPrefix from "src/utility/constants/errorPrefix";
+
 type CommandName = "encrypt-with-key" | "encrypt";
 
 function runTests(command: CommandName) {
@@ -101,11 +103,12 @@ function runTests(command: CommandName) {
           const { exitCode, stderr: errorMessage, stdout } = error;
           expect(exitCode).toBe(1);
 
-          expect(normaliseStdout(stdout)).not.toContain(plaintextValue);
+          expect(stdout).not.toContain(plaintextValue);
           expect(errorMessage).not.toContain(plaintextValue);
           expect(errorMessage).toBe(
-            "Encryption failed. Please double-check that the given key is a valid base 64 string.",
+            `${errorPrefix} Encryption failed. Please double-check that the given key is a valid base 64 string.`,
           );
+          expect(errorPrefix).not.toContain(plaintextValue);
         } else {
           throw error;
         }

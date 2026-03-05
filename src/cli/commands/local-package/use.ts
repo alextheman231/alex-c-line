@@ -30,12 +30,10 @@ function localPackageUse(program: Command) {
       ]);
 
       if (!configPath) {
-        program.error(
+        throw new DataError(
+          { configPath },
+          "ALEX_C_LINE_PRIVATE_CONFIG_NOT_FOUND",
           "Could not find the path to the alex-c-line private config file (should be `.alex-c-line.private.config.js`). Does it exist?",
-          {
-            exitCode: 1,
-            code: "ALEX_C_LINE_PRIVATE_CONFIG_NOT_FOUND",
-          },
         );
       }
 
@@ -123,9 +121,9 @@ function localPackageUse(program: Command) {
           },
         );
 
-        if (exitCode !== 0 && args.length !== 0) {
+        if (exitCode !== 0) {
           program.error("❌ ERROR: An error occurred during the local `alex-c-line` run.", {
-            exitCode: 1,
+            exitCode,
             code: "LOCAL_ALEX_C_LINE_ERROR",
           });
         }

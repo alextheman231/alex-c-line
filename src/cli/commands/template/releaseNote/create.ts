@@ -13,6 +13,7 @@ import z from "zod";
 import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 
+import errorPrefix from "src/utility/constants/errorPrefix";
 import getReleaseNotePath from "src/utility/markdownTemplates/releaseNote/getReleaseNotePath";
 import getReleaseNoteTemplateFromMarkdown from "src/utility/markdownTemplates/releaseNote/getReleaseNoteTemplateFromMarkdown";
 
@@ -44,12 +45,6 @@ function templateReleaseNoteCreate(program: Command) {
       const { name, version: packageVersion } = parseZodSchema(
         z.object({ name: z.string(), version: z.string() }),
         packageInfo,
-        () => {
-          program.error(
-            "Invalid package.json - expected package.json to contain a `name` and `version` property.",
-            { exitCode: 1, code: "INVALID_PACKAGE_JSON" },
-          );
-        },
       );
 
       const versionNumber =
@@ -70,7 +65,7 @@ function templateReleaseNoteCreate(program: Command) {
         await writeFile(releaseNotePath, releaseNoteTemplate, { flag: "wx" });
       } catch (error) {
         if (error instanceof Error && "code" in error && error.code === "EEXIST") {
-          program.error("❌ ERROR: Release notes already exist.", {
+          program.error(`${errorPrefix} Release notes already exist.`, {
             exitCode: 1,
             code: "RELEASE_NOTE_EXISTS",
           });
