@@ -13,12 +13,12 @@ permissions:
 
 jobs:
   package-ci:
-    uses: alextheman231/github-actions/.github/workflows/package-ci.yml@06984a14da9331ddb4f308379582012bce780b0c # v10.0.0
+    uses: alextheman231/github-actions/.github/workflows/package-ci.yml@dc2d1246a158a1a04045a85a8c1bfd1978afeaf2 # v10.1.0
     with:
       os: '["ubuntu-latest", "windows-latest", "macos-latest"]'
 
   actions-ci:
-    uses: alextheman231/github-actions/.github/workflows/actions-ci.yml@06984a14da9331ddb4f308379582012bce780b0c # v10.0.0
+    uses: alextheman231/github-actions/.github/workflows/actions-ci.yml@dc2d1246a158a1a04045a85a8c1bfd1978afeaf2 # v10.1.0
 
   end-to-end-ci-steps:
     if: ${{ github.head_ref != 'alex-up-bot/change-major-version' && github.head_ref != 'alex-up-bot/change-minor-version' && github.head_ref != 'alex-up-bot/change-patch-version' }}
@@ -38,7 +38,7 @@ jobs:
           run_install: false
 
       - name: Use Node.js
-        uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238 # v6.2.0
+        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
         with:
           node-version: 22
           cache: "pnpm"
