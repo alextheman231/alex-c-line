@@ -70,7 +70,7 @@
     "use-local-utility": "pnpm run prepare-local-utility"
   },
   "dependencies": {
-    "@alextheman/utility": "^5.6.0",
+    "@alextheman/utility": "^5.6.1",
     "@inquirer/prompts": "^8.3.0",
     "boxen": "^8.0.1",
     "canvas": "^3.2.1",
@@ -91,12 +91,12 @@
     "@alextheman/eslint-plugin": "^5.10.0",
     "@commander-js/extra-typings": "^14.0.0",
     "@types/eslint": "^9.6.1",
-    "@types/node": "^25.3.2",
+    "@types/node": "^25.3.5",
     "@types/semver": "^7.7.1",
     "@types/update-notifier": "^6.0.8",
     "cross-env": "^10.1.0",
     "dotenv-cli": "^11.0.0",
-    "eslint": "^10.0.2",
+    "eslint": "^10.0.3",
     "husky": "^9.1.7",
     "prettier": "^3.8.1",
     "tempy": "^3.2.0",
