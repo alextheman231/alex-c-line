@@ -1,15 +1,15 @@
 import { DataError, parseZodSchema } from "@alextheman/utility";
 import z from "zod";
 
-import createMarkdownCommentPair from "src/utility/markdownTemplates/createMarkdownCommentPair";
 import getMarkdownBlock from "src/utility/markdownTemplates/getMarkdownBlock";
+import getMarkdownCommentPair from "src/utility/markdownTemplates/getMarkdownCommentPair";
 import normaliseMarkdown from "src/utility/markdownTemplates/normaliseMarkdown";
 import { ReleaseStatus } from "src/utility/markdownTemplates/releaseNote/types/ReleaseStatus";
 
 function getReleaseStatus(content: string): ReleaseStatus {
   const releaseStatus = getMarkdownBlock(
     content,
-    ...createMarkdownCommentPair("alex-c-line-release-status"),
+    ...getMarkdownCommentPair("alex-c-line-release-status"),
   );
 
   if (releaseStatus === null) {

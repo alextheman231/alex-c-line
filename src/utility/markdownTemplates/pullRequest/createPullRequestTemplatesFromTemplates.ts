@@ -26,7 +26,9 @@ function getTemplateVariables(config: Required<TemplatePullRequestConfig>): Reco
   };
 }
 
-async function getPullRequestTemplatesFromMarkdown(config: Required<TemplatePullRequestConfig>) {
+async function createPullRequestTemplatesFromTemplates(
+  config: Required<TemplatePullRequestConfig>,
+) {
   const templateVariables = getTemplateVariables(config);
   const { category } = config;
 
@@ -77,4 +79,4 @@ async function getPullRequestTemplatesFromMarkdown(config: Required<TemplatePull
   return allTemplates;
 }
 
-export default getPullRequestTemplatesFromMarkdown;
+export default createPullRequestTemplatesFromTemplates;

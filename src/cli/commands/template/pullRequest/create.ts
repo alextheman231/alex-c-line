@@ -11,7 +11,7 @@ import { PullRequestTemplateCategory } from "src/configs";
 import { parseTemplatePullRequestConfig } from "src/configs/helpers/template/pullRequest/defineTemplatePullRequestSchema";
 import findAlexCLineConfig from "src/utility/configs/findAlexCLineConfig";
 import loadAlexCLineConfig from "src/utility/configs/loadAlexCLineConfig";
-import getPullRequestTemplatesFromMarkdown from "src/utility/markdownTemplates/pullRequest/getPullRequestTemplatesFromMarkdown";
+import createPullRequestTemplatesFromTemplates from "src/utility/markdownTemplates/pullRequest/createPullRequestTemplatesFromTemplates";
 
 function templatePullRequestCreate(program: Command) {
   program
@@ -85,7 +85,7 @@ function templatePullRequestCreate(program: Command) {
       const gitHubPath = path.join(process.cwd(), ".github");
       const pullRequestTemplatePath = path.join(gitHubPath, "PULL_REQUEST_TEMPLATE");
 
-      const allTemplates = await getPullRequestTemplatesFromMarkdown({
+      const allTemplates = await createPullRequestTemplatesFromTemplates({
         ...parsedOptions,
         projectName,
       });

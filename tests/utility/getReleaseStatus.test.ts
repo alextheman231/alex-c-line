@@ -1,12 +1,12 @@
 import { normaliseIndents } from "@alextheman/utility";
 import { describe, expect, test } from "vitest";
 
-import createMarkdownCommentPair from "src/utility/markdownTemplates/createMarkdownCommentPair";
+import getMarkdownCommentPair from "src/utility/markdownTemplates/getMarkdownCommentPair";
 import getReleaseStatus from "src/utility/markdownTemplates/releaseNote/getReleaseStatus";
 import { ReleaseStatus } from "src/utility/markdownTemplates/releaseNote/types/ReleaseStatus";
 
 describe("getReleaseStatus", () => {
-  const [releaseStatusStart, releaseStatusEnd] = createMarkdownCommentPair(
+  const [releaseStatusStart, releaseStatusEnd] = getMarkdownCommentPair(
     "alex-c-line-release-status",
   );
   test.each([

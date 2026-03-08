@@ -68,7 +68,7 @@ async function getTemplateVariables(
   };
 }
 
-async function getReleaseNoteTemplateFromMarkdown(
+async function createReleaseNoteFromTemplates(
   projectName: string,
   version: VersionNumber,
   metadata: ReleaseNoteData,
@@ -81,4 +81,4 @@ async function getReleaseNoteTemplateFromMarkdown(
   return replaceMarkdownPlaceholders(await readFile(filePath, "utf-8"), templateVariables);
 }
 
-export default getReleaseNoteTemplateFromMarkdown;
+export default createReleaseNoteFromTemplates;
