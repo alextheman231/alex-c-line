@@ -28,10 +28,10 @@ async function evaluateResult<ExecaOptions extends Options>(
   program: Command,
   promisedResult: Promise<Result<ExecaOptions>>,
   failedCommand: string,
+  boundOptions: Options,
 ): Promise<Result<ExecaOptions>> {
   const result = await promisedResult;
-
-  if (result.exitCode !== 0) {
+  if (result.exitCode !== 0 && (boundOptions.reject ?? true)) {
     program.error(`Command failed: ${failedCommand}`, {
       exitCode: result.exitCode ?? 1,
       code: "PRE_COMMIT_FAILED",
@@ -54,6 +54,7 @@ function bindStepRunner<ExecaOptions extends Options>(
         program,
         client(command, args),
         `${command}${args.length ? ` ${args.join(" ")}` : ""}`,
+        boundOptions,
       );
     }
 
@@ -63,7 +64,7 @@ function bindStepRunner<ExecaOptions extends Options>(
         ...(second as Array<TemplateExpression>),
       );
       const client = runCommandAndLogToConsole(boundOptions);
-      return evaluateResult(program, client(...args), interpolate(...args));
+      return evaluateResult(program, client(...args), interpolate(...args), boundOptions);
     }
 
     return bindStepRunner(program, { ...boundOptions, ...(first as Options) } as ExecaOptions &
