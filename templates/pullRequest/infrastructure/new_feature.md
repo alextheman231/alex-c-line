@@ -5,7 +5,6 @@ placeholders:
 - projectName
 - infrastructureProvider
 ---
-
 # New Feature
 
 This is a new feature for `{{projectName}}` that adds a new {{infrastructureProvider}}-managed resource.
