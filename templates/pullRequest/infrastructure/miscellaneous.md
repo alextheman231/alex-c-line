@@ -4,7 +4,6 @@ category: infrastructure
 placeholders:
 - projectName
 ---
-
 # Miscellaneous
 
 This is a general change to `{{projectName}}` that does not fit in any of the other provided categories.

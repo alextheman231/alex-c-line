@@ -6,7 +6,6 @@ placeholders:
 - infrastructureProvider
 - requireConfirmationFrom
 ---
-
 # Manual Change
 
 This is a change to `{{projectName}}` that requires manual changes to the managed {{infrastructureProvider}} resources. {{requireConfirmationFrom}} **MUST** confirm by approval (or authorship of pull request) that these changes have been made before this can be merged in.

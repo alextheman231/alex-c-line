@@ -5,8 +5,6 @@ placeholders:
 - projectName
 - infrastructureProvider
 ---
-
-
 # Select a Template
 
 Please select the option that best describes your changes to `{{projectName}}`:
