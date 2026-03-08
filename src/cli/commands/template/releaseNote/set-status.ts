@@ -7,9 +7,9 @@ import z from "zod";
 import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
-import createMarkdownCommentPair from "src/utility/markdownTemplates/createMarkdownCommentPair";
 import getMarkdownBlock from "src/utility/markdownTemplates/getMarkdownBlock";
-import getReleaseNoteTemplateFromMarkdown from "src/utility/markdownTemplates/releaseNote/getReleaseNoteTemplateFromMarkdown";
+import getMarkdownCommentPair from "src/utility/markdownTemplates/getMarkdownCommentPair";
+import createReleaseNoteFromTemplates from "src/utility/markdownTemplates/releaseNote/createReleaseNoteFromTemplates";
 import parseReleaseStatus from "src/utility/markdownTemplates/releaseNote/parseReleaseStatus";
 import { ReleaseStatus } from "src/utility/markdownTemplates/releaseNote/types/ReleaseStatus";
 import validateReleaseDocument from "src/utility/markdownTemplates/releaseNote/validateReleaseDocument";
@@ -63,7 +63,7 @@ function templateReleaseNoteSetStatus(program: Command) {
       await validateReleaseDocument(name, versionNumber, initialDocument);
 
       const [userEditableSectionStart, userEditableSectionEnd] =
-        createMarkdownCommentPair("user-editable-section");
+        getMarkdownCommentPair("user-editable-section");
       const editableSection = getMarkdownBlock(
         initialDocument,
         userEditableSectionStart,
@@ -78,7 +78,7 @@ function templateReleaseNoteSetStatus(program: Command) {
         );
       }
 
-      const newDocument = await getReleaseNoteTemplateFromMarkdown(name, versionNumber, {
+      const newDocument = await createReleaseNoteFromTemplates(name, versionNumber, {
         status,
         editableSection,
       });

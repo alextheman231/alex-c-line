@@ -14,8 +14,8 @@ import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 
 import errorPrefix from "src/utility/constants/errorPrefix";
+import createReleaseNoteFromTemplates from "src/utility/markdownTemplates/releaseNote/createReleaseNoteFromTemplates";
 import getReleaseNotePath from "src/utility/markdownTemplates/releaseNote/getReleaseNotePath";
-import getReleaseNoteTemplateFromMarkdown from "src/utility/markdownTemplates/releaseNote/getReleaseNoteTemplateFromMarkdown";
 
 function templateReleaseNoteCreate(program: Command) {
   program
@@ -56,7 +56,7 @@ function templateReleaseNoteCreate(program: Command) {
 
       const releaseNotePath = getReleaseNotePath(versionNumber);
 
-      const releaseNoteTemplate = await getReleaseNoteTemplateFromMarkdown(name, versionNumber, {
+      const releaseNoteTemplate = await createReleaseNoteFromTemplates(name, versionNumber, {
         status: "In progress",
       });
 

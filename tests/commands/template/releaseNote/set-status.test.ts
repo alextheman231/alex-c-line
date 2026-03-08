@@ -10,10 +10,10 @@ import getReleaseSummary, { getMajorReleaseSummary } from "tests/helpers/getRele
 import setDirectory from "tests/helpers/setDirectory";
 import createAlexCLineTestClient from "tests/testClients/alexCLineTestClient";
 
-import createMarkdownCommentPair from "src/utility/markdownTemplates/createMarkdownCommentPair";
 import getMarkdownBlock from "src/utility/markdownTemplates/getMarkdownBlock";
+import getMarkdownCommentPair from "src/utility/markdownTemplates/getMarkdownCommentPair";
+import createReleaseNoteFromTemplates from "src/utility/markdownTemplates/releaseNote/createReleaseNoteFromTemplates";
 import getReleaseNotePath from "src/utility/markdownTemplates/releaseNote/getReleaseNotePath";
-import getReleaseNoteTemplateFromMarkdown from "src/utility/markdownTemplates/releaseNote/getReleaseNoteTemplateFromMarkdown";
 
 import { name, version } from "package.json" with { type: "json" };
 
@@ -76,7 +76,7 @@ describe("template release-note set-status", () => {
       await mkdir(path.dirname(path.join(temporaryPath, documentPath)), { recursive: true });
       await writeFile(
         path.join(temporaryPath, documentPath),
-        await getReleaseNoteTemplateFromMarkdown(name, new VersionNumber(version), {
+        await createReleaseNoteFromTemplates(name, new VersionNumber(version), {
           status: "In progress",
           descriptionOfChanges: "**Status**: In progress",
         }),
@@ -98,7 +98,7 @@ describe("template release-note set-status", () => {
       expect(
         getMarkdownBlock(
           fileContentsAfterWrite,
-          ...createMarkdownCommentPair("alex-c-line-release-status"),
+          ...getMarkdownCommentPair("alex-c-line-release-status"),
         ),
       );
       expect(fileContentsAfterWrite).toContain("**Status**: In progress");

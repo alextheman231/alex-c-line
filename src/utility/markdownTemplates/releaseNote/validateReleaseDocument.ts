@@ -9,8 +9,8 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 import findPackageRoot from "src/utility/fileSystem/findPackageRoot";
-import createMarkdownCommentPair from "src/utility/markdownTemplates/createMarkdownCommentPair";
 import getMarkdownBlock from "src/utility/markdownTemplates/getMarkdownBlock";
+import getMarkdownCommentPair from "src/utility/markdownTemplates/getMarkdownCommentPair";
 import normaliseMarkdown from "src/utility/markdownTemplates/normaliseMarkdown";
 import getReleaseStatus from "src/utility/markdownTemplates/releaseNote/getReleaseStatus";
 
@@ -65,7 +65,7 @@ async function validateReleaseDocument(
     );
   }
 
-  const releaseSummaryHeaders = createMarkdownCommentPair("alex-c-line-release-summary");
+  const releaseSummaryHeaders = getMarkdownCommentPair("alex-c-line-release-summary");
 
   const summary = getMarkdownBlock(content, ...releaseSummaryHeaders);
 

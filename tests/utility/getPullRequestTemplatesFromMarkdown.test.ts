@@ -1,11 +1,11 @@
 import { DataError } from "@alextheman/utility";
 import { describe, expect, test } from "vitest";
 
-import getPullRequestTemplatesFromMarkdown from "src/utility/markdownTemplates/pullRequest/getPullRequestTemplatesFromMarkdown";
+import createPullRequestTemplatesFromTemplates from "src/utility/markdownTemplates/pullRequest/createPullRequestTemplatesFromTemplates";
 
 describe("getPullRequestTemplatesFromMarkdown", () => {
   test("Gets the correct templates", async () => {
-    const allGeneralTemplates = await getPullRequestTemplatesFromMarkdown({
+    const allGeneralTemplates = await createPullRequestTemplatesFromTemplates({
       category: "general",
       projectName: "Test project",
       projectType: "package",
@@ -30,7 +30,7 @@ describe("getPullRequestTemplatesFromMarkdown", () => {
       expect(contents).not.toContain("{{projectType}}");
     }
 
-    const allInfrastructureTemplates = await getPullRequestTemplatesFromMarkdown({
+    const allInfrastructureTemplates = await createPullRequestTemplatesFromTemplates({
       category: "infrastructure",
       projectName: "Test project",
       infrastructureProvider: "Terraform",
@@ -61,7 +61,7 @@ describe("getPullRequestTemplatesFromMarkdown", () => {
   test("Throws a DataError if there is no folder corresponding to the category", async () => {
     try {
       // @ts-expect-error: To allow us to simulate a pure JavaScript user
-      await getPullRequestTemplatesFromMarkdown({ category: "hi" });
+      await createPullRequestTemplatesFromTemplates({ category: "hi" });
       throw new Error("DID_NOT_THROW");
     } catch (error) {
       if (DataError.check(error)) {
