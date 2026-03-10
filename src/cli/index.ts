@@ -3,6 +3,7 @@ import { Command } from "commander";
 
 import createCommands from "src/cli/commands";
 import formatError from "src/utility/errors/formatError";
+import { registerUpdateMessagePrinter } from "src/utility/updates/pendingUpdateMessage";
 import runAutomatedUpdateCheck from "src/utility/updates/runAutomatedUpdateCheck";
 import shouldRunAutomatedUpdateCheck from "src/utility/updates/shouldRunAutomatedUpdateCheck";
 
@@ -16,8 +17,12 @@ import packageInfo from "package.json" with { type: "json" };
       .description(packageInfo.description)
       .version(packageInfo.version);
 
+    registerUpdateMessagePrinter();
+
     if (shouldRunAutomatedUpdateCheck) {
-      await runAutomatedUpdateCheck();
+      setTimeout(() => {
+        void runAutomatedUpdateCheck();
+      }, 0);
     }
 
     createCommands(program);

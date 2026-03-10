@@ -13,6 +13,7 @@ import { version } from "package.json" with { type: "json" };
 export interface CheckUpdateOptions {
   program?: Command;
   logNoUpdates?: boolean;
+  updateLogger?: (message: string) => void;
 }
 
 async function checkUpdate(options?: CheckUpdateOptions) {
@@ -50,7 +51,8 @@ async function checkUpdate(options?: CheckUpdateOptions) {
         code: "OUTDATED_VERSION",
       });
     } else {
-      console.info(messageWithArtwork);
+      const { updateLogger = console.info } = options ?? {};
+      updateLogger(messageWithArtwork);
     }
   } else if (options?.logNoUpdates) {
     console.info(`alex-c-line is up to date (${currentVersion}).`);
