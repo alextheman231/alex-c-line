@@ -1,10 +1,10 @@
 #!/usr/bin/env node
-import { parseBoolean } from "@alextheman/utility";
 import { Command } from "commander";
 
 import createCommands from "src/cli/commands";
 import formatError from "src/utility/errors/formatError";
 import runAutomatedUpdateCheck from "src/utility/updates/runAutomatedUpdateCheck";
+import shouldRunAutomatedUpdateCheck from "src/utility/updates/shouldRunAutomatedUpdateCheck";
 
 import packageInfo from "package.json" with { type: "json" };
 
@@ -16,13 +16,7 @@ import packageInfo from "package.json" with { type: "json" };
       .description(packageInfo.description)
       .version(packageInfo.version);
 
-    if (
-      !(
-        process.env.NODE_ENV === "test" ||
-        parseBoolean(process.env.RUN_END_TO_END ?? "false") ||
-        parseBoolean(process.env.CI ?? "false")
-      )
-    ) {
+    if (shouldRunAutomatedUpdateCheck) {
       await runAutomatedUpdateCheck();
     }
 
