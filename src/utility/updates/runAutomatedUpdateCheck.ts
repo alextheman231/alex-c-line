@@ -3,6 +3,7 @@ import { ONE_DAY_IN_MILLISECONDS } from "@alextheman/utility";
 import createAlexCLineGlobalCache from "src/cache/global/createAlexCLineGlobalCache";
 import loadAlexCLineGlobalCache from "src/cache/global/loadAlexCLineGlobalCache";
 import checkUpdate from "src/utility/updates/checkUpdate";
+import { setPendingUpdateMessage } from "src/utility/updates/pendingUpdateMessage";
 
 import { version } from "package.json" with { type: "json" };
 
@@ -19,7 +20,7 @@ async function runAutomatedUpdateCheck() {
       lastChecked === undefined ||
       currentDate.getTime() - lastChecked.getTime() >= ONE_DAY_IN_MILLISECONDS
     ) {
-      await checkUpdate({ logNoUpdates: false });
+      await checkUpdate({ logNoUpdates: false, updateLogger: setPendingUpdateMessage });
       await createAlexCLineGlobalCache({
         ...(cacheData ?? {}),
         updateChecks: {
