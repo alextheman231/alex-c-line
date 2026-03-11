@@ -1,8 +1,8 @@
 import type { Command } from "commander";
 
 import { normaliseIndents, VersionNumber } from "@alextheman/utility";
+import axios from "axios";
 import chalk from "chalk";
-import { execa } from "execa";
 import supportsColor from "supports-color";
 
 import centerLine from "src/utility/miscellaneous/centerLine";
@@ -18,8 +18,10 @@ export interface CheckUpdateOptions {
 
 async function checkUpdate(options?: CheckUpdateOptions) {
   const currentVersion = new VersionNumber(version);
-  const { stdout: npmViewResult } = await execa`npm view alex-c-line version`;
-  const latestVersion = new VersionNumber(npmViewResult.trim());
+  const { data } = await axios.get("https://registry.npmjs.org/alex-c-line/latest", {
+    timeout: 5000,
+  });
+  const latestVersion = new VersionNumber(data.version);
 
   if (!VersionNumber.isEqual(currentVersion, latestVersion)) {
     const message = normaliseIndents`
