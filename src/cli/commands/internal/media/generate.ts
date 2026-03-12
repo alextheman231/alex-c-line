@@ -24,7 +24,7 @@ function internalMediaGenerate(program: Command) {
 
           if (entry.isFile() && entry.name.endsWith(".py")) {
             console.info(`Rendering ${path.relative(process.cwd(), fullPath)}...`);
-            await execa({ stdio: "inherit" })`manim -pql ${fullPath}`;
+            await execa({ stdio: "inherit" })`manim -ql ${fullPath}`;
           }
         }
       }
