@@ -9,7 +9,7 @@ placeholders:
 
 Please select the option that best describes your changes to `{{projectName}}`:
 
-- [Breaking Change](?template=breaking_change.md) - may require changes in how the {{projectType}} is used and/or deployed.
+- [Breaking Change](?template=breaking_change.md) - For changes that have a substantial effect on how the {{projectType}} is used and/or deployed.
 - [New Feature](?template=new_feature.md) - For changes that add a new feature to the {{projectType}}.
 - [Bug Fix](?template=bug_fix.md) - For changes that fix a bug in the {{projectType}}.
 - [Tooling Change](?template=tooling_change.md) - For changes to the {{projectType}}'s tooling (dependencies, devDependencies, configs...).
