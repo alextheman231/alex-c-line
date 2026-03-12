@@ -4,7 +4,13 @@ import { ExecaError } from "execa";
 function formatError(error: unknown): never {
   if (error instanceof ExecaError) {
     const dataError = new DataError(
-      { cwd: error.cwd, command: error.command, exitCode: error.exitCode },
+      {
+        cwd: error.cwd,
+        command: error.command,
+        exitCode: error.exitCode,
+        stderr: error.stderr,
+        stdout: error.stdout,
+      },
       error.code,
       error.message,
     );
