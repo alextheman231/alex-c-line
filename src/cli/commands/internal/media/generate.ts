@@ -17,7 +17,7 @@ function internalMediaGenerate(program: Command) {
           const fullPath = path.join(directory, entry.name);
           if (
             entry.isDirectory() &&
-            ![".git", "node_modules", "__pycache__"].includes(entry.name)
+            ![".git", "node_modules", "__pycache__", ".venv"].includes(entry.name)
           ) {
             await readDirectory(fullPath);
           }
