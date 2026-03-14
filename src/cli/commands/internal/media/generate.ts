@@ -9,7 +9,8 @@ function internalMediaGenerate(program: Command) {
   program
     .command("generate")
     .argument("[directory]", "The directory to generate from", process.cwd())
-    .action(async (directory) => {
+    .option("--ignore <ignore>", "Extra directories to ignore as comma-separated list")
+    .action(async (directory, { ignore }) => {
       async function readDirectory(directory: string) {
         const directoryContents = await readdir(directory, { withFileTypes: true });
 
@@ -17,7 +18,14 @@ function internalMediaGenerate(program: Command) {
           const fullPath = path.join(directory, entry.name);
           if (
             entry.isDirectory() &&
-            ![".git", "node_modules", "__pycache__", ".venv"].includes(entry.name)
+            ![
+              ".git",
+              "node_modules",
+              "__pycache__",
+              ".venv",
+              "helpers",
+              ...[ignore?.split(",") ?? ""],
+            ].includes(entry.name)
           ) {
             await readDirectory(fullPath);
           }
