@@ -1,10 +1,11 @@
 import type { Command } from "commander";
 
-import { execa } from "execa";
+import { execa, ExecaError } from "execa";
 
 import { stat } from "node:fs/promises";
 import path from "node:path";
 
+import errorPrefix from "src/utility/constants/errorPrefix";
 import warningPrefix from "src/utility/constants/warningPrefix";
 import readdirSafe from "src/utility/fileSystem/readdirSafe";
 
@@ -24,12 +25,27 @@ function internalMediaGenerate(program: Command) {
       ]);
 
       async function renderFile(file: string) {
-        console.info(`Rendering ${path.relative(process.cwd(), file)}...`);
+        const relativePath = path.relative(process.cwd(), file);
+        console.info(`Rendering ${relativePath}...`);
 
-        return await execa({
-          stdio: "inherit",
-          env: { ...process.env, PYTHONPATH: path.resolve("src") },
-        })`manim -qh ${file}`;
+        try {
+          return await execa({
+            stdio: "inherit",
+            env: { ...process.env, PYTHONPATH: path.resolve("src") },
+          })`manim -qh ${file}`;
+        } catch (error) {
+          if (error instanceof ExecaError) {
+            program.error(
+              `${errorPrefix} An error has occurred with Manim while rendering ${relativePath}.`,
+              {
+                exitCode: error.exitCode ?? 1,
+                code: "MANIM_ERROR",
+              },
+            );
+          } else {
+            throw error;
+          }
+        }
       }
 
       async function readDirectory(directory: string) {
