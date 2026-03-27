@@ -1,6 +1,6 @@
 import type { CreateEnumType } from "@alextheman/utility";
 
-import { normaliseIndents, parseBoolean } from "@alextheman/utility";
+import { normaliseIndents, omitProperties, parseBoolean } from "@alextheman/utility";
 import {
   getPackageJsonContents,
   getPackageJsonPath,
@@ -86,7 +86,7 @@ describe.each<Entrypoint>([Entrypoint.ROOT, Entrypoint.CONFIGS, Entrypoint.CONFI
             };
 
             if (packageManager === PackageManager.PNPM) {
-              testPackageInfo.pnpm = packageInfo.pnpm;
+              testPackageInfo.pnpm = omitProperties(packageInfo.pnpm, "overrides");
             }
 
             await writeFile(

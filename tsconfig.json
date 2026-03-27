@@ -6,9 +6,10 @@
     "types": ["eslint", "node", "vitest"],
     "module": "ESNext",
     "skipLibCheck": true,
-    "baseUrl": ".",
     "paths": {
-      "src/*": ["src/*"]
+      "src/*": ["./src/*"],
+      "tests/*": ["./tests/*"],
+      "package.json": ["./package.json"]
     },
     "esModuleInterop": true,
 

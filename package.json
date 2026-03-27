@@ -103,7 +103,7 @@
     "tempy": "^3.2.0",
     "ts-node": "^10.9.2",
     "tsdown": "^0.21.6",
-    "typescript": "^6.0.2",
+    "typescript": "^5.9.3",
     "typescript-eslint": "^8.57.2",
     "vite-tsconfig-paths": "^6.1.1",
     "vitest": "^4.1.2"
@@ -113,6 +113,9 @@
     "node": ">=22.0.0"
   },
   "pnpm": {
+    "overrides": {
+      "typescript": "<6.0.0"
+    },
     "onlyBuiltDependencies": [
       "canvas",
       "core-js",
