@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@alextheman/utility':
-        specifier: ^5.8.0
-        version: 5.8.0
+        specifier: ^5.9.0
+        version: 5.9.0
       '@inquirer/prompts':
         specifier: ^8.3.2
         version: 8.3.2(@types/node@25.5.0)
@@ -141,8 +141,8 @@ packages:
       vite-tsconfig-paths: '>=5.1.4'
       vitest: '>=4.0.13'
 
-  '@alextheman/utility@5.8.0':
-    resolution: {integrity: sha512-uU2URao/Xme3dDaDwbg/s0eA/ftmJ4LUBZtVqMXSOFROrsUJEQvjphm2Futfs671OIb2KZolSdzCgvZW9Iv8iw==}
+  '@alextheman/utility@5.9.0':
+    resolution: {integrity: sha512-ALMb9uCOiV3AxavIgcB8rb4B04jfwGU7zLmvzX1Y078oOzQ000MyHG44MVyKvRVT/oXjIPAmizm/E/9BL85Vng==}
     engines: {node: '>=22.3.0'}
 
   '@altano/repository-tools@2.0.3':
@@ -1553,8 +1553,8 @@ packages:
   eastasianwidth@0.2.0:
     resolution: {integrity: sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==}
 
-  electron-to-chromium@1.5.328:
-    resolution: {integrity: sha512-QNQ5l45DzYytThO21403XN3FvK0hOkWDG8viNf6jqS42msJ8I4tGDSpBCgvDRRPnkffafiwAym2X2eHeGD2V0w==}
+  electron-to-chromium@1.5.329:
+    resolution: {integrity: sha512-/4t+AS1l4S3ZC0Ja7PHFIWeBIxGA3QGqV8/yKsP36v7NcyUCl+bIcmw6s5zVuMIECWwBrAK/6QLzTmbJChBboQ==}
 
   emoji-regex@10.6.0:
     resolution: {integrity: sha512-toUI84YS5YmxW219erniWD0CIVOo46xGKColeNQRgOzDorgBi1v4D71/OFzgD9GO2UGKIv1C3Sp8DAn0+j5w7A==}
@@ -3211,7 +3211,7 @@ snapshots:
 
   '@alextheman/eslint-plugin@5.10.4(8207d91db7974919614acb43a5cbb833)':
     dependencies:
-      '@alextheman/utility': 5.8.0
+      '@alextheman/utility': 5.9.0
       '@eslint/compat': 2.0.3(eslint@10.1.0(supports-color@10.2.2))
       '@eslint/js': 10.0.1(eslint@10.1.0(supports-color@10.2.2))
       '@typescript-eslint/types': 8.58.0
@@ -3242,7 +3242,7 @@ snapshots:
       - supports-color
       - typescript
 
-  '@alextheman/utility@5.8.0':
+  '@alextheman/utility@5.9.0':
     dependencies:
       dotenv: 17.3.1
       execa: 9.6.1
@@ -4306,7 +4306,7 @@ snapshots:
     dependencies:
       baseline-browser-mapping: 2.10.12
       caniuse-lite: 1.0.30001782
-      electron-to-chromium: 1.5.328
+      electron-to-chromium: 1.5.329
       node-releases: 2.0.36
       update-browserslist-db: 1.2.3(browserslist@4.28.1)
 
@@ -4491,7 +4491,7 @@ snapshots:
 
   eastasianwidth@0.2.0: {}
 
-  electron-to-chromium@1.5.328: {}
+  electron-to-chromium@1.5.329: {}
 
   emoji-regex@10.6.0: {}
 

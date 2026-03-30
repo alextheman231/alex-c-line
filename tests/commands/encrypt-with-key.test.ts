@@ -1,4 +1,4 @@
-import { encryptWithKey } from "@alextheman/utility";
+import { encryptWithKey } from "@alextheman/utility/node";
 import { ExecaError } from "execa";
 import sodium from "libsodium-wrappers";
 import { beforeAll, describe, expect, test } from "vitest";

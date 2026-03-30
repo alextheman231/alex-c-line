@@ -1,6 +1,6 @@
 import type { Command } from "commander";
 
-import { encryptWithKey as encryptWithKeyUtility } from "@alextheman/utility";
+import { encryptWithKey as encryptWithKeyUtility } from "@alextheman/utility/node";
 
 import errorPrefix from "src/utility/constants/errorPrefix";
 
