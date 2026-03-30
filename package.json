@@ -50,7 +50,7 @@
     "lint-pre-release": "node dist/index.js package-json check --rules no-pre-release-dependencies",
     "lint-prettier": "pnpm run lint-prettier-typescript && pnpm run lint-prettier-javascript && pnpm run lint-prettier-yml && pnpm run lint-prettier-html",
     "lint-prettier-html": "prettier --check \"**/*.html\"",
-    "lint-prettier-javascript": "prettier --check \"./**.js\"",
+    "lint-prettier-javascript": "prettier --check \"./**/*.js\"",
     "lint-prettier-typescript": "prettier --check --parser typescript \"./**/*.ts\"",
     "lint-prettier-yml": "prettier --check \"./**/*.{yml,yaml}\"",
     "lint-tsc": "tsc --noEmit",
