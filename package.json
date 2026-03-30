@@ -113,9 +113,6 @@
     "node": ">=22.0.0"
   },
   "pnpm": {
-    "overrides": {
-      "typescript": "<6.0.0"
-    },
     "onlyBuiltDependencies": [
       "canvas",
       "core-js",
