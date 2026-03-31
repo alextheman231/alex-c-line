@@ -9,110 +9,110 @@ importers:
   .:
     dependencies:
       '@alextheman/utility':
-        specifier: ^5.9.0
+        specifier: 5.9.0
         version: 5.9.0
       '@inquirer/prompts':
-        specifier: ^8.3.2
+        specifier: 8.3.2
         version: 8.3.2(@types/node@25.5.0)
       axios:
-        specifier: ^1.14.0
+        specifier: 1.14.0
         version: 1.14.0
       boxen:
-        specifier: ^8.0.1
+        specifier: 8.0.1
         version: 8.0.1
       canvas:
-        specifier: ^3.2.2
+        specifier: 3.2.2
         version: 3.2.2
       chalk:
-        specifier: ^5.6.2
+        specifier: 5.6.2
         version: 5.6.2
       commander:
-        specifier: ^14.0.3
+        specifier: 14.0.3
         version: 14.0.3
       dotenv:
-        specifier: ^17.3.1
+        specifier: 17.3.1
         version: 17.3.1
       dotenv-stringify:
-        specifier: ^3.0.1
+        specifier: 3.0.1
         version: 3.0.1
       env-paths:
-        specifier: ^4.0.0
+        specifier: 4.0.0
         version: 4.0.0
       execa:
-        specifier: ^9.6.1
+        specifier: 9.6.1
         version: 9.6.1
       figlet:
-        specifier: ^1.11.0
+        specifier: 1.11.0
         version: 1.11.0
       gray-matter:
-        specifier: ^4.0.3
+        specifier: 4.0.3
         version: 4.0.3
       libsodium-wrappers:
-        specifier: ^0.8.2
+        specifier: 0.8.2
         version: 0.8.2
       semver:
-        specifier: ^7.7.4
+        specifier: 7.7.4
         version: 7.7.4
       supports-color:
-        specifier: ^10.2.2
+        specifier: 10.2.2
         version: 10.2.2
       zod:
-        specifier: ^4.3.6
+        specifier: 4.3.6
         version: 4.3.6
     devDependencies:
       '@alextheman/eslint-plugin':
-        specifier: ^5.10.4
+        specifier: 5.10.4
         version: 5.10.4(8207d91db7974919614acb43a5cbb833)
       '@commander-js/extra-typings':
-        specifier: ^14.0.0
+        specifier: 14.0.0
         version: 14.0.0(commander@14.0.3)
       '@types/eslint':
-        specifier: ^9.6.1
+        specifier: 9.6.1
         version: 9.6.1
       '@types/node':
-        specifier: ^25.5.0
+        specifier: 25.5.0
         version: 25.5.0
       '@types/semver':
-        specifier: ^7.7.1
+        specifier: 7.7.1
         version: 7.7.1
       '@types/update-notifier':
-        specifier: ^6.0.8
+        specifier: 6.0.8
         version: 6.0.8
       cross-env:
-        specifier: ^10.1.0
+        specifier: 10.1.0
         version: 10.1.0
       dotenv-cli:
-        specifier: ^11.0.0
+        specifier: 11.0.0
         version: 11.0.0
       eslint:
-        specifier: ^10.1.0
+        specifier: 10.1.0
         version: 10.1.0(supports-color@10.2.2)
       husky:
-        specifier: ^9.1.7
+        specifier: 9.1.7
         version: 9.1.7
       prettier:
-        specifier: ^3.8.1
+        specifier: 3.8.1
         version: 3.8.1
       tempy:
-        specifier: ^3.2.0
+        specifier: 3.2.0
         version: 3.2.0
       ts-node:
-        specifier: ^10.9.2
+        specifier: 10.9.2
         version: 10.9.2(@types/node@25.5.0)(typescript@6.0.2)
       tsdown:
-        specifier: ^0.21.7
+        specifier: 0.21.7
         version: 0.21.7(@emnapi/core@1.9.1)(@emnapi/runtime@1.9.1)(synckit@0.11.12)(typescript@6.0.2)
       typescript:
-        specifier: ^6.0.2
+        specifier: 6.0.2
         version: 6.0.2
       typescript-eslint:
-        specifier: ^8.58.0
+        specifier: 8.58.0
         version: 8.58.0(eslint@10.1.0(supports-color@10.2.2))(supports-color@10.2.2)(typescript@6.0.2)
       vite-tsconfig-paths:
-        specifier: ^6.1.1
+        specifier: 6.1.1
         version: 6.1.1(supports-color@10.2.2)(typescript@6.0.2)(vite@7.3.1(@types/node@25.5.0)(yaml@2.8.3))
       vitest:
-        specifier: ^4.1.2
+        specifier: 4.1.2
         version: 4.1.2(@types/node@25.5.0)(vite@7.3.1(@types/node@25.5.0)(yaml@2.8.3))
 
 packages:
