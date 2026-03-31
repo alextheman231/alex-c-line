@@ -1,6 +1,6 @@
-import plugin from "@alextheman/eslint-plugin";
+import alexPlugin from "@alextheman/eslint-plugin";
 
 export default [
-  ...plugin.configs["internal/alex-c-line"],
-  ...plugin.configs["general/package-json"],
+  ...alexPlugin.configs["internal/alex-c-line"],
+  ...alexPlugin.configs["internal/package-json"],
 ];

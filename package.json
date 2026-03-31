@@ -89,7 +89,7 @@
     "zod": "4.3.6"
   },
   "devDependencies": {
-    "@alextheman/eslint-plugin": "5.10.4",
+    "@alextheman/eslint-plugin": "5.11.0",
     "@commander-js/extra-typings": "14.0.0",
     "@types/eslint": "9.6.1",
     "@types/node": "25.5.0",
