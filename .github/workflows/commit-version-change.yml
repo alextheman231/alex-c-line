@@ -9,10 +9,9 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
-    uses: alextheman231/github-actions/.github/workflows/commit-version-change.yml@e4a092a202ca5bac12242bbf53a046f32a08455a # v10.4.0
+    uses: alextheman231/github-actions/.github/workflows/commit-version-change.yml@f00401c75c7e0e158a87be24c87ee8ebbd664dbb # v10.5.1
     with:
       version-type: major
-      create-feature-docs: false
     secrets:
       APP_ID: ${{ secrets.ALEX_UP_BOT_APP_ID }}
       APP_PRIVATE_KEY: ${{ secrets.ALEX_UP_BOT_PRIVATE_KEY }}
@@ -21,10 +20,9 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
-    uses: alextheman231/github-actions/.github/workflows/commit-version-change.yml@e4a092a202ca5bac12242bbf53a046f32a08455a # v10.4.0
+    uses: alextheman231/github-actions/.github/workflows/commit-version-change.yml@f00401c75c7e0e158a87be24c87ee8ebbd664dbb # v10.5.1
     with:
       version-type: minor
-      create-feature-docs: false
     secrets:
       APP_ID: ${{ secrets.ALEX_UP_BOT_APP_ID }}
       APP_PRIVATE_KEY: ${{ secrets.ALEX_UP_BOT_PRIVATE_KEY }}
@@ -33,10 +31,9 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
-    uses: alextheman231/github-actions/.github/workflows/commit-version-change.yml@e4a092a202ca5bac12242bbf53a046f32a08455a # v10.4.0
+    uses: alextheman231/github-actions/.github/workflows/commit-version-change.yml@f00401c75c7e0e158a87be24c87ee8ebbd664dbb # v10.5.1
     with:
       version-type: patch
-      create-feature-docs: false
     secrets:
       APP_ID: ${{ secrets.ALEX_UP_BOT_APP_ID }}
       APP_PRIVATE_KEY: ${{ secrets.ALEX_UP_BOT_PRIVATE_KEY }}
