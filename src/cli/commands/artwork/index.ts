@@ -1,7 +1,6 @@
 import type { Command } from "commander";
 
 import artworkLog from "src/cli/commands/artwork/log";
-import artworkSave from "src/cli/commands/artwork/save";
 import loadCommands from "src/utility/miscellaneous/loadCommands";
 
 function artwork(program: Command) {
@@ -11,7 +10,6 @@ function artwork(program: Command) {
 
   loadCommands(artworkProgram, {
     artworkLog,
-    artworkSave,
   });
 }
 
