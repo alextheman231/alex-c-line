@@ -9,7 +9,7 @@ permissions:
 jobs:
   create-github-release:
     if: ${{ github.repository == 'alextheman231/alex-c-line' }}
-    uses: alextheman231/github-actions/.github/workflows/create-github-release.yml@37105e9531353a1e0d4914cf954e10efe03a4bdf # v11.0.0
+    uses: alextheman231/github-actions/.github/workflows/create-github-release.yml@d7dc056201417cb361b653afa9a09b5900e245e4 # v11.0.4
     secrets:
       APP_ID: ${{ secrets.ALEX_UP_BOT_APP_ID }}
       APP_PRIVATE_KEY: ${{ secrets.ALEX_UP_BOT_PRIVATE_KEY }}
