@@ -72,7 +72,7 @@
     "use-local-utility": "pnpm run prepare-local-utility"
   },
   "dependencies": {
-    "@alextheman/utility": "5.10.1",
+    "@alextheman/utility": "5.11.0",
     "@inquirer/prompts": "8.4.1",
     "axios": "1.15.0",
     "boxen": "8.0.1",
@@ -114,9 +114,6 @@
     "node": ">=22.0.0"
   },
   "pnpm": {
-    "overrides": {
-      "libsodium-wrappers": "npm:noop-package@1.0.0"
-    },
     "onlyBuiltDependencies": [
       "esbuild",
       "unrs-resolver"
