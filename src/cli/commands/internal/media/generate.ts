@@ -12,9 +12,13 @@ import readdirSafe from "src/utility/fileSystem/readdirSafe";
 function internalMediaGenerate(program: Command) {
   program
     .command("generate")
-    .argument("[target]", "The directory to generate from", process.cwd())
-    .option("--ignore <ignore>", "Extra directories to ignore as comma-separated list")
-    .action(async (target, { ignore }) => {
+    .argument("[target]", "The directory to generate from.", process.cwd())
+    .option("--ignore <ignore>", "Extra directories to ignore as comma-separated list.")
+    .option(
+      "-r --resolution <resolution>",
+      "The resolution of the rendered scenes, with a comma between width and height.",
+    )
+    .action(async (target, { ignore, resolution }) => {
       const ignored = new Set([
         ".git",
         "node_modules",
@@ -28,11 +32,16 @@ function internalMediaGenerate(program: Command) {
         const relativePath = path.relative(process.cwd(), file);
         console.info(`Rendering ${relativePath}...`);
 
+        const runManimCommand = execa({
+          stdio: "inherit",
+          env: { ...process.env, PYTHONPATH: path.resolve("src") },
+        });
+
         try {
-          return await execa({
-            stdio: "inherit",
-            env: { ...process.env, PYTHONPATH: path.resolve("src") },
-          })`manim -qh ${file}`;
+          if (resolution) {
+            return await runManimCommand`manim -qh -r ${resolution} ${file}`;
+          }
+          return await runManimCommand`manim -qh ${file}`;
         } catch (error) {
           if (error instanceof ExecaError) {
             program.error(
