@@ -84,7 +84,6 @@
     "execa": "9.6.1",
     "figlet": "1.11.0",
     "gray-matter": "4.0.3",
-    "libsodium-wrappers": "0.8.3",
     "semver": "7.7.4",
     "supports-color": "10.2.2",
     "zod": "4.3.6"
@@ -115,6 +114,9 @@
     "node": ">=22.0.0"
   },
   "pnpm": {
+    "overrides": {
+      "libsodium-wrappers": "npm:noop-package@1.0.0"
+    },
     "onlyBuiltDependencies": [
       "esbuild",
       "unrs-resolver"
