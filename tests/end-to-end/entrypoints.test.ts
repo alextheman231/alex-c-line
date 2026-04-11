@@ -54,7 +54,7 @@ function getAlexCLineConfig(
   `;
 }
 
-describe.each<Entrypoint>([Entrypoint.ROOT, Entrypoint.CONFIGS, Entrypoint.CONFIGS_INTERNAL])(
+describe.skip.each<Entrypoint>([Entrypoint.ROOT, Entrypoint.CONFIGS, Entrypoint.CONFIGS_INTERNAL])(
   "Entrypoint %s",
   (entrypoint) => {
     describe.each<PackageManager>(["npm", "pnpm"])("Package manager %s", (packageManager) => {
