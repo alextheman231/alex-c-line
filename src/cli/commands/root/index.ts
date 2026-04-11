@@ -1,13 +1,11 @@
 import type { Command } from "commander";
 
-import encryptWithKey from "src/cli/commands/root/encrypt-with-key";
 import preCommit from "src/cli/commands/root/pre-commit/pre-commit";
 import sayHello from "src/cli/commands/root/say-hello";
 import loadCommands from "src/utility/miscellaneous/loadCommands";
 
 function root(program: Command) {
   loadCommands(program, {
-    encryptWithKey,
     preCommit,
     sayHello,
   });
