@@ -5,7 +5,7 @@ import type { ReleaseStatus } from "src/utility/markdownTemplates/releaseNote/ty
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 
-import ALEX_C_LINE_PACKAGE_ROOT from "src/utility/constants/alexCLinePackageRoot";
+import ALEX_C_LINE_PACKAGE_ROOT from "src/utility/constants/ALEX_C_LINE_PACKAGE_ROOT";
 import getEditableSectionFromTemplate from "src/utility/markdownTemplates/getEditableSectionFromTemplate";
 import replaceMarkdownPlaceholders from "src/utility/markdownTemplates/replaceMarkdownPlaceholders";
 

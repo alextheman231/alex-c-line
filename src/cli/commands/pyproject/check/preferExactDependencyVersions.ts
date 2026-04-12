@@ -6,8 +6,8 @@ import z from "zod";
 
 import { readFile } from "node:fs/promises";
 
-import errorPrefix from "src/utility/constants/errorPrefix";
-import successPrefix from "src/utility/constants/successPrefix";
+import ERROR_PREFIX from "src/utility/constants/ERROR_PREFIX";
+import SUCCESS_PREFIX from "src/utility/constants/SUCCESS_PREFIX";
 
 const pyprojectSchema = z
   .object({
@@ -39,13 +39,13 @@ async function preferExactDependencyVersions(program: Command) {
   }
 
   if (violations.length !== 0) {
-    program.error(`${errorPrefix} Non-exact dependencies found:\n\n${violations.join("\n")}`, {
+    program.error(`${ERROR_PREFIX} Non-exact dependencies found:\n\n${violations.join("\n")}`, {
       code: "NON_EXACT_DEPENDENCIES_FOUND",
       exitCode: 2,
     });
   }
 
-  console.info(`${successPrefix} All dependencies are exactly pinned`);
+  console.info(`${SUCCESS_PREFIX} All dependencies are exactly pinned`);
 }
 
 export default preferExactDependencyVersions;

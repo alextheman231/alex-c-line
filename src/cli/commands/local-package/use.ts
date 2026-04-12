@@ -12,7 +12,7 @@ import loadAlexCLineProjectCache from "src/cache/project/loadAlexCLineProjectCac
 import { PrivateConfigFileName } from "src/configs/types/ConfigFileName";
 import findAlexCLineConfig from "src/utility/configs/findAlexCLineConfig";
 import loadAlexCLinePrivateConfig from "src/utility/configs/loadAlexCLinePrivateConfig";
-import errorPrefix from "src/utility/constants/errorPrefix";
+import ERROR_PREFIX from "src/utility/constants/ERROR_PREFIX";
 import findTgzFile from "src/utility/fileSystem/findTgzFile";
 import removeAllTarballs from "src/utility/miscellaneous/removeAllTarballs";
 
@@ -123,7 +123,7 @@ function localPackageUse(program: Command) {
         );
 
         if (exitCode !== 0) {
-          program.error(`${errorPrefix} An error occurred during the local \`alex-c-line\` run.`, {
+          program.error(`${ERROR_PREFIX} An error occurred during the local \`alex-c-line\` run.`, {
             exitCode,
             code: "LOCAL_ALEX_C_LINE_ERROR",
           });

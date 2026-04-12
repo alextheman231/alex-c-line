@@ -8,8 +8,8 @@ import {
 } from "@alextheman/utility/internal";
 import { minVersion, prerelease } from "semver";
 
-import errorPrefix from "src/utility/constants/errorPrefix";
-import successPrefix from "src/utility/constants/successPrefix";
+import ERROR_PREFIX from "src/utility/constants/ERROR_PREFIX";
+import SUCCESS_PREFIX from "src/utility/constants/SUCCESS_PREFIX";
 
 function isPreRelease(dependencyVersionRange: string) {
   const minimumFromRange = minVersion(dependencyVersionRange);
@@ -46,7 +46,7 @@ async function noPreReleaseDependencies(program: Command): Promise<void> {
   ) {
     program.error(
       normaliseIndents`
-            ${errorPrefix} Pre-release version pinning is not allowed. Found the following violations:
+            ${ERROR_PREFIX} Pre-release version pinning is not allowed. Found the following violations:
 
         ` +
         JSON.stringify(
@@ -61,7 +61,7 @@ async function noPreReleaseDependencies(program: Command): Promise<void> {
     );
   }
 
-  console.info(`${successPrefix} No pre-release versions found!`);
+  console.info(`${SUCCESS_PREFIX} No pre-release versions found!`);
 }
 
 export default noPreReleaseDependencies;
