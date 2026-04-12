@@ -50,6 +50,9 @@ importers:
       supports-color:
         specifier: 10.2.2
         version: 10.2.2
+      toml:
+        specifier: 4.1.1
+        version: 4.1.1
       zod:
         specifier: 4.3.6
         version: 4.3.6
@@ -3001,6 +3004,10 @@ packages:
 
   to-valid-identifier@1.0.0:
     resolution: {integrity: sha512-41wJyvKep3yT2tyPqX/4blcfybknGB4D+oETKLs7Q76UiPqRpUJK3hr1nxelyYO0PHKVzJwlu0aCeEAsGI6rpw==}
+    engines: {node: '>=20'}
+
+  toml@4.1.1:
+    resolution: {integrity: sha512-EBJnVBr3dTXdA89WVFoAIPUqkBjxPMwRqsfuo1r240tKFHXv3zgca4+NJib/h6TyvGF7vOawz0jGuryJCdNHrw==}
     engines: {node: '>=20'}
 
   tree-kill@1.2.2:
@@ -6466,6 +6473,8 @@ snapshots:
     dependencies:
       '@sindresorhus/base62': 1.0.0
       reserved-identifiers: 1.2.0
+
+  toml@4.1.1: {}
 
   tree-kill@1.2.2: {}
 
