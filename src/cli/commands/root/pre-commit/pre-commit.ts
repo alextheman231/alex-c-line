@@ -12,7 +12,7 @@ import createStepRunner from "src/cli/commands/root/pre-commit/createStepRunner"
 import getCommandArguments from "src/cli/commands/root/pre-commit/getCommandArguments";
 import findAlexCLineConfig from "src/utility/configs/findAlexCLineConfig";
 import loadAlexCLineConfig from "src/utility/configs/loadAlexCLineConfig";
-import errorPrefix from "src/utility/constants/errorPrefix";
+import ERROR_PREFIX from "src/utility/constants/ERROR_PREFIX";
 
 function preCommit(program: Command) {
   program
@@ -51,7 +51,7 @@ function preCommit(program: Command) {
 
       switch (diffExitCode) {
         case 128:
-          program.error(`${errorPrefix} Not currently in a Git repository`, {
+          program.error(`${ERROR_PREFIX} Not currently in a Git repository`, {
             exitCode: 1,
             code: "GIT_DIFF_FAILED",
           });

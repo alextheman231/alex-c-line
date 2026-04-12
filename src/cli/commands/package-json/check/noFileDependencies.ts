@@ -2,8 +2,8 @@ import type { Command } from "commander";
 
 import { getDependenciesFromGroup, getPackageJsonContents } from "@alextheman/utility/internal";
 
-import errorPrefix from "src/utility/constants/errorPrefix";
-import successPrefix from "src/utility/constants/successPrefix";
+import ERROR_PREFIX from "src/utility/constants/ERROR_PREFIX";
+import SUCCESS_PREFIX from "src/utility/constants/SUCCESS_PREFIX";
 
 export interface PackageDependencies {
   dependencies?: Record<string, string>;
@@ -46,12 +46,12 @@ async function noFileDependencies(program: Command) {
 
   if (Object.keys(allFileDependencies).length !== 0) {
     program.error(
-      `${errorPrefix} File dependencies found:\n\n${JSON.stringify(allFileDependencies, undefined, 2)}
+      `${ERROR_PREFIX} File dependencies found:\n\n${JSON.stringify(allFileDependencies, undefined, 2)}
           `,
       { exitCode: 2, code: "FILE_DEPENDENCIES_FOUND" },
     );
   }
-  console.info(`${successPrefix} No file dependencies found!`);
+  console.info(`${SUCCESS_PREFIX} No file dependencies found!`);
 }
 
 export default noFileDependencies;

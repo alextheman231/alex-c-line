@@ -3,7 +3,7 @@ import type { Command } from "commander";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 
-import errorPrefix from "src/utility/constants/errorPrefix";
+import ERROR_PREFIX from "src/utility/constants/ERROR_PREFIX";
 
 function checkLockfileVersionDiscrepancy(program: Command) {
   program
@@ -19,7 +19,7 @@ function checkLockfileVersionDiscrepancy(program: Command) {
       );
       if (packageVersion !== packageLockVersion) {
         console.error(
-          `${errorPrefix} package.json and package-lock.json out of sync. Please run \`npm install\` to fix this.`,
+          `${ERROR_PREFIX} package.json and package-lock.json out of sync. Please run \`npm install\` to fix this.`,
         );
         process.exitCode = 1;
         return;

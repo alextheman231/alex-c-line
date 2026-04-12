@@ -11,7 +11,7 @@ import path from "node:path";
 import setDirectory from "tests/helpers/setDirectory";
 import createAlexCLineTestClient from "tests/testClients/alexCLineTestClient";
 
-import errorPrefix from "src/utility/constants/errorPrefix";
+import ERROR_PREFIX from "src/utility/constants/ERROR_PREFIX";
 import getReleaseNotePath from "src/utility/markdownTemplates/releaseNote/getReleaseNotePath";
 
 import { name, version } from "package.json" with { type: "json" };
@@ -109,7 +109,7 @@ describe("template release-note create", () => {
         if (error instanceof ExecaError) {
           const { stderr: errorMessage, exitCode } = error;
           expect(exitCode).toBe(1);
-          expect(errorMessage).toBe(`${errorPrefix} Release notes already exist.`);
+          expect(errorMessage).toBe(`${ERROR_PREFIX} Release notes already exist.`);
         }
       }
     });

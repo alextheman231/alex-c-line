@@ -8,7 +8,7 @@ import path from "node:path";
 import setDirectory from "tests/helpers/setDirectory";
 import createAlexCLineTestClient from "tests/testClients/alexCLineTestClient";
 
-import errorPrefix from "src/utility/constants/errorPrefix";
+import ERROR_PREFIX from "src/utility/constants/ERROR_PREFIX";
 
 describe("package-json no-file-dependencies", () => {
   test("Exits with exit code 0 if no file dependencies found", async () => {
@@ -120,7 +120,7 @@ test("Exit with exit code 2 if file dependencies found", async () => {
     })`package-json check --rules no-file-dependencies`;
     expect(exitCode).toBe(2);
     expect(message).toContain("Checking for file dependencies...");
-    expect(errorMessage).toContain(`${errorPrefix} File dependencies found:`);
+    expect(errorMessage).toContain(`${ERROR_PREFIX} File dependencies found:`);
     expect(errorMessage).toContain(
       JSON.stringify(
         {
@@ -157,7 +157,7 @@ describe("devDependencies can be left out even if error code is 2", () => {
 
       expect(exitCode).toBe(2);
       expect(message).toContain("Checking for file dependencies...");
-      expect(errorMessage).toContain(`${errorPrefix} File dependencies found:`);
+      expect(errorMessage).toContain(`${ERROR_PREFIX} File dependencies found:`);
       expect(errorMessage).toContain(
         JSON.stringify(
           {
@@ -193,7 +193,7 @@ describe("devDependencies can be left out even if error code is 2", () => {
 
       expect(exitCode).toBe(2);
       expect(message).toContain("Checking for file dependencies...");
-      expect(errorMessage).toContain(`${errorPrefix} File dependencies found:`);
+      expect(errorMessage).toContain(`${ERROR_PREFIX} File dependencies found:`);
       expect(errorMessage).toContain(
         JSON.stringify(
           {

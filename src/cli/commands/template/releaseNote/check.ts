@@ -8,7 +8,7 @@ import z from "zod";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 
-import successPrefix from "src/utility/constants/successPrefix";
+import SUCCESS_PREFIX from "src/utility/constants/SUCCESS_PREFIX";
 import convertDataErrorToProgramError from "src/utility/errors/convertDataErrorToProgramError";
 import parseReleaseStatus from "src/utility/markdownTemplates/releaseNote/parseReleaseStatus";
 import validateReleaseDocument from "src/utility/markdownTemplates/releaseNote/validateReleaseDocument";
@@ -47,7 +47,7 @@ function templateReleaseNoteCheck(program: Command) {
 
       try {
         await validateReleaseDocument(name, documentVersion, fileContents, expectedReleaseStatus);
-        console.info(`${successPrefix} Release document is valid!`);
+        console.info(`${SUCCESS_PREFIX} Release document is valid!`);
       } catch (error) {
         if (DataError.check(error)) {
           convertDataErrorToProgramError(error, program, { exitCode: 2 });

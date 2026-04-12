@@ -2,7 +2,7 @@ import type { Command } from "commander";
 
 import { execa } from "execa";
 
-import errorPrefix from "src/utility/constants/errorPrefix";
+import ERROR_PREFIX from "src/utility/constants/ERROR_PREFIX";
 
 function gitPostMergeCleanup(program: Command) {
   program
@@ -16,7 +16,7 @@ function gitPostMergeCleanup(program: Command) {
 
       const { stdout: currentBranch } = await execa`git branch --show-current`;
       if (currentBranch === branch) {
-        program.error(`${errorPrefix} Cannot run cleanup on ${branch} branch!`, {
+        program.error(`${ERROR_PREFIX} Cannot run cleanup on ${branch} branch!`, {
           exitCode: 1,
           code: "INVALID_BRANCH",
         });
@@ -36,7 +36,7 @@ function gitPostMergeCleanup(program: Command) {
         const { stdout: changes } = await execa`git diff ${branch}..${currentBranch}`;
         if (changes) {
           await execa`git checkout ${currentBranch}`;
-          program.error(`${errorPrefix} Changes on branch not fully merged!`, {
+          program.error(`${ERROR_PREFIX} Changes on branch not fully merged!`, {
             exitCode: 1,
             code: "CHANGES_NOT_MERGED",
           });
@@ -51,7 +51,7 @@ function gitPostMergeCleanup(program: Command) {
 
         if (exitCode !== 0) {
           await execa`git checkout ${currentBranch}`;
-          program.error(`${errorPrefix} Changes on branch not fully merged!`, {
+          program.error(`${ERROR_PREFIX} Changes on branch not fully merged!`, {
             exitCode: 1,
             code: "CHANGES_NOT_MERGED",
           });

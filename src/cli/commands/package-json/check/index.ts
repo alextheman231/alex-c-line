@@ -4,7 +4,7 @@ import type { Command } from "commander";
 import { parseZodSchema } from "@alextheman/utility";
 import z from "zod";
 
-import successPrefix from "src/utility/constants/successPrefix";
+import SUCCESS_PREFIX from "src/utility/constants/SUCCESS_PREFIX";
 
 import noFileDependencies from "src/cli/commands/package-json/check/noFileDependencies";
 import noPreReleaseDependencies from "src/cli/commands/package-json/check/noPreReleaseDependencies";
@@ -30,7 +30,7 @@ function packageJsonCheck(program: Command) {
       if (rules?.includes("no-file-dependencies")) {
         await noFileDependencies(program);
       }
-      console.info(`${successPrefix} Success! All checks passed!`);
+      console.info(`${SUCCESS_PREFIX} Success! All checks passed!`);
     });
 }
 

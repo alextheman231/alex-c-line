@@ -13,7 +13,7 @@ import z from "zod";
 import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 
-import errorPrefix from "src/utility/constants/errorPrefix";
+import ERROR_PREFIX from "src/utility/constants/ERROR_PREFIX";
 import createReleaseNoteFromTemplates from "src/utility/markdownTemplates/releaseNote/createReleaseNoteFromTemplates";
 import getReleaseNotePath from "src/utility/markdownTemplates/releaseNote/getReleaseNotePath";
 
@@ -65,7 +65,7 @@ function templateReleaseNoteCreate(program: Command) {
         await writeFile(releaseNotePath, releaseNoteTemplate, { flag: "wx" });
       } catch (error) {
         if (error instanceof Error && "code" in error && error.code === "EEXIST") {
-          program.error(`${errorPrefix} Release notes already exist.`, {
+          program.error(`${ERROR_PREFIX} Release notes already exist.`, {
             exitCode: 1,
             code: "RELEASE_NOTE_EXISTS",
           });

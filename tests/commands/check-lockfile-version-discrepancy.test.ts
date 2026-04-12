@@ -8,7 +8,7 @@ import path from "node:path";
 import setDirectory from "tests/helpers/setDirectory";
 import alexCLineTestClient from "tests/testClients/alexCLineTestClient";
 
-import errorPrefix from "src/utility/constants/errorPrefix";
+import ERROR_PREFIX from "src/utility/constants/ERROR_PREFIX";
 
 describe("check-lockfile-version-discrepancy", () => {
   test("Succeed if version numbers in package.json and package-lock.json are successful", async () => {
@@ -44,7 +44,7 @@ describe("check-lockfile-version-discrepancy", () => {
           const { stderr: errorMessage, exitCode } = error;
           expect(exitCode).toBe(1);
           expect(errorMessage).toBe(
-            `${errorPrefix} package.json and package-lock.json out of sync. Please run \`npm install\` to fix this.`,
+            `${ERROR_PREFIX} package.json and package-lock.json out of sync. Please run \`npm install\` to fix this.`,
           );
         }
       }

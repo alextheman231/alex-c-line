@@ -5,7 +5,7 @@ import { parseZodSchema } from "@alextheman/utility";
 import z from "zod";
 
 import preferExactDependencyVersions from "src/cli/commands/pyproject/check/preferExactDependencyVersions";
-import successPrefix from "src/utility/constants/successPrefix";
+import SUCCESS_PREFIX from "src/utility/constants/SUCCESS_PREFIX";
 
 const RuleName = {
   PREFER_EXACT_DEPENDENCY_VERSIONS: "prefer-exact-dependency-versions",
@@ -24,7 +24,7 @@ function pyprojectCheck(program: Command) {
       if (rules?.includes("prefer-exact-dependency-versions")) {
         await preferExactDependencyVersions(program);
       }
-      console.info(`${successPrefix} Success! All checks passed!`);
+      console.info(`${SUCCESS_PREFIX} Success! All checks passed!`);
     });
 }
 

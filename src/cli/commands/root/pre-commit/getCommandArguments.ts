@@ -1,6 +1,6 @@
 import type { Command } from "commander";
 
-import errorPrefix from "src/utility/constants/errorPrefix";
+import ERROR_PREFIX from "src/utility/constants/ERROR_PREFIX";
 
 function getCommandArguments(
   program: Command,
@@ -9,7 +9,7 @@ function getCommandArguments(
   args?: Array<string>,
 ): Array<string> {
   if (!(script in (scripts ?? {}))) {
-    program.error(`${errorPrefix} Could not find script \`${script}\` in package.json.`, {
+    program.error(`${ERROR_PREFIX} Could not find script \`${script}\` in package.json.`, {
       exitCode: 1,
       code: "SCRIPT_NOT_FOUND",
     });

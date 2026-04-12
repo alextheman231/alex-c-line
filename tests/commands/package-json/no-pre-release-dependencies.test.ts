@@ -9,8 +9,8 @@ import path from "node:path/posix";
 import setDirectory from "tests/helpers/setDirectory";
 import alexCLineTestClient from "tests/testClients/alexCLineTestClient";
 
-import errorPrefix from "src/utility/constants/errorPrefix";
-import successPrefix from "src/utility/constants/successPrefix";
+import ERROR_PREFIX from "src/utility/constants/ERROR_PREFIX";
+import SUCCESS_PREFIX from "src/utility/constants/SUCCESS_PREFIX";
 
 describe("no-pre-release-dependencies", () => {
   test("Exits with exit code 0 if there are no pre-release versions", async () => {
@@ -36,7 +36,7 @@ describe("no-pre-release-dependencies", () => {
       const { exitCode, stdout: message } =
         await testClient`package-json check --rules no-pre-release-dependencies`;
       expect(exitCode).toBe(0);
-      expect(message).toContain(`${successPrefix} No pre-release versions found!`);
+      expect(message).toContain(`${SUCCESS_PREFIX} No pre-release versions found!`);
     });
   });
 
@@ -71,7 +71,7 @@ describe("no-pre-release-dependencies", () => {
         const { exitCode, stderr: errorMessage } =
           await testClient`package-json check --rules no-pre-release-dependencies`;
         expect(exitCode).toBe(2);
-        expect(errorMessage).toContain(errorPrefix);
+        expect(errorMessage).toContain(ERROR_PREFIX);
         expect(errorMessage).toContain(dependencyGroup);
         expect(errorMessage).toContain(
           dependencyGroup === "dependencies" ? "@alextheman/utility" : "tsdown",

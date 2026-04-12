@@ -5,8 +5,8 @@ import { execa, ExecaError } from "execa";
 import { stat } from "node:fs/promises";
 import path from "node:path";
 
-import errorPrefix from "src/utility/constants/errorPrefix";
-import warningPrefix from "src/utility/constants/warningPrefix";
+import ERROR_PREFIX from "src/utility/constants/ERROR_PREFIX";
+import WARNING_PREFIX from "src/utility/constants/WARNING_PREFIX";
 import readdirSafe from "src/utility/fileSystem/readdirSafe";
 
 function internalMediaGenerate(program: Command) {
@@ -45,7 +45,7 @@ function internalMediaGenerate(program: Command) {
         } catch (error) {
           if (error instanceof ExecaError) {
             program.error(
-              `${errorPrefix} An error has occurred with Manim while rendering ${relativePath}.`,
+              `${ERROR_PREFIX} An error has occurred with Manim while rendering ${relativePath}.`,
               {
                 exitCode: error.exitCode ?? 1,
                 code: "MANIM_ERROR",
@@ -80,7 +80,7 @@ function internalMediaGenerate(program: Command) {
       } else if (statResult.isDirectory()) {
         await readDirectory(target);
       } else {
-        console.warn(`${warningPrefix} Not a file or directory.`);
+        console.warn(`${WARNING_PREFIX} Not a file or directory.`);
       }
     });
 }

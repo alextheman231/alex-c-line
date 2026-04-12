@@ -4,7 +4,7 @@ import type { DotenvParseOutput } from "dotenv";
 import { normaliseIndents } from "@alextheman/utility";
 import { input, password } from "@inquirer/prompts";
 
-import errorPrefix from "src/utility/constants/errorPrefix";
+import ERROR_PREFIX from "src/utility/constants/ERROR_PREFIX";
 import upsertDotenvFile from "src/utility/envFile/upsertDotenvFile";
 
 async function addVariable<EnvContents extends DotenvParseOutput>(
@@ -19,7 +19,7 @@ async function addVariable<EnvContents extends DotenvParseOutput>(
   if (newVariableName in envFileContents) {
     program.error(
       `
-            ${errorPrefix} Error with chosen environment variable name ${newVariableName}.
+            ${ERROR_PREFIX} Error with chosen environment variable name ${newVariableName}.
             Variable name already exists. If you wish to edit this variable, please select it from the initial menu instead.
             `,
       {
@@ -32,7 +32,7 @@ async function addVariable<EnvContents extends DotenvParseOutput>(
   if (/[ \t\r\n]/.test(newVariableName)) {
     program.error(
       normaliseIndents`
-            ${errorPrefix} Error with chosen environment variable name ${newVariableName}.
+            ${ERROR_PREFIX} Error with chosen environment variable name ${newVariableName}.
             Environment variables are not allowed to have whitespace.
             `,
       {

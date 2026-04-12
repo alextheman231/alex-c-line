@@ -5,7 +5,7 @@ import { execa } from "execa";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 
-import ALEX_C_LINE_PACKAGE_ROOT from "src/utility/constants/alexCLinePackageRoot";
+import ALEX_C_LINE_PACKAGE_ROOT from "src/utility/constants/ALEX_C_LINE_PACKAGE_ROOT";
 
 function outdatedDependencies(program: Command) {
   program.command("outdated-dependencies").action(async () => {
