@@ -5,6 +5,7 @@ import cache from "src/cli/commands/cache";
 import envFile from "src/cli/commands/env-file";
 import internal from "src/cli/commands/internal";
 import localPackage from "src/cli/commands/local-package";
+import pyproject from "src/cli/commands/pyproject";
 import root from "src/cli/commands/root";
 import template from "src/cli/commands/template";
 import update from "src/cli/commands/update";
@@ -22,6 +23,7 @@ function createCommands(program: Command) {
     internal,
     localPackage,
     packageJson,
+    pyproject,
     root,
     template,
     update,
