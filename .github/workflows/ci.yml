@@ -20,44 +20,5 @@ jobs:
   actions-ci:
     uses: alextheman231/github-actions/.github/workflows/actions-ci.yml@84fe032bc2c67a442beaae6648323087929d34c0 # v11.0.7
 
-  end-to-end-ci-steps:
-    if: ${{ github.head_ref != 'alex-up-bot/change-major-version' && github.head_ref != 'alex-up-bot/change-minor-version' && github.head_ref != 'alex-up-bot/change-patch-version' }}
-    strategy:
-      matrix:
-        os: [ubuntu-latest, macos-latest]
-    runs-on: ${{ matrix.os }}
-    steps:
-      - name: Checkout the repository
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-        with:
-          persist-credentials: false
-
-      - name: Use PNPM
-        uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v4.4.0
-        with:
-          run_install: false
-
-      - name: Use Node.js
-        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
-        with:
-          node-version: 22
-          cache: "pnpm"
-
-      - name: Install dependencies
-        run: pnpm install
-
-      - name: Run end-to-end tests
-        run: pnpm run test-end-to-end
-
   end-to-end-ci:
-    needs: end-to-end-ci-steps
-    runs-on: ubuntu-latest
-    if: always()
-    env:
-      CI_STATUS: ${{ needs.end-to-end-ci-steps.result }}
-    steps:
-      - name: Report on any matrix failures
-        run: |
-          if [ "$CI_STATUS" == "failure" ] || [ "$CI_STATUS" == "cancelled" ]; then
-            exit 1
-          fi
+    uses: alextheman231/github-actions/.github/workflows/end-to-end-node-package-ci.yml@2e41fee3271c96b410b398994b6df72997e18c02 # v11.2.1
