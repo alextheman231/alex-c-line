@@ -6,7 +6,7 @@ on:
 
 jobs:
   comment-outdated:
-    uses: alextheman231/github-actions/.github/workflows/comment-outdated.yml@84fe032bc2c67a442beaae6648323087929d34c0 # v11.0.7
+    uses: alextheman231/github-actions/.github/workflows/comment-outdated.yml@2e41fee3271c96b410b398994b6df72997e18c02 # v11.2.1
     if: ${{ github.head_ref == 'alex-up-bot/update-dependencies' }}
     permissions:
       actions: read
