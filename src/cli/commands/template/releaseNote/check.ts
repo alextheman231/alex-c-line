@@ -1,8 +1,9 @@
 import type { Command } from "commander";
 
-import { DataError, parseZodSchema, VersionNumber } from "@alextheman/utility";
+import { parseZodSchema, VersionNumber } from "@alextheman/utility";
 import { getPackageJsonContents } from "@alextheman/utility/internal";
 import { parseFilePath } from "@alextheman/utility/node";
+import { DataError } from "@alextheman/utility/v6";
 import z from "zod";
 
 import { readFile } from "node:fs/promises";

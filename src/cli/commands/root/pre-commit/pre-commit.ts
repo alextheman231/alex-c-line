@@ -1,7 +1,8 @@
 import type { Command } from "commander";
 
-import { DataError, parseZodSchema } from "@alextheman/utility";
+import { parseZodSchema } from "@alextheman/utility";
 import { PackageManager } from "@alextheman/utility/internal";
+import { DataError } from "@alextheman/utility/v6";
 import { execa } from "execa";
 import z from "zod";
 

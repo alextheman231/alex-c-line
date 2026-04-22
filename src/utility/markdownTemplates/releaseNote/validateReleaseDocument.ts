@@ -2,7 +2,8 @@ import type { VersionNumber } from "@alextheman/utility";
 
 import type { ReleaseStatus } from "src/utility/markdownTemplates/releaseNote/types/ReleaseStatus";
 
-import { DataError, kebabToCamel, normaliseIndents, removeDuplicates } from "@alextheman/utility";
+import { kebabToCamel, normaliseIndents, removeDuplicates } from "@alextheman/utility";
+import { DataError } from "@alextheman/utility/v6";
 
 import { readFile } from "node:fs/promises";
 import path from "node:path";

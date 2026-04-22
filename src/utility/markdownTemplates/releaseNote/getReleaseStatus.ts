@@ -1,4 +1,5 @@
-import { DataError, parseZodSchema } from "@alextheman/utility";
+import { parseZodSchema } from "@alextheman/utility";
+import { DataError } from "@alextheman/utility/v6";
 import z from "zod";
 
 import getMarkdownBlock from "src/utility/markdownTemplates/getMarkdownBlock";

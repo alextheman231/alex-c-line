@@ -2,7 +2,8 @@ import type { Command } from "commander";
 import type { ZodType } from "zod";
 import type z from "zod";
 
-import { DataError, parseZodSchema } from "@alextheman/utility";
+import { parseZodSchema } from "@alextheman/utility";
+import { DataError } from "@alextheman/utility/v6";
 
 import convertDataErrorToProgramError from "src/utility/errors/convertDataErrorToProgramError";
 

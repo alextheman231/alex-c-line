@@ -1,4 +1,4 @@
-import type { DataError } from "@alextheman/utility";
+import type { DataError } from "@alextheman/utility/v6";
 import type { Command } from "commander";
 
 import ERROR_PREFIX from "src/utility/constants/ERROR_PREFIX";
