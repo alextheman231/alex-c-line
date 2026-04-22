@@ -1,7 +1,7 @@
 import type { PackageManager } from "@alextheman/utility/internal";
 
-import { DataError } from "@alextheman/utility";
 import { getExpectedTgzName } from "@alextheman/utility/internal";
+import { DataError } from "@alextheman/utility/v6";
 
 import { readdir } from "node:fs/promises";
 

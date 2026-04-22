@@ -1,7 +1,8 @@
 import type { Command } from "commander";
 
-import { DataError, parseZodSchema, removeUndefinedFromObject } from "@alextheman/utility";
+import { parseZodSchema, removeUndefinedFromObject } from "@alextheman/utility";
 import { getPackageJsonContents } from "@alextheman/utility/internal";
+import { DataError } from "@alextheman/utility/v6";
 import z from "zod";
 
 import { mkdir, writeFile } from "node:fs/promises";

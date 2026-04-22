@@ -1,4 +1,4 @@
-import { DataError } from "@alextheman/utility";
+import { DataError } from "@alextheman/utility/v6";
 import { describe, expect, test } from "vitest";
 
 import createPullRequestTemplatesFromTemplates from "src/utility/markdownTemplates/pullRequest/createPullRequestTemplatesFromTemplates";

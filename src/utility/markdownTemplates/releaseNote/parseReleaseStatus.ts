@@ -1,4 +1,4 @@
-import { DataError } from "@alextheman/utility";
+import { DataError } from "@alextheman/utility/v6";
 
 import { ReleaseStatus } from "src/utility/markdownTemplates/releaseNote/types/ReleaseStatus";
 

@@ -1,4 +1,4 @@
-import { DataError } from "@alextheman/utility";
+import { DataError } from "@alextheman/utility/v6";
 
 import { readFile } from "node:fs/promises";
 import path from "node:path";

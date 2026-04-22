@@ -1,13 +1,13 @@
 import type { Command } from "commander";
 
 import {
-  DataError,
   normaliseIndents,
   parseVersionType,
   parseZodSchema,
   VersionNumber,
 } from "@alextheman/utility";
 import { getPackageJsonContents } from "@alextheman/utility/internal";
+import { DataError } from "@alextheman/utility/v6";
 import z from "zod";
 
 import { mkdir, writeFile } from "node:fs/promises";
@@ -31,7 +31,10 @@ function templateReleaseNoteCreate(program: Command) {
         try {
           return new VersionNumber(rawValue);
         } catch (error) {
-          if (DataError.check(error) && error.code === "INVALID_VERSION") {
+          if (
+            DataError.check<Record<PropertyKey, unknown>, "INVALID_VERSION">(error) &&
+            error.code === "INVALID_VERSION"
+          ) {
             return parseVersionType(rawValue);
           }
           throw error;

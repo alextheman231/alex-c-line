@@ -1,6 +1,6 @@
 import type { AlexCLineProjectCache } from "src/cache/project/types/AlexCLineProjectCache";
 
-import { DataError } from "@alextheman/utility";
+import { DataError } from "@alextheman/utility/v6";
 import { describe, expect, test } from "vitest";
 
 import parseAlexCLineProjectCache from "src/cache/project/parseAlexCLineProjectCache";
@@ -41,15 +41,11 @@ describe("parseAlexCLineProjectCache", () => {
         },
       },
     };
-    try {
+    const error = DataError.expectError(() => {
       parseAlexCLineProjectCache(input);
-    } catch (error) {
-      if (error instanceof DataError) {
-        expect(error.data.input).toEqual(input);
-        expect(error.code).toContain("INVALID_TYPE");
-      } else {
-        throw error;
-      }
-    }
+    });
+
+    expect(error.data.input).toEqual(input);
+    expect(error.code).toContain("INVALID_TYPE");
   });
 });

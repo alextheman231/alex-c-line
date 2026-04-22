@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@alextheman/utility':
-        specifier: 5.11.2
-        version: 5.11.2
+        specifier: 5.13.0
+        version: 5.13.0
       '@inquirer/prompts':
         specifier: 8.4.1
         version: 8.4.1(@types/node@25.6.0)
@@ -141,8 +141,8 @@ packages:
     resolution: {integrity: sha512-uZkQezcxvO6NJ2VHpIyQ0gF6Ha+NaYq6ylJtyaYuKPDSYjW1GgQf+BQseP/PLGWpT5SzYg795ewqvwfJrrGoWA==}
     engines: {node: '>=22.3.0'}
 
-  '@alextheman/utility@5.11.2':
-    resolution: {integrity: sha512-4B93rFyDqGxaf87yUqK5hBtTcUcfgiNEcIFqAUrhZWQAMQNvWwuHIBcwvWriFyLk3DyG/KDfJi4EMe73nmeyzQ==}
+  '@alextheman/utility@5.13.0':
+    resolution: {integrity: sha512-1J7GqXYAFq5NMAWlu1/C7onWhI3jQ02gKSQ23fJ2D1OoaN6yKx5V8qbvV5H/XgzMJMuUA6YY46UL8Eo2WbM3pg==}
     engines: {node: '>=22.3.0'}
 
   '@altano/repository-tools@2.0.3':
@@ -3441,9 +3441,9 @@ snapshots:
       execa: 9.6.1
       zod: 4.3.6
 
-  '@alextheman/utility@5.11.2':
+  '@alextheman/utility@5.13.0':
     dependencies:
-      dotenv: 17.4.1
+      dotenv: 17.4.2
       execa: 9.6.1
       zod: 4.3.6
 
@@ -5837,7 +5837,7 @@ snapshots:
       micromark-factory-whitespace: 2.0.1
       micromark-util-character: 2.1.1
       micromark-util-symbol: 2.0.1
-      micromark-util-types: 2.0.1
+      micromark-util-types: 2.0.2
       parse-entities: 4.0.2
 
   micromark-extension-directive@4.0.0:
@@ -5874,7 +5874,7 @@ snapshots:
       micromark-factory-space: 2.0.1
       micromark-util-character: 2.1.1
       micromark-util-symbol: 2.0.1
-      micromark-util-types: 2.0.1
+      micromark-util-types: 2.0.2
 
   micromark-extension-gfm-table@2.1.1:
     dependencies:
@@ -5999,7 +5999,7 @@ snapshots:
       micromark-util-sanitize-uri: 2.0.1
       micromark-util-subtokenize: 2.1.0
       micromark-util-symbol: 2.0.1
-      micromark-util-types: 2.0.1
+      micromark-util-types: 2.0.2
     transitivePeerDependencies:
       - supports-color
 

@@ -1,4 +1,4 @@
-import { DataError } from "@alextheman/utility";
+import { DataError } from "@alextheman/utility/v6";
 
 function normaliseStdout(
   stdout: string | Array<string> | Array<unknown> | Uint8Array<ArrayBufferLike> | undefined | null,

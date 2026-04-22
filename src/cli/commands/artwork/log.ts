@@ -1,6 +1,6 @@
 import type { Command } from "commander";
 
-import { DataError } from "@alextheman/utility";
+import { DataError } from "@alextheman/utility/v6";
 import chalk from "chalk";
 
 import createAlexCLineArtwork from "src/utility/miscellaneous/createAlexCLineArtwork";

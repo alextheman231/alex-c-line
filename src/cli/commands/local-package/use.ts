@@ -1,7 +1,8 @@
 import type { Command } from "commander";
 
-import { DataError, omitProperties, parseZodSchema } from "@alextheman/utility";
+import { omitProperties, parseZodSchema } from "@alextheman/utility";
 import { getDependenciesFromGroup, getPackageJsonContents } from "@alextheman/utility/internal";
+import { DataError } from "@alextheman/utility/v6";
 import { execa } from "execa";
 import z from "zod";
 
