@@ -1,6 +1,6 @@
 import type { VersionType } from "@alextheman/utility";
 
-import { parseZodSchema, VersionNumber } from "@alextheman/utility";
+import { az, VersionNumber } from "@alextheman/utility";
 import { getPackageJsonContents } from "@alextheman/utility/internal";
 import { execa, ExecaError } from "execa";
 import { temporaryDirectoryTask } from "tempy";
@@ -84,24 +84,23 @@ describe("incrementVersion", () => {
         await execaInDirectory`git commit -m ${"Initial commit"}`;
 
         const alexCLineInDirectory = alexCLineTestClient(setDirectory(temporaryPath));
-        const { version } = parseZodSchema(
-          z.object({
-            version: z.string().transform((rawValue) => {
-              return new VersionNumber(rawValue.trim());
+        const { version } = az
+          .with(
+            z.object({
+              version: az.versionNumber(),
             }),
-          }),
-          await getPackageJsonContents(temporaryPath),
-        );
+          )
+          .parse(await getPackageJsonContents(temporaryPath));
 
-        const { exitCode: alexCLineExitCode, stdout: newAlexCLineVersion } = parseZodSchema(
-          stdoutSchema,
-          await alexCLineInDirectory`version increment ${version.toString()} ${versionType}`,
-        );
+        const { exitCode: alexCLineExitCode, stdout: newAlexCLineVersion } = az
+          .with(stdoutSchema)
+          .parse(
+            await alexCLineInDirectory`version increment ${version.toString()} ${versionType}`,
+          );
         expect(alexCLineExitCode).toBe(0);
-        const { exitCode: npmExitCode, stdout: newNpmVersion } = parseZodSchema(
-          stdoutSchema,
-          await execaInDirectory`npm version ${versionType} --no-git-tag-version`,
-        );
+        const { exitCode: npmExitCode, stdout: newNpmVersion } = az
+          .with(stdoutSchema)
+          .parse(await execaInDirectory`npm version ${versionType} --no-git-tag-version`);
         expect(npmExitCode).toBe(0);
 
         expect(

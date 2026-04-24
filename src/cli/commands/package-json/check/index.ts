@@ -1,7 +1,7 @@
 import type { CreateEnumType } from "@alextheman/utility";
 import type { Command } from "commander";
 
-import { parseZodSchema } from "@alextheman/utility";
+import { az } from "@alextheman/utility";
 import z from "zod";
 
 import SUCCESS_PREFIX from "src/utility/constants/SUCCESS_PREFIX";
@@ -21,7 +21,7 @@ function packageJsonCheck(program: Command) {
     .description("Run checks on your package.json file")
     .option("--rules <rules>", "The name of the rule to check", (rawRules) => {
       const rawRuleNamesArray = rawRules.split(",");
-      return parseZodSchema(z.array(z.enum(RuleName)), rawRuleNamesArray);
+      return az.with(z.array(z.enum(RuleName))).parse(rawRuleNamesArray);
     })
     .action(async ({ rules }) => {
       if (rules?.includes("no-pre-release-dependencies")) {

@@ -1,6 +1,6 @@
 import type { Command } from "commander";
 
-import { parseZodSchema } from "@alextheman/utility";
+import { az } from "@alextheman/utility";
 import { PackageManager } from "@alextheman/utility/internal";
 import { DataError } from "@alextheman/utility/v6";
 import { execa } from "execa";
@@ -75,15 +75,16 @@ function preCommit(program: Command) {
           ? packagePackageManager.split("@")[0]
           : undefined);
 
-      const packageManager = parseZodSchema(
-        z.enum(PackageManager),
-        rawPackageManager,
-        new DataError(
-          { packageManager: rawPackageManager },
-          "UNSUPPORTED_PACKAGE_MANAGER",
-          `This package manager is not currently supported. Only the following are supported: ${Object.values(PackageManager).join(", ")}`,
-        ),
-      );
+      const packageManager = az
+        .with(z.enum(PackageManager))
+        .parse(
+          rawPackageManager,
+          new DataError(
+            { packageManager: rawPackageManager },
+            "UNSUPPORTED_PACKAGE_MANAGER",
+            `This package manager is not currently supported. Only the following are supported: ${Object.values(PackageManager).join(", ")}`,
+          ),
+        );
 
       const stepRunner = createStepRunner(program);
 

@@ -1,6 +1,6 @@
 import type { Command } from "commander";
 
-import { parseZodSchema, removeUndefinedFromObject } from "@alextheman/utility";
+import { az, removeUndefinedFromObject } from "@alextheman/utility";
 import { getPackageJsonContents } from "@alextheman/utility/internal";
 import { DataError } from "@alextheman/utility/v6";
 import z from "zod";
@@ -21,7 +21,7 @@ function templatePullRequestCreate(program: Command) {
       "--category <category>",
       "The category of pull request templates to get (can be either `general` or `infrastructure`)",
       (rawValue) => {
-        return parseZodSchema(z.enum(PullRequestTemplateCategory), rawValue, () => {
+        return az.with(z.enum(PullRequestTemplateCategory)).parse(rawValue, () => {
           program.error(
             `Invalid template category ${rawValue}. The category must be one of \`general\` or \`infrastructure\``,
           );
@@ -58,7 +58,7 @@ function templatePullRequestCreate(program: Command) {
       const { name: projectName } =
         commandLineOptions.projectName || config?.projectName
           ? { name: commandLineOptions.projectName ?? config?.projectName }
-          : parseZodSchema(z.object({ name: z.string() }), packageInfo);
+          : az.with(z.object({ name: z.string() })).parse(packageInfo);
 
       if (!projectName) {
         throw new DataError(

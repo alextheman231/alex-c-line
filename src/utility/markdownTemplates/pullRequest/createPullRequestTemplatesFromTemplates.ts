@@ -1,6 +1,6 @@
 import type { TemplatePullRequestConfig } from "src/configs";
 
-import { parseZodSchema } from "@alextheman/utility";
+import { az } from "@alextheman/utility";
 import { DataError } from "@alextheman/utility/v6";
 import matter from "gray-matter";
 import z from "zod";
@@ -56,11 +56,10 @@ async function createPullRequestTemplatesFromTemplates(
     const filePath = path.join(categoryPath, templateFileName);
     const { content, data } = matter(await readFile(filePath, "utf-8"));
 
-    const templateName = parseZodSchema(
-      z.string(),
-      data.id === "base" ? "pull_request_template" : data.id,
-    );
-    const placeholders = parseZodSchema(z.array(z.string()).default([]), data.placeholders);
+    const templateName = az
+      .with(z.string())
+      .parse(data.id === "base" ? "pull_request_template" : data.id);
+    const placeholders = az.with(z.array(z.string()).default([])).parse(data.placeholders);
 
     let finalContent = content;
     for (const placeholder of placeholders) {

@@ -1,6 +1,6 @@
 import type { PreCommitConfig } from "src/configs/types/preCommit/PreCommitConfig";
 
-import { parseZodSchemaAsync } from "@alextheman/utility";
+import { az } from "@alextheman/utility";
 import { PackageManager } from "@alextheman/utility/internal";
 import z from "zod";
 
@@ -25,7 +25,7 @@ export const preCommitConfigSchema = z.strictObject({
 });
 
 export async function parsePreCommitConfig(input: unknown): Promise<PreCommitConfig> {
-  return await parseZodSchemaAsync(preCommitConfigSchema, input);
+  return await az.with(preCommitConfigSchema).parseAsync(input);
 }
 
 function definePreCommitConfig<ScriptName extends string = string>(

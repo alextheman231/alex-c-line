@@ -1,6 +1,6 @@
 import type { Command } from "commander";
 
-import { parseZodSchema, VersionNumber } from "@alextheman/utility";
+import { az, VersionNumber } from "@alextheman/utility";
 import { getPackageJsonContents } from "@alextheman/utility/internal";
 import { parseFilePath } from "@alextheman/utility/node";
 import { DataError } from "@alextheman/utility/v6";
@@ -29,13 +29,11 @@ function templateReleaseNoteCheck(program: Command) {
     .action(async (documentPath, { expectedReleaseStatus }) => {
       const fileContents = await readFile(path.join(process.cwd(), documentPath.fullPath), "utf-8");
 
-      const { name } = parseZodSchema(
-        z.object({ name: z.string() }),
-        await getPackageJsonContents(process.cwd()),
-        () => {
+      const { name } = az
+        .with(z.object({ name: z.string() }))
+        .parse(await getPackageJsonContents(process.cwd()), () => {
           program.error("Your package.json is invalid");
-        },
-      );
+        });
 
       const documentVersion = new VersionNumber(
         documentPath.base

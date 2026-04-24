@@ -1,6 +1,6 @@
 import type { AlexCLineConfig } from "src/configs/types/AlexCLineConfig";
 
-import { parseZodSchemaAsync } from "@alextheman/utility";
+import { az } from "@alextheman/utility";
 import z from "zod";
 
 import { preCommitConfigSchema } from "src/configs/helpers/preCommit/definePreCommitConfig";
@@ -16,7 +16,7 @@ const alexCLineConfigSchema = z
   .partial();
 
 export async function parseAlexCLineConfig(input: unknown): Promise<AlexCLineConfig> {
-  return await parseZodSchemaAsync(alexCLineConfigSchema, input);
+  return await az.with(alexCLineConfigSchema).parseAsync(input);
 }
 
 function defineAlexCLineConfig<ScriptName extends string = string>(

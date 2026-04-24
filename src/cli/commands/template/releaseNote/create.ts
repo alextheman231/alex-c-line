@@ -1,11 +1,6 @@
 import type { Command } from "commander";
 
-import {
-  normaliseIndents,
-  parseVersionType,
-  parseZodSchema,
-  VersionNumber,
-} from "@alextheman/utility";
+import { az, normaliseIndents, parseVersionType, VersionNumber } from "@alextheman/utility";
 import { getPackageJsonContents } from "@alextheman/utility/internal";
 import { DataError } from "@alextheman/utility/v6";
 import z from "zod";
@@ -45,10 +40,9 @@ function templateReleaseNoteCreate(program: Command) {
     .action(async (target) => {
       const packageInfo = await getPackageJsonContents(process.cwd());
 
-      const { name, version: packageVersion } = parseZodSchema(
-        z.object({ name: z.string(), version: z.string() }),
-        packageInfo,
-      );
+      const { name, version: packageVersion } = az
+        .with(z.object({ name: z.string(), version: z.string() }))
+        .parse(packageInfo);
 
       const versionNumber =
         target instanceof VersionNumber

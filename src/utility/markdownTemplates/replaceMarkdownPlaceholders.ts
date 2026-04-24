@@ -1,4 +1,4 @@
-import { parseZodSchema } from "@alextheman/utility";
+import { az } from "@alextheman/utility";
 import { DataError } from "@alextheman/utility/v6";
 import matter from "gray-matter";
 import z from "zod";
@@ -9,7 +9,7 @@ function replaceMarkdownPlaceholders(
 ): string {
   const { content, data } = matter(rawContent);
 
-  const placeholders = parseZodSchema(z.array(z.string()).default([]), data.placeholders);
+  const placeholders = az.with(z.array(z.string()).default([])).parse(data.placeholders);
 
   let finalContent = content;
   for (const placeholder of placeholders) {

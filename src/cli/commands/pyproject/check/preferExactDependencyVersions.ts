@@ -1,6 +1,6 @@
 import type { Command } from "commander";
 
-import { parseZodSchema } from "@alextheman/utility";
+import { az } from "@alextheman/utility";
 import { parse as parseToml } from "toml";
 import z from "zod";
 
@@ -21,10 +21,7 @@ const pyprojectSchema = z
   .partial();
 
 async function preferExactDependencyVersions(program: Command) {
-  const data = parseZodSchema(
-    pyprojectSchema,
-    parseToml(await readFile("pyproject.toml", "utf-8")),
-  );
+  const data = az.with(pyprojectSchema).parse(parseToml(await readFile("pyproject.toml", "utf-8")));
 
   const sections = [data.project?.dependencies ?? [], data["dependency-groups"]?.dev ?? []];
 

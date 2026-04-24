@@ -1,6 +1,6 @@
 import type { Command } from "commander";
 
-import { parseZodSchema, VersionNumber } from "@alextheman/utility";
+import { az, VersionNumber } from "@alextheman/utility";
 import { getPackageJsonContents } from "@alextheman/utility/internal";
 import { DataError } from "@alextheman/utility/v6";
 import z from "zod";
@@ -31,15 +31,16 @@ function templateReleaseNoteSetStatus(program: Command) {
     .action(async (documentPath, status) => {
       const packageInfo = await getPackageJsonContents(process.cwd());
 
-      const { name } = parseZodSchema(
-        z.object({ name: z.string() }),
-        packageInfo,
-        new DataError(
-          { name: packageInfo?.name },
-          "INVALID_PACKAGE_JSON",
-          "Invalid package.json - expected package.json to contain a `name` property.",
-        ),
-      );
+      const { name } = az
+        .with(z.object({ name: z.string() }))
+        .parse(
+          packageInfo,
+          new DataError(
+            { name: packageInfo?.name },
+            "INVALID_PACKAGE_JSON",
+            "Invalid package.json - expected package.json to contain a `name` property.",
+          ),
+        );
 
       if (!documentPath.endsWith("md")) {
         throw new DataError(

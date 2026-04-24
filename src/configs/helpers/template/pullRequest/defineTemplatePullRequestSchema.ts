@@ -1,6 +1,6 @@
 import type { TemplatePullRequestConfig } from "src/configs/types";
 
-import { parseZodSchema } from "@alextheman/utility";
+import { az } from "@alextheman/utility";
 import z from "zod";
 
 export const templatePullRequestBaseSchema = z.strictObject({
@@ -20,7 +20,7 @@ export const templatePullRequestSchema = z.discriminatedUnion("category", [
 ]);
 
 export function parseTemplatePullRequestConfig(input: unknown): TemplatePullRequestConfig {
-  return parseZodSchema(templatePullRequestSchema, input);
+  return az.with(templatePullRequestSchema).parse(input);
 }
 
 function defineCreatePullRequestTemplateConfig(
