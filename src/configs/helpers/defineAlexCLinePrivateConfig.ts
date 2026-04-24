@@ -1,6 +1,6 @@
 import type { AlexCLinePrivateConfig } from "src/configs/types/AlexCLinePrivateConfig";
 
-import { parseZodSchema } from "@alextheman/utility";
+import { az } from "@alextheman/utility";
 import { PackageManager } from "@alextheman/utility/internal";
 import z from "zod";
 
@@ -23,7 +23,7 @@ export const alexCLinePrivateConfigSchema = z.object({
 });
 
 export function parseAlexCLinePrivateConfig(data: unknown): AlexCLinePrivateConfig {
-  return parseZodSchema(alexCLinePrivateConfigSchema, data);
+  return az.with(alexCLinePrivateConfigSchema).parse(data);
 }
 
 function defineAlexCLinePrivateConfig(config: AlexCLinePrivateConfig): AlexCLinePrivateConfig {

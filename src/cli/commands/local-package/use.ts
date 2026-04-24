@@ -1,6 +1,6 @@
 import type { Command } from "commander";
 
-import { omitProperties, parseZodSchema } from "@alextheman/utility";
+import { az, omitProperties } from "@alextheman/utility";
 import { getDependenciesFromGroup, getPackageJsonContents } from "@alextheman/utility/internal";
 import { DataError } from "@alextheman/utility/v6";
 import { execa } from "execa";
@@ -91,7 +91,7 @@ function localPackageUse(program: Command) {
         );
       }
 
-      const localPackageRepositoryName = parseZodSchema(z.string(), localPackageInfo.name);
+      const localPackageRepositoryName = az.with(z.string()).parse(localPackageInfo.name);
 
       if (localPackageRepositoryName !== packageName) {
         throw new DataError(

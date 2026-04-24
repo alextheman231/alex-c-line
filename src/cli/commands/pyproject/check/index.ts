@@ -1,7 +1,7 @@
 import type { CreateEnumType } from "@alextheman/utility";
 import type { Command } from "commander";
 
-import { parseZodSchema } from "@alextheman/utility";
+import { az } from "@alextheman/utility";
 import z from "zod";
 
 import preferExactDependencyVersions from "src/cli/commands/pyproject/check/preferExactDependencyVersions";
@@ -18,7 +18,7 @@ function pyprojectCheck(program: Command) {
     .description("Run checks on your pyproject.toml file")
     .option("--rules <rules>", "The name of the rule to check", (rawRules) => {
       const rawRuleNamesArray = rawRules.split(",");
-      return parseZodSchema(z.array(z.enum(RuleName)), rawRuleNamesArray);
+      return az.with(z.array(z.enum(RuleName))).parse(rawRuleNamesArray);
     })
     .action(async ({ rules }) => {
       if (rules?.includes("prefer-exact-dependency-versions")) {

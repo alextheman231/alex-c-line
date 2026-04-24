@@ -1,4 +1,4 @@
-import { parseZodSchema } from "@alextheman/utility";
+import { az } from "@alextheman/utility";
 import { DataError } from "@alextheman/utility/v6";
 import z from "zod";
 
@@ -21,7 +21,7 @@ function getReleaseStatus(content: string): ReleaseStatus {
     );
   }
 
-  return parseZodSchema(z.enum(ReleaseStatus), normaliseMarkdown(releaseStatus.split(":")[1]));
+  return az.with(z.enum(ReleaseStatus)).parse(normaliseMarkdown(releaseStatus.split(":")[1]));
 }
 
 export default getReleaseStatus;

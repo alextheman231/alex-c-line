@@ -1,6 +1,6 @@
 import type { PreCommitPrivateConfig } from "src/configs/types/preCommit/PreCommitPrivateConfig";
 
-import { parseZodSchema } from "@alextheman/utility";
+import { az } from "@alextheman/utility";
 import z from "zod";
 
 export const preCommitPrivateConfigSchema = z.strictObject({
@@ -8,7 +8,7 @@ export const preCommitPrivateConfigSchema = z.strictObject({
 });
 
 export function parsePreCommitPrivateConfig(input: unknown): PreCommitPrivateConfig {
-  return parseZodSchema(preCommitPrivateConfigSchema, input);
+  return az.with(preCommitPrivateConfigSchema).parse(input);
 }
 
 function definePreCommitPrivateConfig<ScriptName extends string = string>(

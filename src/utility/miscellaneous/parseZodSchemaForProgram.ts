@@ -1,8 +1,8 @@
 import type { Command } from "commander";
-import type { ZodType } from "zod";
 import type z from "zod";
+import type { ZodType } from "zod";
 
-import { parseZodSchema } from "@alextheman/utility";
+import { az } from "@alextheman/utility";
 import { DataError } from "@alextheman/utility/v6";
 
 import convertDataErrorToProgramError from "src/utility/errors/convertDataErrorToProgramError";
@@ -13,7 +13,7 @@ function parseZodSchemaForProgram<SchemaType extends ZodType>(
   data: unknown,
 ): z.infer<SchemaType> {
   try {
-    return parseZodSchema<SchemaType>(schema, data);
+    return az.with<SchemaType>(schema).parse(data);
   } catch (error) {
     if (DataError.check(error)) {
       convertDataErrorToProgramError(error, program);
