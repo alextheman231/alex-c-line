@@ -11,7 +11,7 @@ function formatError(error: unknown): never {
         stderr: error.stderr,
         stdout: error.stdout,
       },
-      error.code,
+      error.code ?? "COMMAND_ERROR",
       error.message,
     );
 
