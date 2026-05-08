@@ -11,13 +11,11 @@ import {
 import { temporaryDirectoryTask } from "tempy";
 import { describe as describeVitest, expect, test } from "vitest";
 
-import { writeFile } from "node:fs/promises";
+import { cp, writeFile } from "node:fs/promises";
 import path from "node:path";
 
 import doesFileExist from "src/utility/fileSystem/doesFileExist";
 import createAlexCLineArtwork from "src/utility/miscellaneous/createAlexCLineArtwork";
-
-import packageInfo from "package.json" with { type: "json" };
 
 const Entrypoint = {
   ROOT: "alex-c-line",
@@ -86,7 +84,10 @@ describe.each<Entrypoint>([Entrypoint.ROOT, Entrypoint.CONFIGS, Entrypoint.CONFI
             };
 
             if (packageManager === PackageManager.PNPM) {
-              testPackageInfo.pnpm = packageInfo.pnpm;
+              await cp(
+                path.join(process.cwd(), "pnpm-workspace.yaml"),
+                path.join(temporaryPath, "pnpm-workspace.yaml"),
+              );
             }
 
             await writeFile(
