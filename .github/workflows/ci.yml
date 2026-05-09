@@ -13,12 +13,12 @@ permissions:
 
 jobs:
   package-ci:
-    uses: alextheman231/github-actions/.github/workflows/package-ci.yml@2e41fee3271c96b410b398994b6df72997e18c02 # v11.2.1
+    uses: alextheman231/github-actions/.github/workflows/package-ci.yml@c4545878d40d8cd0b3b08c8f693c27980b5f3e16 # v11.2.2
     with:
       os: '["ubuntu-latest", "windows-latest", "macos-latest"]'
 
   actions-ci:
-    uses: alextheman231/github-actions/.github/workflows/actions-ci.yml@2e41fee3271c96b410b398994b6df72997e18c02 # v11.2.1
+    uses: alextheman231/github-actions/.github/workflows/actions-ci.yml@c4545878d40d8cd0b3b08c8f693c27980b5f3e16 # v11.2.2
 
   end-to-end-ci:
-    uses: alextheman231/github-actions/.github/workflows/end-to-end-node-package-ci.yml@2e41fee3271c96b410b398994b6df72997e18c02 # v11.2.1
+    uses: alextheman231/github-actions/.github/workflows/end-to-end-node-package-ci.yml@c4545878d40d8cd0b3b08c8f693c27980b5f3e16 # v11.2.2
