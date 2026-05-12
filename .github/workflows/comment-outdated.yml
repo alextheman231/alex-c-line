@@ -16,5 +16,5 @@ jobs:
     with:
       pull-request-number: ${{ github.event.pull_request.number }}
     secrets:
-      APP_ID: ${{ secrets.ALEX_UP_BOT_APP_ID }}
+      APP_ID: ${{ vars.ALEX_UP_BOT_APP_ID }}
       APP_PRIVATE_KEY: ${{ secrets.ALEX_UP_BOT_PRIVATE_KEY }}
