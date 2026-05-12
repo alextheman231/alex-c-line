@@ -19,5 +19,5 @@ jobs:
     if: needs.npm-registry-publish.outputs.did_publish == 'true'
     uses: alextheman231/github-actions/.github/workflows/create-github-release.yml@c4545878d40d8cd0b3b08c8f693c27980b5f3e16 # v11.2.2
     secrets:
-      APP_ID: ${{ secrets.ALEX_UP_BOT_APP_ID }}
+      APP_ID: ${{ vars.ALEX_UP_BOT_APP_ID }}
       APP_PRIVATE_KEY: ${{ secrets.ALEX_UP_BOT_PRIVATE_KEY }}
