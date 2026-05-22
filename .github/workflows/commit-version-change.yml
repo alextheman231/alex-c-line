@@ -9,7 +9,7 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
-    uses: alextheman231/github-actions/.github/workflows/commit-version-change.yml@c4545878d40d8cd0b3b08c8f693c27980b5f3e16 # v11.2.2
+    uses: alextheman231/github-actions/.github/workflows/commit-version-change.yml@b392a15552197a9ee42f5927ecf5b61852152c72 # v11.2.5
     with:
       version-type: major
     secrets:
@@ -20,7 +20,7 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
-    uses: alextheman231/github-actions/.github/workflows/commit-version-change.yml@c4545878d40d8cd0b3b08c8f693c27980b5f3e16 # v11.2.2
+    uses: alextheman231/github-actions/.github/workflows/commit-version-change.yml@b392a15552197a9ee42f5927ecf5b61852152c72 # v11.2.5
     with:
       version-type: minor
     secrets:
@@ -31,7 +31,7 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
-    uses: alextheman231/github-actions/.github/workflows/commit-version-change.yml@c4545878d40d8cd0b3b08c8f693c27980b5f3e16 # v11.2.2
+    uses: alextheman231/github-actions/.github/workflows/commit-version-change.yml@b392a15552197a9ee42f5927ecf5b61852152c72 # v11.2.5
     with:
       version-type: patch
     secrets:
