@@ -1,3 +1,5 @@
+import type { ZodParsingErrorData } from "@alextheman/utility";
+
 import type { AlexCLineProjectCache } from "src/cache/project/types/AlexCLineProjectCache";
 
 import { DataError } from "@alextheman/utility/v6";
@@ -41,11 +43,16 @@ describe("parseAlexCLineProjectCache", () => {
         },
       },
     };
-    const error = DataError.expectError(() => {
+    const error = DataError.expectError<ZodParsingErrorData>(() => {
       parseAlexCLineProjectCache(input);
     });
 
     expect(error.data.input).toEqual(input);
-    expect(error.code).toContain("INVALID_TYPE");
+    expect(
+      error.data.issues.map((issue) => {
+        return issue.code;
+      }),
+    ).toContain("invalid_type");
+    expect(error.code).toBe("ZOD_ERROR");
   });
 });
