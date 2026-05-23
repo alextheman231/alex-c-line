@@ -1,0 +1,94 @@
+name: Scheduled Patch Release
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: 0 21 1 * *
+
+jobs:
+  scheduled-patch-release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    if: ${{ github.repository == 'alextheman231/alex-c-line' }}
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+
+      - name: Use PNPM
+        uses: pnpm/action-setup@0e279bb959325dab635dd2c09392533439d90093 # v6.0.8
+        with:
+          run_install: false
+
+      - name: Use Node.js
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
+        with:
+          node-version: 22
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Install alex-c-line
+        uses: alextheman231/typescript-actions/actions/safe-npm-dependency-global-install@52cf8adbb2d435944bbd882e03d0be6cdaeac243 # v1.2.1
+        with:
+          package-name: alex-c-line
+          dependency-group: devDependencies
+          strict-version-resolution: false
+
+      - name: Get package data
+        id: get_package_data
+        run: |
+          PACKAGE_NAME=v$(jq -r ".name" package.json)
+          echo "package_name=$PACKAGE_NAME" >> "$GITHUB_OUTPUT"
+
+          VERSION=v$(jq -r ".version" package.json)
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Get next version
+        id: get_next_version
+        env:
+          VERSION: ${{ steps.get_package_data.outputs.version }}
+        run: |
+          NEXT_VERSION=$(alex-c-line version increment "$VERSION" patch)
+          echo "version=$NEXT_VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Create the release note
+        env:
+          PACKAGE_NAME: ${{ steps.get_package_data.outputs.package_name }}
+        run: alex-c-line template release-note create patch --content "- Automated release of `$PACKAGE_NAME`"
+
+      - name: Find release note
+        id: get_release_note_path
+
+        run: RELEASE_NOTE_PATH=$(alex-c-line template release-note path "$NEXT_VERSION")
+          echo "path=$RELEASE_NOTE_PATH" >> "$GITHUB_OUTPUT"
+
+      - name: Change the status in the release note to 'Released'
+        env:
+          RELEASE_NOTE_PATH: ${{ steps.get_release_note_path.outputs.path }}
+        run: alex-c-line template release-note set-status "$RELEASE_DOC_PATH" Released
+
+      - name: Get alex-up-bot GitHub token
+        id: app-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
+        with:
+          client-id: ${{ vars.ALEX_UP_BOT_APP_ID }}
+          private-key: ${{ secrets.ALEX_UP_BOT_PRIVATE_KEY }}
+          permission-contents: write
+          permission-pull-requests: write
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8.1.1
+        with:
+          token: ${{ steps.app-token.outputs.token }}
+          author: alex-up-bot <alexupbot@bot.com>
+          committer: alex-up-bot <alexupbot@bot.com>
+          branch: alex-up-bot/auto-release
+          base: main
+          title: "Change version number to ${{ steps.get_next_version.outputs.version }}"
+          commit-message: "Change version number to ${{ steps.get_next_version.outputs.version }}"
+          maintainer-can-modify: false
+          body-path: ${{ steps.get_release_note_path.outputs.path }}
