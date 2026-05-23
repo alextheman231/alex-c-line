@@ -72,6 +72,9 @@ jobs:
           RELEASE_NOTE_PATH: ${{ steps.get_release_note_path.outputs.path }}
         run: alex-c-line template release-note set-status "$RELEASE_NOTE_PATH" Released
 
+      - name: Format the release note
+        run: pnpm run format-markdownlint
+
       - name: Get alex-up-bot GitHub token
         id: app-token
         uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
