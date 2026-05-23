@@ -50,7 +50,11 @@ jobs:
         run: |
           PREVIOUS_TAG=$(git describe --tags --abbrev=0)
           COMMITS=$(git log "$PREVIOUS_TAG"..HEAD --pretty=format:"- %s")
-          echo "commits=$COMMITS" >> "$GITHUB_OUTPUT"
+          {
+            echo "commits<<EOF"
+            echo "$COMMITS"
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
 
       - name: Create the release note
         env:
