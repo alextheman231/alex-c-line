@@ -40,6 +40,11 @@ jobs:
           dependency-group: devDependencies
           strict-version-resolution: false
 
+      - name: Fetch tags
+        run: |
+          git fetch --unshallow origin main
+          git fetch --tags origin
+
       - name: Get commits from previous tag to now
         id: get_commits
         run: |
