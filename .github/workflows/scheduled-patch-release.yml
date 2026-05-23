@@ -7,101 +7,10 @@ on:
 
 jobs:
   scheduled-patch-release:
-    runs-on: ubuntu-latest
     permissions:
       contents: write
-    env:
-      HUSKY: 0
     if: ${{ github.repository == 'alextheman231/alex-c-line' }}
-    steps:
-      - name: Checkout the repository
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-        with:
-          persist-credentials: false
-
-      - name: Use PNPM
-        uses: pnpm/action-setup@0e279bb959325dab635dd2c09392533439d90093 # v6.0.8
-        with:
-          run_install: false
-
-      - name: Use Node.js
-        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
-        with:
-          node-version: 22
-          cache: "pnpm"
-
-      - name: Install dependencies
-        run: pnpm install
-
-      - name: Install alex-c-line
-        uses: alextheman231/typescript-actions/actions/safe-npm-dependency-global-install@52cf8adbb2d435944bbd882e03d0be6cdaeac243 # v1.2.1
-        with:
-          package-name: alex-c-line
-          dependency-group: devDependencies
-          strict-version-resolution: false
-
-      - name: Fetch tags
-        run: |
-          git fetch --unshallow origin main
-          git fetch --tags origin
-
-      - name: Get commits from previous tag to now
-        id: get_commits
-        run: |
-          PREVIOUS_TAG=$(git describe --tags --abbrev=0)
-          COMMITS=$(git log "$PREVIOUS_TAG"..HEAD --pretty=format:"   - %s")
-          {
-            echo "commits<<EOF"
-            echo "$COMMITS"
-            echo "EOF"
-          } >> "$GITHUB_OUTPUT"
-
-      - name: Create the release note
-        env:
-          COMMITS: ${{ steps.get_commits.outputs.commits }}
-        run: |
-          CONTENT=$(printf "%s\n%s" "- Automated release" "$COMMITS")
-          alex-c-line template release-note create patch --content "$CONTENT"
-
-      - name: Get next version
-        id: get_next_version
-        run: |
-          NEXT_VERSION=$(npm version patch --no-git-tag-version)
-          echo "version=$NEXT_VERSION" >> "$GITHUB_OUTPUT"
-
-      - name: Find release note
-        id: get_release_note_path
-        env:
-          NEXT_VERSION: ${{ steps.get_next_version.outputs.version }}
-        run: |
-          RELEASE_NOTE_PATH=$(alex-c-line template release-note path "$NEXT_VERSION")
-          echo "path=$RELEASE_NOTE_PATH" >> "$GITHUB_OUTPUT"
-
-      - name: Change the status in the release note to 'Released'
-        env:
-          RELEASE_NOTE_PATH: ${{ steps.get_release_note_path.outputs.path }}
-        run: alex-c-line template release-note set-status "$RELEASE_NOTE_PATH" Released
-
-      - name: Format the release note
-        run: pnpm run format-markdownlint
-
-      - name: Get alex-up-bot GitHub token
-        id: app-token
-        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
-        with:
-          client-id: ${{ vars.ALEX_UP_BOT_APP_ID }}
-          private-key: ${{ secrets.ALEX_UP_BOT_PRIVATE_KEY }}
-          permission-contents: write
-          permission-pull-requests: write
-
-      - name: Create Pull Request
-        uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8.1.1
-        with:
-          token: ${{ steps.app-token.outputs.token }}
-          author: alex-up-bot <alexupbot@bot.com>
-          committer: alex-up-bot <alexupbot@bot.com>
-          branch: alex-up-bot/auto-release
-          base: main
-          title: "Change version number to ${{ steps.get_next_version.outputs.version }}"
-          commit-message: "Change version number to ${{ steps.get_next_version.outputs.version }}"
-          body-path: ${{ steps.get_release_note_path.outputs.path }}
+    uses: alextheman231/github-actions/.github/workflows/scheduled-patch-release.yml@836601cc7cd1e60f2c0acfc60bbdb280908ef7e8 # v11.2.6
+    secrets:
+      APP_ID: ${{ vars.ALEX_UP_BOT_APP_ID }}
+      APP_PRIVATE_KEY: ${{ secrets.ALEX_UP_BOT_PRIVATE_KEY }}
