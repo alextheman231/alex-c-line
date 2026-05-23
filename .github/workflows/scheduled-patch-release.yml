@@ -59,6 +59,8 @@ jobs:
 
       - name: Find release note
         id: get_release_note_path
+        env:
+          NEXT_VERSION: ${{ steps.get_next_version.outputs.version }}
         run: |
           RELEASE_NOTE_PATH=$(alex-c-line template release-note path "$NEXT_VERSION")
           echo "path=$RELEASE_NOTE_PATH" >> "$GITHUB_OUTPUT"
