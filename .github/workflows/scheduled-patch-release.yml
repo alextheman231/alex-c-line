@@ -49,7 +49,7 @@ jobs:
         id: get_commits
         run: |
           PREVIOUS_TAG=$(git describe --tags --abbrev=0)
-          COMMITS=$(git log "$PREVIOUS_TAG"..HEAD --pretty=format:"- %s")
+          COMMITS=$(git log "$PREVIOUS_TAG"..HEAD --pretty=format:"   - %s")
           {
             echo "commits<<EOF"
             echo "$COMMITS"
@@ -59,7 +59,7 @@ jobs:
       - name: Create the release note
         env:
           COMMITS: ${{ steps.get_commits.outputs.commits }}
-        run: alex-c-line template release-note create patch --content "$COMMITS"
+        run: alex-c-line template release-note create patch --content "- Automated release\n$COMMITS"
 
       - name: Get next version
         id: get_next_version
