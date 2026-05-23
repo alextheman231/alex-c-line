@@ -43,7 +43,7 @@ jobs:
       - name: Get package data
         id: get_package_data
         run: |
-          PACKAGE_NAME=v$(jq -r ".name" package.json)
+          PACKAGE_NAME=$(jq -r ".name" package.json)
           echo "package_name=$PACKAGE_NAME" >> "$GITHUB_OUTPUT"
 
       - name: Create the release note
