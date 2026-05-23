@@ -49,7 +49,7 @@ jobs:
       - name: Create the release note
         env:
           PACKAGE_NAME: ${{ steps.get_package_data.outputs.package_name }}
-        run: alex-c-line template release-note create patch --content "- Automated release of `$PACKAGE_NAME`"
+        run: alex-c-line template release-note create patch --content "- Automated release of \`$PACKAGE_NAME\`"
 
       - name: Get next version
         id: get_next_version
