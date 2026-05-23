@@ -40,21 +40,20 @@ jobs:
           dependency-group: devDependencies
           strict-version-resolution: false
 
-      - name: Get package data
-        id: get_package_data
+      - name: Get commits from previous tag to now
+        id: get_commits
         run: |
-          PACKAGE_NAME=$(jq -r ".name" package.json)
-          echo "package_name=$PACKAGE_NAME" >> "$GITHUB_OUTPUT"
+          PREVIOUS_TAG=$(git describe --tags --abbrev=0)
+          COMMITS=$(git log "$PREVIOUS_TAG"..HEAD --pretty=format:"- %s")
+          echo "commits=$COMMITS" >> "$GITHUB_OUTPUT"
 
       - name: Create the release note
         env:
-          PACKAGE_NAME: ${{ steps.get_package_data.outputs.package_name }}
-        run: alex-c-line template release-note create patch --content "- Automated release of \`$PACKAGE_NAME\`"
+          COMMITS: ${{ steps.get_commits.outputs.commits }}
+        run: alex-c-line template release-note create patch --content "$COMMITS"
 
       - name: Get next version
         id: get_next_version
-        env:
-          VERSION: ${{ steps.get_package_data.outputs.version }}
         run: |
           NEXT_VERSION=$(npm version patch --no-git-tag-version)
           echo "version=$NEXT_VERSION" >> "$GITHUB_OUTPUT"
@@ -94,5 +93,4 @@ jobs:
           base: main
           title: "Change version number to ${{ steps.get_next_version.outputs.version }}"
           commit-message: "Change version number to ${{ steps.get_next_version.outputs.version }}"
-          maintainer-can-modify: false
           body-path: ${{ steps.get_release_note_path.outputs.path }}
