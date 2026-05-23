@@ -68,7 +68,7 @@ jobs:
       - name: Change the status in the release note to 'Released'
         env:
           RELEASE_NOTE_PATH: ${{ steps.get_release_note_path.outputs.path }}
-        run: alex-c-line template release-note set-status "$RELEASE_DOC_PATH" Released
+        run: alex-c-line template release-note set-status "$RELEASE_NOTE_PATH" Released
 
       - name: Get alex-up-bot GitHub token
         id: app-token
