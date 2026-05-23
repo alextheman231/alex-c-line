@@ -8,6 +8,7 @@ import { describe, expect, test } from "vitest";
 import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
+import getReleaseSummary from "tests/helpers/getReleaseSummary";
 import setDirectory from "tests/helpers/setDirectory";
 import createAlexCLineTestClient from "tests/testClients/alexCLineTestClient";
 
@@ -145,4 +146,30 @@ describe("template release-note create", () => {
       });
     },
   );
+  test("Can set the content through the CLI", async () => {
+    await temporaryDirectoryTask(async (temporaryPath) => {
+      const alexCLineTestClient = createAlexCLineTestClient(setDirectory(temporaryPath));
+      await writeFile(
+        path.join(temporaryPath, "package.json"),
+        JSON.stringify({
+          name,
+          version,
+        }),
+      );
+      const versionNumber = new VersionNumber(version);
+      const content = "- Test release";
+      const { exitCode } =
+        await alexCLineTestClient`template release-note create ${versionNumber.toString()} --content ${content}`;
+
+      expect(exitCode).toBe(0);
+      const fileContents = await readFile(
+        path.join(temporaryPath, getReleaseNotePath(versionNumber)),
+        "utf-8",
+      );
+
+      expect(fileContents).toContain(getReleaseSummary(name, versionNumber));
+      expect(fileContents).toContain("## Description of Changes");
+      expect(fileContents).toContain(content);
+    });
+  });
 });

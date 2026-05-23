@@ -36,8 +36,9 @@ function templateReleaseNoteCreate(program: Command) {
         }
       },
     )
+    .option("--content <content>", "Set the content of the release note")
     .description("Create release notes based on the current version in package.json.")
-    .action(async (target) => {
+    .action(async (target, { content }) => {
       const packageInfo = await getPackageJsonContents(process.cwd());
 
       const { name, version: packageVersion } = az
@@ -55,6 +56,7 @@ function templateReleaseNoteCreate(program: Command) {
 
       const releaseNoteTemplate = await createReleaseNoteFromTemplates(name, versionNumber, {
         status: "In progress",
+        editableSection: content,
       });
 
       try {
