@@ -59,7 +59,9 @@ jobs:
       - name: Create the release note
         env:
           COMMITS: ${{ steps.get_commits.outputs.commits }}
-        run: alex-c-line template release-note create patch --content "- Automated release\n$COMMITS"
+        run: |
+          CONTENT=$(printf "%s\n%s" "- Automated release" "$COMMITS")
+          alex-c-line template release-note create patch --content "$CONTENT"
 
       - name: Get next version
         id: get_next_version
