@@ -44,15 +44,12 @@ jobs:
           PACKAGE_NAME=v$(jq -r ".name" package.json)
           echo "package_name=$PACKAGE_NAME" >> "$GITHUB_OUTPUT"
 
-          VERSION=v$(jq -r ".version" package.json)
-          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
-
       - name: Get next version
         id: get_next_version
         env:
           VERSION: ${{ steps.get_package_data.outputs.version }}
         run: |
-          NEXT_VERSION=$(alex-c-line version increment "$VERSION" patch)
+          NEXT_VERSION=$(npm version patch --no-git-tag-version)
           echo "version=$NEXT_VERSION" >> "$GITHUB_OUTPUT"
 
       - name: Create the release note
@@ -62,8 +59,8 @@ jobs:
 
       - name: Find release note
         id: get_release_note_path
-
-        run: RELEASE_NOTE_PATH=$(alex-c-line template release-note path "$NEXT_VERSION")
+        run: |
+          RELEASE_NOTE_PATH=$(alex-c-line template release-note path "$NEXT_VERSION")
           echo "path=$RELEASE_NOTE_PATH" >> "$GITHUB_OUTPUT"
 
       - name: Change the status in the release note to 'Released'
