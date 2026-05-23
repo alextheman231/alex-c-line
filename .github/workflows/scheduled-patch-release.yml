@@ -44,6 +44,11 @@ jobs:
           PACKAGE_NAME=v$(jq -r ".name" package.json)
           echo "package_name=$PACKAGE_NAME" >> "$GITHUB_OUTPUT"
 
+      - name: Create the release note
+        env:
+          PACKAGE_NAME: ${{ steps.get_package_data.outputs.package_name }}
+        run: alex-c-line template release-note create patch --content "- Automated release of `$PACKAGE_NAME`"
+
       - name: Get next version
         id: get_next_version
         env:
@@ -51,11 +56,6 @@ jobs:
         run: |
           NEXT_VERSION=$(npm version patch --no-git-tag-version)
           echo "version=$NEXT_VERSION" >> "$GITHUB_OUTPUT"
-
-      - name: Create the release note
-        env:
-          PACKAGE_NAME: ${{ steps.get_package_data.outputs.package_name }}
-        run: alex-c-line template release-note create patch --content "- Automated release of `$PACKAGE_NAME`"
 
       - name: Find release note
         id: get_release_note_path
