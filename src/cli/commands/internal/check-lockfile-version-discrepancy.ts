@@ -5,7 +5,7 @@ import path from "node:path";
 
 import ERROR_PREFIX from "src/utility/constants/ERROR_PREFIX";
 
-function checkLockfileVersionDiscrepancy(program: Command) {
+function internalCheckLockfileVersionDiscrepancy(program: Command) {
   program
     .command("check-lockfile-version-discrepancy")
     .description("Check that version numbers in package.json and package-lock.json match")
@@ -28,4 +28,4 @@ function checkLockfileVersionDiscrepancy(program: Command) {
     });
 }
 
-export default checkLockfileVersionDiscrepancy;
+export default internalCheckLockfileVersionDiscrepancy;

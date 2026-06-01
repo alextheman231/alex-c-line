@@ -7,7 +7,7 @@ import path from "node:path";
 
 import ALEX_C_LINE_PACKAGE_ROOT from "src/utility/constants/ALEX_C_LINE_PACKAGE_ROOT";
 
-function outdatedDependencies(program: Command) {
+function internalOutdatedDependencies(program: Command) {
   program.command("outdated-dependencies").action(async () => {
     const { exitCode, stdout, stderr } = await execa({ reject: false })`pnpm outdated --json`;
     if (!([0, 1] as Array<number | undefined>).includes(exitCode)) {
@@ -52,4 +52,4 @@ function outdatedDependencies(program: Command) {
   });
 }
 
-export default outdatedDependencies;
+export default internalOutdatedDependencies;

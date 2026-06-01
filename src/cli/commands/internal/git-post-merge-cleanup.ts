@@ -4,7 +4,7 @@ import { execa } from "execa";
 
 import ERROR_PREFIX from "src/utility/constants/ERROR_PREFIX";
 
-function gitPostMergeCleanup(program: Command) {
+function internalGitPostMergeCleanup(program: Command) {
   program
     .command("git-post-merge-cleanup")
     .alias("git-cleanup")
@@ -62,4 +62,4 @@ function gitPostMergeCleanup(program: Command) {
     });
 }
 
-export default gitPostMergeCleanup;
+export default internalGitPostMergeCleanup;

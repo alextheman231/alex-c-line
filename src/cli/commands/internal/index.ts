@@ -1,9 +1,9 @@
 import type { Command } from "commander";
 
-import checkLockfileVersionDiscrepancy from "src/cli/commands/internal/check-lockfile-version-discrepancy";
-import gitPostMergeCleanup from "src/cli/commands/internal/git-post-merge-cleanup";
+import internalCheckLockfileVersionDiscrepancy from "src/cli/commands/internal/check-lockfile-version-discrepancy";
+import internalGitPostMergeCleanup from "src/cli/commands/internal/git-post-merge-cleanup";
 import internalMedia from "src/cli/commands/internal/media";
-import outdatedDependencies from "src/cli/commands/internal/outdated-dependencies";
+import internalOutdatedDependencies from "src/cli/commands/internal/outdated-dependencies";
 import loadCommands from "src/utility/miscellaneous/loadCommands";
 
 function internal(program: Command) {
@@ -14,10 +14,10 @@ function internal(program: Command) {
     );
 
   loadCommands(internalProgram, {
-    checkLockfileVersionDiscrepancy,
-    gitPostMergeCleanup,
+    internalCheckLockfileVersionDiscrepancy,
+    internalGitPostMergeCleanup,
     internalMedia,
-    outdatedDependencies,
+    internalOutdatedDependencies,
   });
 }
 
