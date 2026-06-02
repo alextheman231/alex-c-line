@@ -1,6 +1,7 @@
 import type { Command } from "commander";
 
 import internalCheckLockfileVersionDiscrepancy from "src/cli/commands/internal/check-lockfile-version-discrepancy";
+import internalDependencyAudit from "src/cli/commands/internal/dependency-audit";
 import internalGitPostMergeCleanup from "src/cli/commands/internal/git-post-merge-cleanup";
 import internalMedia from "src/cli/commands/internal/media";
 import internalOutdatedDependencies from "src/cli/commands/internal/outdated-dependencies";
@@ -15,6 +16,7 @@ function internal(program: Command) {
 
   loadCommands(internalProgram, {
     internalCheckLockfileVersionDiscrepancy,
+    internalDependencyAudit,
     internalGitPostMergeCleanup,
     internalMedia,
     internalOutdatedDependencies,
