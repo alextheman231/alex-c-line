@@ -1,0 +1,17 @@
+name: Audit dependencies
+
+on:
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  audit-javascript-dependencies:
+    permissions:
+      contents: read
+      pull-requests: write
+    uses: alextheman231/github-actions/.github/workflows/audit-javascript-dependencies.yml@3a7c224f60dbd26c8e2f31738236b6cbc8dd96e7 # v12.0.0
+    with:
+      pull-request-number: ${{ github.event.pull_request.number }}
+      APP_ID: ${{ vars.ALEX_UP_BOT_APP_ID }}
+    secrets:
+      APP_PRIVATE_KEY: ${{ secrets.ALEX_UP_BOT_PRIVATE_KEY }}
