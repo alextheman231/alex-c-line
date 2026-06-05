@@ -21,7 +21,6 @@ function versionIncrement(program: Command) {
       parseVersionType,
     )
     .option("--no-prefix", "Omit the `v` prefix from the output.")
-    .option("--prefix")
     .action((version, incrementType, { prefix }) => {
       console.info(version.increment(incrementType).format({ omitPrefix: !prefix }));
     });

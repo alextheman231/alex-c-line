@@ -20,8 +20,7 @@ function preCommit(program: Command) {
     .command("pre-commit")
     .description("Run the pre-commit scripts specified in the alex-c-line config (v2 experiment).")
     .option("--allow-no-staged-changes", "Run even if nothing is staged")
-    .option("--no-update-index")
-    .option("--update-index", "Update the git index after the run")
+    .option("--no-update-index", "Update the git index after the run")
     .action(async (options) => {
       const configPath = await findAlexCLineConfig(process.cwd());
       if (!configPath) {

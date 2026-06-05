@@ -32,14 +32,11 @@ function versionFormat(program: Command) {
       return new VersionNumber(rawVersion);
     })
     .option("--no-prefix", "Omit the `v` prefix from the output.")
-    .option("--prefix")
     .option(
       "--no-minor",
       "Omit the minor version number from the output (will also omit the patch version)",
     )
-    .option("--minor")
     .option("--no-patch", "Omit the patch version number from the output.")
-    .option("--patch")
     .action((version, options) => {
       const { prefix, minor, patch } = parseZodSchemaForProgram(
         program,
