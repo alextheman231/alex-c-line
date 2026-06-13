@@ -1,7 +1,7 @@
 import type { CreateEnumType } from "@alextheman/utility";
 import type { Command } from "commander";
 
-import { az, normaliseIndents } from "@alextheman/utility";
+import { az, normaliseIndents, sortBy } from "@alextheman/utility";
 import { execa } from "execa";
 import z from "zod";
 
@@ -83,9 +83,11 @@ async function getSecurityAudit(program: Command): Promise<string> {
   const auditTable = tableTemplate.replace(
     "{{tableRows}}",
     Object.entries(securityAudit.advisories)
-      .toSorted(([_, first], [__, second]) => {
-        return severityOrder[second.severity] - severityOrder[first.severity];
-      })
+      .toSorted(
+        sortBy(([_, advisory]) => {
+          return severityOrder[advisory.severity];
+        }, "desc"),
+      )
       .map(([id, data]) => {
         return tableRowTemplate
           .replace("{{advisoryId}}", id)
