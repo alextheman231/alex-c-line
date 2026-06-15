@@ -6,6 +6,7 @@ import { DataError } from "@alextheman/utility/v6";
 import { writeFile } from "node:fs/promises";
 import path from "node:path";
 
+import getLicenseCheck from "src/cli/commands/internal/dependency-audit/helpers/getLicenseCheck";
 import getOutdatedDependencies from "src/cli/commands/internal/dependency-audit/helpers/getOutdatedDependencies";
 import getPeerCheck from "src/cli/commands/internal/dependency-audit/helpers/getPeerCheck";
 import getSecurityAudit from "src/cli/commands/internal/dependency-audit/helpers/getSecurityAudit";
@@ -19,6 +20,7 @@ function internalDependencyAudit(program: Command) {
       const securityAudit = await getSecurityAudit(program);
       const peerCheckResult = await getPeerCheck(program);
       const outdatedDependencies = await getOutdatedDependencies(program);
+      const licenseCheck = await getLicenseCheck(program);
 
       const content = normaliseIndents`
         # JavaScript Dependency Audit
@@ -34,6 +36,10 @@ function internalDependencyAudit(program: Command) {
         ## Outdated Dependencies
 
         ${outdatedDependencies}
+
+        ## Licenses
+
+        ${licenseCheck}
       `;
 
       console.info(content);
