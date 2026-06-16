@@ -37,7 +37,9 @@ async function getLicenseCheck(program: Command): Promise<string> {
 
   const licenseCheck = parseLicenseCheck(JSON.parse(stdout.trim()));
 
-  if (Object.keys(licenseCheck).length === 0) {
+  const licenseEntries = Object.entries(licenseCheck);
+
+  if (licenseEntries.length === 0) {
     return "No licenses found.";
   }
 
@@ -60,7 +62,7 @@ async function getLicenseCheck(program: Command): Promise<string> {
 
   const summary = summaryTableTemplate.replace(
     "{{tableRows}}",
-    Object.entries(licenseCheck)
+    licenseEntries
       .toSorted(
         sortBy(([_, data]) => {
           return data.length;
@@ -74,8 +76,7 @@ async function getLicenseCheck(program: Command): Promise<string> {
       .join("\n"),
   );
 
-  const licenses = Object.keys(licenseCheck);
-  const invalidLicenses = licenses.filter((license) => {
+  const invalidLicenses = licenseEntries.filter(([license, _]) => {
     return !ALLOWED_LICENSES.includes(license);
   });
 
@@ -112,10 +113,7 @@ async function getLicenseCheck(program: Command): Promise<string> {
 
     invalidSummary = invalidLicensesTableTemplate.replace(
       "{{tableRows}}",
-      Object.entries(licenseCheck)
-        .filter(([license]) => {
-          return !ALLOWED_LICENSES.includes(license);
-        })
+      invalidLicenses
         .map(([license, data]) => {
           return invalidLicensesTableRowTemplate
             .replaceAll("{{license}}", license)
