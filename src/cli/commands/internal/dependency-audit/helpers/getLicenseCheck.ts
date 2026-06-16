@@ -1,6 +1,6 @@
 import type { Command } from "commander";
 
-import { az, normaliseIndents } from "@alextheman/utility";
+import { az, normaliseIndents, sortBy } from "@alextheman/utility";
 import { execa } from "execa";
 import z from "zod";
 
@@ -61,6 +61,11 @@ async function getLicenseCheck(program: Command): Promise<string> {
   const summary = summaryTableTemplate.replace(
     "{{tableRows}}",
     Object.entries(licenseCheck)
+      .toSorted(
+        sortBy(([_, data]) => {
+          return data.length;
+        }, "desc"),
+      )
       .map(([license, data]) => {
         return summaryTableRowTemplate
           .replace("{{license}}", license)
