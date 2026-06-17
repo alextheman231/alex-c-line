@@ -1,7 +1,7 @@
 import type { CreateEnumType } from "@alextheman/utility";
 import type { Command } from "commander";
 
-import { az, normaliseIndents, sortBy } from "@alextheman/utility";
+import { az, escapeHTML, normaliseIndents, sortBy } from "@alextheman/utility";
 import { execa } from "execa";
 import z from "zod";
 
@@ -90,13 +90,13 @@ async function getSecurityAudit(program: Command): Promise<string> {
       )
       .map(([id, data]) => {
         return tableRowTemplate
-          .replace("{{advisoryId}}", id)
-          .replace("{{severity}}", data.severity)
-          .replace("{{packageName}}", data.module_name)
-          .replace("{{title}}", data.title)
-          .replace("{{affected}}", data.vulnerable_versions)
-          .replace("{{patched}}", data.patched_versions)
-          .replace("{{url}}", data.url);
+          .replace("{{advisoryId}}", escapeHTML(id))
+          .replace("{{severity}}", escapeHTML(data.severity))
+          .replace("{{packageName}}", escapeHTML(data.module_name))
+          .replace("{{title}}", escapeHTML(data.title))
+          .replace("{{affected}}", escapeHTML(data.vulnerable_versions))
+          .replace("{{patched}}", escapeHTML(data.patched_versions))
+          .replace("{{url}}", escapeHTML(data.url));
       })
       .join("\n"),
   );
@@ -107,11 +107,14 @@ async function getSecurityAudit(program: Command): Promise<string> {
   );
 
   const summaryList = summaryListTemplate
-    .replace("{{info}}", securityAudit.metadata.vulnerabilities.info.toString())
-    .replace("{{low}}", securityAudit.metadata.vulnerabilities.low.toString())
-    .replace("{{moderate}}", securityAudit.metadata.vulnerabilities.moderate.toString())
-    .replace("{{high}}", securityAudit.metadata.vulnerabilities.high.toString())
-    .replace("{{critical}}", securityAudit.metadata.vulnerabilities.critical.toString());
+    .replace("{{info}}", escapeHTML(securityAudit.metadata.vulnerabilities.info.toString()))
+    .replace("{{low}}", escapeHTML(securityAudit.metadata.vulnerabilities.low.toString()))
+    .replace("{{moderate}}", escapeHTML(securityAudit.metadata.vulnerabilities.moderate.toString()))
+    .replace("{{high}}", escapeHTML(securityAudit.metadata.vulnerabilities.high.toString()))
+    .replace(
+      "{{critical}}",
+      escapeHTML(securityAudit.metadata.vulnerabilities.critical.toString()),
+    );
 
   return normaliseIndents`
     ### Summary

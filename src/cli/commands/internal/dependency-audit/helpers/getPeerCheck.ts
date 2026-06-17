@@ -1,6 +1,6 @@
 import type { Command } from "commander";
 
-import { az } from "@alextheman/utility";
+import { az, escapeHTML } from "@alextheman/utility";
 import { execa } from "execa";
 import z from "zod";
 
@@ -72,14 +72,14 @@ async function getPeerCheck(program: Command): Promise<string> {
       .flatMap(([packageName, data]) => {
         return data.map((item) => {
           return peerCheckTableRowTemplate
-            .replace("{{packageName}}", packageName)
-            .replace("{{currentVersion}}", item.foundVersion.toString())
-            .replace("{{wantedRange}}", item.wantedRange)
+            .replace("{{packageName}}", escapeHTML(packageName))
+            .replace("{{currentVersion}}", escapeHTML(item.foundVersion.toString()))
+            .replace("{{wantedRange}}", escapeHTML(item.wantedRange))
             .replace(
               "{{parentDependencies}}",
               item.parents
                 .map((parent) => {
-                  return `${parent.name}@${parent.version}`;
+                  return `${escapeHTML(parent.name)}@${parent.version}`;
                 })
                 .join(", "),
             );

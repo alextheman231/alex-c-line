@@ -1,6 +1,6 @@
 import type { Command } from "commander";
 
-import { az } from "@alextheman/utility";
+import { az, escapeHTML } from "@alextheman/utility";
 import { execa } from "execa";
 import z from "zod";
 
@@ -57,11 +57,11 @@ async function getOutdatedDependencies(program: Command): Promise<string> {
     Object.entries(outdatedDependencies)
       .map(([packageName, data]) => {
         return tableRowTemplate
-          .replace("{{packageName}}", packageName)
-          .replace("{{currentVersion}}", data.current.toString())
-          .replace("{{latestVersion}}", data.latest.toString())
+          .replace("{{packageName}}", escapeHTML(packageName))
+          .replace("{{currentVersion}}", escapeHTML(data.current.toString()))
+          .replace("{{latestVersion}}", escapeHTML(data.latest.toString()))
           .replace("{{isDeprecated}}", data.isDeprecated ? "Yes" : "No")
-          .replace("{{dependencyGroup}}", data.dependencyType);
+          .replace("{{dependencyGroup}}", escapeHTML(data.dependencyType));
       })
       .join("\n"),
   );
