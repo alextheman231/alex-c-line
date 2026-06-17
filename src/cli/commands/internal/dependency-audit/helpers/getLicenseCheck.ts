@@ -1,6 +1,6 @@
 import type { Command } from "commander";
 
-import { az, normaliseIndents, sortBy } from "@alextheman/utility";
+import { az, escapeHTML, normaliseIndents, sortBy } from "@alextheman/utility";
 import { execa } from "execa";
 import z from "zod";
 
@@ -70,8 +70,8 @@ async function getLicenseCheck(program: Command): Promise<string> {
       )
       .map(([license, data]) => {
         return summaryTableRowTemplate
-          .replace("{{license}}", license)
-          .replace("{{count}}", data.length.toString());
+          .replace("{{license}}", escapeHTML(license))
+          .replace("{{count}}", escapeHTML(data.length.toString()));
       })
       .join("\n"),
   );
@@ -116,8 +116,8 @@ async function getLicenseCheck(program: Command): Promise<string> {
       invalidLicenses
         .map(([license, data]) => {
           return invalidLicensesTableRowTemplate
-            .replaceAll("{{license}}", license)
-            .replace("{{count}}", data.length.toString())
+            .replaceAll("{{license}}", escapeHTML(license))
+            .replace("{{count}}", escapeHTML(data.length.toString()))
             .replace(
               "{{dependencies}}",
               invalidLicensesListTemplate.replace(
@@ -126,8 +126,8 @@ async function getLicenseCheck(program: Command): Promise<string> {
                   .flatMap((item) => {
                     return item.versions.map((version) => {
                       return invalidLicensesListItemTemplate
-                        .replace("{{name}}", item.name)
-                        .replace("{{version}}", version);
+                        .replace("{{name}}", escapeHTML(item.name))
+                        .replace("{{version}}", escapeHTML(version));
                     });
                   })
                   .join(""),

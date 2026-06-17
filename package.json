@@ -72,7 +72,7 @@
     "use-local-utility": "pnpm run prepare-local-utility"
   },
   "dependencies": {
-    "@alextheman/utility": "5.21.0",
+    "@alextheman/utility": "5.22.0",
     "@inquirer/prompts": "8.5.2",
     "axios": "1.17.0",
     "boxen": "8.0.1",
