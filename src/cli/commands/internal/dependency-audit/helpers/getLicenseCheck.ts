@@ -10,7 +10,19 @@ import path from "node:path";
 import ALEX_C_LINE_PACKAGE_ROOT from "src/utility/constants/ALEX_C_LINE_PACKAGE_ROOT";
 
 // TODO: Allow this to be configurable by alex-c-line.config.js
-const ALLOWED_LICENSES = ["MIT", "ISC", "Apache-2.0", "BSD-2-Clause", "BSD-3-Clause"];
+const ALLOWED_LICENSES = [
+  "MIT",
+  "MIT-0",
+  "ISC",
+  "Apache-2.0",
+  "BSD-2-Clause",
+  "BSD-3-Clause",
+  "BlueOak-1.0.0",
+  "Python-2.0",
+  "0BSD",
+  "Unlicense",
+  "CC0-1.0",
+];
 
 const pnpmLicensesSchema = z.record(
   z.string(),
