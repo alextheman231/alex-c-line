@@ -72,7 +72,7 @@
     "use-local-utility": "pnpm run prepare-local-utility"
   },
   "dependencies": {
-    "@alextheman/utility": "5.22.0",
+    "@alextheman/utility": "5.23.0",
     "@inquirer/prompts": "8.5.2",
     "axios": "1.18.0",
     "boxen": "8.0.1",
@@ -104,7 +104,7 @@
     "prettier": "3.8.4",
     "tempy": "3.2.0",
     "ts-node": "10.9.2",
-    "tsdown": "0.22.2",
+    "tsdown": "0.22.3",
     "typescript": "6.0.3",
     "typescript-eslint": "8.61.1",
     "vite": "8.0.16",
