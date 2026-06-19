@@ -8,6 +8,7 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 
 import ALEX_C_LINE_PACKAGE_ROOT from "src/utility/constants/ALEX_C_LINE_PACKAGE_ROOT";
+import isValidLicense from "src/utility/licenses/isValidLicense";
 
 // TODO: Allow this to be configurable by alex-c-line.config.js
 const ALLOWED_LICENSES = [
@@ -89,7 +90,7 @@ async function getLicenseCheck(program: Command): Promise<string> {
   );
 
   const invalidLicenses = licenseEntries.filter(([license, _]) => {
-    return !ALLOWED_LICENSES.includes(license);
+    return !isValidLicense(license, ALLOWED_LICENSES);
   });
 
   let invalidSummary: string;
