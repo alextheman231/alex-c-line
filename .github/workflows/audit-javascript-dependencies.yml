@@ -3,6 +3,8 @@ name: Audit dependencies
 on:
   pull_request:
     branches: ["main"]
+    paths:
+      - "**/pnpm-lock.yaml"
 
 jobs:
   audit-javascript-dependencies:
