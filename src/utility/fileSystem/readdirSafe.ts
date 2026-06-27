@@ -1,4 +1,4 @@
-// eslint-disable-next-line no-restricted-imports
+// eslint-disable-next-line no-restricted-imports -- The type comes from `node:fs`, not `node:fs/promises` so we need to import it from there.
 import type { Dirent } from "node:fs";
 
 import { readdir } from "node:fs/promises";

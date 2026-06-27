@@ -55,8 +55,7 @@ function preCommit(program: Command) {
             exitCode: 1,
             code: "GIT_DIFF_FAILED",
           });
-        // program.error() will throw an error and stop the program, so it is redundant to include a break here.
-        // eslint-disable-next-line no-fallthrough
+        // eslint-disable-next-line no-fallthrough -- program.error() will throw an error and stop the program, so it is redundant to include a break here.
         case 0:
           if (allowNoStagedChanges ?? preCommitConfig.allowNoStagedChanges) {
             break;
