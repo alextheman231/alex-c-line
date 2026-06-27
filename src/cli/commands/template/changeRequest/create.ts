@@ -44,7 +44,7 @@ function templateChangeRequestCreate(program: Command) {
 
       const outputPath = path.join(resolvedOutputDirectory, newFileName);
       await writeFile(outputPath, newDocumentContents);
-      console.info(`Change document successfully written to \`${outputPath}\`.`);
+      console.info(outputPath);
     });
 }
 
