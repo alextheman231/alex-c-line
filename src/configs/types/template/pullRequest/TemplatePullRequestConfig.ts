@@ -20,5 +20,4 @@ export interface TemplatePullRequestInfrastructureConfig extends TemplatePullReq
 }
 
 export type TemplatePullRequestConfig =
-  | TemplatePullRequestGeneralConfig
-  | TemplatePullRequestInfrastructureConfig;
+  TemplatePullRequestGeneralConfig | TemplatePullRequestInfrastructureConfig;
