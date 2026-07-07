@@ -2,6 +2,7 @@
 import { Command } from "commander";
 
 import createCommands from "src/cli/commands";
+import maybeSendBirthdayNotification from "src/cli/notifications/birthday/maybeSendBirthdayNotification";
 import shouldShowNotifications from "src/cli/notifications/shouldShowNotifications";
 import { registerUpdateMessagePrinter } from "src/cli/notifications/updates/pendingUpdateMessage";
 import runAutomatedUpdateCheck from "src/cli/notifications/updates/runAutomatedUpdateCheck";
@@ -22,6 +23,7 @@ import packageInfo from "package.json" with { type: "json" };
     if (shouldShowNotifications) {
       setTimeout(() => {
         void runAutomatedUpdateCheck();
+        void maybeSendBirthdayNotification();
       }, 0);
     }
 
