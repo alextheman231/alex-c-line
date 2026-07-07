@@ -2,10 +2,10 @@
 import { Command } from "commander";
 
 import createCommands from "src/cli/commands";
+import shouldShowNotifications from "src/cli/notifications/shouldShowNotifications";
+import { registerUpdateMessagePrinter } from "src/cli/notifications/updates/pendingUpdateMessage";
+import runAutomatedUpdateCheck from "src/cli/notifications/updates/runAutomatedUpdateCheck";
 import formatError from "src/utility/errors/formatError";
-import { registerUpdateMessagePrinter } from "src/utility/updates/pendingUpdateMessage";
-import runAutomatedUpdateCheck from "src/utility/updates/runAutomatedUpdateCheck";
-import shouldRunAutomatedUpdateCheck from "src/utility/updates/shouldRunAutomatedUpdateCheck";
 
 import packageInfo from "package.json" with { type: "json" };
 
@@ -19,7 +19,7 @@ import packageInfo from "package.json" with { type: "json" };
 
     registerUpdateMessagePrinter();
 
-    if (shouldRunAutomatedUpdateCheck) {
+    if (shouldShowNotifications) {
       setTimeout(() => {
         void runAutomatedUpdateCheck();
       }, 0);

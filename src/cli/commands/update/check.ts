@@ -1,6 +1,6 @@
 import type { Command } from "commander";
 
-import checkUpdate from "src/utility/updates/checkUpdate";
+import checkUpdate from "src/cli/notifications/updates/checkUpdate";
 
 function checkUpdateCommand(program: Command) {
   program
