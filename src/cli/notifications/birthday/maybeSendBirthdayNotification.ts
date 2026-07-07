@@ -5,14 +5,18 @@ import loadAlexCLineGlobalCache from "src/cache/global/loadAlexCLineGlobalCache"
 import sendBirthdayNotification from "src/cli/notifications/birthday/sendBirthdayNotification";
 import birthdays from "src/cli/notifications/helpers/birthdays";
 
+import { version } from "package.json" with { type: "json" };
+
 async function maybeSendBirthdayNotification() {
   try {
     const cacheData = await loadAlexCLineGlobalCache();
     const currentDate = new Date();
 
     for (const [birthdayId, birthdayData] of Object.entries(birthdays)) {
-      const lastChecked = cacheData?.birthdayChecks?.[birthdayId]
-        ? new Date(cacheData.birthdayChecks[birthdayId])
+      const cacheKey = `${version}_${birthdayId}`;
+
+      const lastChecked = cacheData?.birthdayChecks?.[cacheKey]
+        ? new Date(cacheData.birthdayChecks[cacheKey])
         : undefined;
       if (
         (lastChecked === undefined || lastChecked.getFullYear() !== currentDate.getFullYear()) &&
@@ -25,7 +29,7 @@ async function maybeSendBirthdayNotification() {
           ...(cacheData ?? {}),
           birthdayChecks: {
             ...(cacheData?.birthdayChecks ?? {}),
-            [birthdayId]: currentDate.toISOString(),
+            [cacheKey]: currentDate.toISOString(),
           },
         });
       }
