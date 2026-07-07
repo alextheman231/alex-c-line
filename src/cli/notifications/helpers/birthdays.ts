@@ -1,14 +1,12 @@
 import { normaliseIndents } from "@alextheman/utility";
 
 interface Birthday {
-  id: string;
   date: Date;
   getMessage: (age: number) => string;
 }
 
-const birthdays: Array<Birthday> = [
-  {
-    id: "alex",
+const birthdays: Record<string, Birthday> = {
+  alex: {
     date: new Date("2003-07-16T00:00:00.000Z"),
     getMessage: (age) => {
       return normaliseIndents`
@@ -17,8 +15,7 @@ const birthdays: Array<Birthday> = [
             `;
     },
   },
-  {
-    id: "alex-c-line",
+  "alex-c-line": {
     date: new Date("2025-07-20T00:00:00.000Z"),
     getMessage: (age) => {
       return normaliseIndents`
@@ -27,6 +24,6 @@ const birthdays: Array<Birthday> = [
             `;
     },
   },
-];
+};
 
 export default birthdays;

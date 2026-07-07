@@ -10,22 +10,22 @@ async function maybeSendBirthdayNotification() {
     const cacheData = await loadAlexCLineGlobalCache();
     const currentDate = new Date();
 
-    for (const birthday of birthdays) {
-      const lastChecked = cacheData?.birthdayChecks?.[birthday.id]
-        ? new Date(cacheData.birthdayChecks[birthday.id])
+    for (const [birthdayId, birthdayData] of Object.entries(birthdays)) {
+      const lastChecked = cacheData?.birthdayChecks?.[birthdayId]
+        ? new Date(cacheData.birthdayChecks[birthdayId])
         : undefined;
       if (
         (lastChecked === undefined || lastChecked.getFullYear() !== currentDate.getFullYear()) &&
-        isAnniversary(currentDate, birthday.date)
+        isAnniversary(currentDate, birthdayData.date)
       ) {
         await sendBirthdayNotification(
-          birthday.getMessage(currentDate.getFullYear() - birthday.date.getFullYear()),
+          birthdayData.getMessage(currentDate.getFullYear() - birthdayData.date.getFullYear()),
         );
         await createAlexCLineGlobalCache({
           ...(cacheData ?? {}),
           birthdayChecks: {
             ...(cacheData?.birthdayChecks ?? {}),
-            [birthday.id]: currentDate.toISOString(),
+            [birthdayId]: currentDate.toISOString(),
           },
         });
       }
