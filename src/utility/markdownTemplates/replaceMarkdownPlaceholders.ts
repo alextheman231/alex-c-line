@@ -21,7 +21,9 @@ function replaceMarkdownPlaceholders(
       );
     }
 
-    finalContent = finalContent.replaceAll(`{{${placeholder}}}`, templateVariables[placeholder]);
+    finalContent = finalContent.replaceAll(`{{${placeholder}}}`, () => {
+      return templateVariables[placeholder];
+    });
   }
   return finalContent;
 }
