@@ -186,4 +186,31 @@ describe("template release-note set-status", () => {
       }
     });
   });
+  test("Leaves $ alone", async () => {
+    await temporaryDirectoryTask(async (temporaryPath) => {
+      const alexCLineTestClient = createAlexCLineTestClient(setDirectory(temporaryPath));
+      const versionNumber = new VersionNumber(version);
+      const documentPath = getReleaseNotePath(versionNumber);
+
+      await writeFile(
+        path.join(temporaryPath, "package.json"),
+        JSON.stringify({
+          name,
+          version,
+        }),
+      );
+
+      const message = "This is a release note containing a `$` sign. It should maintain it.";
+      const { exitCode: createReleaseNoteExitCode } =
+        await alexCLineTestClient`template release-note create --content ${message}`;
+      expect(createReleaseNoteExitCode).toBe(0);
+
+      const { exitCode: setStatusExitCode } =
+        await alexCLineTestClient`template release-note set-status ${documentPath} Released`;
+      expect(setStatusExitCode).toBe(0);
+
+      const content = await readFile(path.join(temporaryPath, documentPath), "utf-8");
+      expect(content).toContain(message);
+    });
+  });
 });
