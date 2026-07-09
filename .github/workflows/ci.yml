@@ -12,6 +12,11 @@ permissions:
   contents: read
 
 jobs:
+  package-ci-legacy:
+    uses: alextheman231/github-actions/.github/workflows/package-ci.yml@beff06a63619c0122aeeca38b9cd48bf09f70cc9 # v12.4.0
+    with:
+      node-version: 22
+
   package-ci:
     uses: alextheman231/github-actions/.github/workflows/package-ci.yml@beff06a63619c0122aeeca38b9cd48bf09f70cc9 # v12.4.0
     with:
@@ -20,6 +25,11 @@ jobs:
 
   actions-ci:
     uses: alextheman231/github-actions/.github/workflows/actions-ci.yml@beff06a63619c0122aeeca38b9cd48bf09f70cc9 # v12.4.0
+
+  end-to-end-legacy:
+    uses: alextheman231/github-actions/.github/workflows/end-to-end-node-package-ci.yml@beff06a63619c0122aeeca38b9cd48bf09f70cc9 # v12.4.0
+    with:
+      node-version: 22
 
   end-to-end-ci:
     uses: alextheman231/github-actions/.github/workflows/end-to-end-node-package-ci.yml@beff06a63619c0122aeeca38b9cd48bf09f70cc9 # v12.4.0
