@@ -1,7 +1,6 @@
 import createAlexCLineGlobalCache from "src/cache/global/createAlexCLineGlobalCache";
 import loadAlexCLineGlobalCache from "src/cache/global/loadAlexCLineGlobalCache";
 import sendBirthdayNotification from "src/cli/notifications/birthday/sendBirthdayNotification";
-import birthdays from "src/cli/notifications/helpers/birthdays";
 
 import { version } from "package.json" with { type: "json" };
 
@@ -10,6 +9,8 @@ async function maybeSendBirthdayNotification() {
     if (typeof Temporal === "undefined") {
       return;
     }
+
+    const birthdays = (await import("src/cli/notifications/helpers/birthdays")).default;
 
     const currentDate = Temporal.Now.plainDateISO();
     const cacheData = await loadAlexCLineGlobalCache();
