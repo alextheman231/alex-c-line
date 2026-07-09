@@ -1,13 +1,13 @@
 import { normaliseIndents } from "@alextheman/utility";
 
 interface Birthday {
-  date: Date;
+  date: Temporal.PlainDate;
   getMessage: (age: number) => string;
 }
 
 const birthdays: Record<string, Birthday> = {
   alex: {
-    date: new Date("2003-07-16T00:00:00.000Z"),
+    date: Temporal.PlainDate.from({ day: 16, month: 7, year: 2003 }),
     getMessage: (age) => {
       return normaliseIndents`
                 Happy birthday to AlexMan123456, my creator! 🎉
@@ -16,7 +16,7 @@ const birthdays: Record<string, Birthday> = {
     },
   },
   "alex-c-line": {
-    date: new Date("2025-07-20T00:00:00.000Z"),
+    date: Temporal.PlainDate.from({ day: 20, month: 7, year: 2025 }),
     getMessage: (age) => {
       return normaliseIndents`
                 Happy birthday to me, alex-c-line! 🎉

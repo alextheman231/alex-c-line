@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@alextheman/utility':
-        specifier: 5.23.1
-        version: 5.23.1(zod@4.4.3)
+        specifier: 5.25.0
+        version: 5.25.0(zod@4.4.3)
       '@inquirer/prompts':
         specifier: 8.5.2
         version: 8.5.2(@types/node@26.1.0)
@@ -151,8 +151,8 @@ packages:
     peerDependencies:
       zod: '>=4.0.0'
 
-  '@alextheman/utility@5.23.1':
-    resolution: {integrity: sha512-cICwD3pZSopKBFhN+TCghXf0xuEEde/BCyeXcSXZ2pRheUMWoiWS+8CtGCtBzjU6gHc+DSA8AQcxSP23SrOw2w==}
+  '@alextheman/utility@5.25.0':
+    resolution: {integrity: sha512-nC2PsPoINheADOmq/ZruH3cUt3GjuZrnnepi5OsR/Ddp6cWCWkzgx71lB0q8xIGn+lLcTOCY0TX7iOLTLwtsSg==}
     engines: {node: '>=22.3.0'}
     peerDependencies:
       zod: '>=4.0.0'
@@ -2989,7 +2989,7 @@ snapshots:
       execa: 9.6.1
       zod: 4.4.3
 
-  '@alextheman/utility@5.23.1(zod@4.4.3)':
+  '@alextheman/utility@5.25.0(zod@4.4.3)':
     dependencies:
       dotenv: 17.4.2
       execa: 9.6.1
