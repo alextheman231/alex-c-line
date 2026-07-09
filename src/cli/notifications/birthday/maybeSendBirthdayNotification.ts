@@ -10,7 +10,7 @@ async function maybeSendBirthdayNotification() {
       return;
     }
 
-    const birthdays = (await import("src/cli/notifications/helpers/birthdays")).default;
+    const { default: birthdays } = await import("src/cli/notifications/helpers/birthdays");
 
     const currentDate = Temporal.Now.plainDateISO();
     const cacheData = await loadAlexCLineGlobalCache();
