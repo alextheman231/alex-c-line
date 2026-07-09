@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "ES6",
     "useDefineForClassFields": true,
-    "lib": ["ES2024"],
+    "lib": ["ESNext"],
     "types": ["eslint", "node", "vitest"],
     "module": "ESNext",
     "skipLibCheck": true,
