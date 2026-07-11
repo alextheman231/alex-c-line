@@ -96,7 +96,7 @@ describe.each<Entrypoint>([Entrypoint.ROOT, Entrypoint.CONFIGS, Entrypoint.CONFI
             );
 
             if (packageManager === PackageManager.PNPM) {
-              await runCommandInTempDirectory`pnpm install`;
+              await runCommandInTempDirectory`pnpm install --no-frozen-lockfile`;
             }
 
             if (entrypoint === Entrypoint.ROOT) {
