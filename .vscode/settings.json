@@ -1,5 +1,6 @@
 {
     "files.associations": {
-        "**/templates/**/*.md": "markdown"
+        "**/templates/**/*.md": "markdown",
+        "**/templates/**/*.html": "html"
     }
 }
