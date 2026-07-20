@@ -37,6 +37,7 @@
     "build": "tsdown",
     "command": "bash -c 'pnpm run build && echo && echo \"Command output:\" && node dist/index.js \"$@\"' --",
     "create-local-package": "pnpm run build && rm -f alex-c-line-*.tgz && pnpm pack",
+    "create-release": "bash -c 'git pull origin main && pnpm run command template release-note create $@ --status \"Released\" --update-version' --",
     "create-release-note": "bash -c 'git pull origin main && pnpm run command template release-note create $@' --",
     "dev": "tsx src/cli/index.ts",
     "format": "pnpm run format-prettier && pnpm run format-eslint && pnpm run format-markdownlint",
