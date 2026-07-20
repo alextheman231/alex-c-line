@@ -1,6 +1,9 @@
 import type { VersionType } from "@alextheman/utility";
 
+import type { ReleaseStatus } from "src/utility/markdownTemplates/releaseNote/types/ReleaseStatus";
+
 import { kebabToCamel, VersionNumber } from "@alextheman/utility";
+import { getPackageJsonContents } from "@alextheman/utility/internal";
 import { ExecaError } from "execa";
 import { temporaryDirectoryTask } from "tempy";
 import { describe, expect, test } from "vitest";
@@ -13,6 +16,8 @@ import setDirectory from "tests/helpers/setDirectory";
 import createAlexCLineTestClient from "tests/testClients/alexCLineTestClient";
 
 import ERROR_PREFIX from "src/utility/constants/ERROR_PREFIX";
+import getMarkdownBlock from "src/utility/markdownTemplates/getMarkdownBlock";
+import getMarkdownCommentPair from "src/utility/markdownTemplates/getMarkdownCommentPair";
 import getReleaseNotePath from "src/utility/markdownTemplates/releaseNote/getReleaseNotePath";
 
 import { name, version } from "package.json" with { type: "json" };
@@ -172,4 +177,59 @@ describe("template release-note create", () => {
       expect(fileContents).toContain(content);
     });
   });
+  test.each<ReleaseStatus>(["In progress", "Released"])(
+    "Sets the release note status to %s when --status flag is provided with that value",
+    async (status) => {
+      await temporaryDirectoryTask(async (temporaryPath) => {
+        const alexCLineTestClient = createAlexCLineTestClient(setDirectory(temporaryPath));
+        await writeFile(
+          path.join(temporaryPath, "package.json"),
+          JSON.stringify({
+            name,
+            version,
+          }),
+        );
+
+        const versionNumber = new VersionNumber(version);
+
+        const { exitCode } =
+          await alexCLineTestClient`template release-note create ${versionNumber.toString()} --status ${status}`;
+        expect(exitCode).toBe(0);
+
+        const content = await readFile(
+          path.join(temporaryPath, getReleaseNotePath(versionNumber)),
+          "utf-8",
+        );
+        const statusPart = getMarkdownBlock(
+          content,
+          ...getMarkdownCommentPair("alex-c-line-release-status"),
+        );
+        expect(statusPart).toBe(`**Status**: ${status}`);
+      });
+    },
+  );
+  test.each<VersionType>(["major", "minor", "patch"])(
+    "Changes the package.json version if `--update-version` flag specified (testing %s releases)",
+    async (versionType) => {
+      await temporaryDirectoryTask(async (temporaryPath) => {
+        const alexCLineTestClient = createAlexCLineTestClient(setDirectory(temporaryPath));
+        await writeFile(
+          path.join(temporaryPath, "package.json"),
+          JSON.stringify({
+            name,
+            version,
+          }),
+        );
+        const oldVersionNumber = new VersionNumber(version);
+        const expectedVersionNumber = oldVersionNumber.increment(versionType);
+        const { exitCode } =
+          await alexCLineTestClient`template release-note create ${versionType} --update-version`;
+        expect(exitCode).toBe(0);
+
+        const newPackageInfo = await getPackageJsonContents(temporaryPath);
+        const newVersionNumber = new VersionNumber(newPackageInfo.version);
+        expect(newVersionNumber.toString()).toBe(expectedVersionNumber.toString());
+      });
+    },
+  );
 });

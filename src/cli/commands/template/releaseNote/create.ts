@@ -11,6 +11,8 @@ import path from "node:path";
 import ERROR_PREFIX from "src/utility/constants/ERROR_PREFIX";
 import createReleaseNoteFromTemplates from "src/utility/markdownTemplates/releaseNote/createReleaseNoteFromTemplates";
 import getReleaseNotePath from "src/utility/markdownTemplates/releaseNote/getReleaseNotePath";
+import parseReleaseStatus from "src/utility/markdownTemplates/releaseNote/parseReleaseStatus";
+import { ReleaseStatus } from "src/utility/markdownTemplates/releaseNote/types/ReleaseStatus";
 
 function templateReleaseNoteCreate(program: Command) {
   program
@@ -37,8 +39,19 @@ function templateReleaseNoteCreate(program: Command) {
       },
     )
     .option("--content <content>", "Set the content of the release note")
+    .option(
+      "--status <status>",
+      "Set the initial release note status",
+      parseReleaseStatus,
+      ReleaseStatus.IN_PROGRESS,
+    )
+    .option(
+      "--update-version",
+      "Update the version in package.json alongside creating the release note.",
+      false,
+    )
     .description("Create release notes based on the current version in package.json.")
-    .action(async (target, { content }) => {
+    .action(async (target, { content, status, updateVersion }) => {
       const packageInfo = await getPackageJsonContents(process.cwd());
 
       const { name, version: packageVersion } = az
@@ -55,13 +68,16 @@ function templateReleaseNoteCreate(program: Command) {
       const releaseNotePath = getReleaseNotePath(versionNumber);
 
       const releaseNoteTemplate = await createReleaseNoteFromTemplates(name, versionNumber, {
-        status: "In progress",
+        status,
         editableSection: content,
       });
 
       try {
         await mkdir(path.dirname(releaseNotePath), { recursive: true });
         await writeFile(releaseNotePath, releaseNoteTemplate, { flag: "wx" });
+        console.info(
+          `Release notes for ${versionNumber} have been created in ${path.relative(process.cwd(), releaseNotePath)}`,
+        );
       } catch (error) {
         if (error instanceof Error && "code" in error && error.code === "EEXIST") {
           program.error(`${ERROR_PREFIX} Release notes already exist.`, {
@@ -72,9 +88,16 @@ function templateReleaseNoteCreate(program: Command) {
           throw error;
         }
       }
-      console.info(
-        `Release notes for ${versionNumber} have been created in ${path.relative(process.cwd(), releaseNotePath)}`,
-      );
+
+      if (updateVersion) {
+        const newPackageInfo = { ...packageInfo };
+        newPackageInfo.version = versionNumber.format({ omitPrefix: true });
+        await writeFile(
+          path.join(process.cwd(), "package.json"),
+          `${JSON.stringify(newPackageInfo, null, 2)}\n`,
+        );
+        console.info(`Updated the version in package.json to ${versionNumber}`);
+      }
     });
 }
 
