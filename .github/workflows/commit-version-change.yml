@@ -9,7 +9,7 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
-    uses: alextheman231/github-actions/.github/workflows/commit-version-change.yml@d1c2bd1832fa5ae4489ed8f9349676045a683655 # v12.8.0
+    uses: alextheman231/github-actions/.github/workflows/commit-version-change.yml@64cb9a86fd3f029229d33d731a5f25ba70d24ba2 # v12.10.0
     with:
       version-type: major
       node-version: 26
@@ -21,7 +21,7 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
-    uses: alextheman231/github-actions/.github/workflows/commit-version-change.yml@d1c2bd1832fa5ae4489ed8f9349676045a683655 # v12.8.0
+    uses: alextheman231/github-actions/.github/workflows/commit-version-change.yml@64cb9a86fd3f029229d33d731a5f25ba70d24ba2 # v12.10.0
     with:
       version-type: minor
       node-version: 26
@@ -33,7 +33,7 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
-    uses: alextheman231/github-actions/.github/workflows/commit-version-change.yml@d1c2bd1832fa5ae4489ed8f9349676045a683655 # v12.8.0
+    uses: alextheman231/github-actions/.github/workflows/commit-version-change.yml@64cb9a86fd3f029229d33d731a5f25ba70d24ba2 # v12.10.0
     with:
       version-type: patch
       node-version: 26
