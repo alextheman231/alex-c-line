@@ -6,22 +6,52 @@ on:
       - main
 
 jobs:
+  check-npm-version:
+    permissions:
+      contents: read
+    uses: alextheman231/github-actions/.github/workflows/report-npm-version-existence.yml@f1ff1cf13a2143e1e04a55da4b1fd77c2adb9b78 # v14.0.0
+    with:
+      node-version: 26
+
+  check-version-tag:
+    permissions:
+      contents: read
+    uses: alextheman231/github-actions/.github/workflows/report-version-tag-existence.yml@f1ff1cf13a2143e1e04a55da4b1fd77c2adb9b78 # v14.0.0
+    with:
+      CLIENT_ID: ${{ vars.ALEX_UP_BOT_CLIENT_ID }}
+      node-version: 26
+    secrets:
+      APP_PRIVATE_KEY: ${{ secrets.ALEX_UP_BOT_PRIVATE_KEY }}
+
+  check-release-note:
+    permissions:
+      contents: read
+    uses: alextheman231/github-actions/.github/workflows/report-release-note-existence.yml@f1ff1cf13a2143e1e04a55da4b1fd77c2adb9b78 # v14.0.0
+    with:
+      CLIENT_ID: ${{ vars.ALEX_UP_BOT_CLIENT_ID }}
+      node-version: 26
+    secrets:
+      APP_PRIVATE_KEY: ${{ secrets.ALEX_UP_BOT_PRIVATE_KEY }}
+
   npm-registry-publish:
+    needs: [check-npm-version, check-version-tag, check-release-note]
+    if: ${{ needs.check-npm-version.outputs.version-exists == 'false' && needs.check-version-tag.outputs.tag-exists == 'false' && needs.check-release-note.outputs.release-note-found == 'true' }}
     permissions:
       id-token: write
-    if: ${{ github.repository == 'alextheman231/alex-c-line' }}
-    uses: alextheman231/github-actions/.github/workflows/npm-registry-publish.yml@6d446b591dd8f09c45f434211e1e5d6773bea4f6 # v13.0.2
+    uses: alextheman231/github-actions/.github/workflows/npm-registry-publish.yml@f1ff1cf13a2143e1e04a55da4b1fd77c2adb9b78 # v14.0.0
     with:
       node-version: 26
 
   create-github-release:
-    needs: npm-registry-publish
+    needs: [check-version-tag, check-release-note]
     permissions:
       contents: write
-    if: needs.npm-registry-publish.outputs.did_publish == 'true'
-    uses: alextheman231/github-actions/.github/workflows/create-github-release.yml@6d446b591dd8f09c45f434211e1e5d6773bea4f6 # v13.0.2
+    if: ${{ needs.check-version-tag.outputs.tag-exists == 'false' && needs.check-release-note.outputs.release-note-found == 'true' }}
+    uses: alextheman231/github-actions/.github/workflows/create-github-release.yml@f1ff1cf13a2143e1e04a55da4b1fd77c2adb9b78 # v14.0.0
     with:
-      node-version: 26
       CLIENT_ID: ${{ vars.ALEX_UP_BOT_CLIENT_ID }}
+      tag: ${{ needs.check-version-tag.outputs.tag }}
+      release-note-path: ${{ needs.check-release-note.outputs.release-note-path }}
+      node-version: 26
     secrets:
       APP_PRIVATE_KEY: ${{ secrets.ALEX_UP_BOT_PRIVATE_KEY }}
