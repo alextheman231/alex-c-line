@@ -13,25 +13,25 @@ permissions:
 
 jobs:
   package-ci-legacy:
-    uses: alextheman231/github-actions/.github/workflows/package-ci.yml@77bb6d670a2c8c1d90b6571c93787f37dafb2e19 # v13.0.1
+    uses: alextheman231/github-actions/.github/workflows/package-ci.yml@6d446b591dd8f09c45f434211e1e5d6773bea4f6 # v13.0.2
     with:
       node-version: 22
 
   package-ci:
-    uses: alextheman231/github-actions/.github/workflows/package-ci.yml@77bb6d670a2c8c1d90b6571c93787f37dafb2e19 # v13.0.1
+    uses: alextheman231/github-actions/.github/workflows/package-ci.yml@6d446b591dd8f09c45f434211e1e5d6773bea4f6 # v13.0.2
     with:
       os: '["ubuntu-latest", "windows-latest", "macos-latest"]'
       node-version: 26
 
   actions-ci:
-    uses: alextheman231/github-actions/.github/workflows/actions-ci.yml@77bb6d670a2c8c1d90b6571c93787f37dafb2e19 # v13.0.1
+    uses: alextheman231/github-actions/.github/workflows/actions-ci.yml@6d446b591dd8f09c45f434211e1e5d6773bea4f6 # v13.0.2
 
   end-to-end-legacy:
-    uses: alextheman231/github-actions/.github/workflows/end-to-end-node-package-ci.yml@77bb6d670a2c8c1d90b6571c93787f37dafb2e19 # v13.0.1
+    uses: alextheman231/github-actions/.github/workflows/end-to-end-node-package-ci.yml@6d446b591dd8f09c45f434211e1e5d6773bea4f6 # v13.0.2
     with:
       node-version: 22
 
   end-to-end-ci:
-    uses: alextheman231/github-actions/.github/workflows/end-to-end-node-package-ci.yml@77bb6d670a2c8c1d90b6571c93787f37dafb2e19 # v13.0.1
+    uses: alextheman231/github-actions/.github/workflows/end-to-end-node-package-ci.yml@6d446b591dd8f09c45f434211e1e5d6773bea4f6 # v13.0.2
     with:
       node-version: 26
