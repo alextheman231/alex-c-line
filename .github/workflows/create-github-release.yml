@@ -9,7 +9,7 @@ permissions:
 jobs:
   create-github-release:
     if: ${{ github.repository == 'alextheman231/alex-c-line' }}
-    uses: alextheman231/github-actions/.github/workflows/create-github-release.yml@6d446b591dd8f09c45f434211e1e5d6773bea4f6 # v13.0.2
+    uses: alextheman231/github-actions/.github/workflows/create-github-release.yml@f1ff1cf13a2143e1e04a55da4b1fd77c2adb9b78 # v14.0.0
     with:
       node-version: 26
       CLIENT_ID: ${{ vars.ALEX_UP_BOT_CLIENT_ID }}
