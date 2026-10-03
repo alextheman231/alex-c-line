@@ -74,7 +74,7 @@
     "use-local-utility": "pnpm run prepare-local-utility"
   },
   "dependencies": {
-    "@alextheman/utility": "5.28.2",
+    "@alextheman/utility": "5.28.4",
     "@inquirer/prompts": "8.7.2",
     "axios": "1.20.0",
     "boxen": "9.0.0",
@@ -96,7 +96,7 @@
     "@commander-js/extra-typings": "15.0.0",
     "@faker-js/faker": "10.6.0",
     "@types/eslint": "9.6.1",
-    "@types/node": "26.6.3",
+    "@types/node": "26.6.4",
     "@types/semver": "7.8.0",
     "@types/update-notifier": "6.0.8",
     "cross-env": "10.1.0",
