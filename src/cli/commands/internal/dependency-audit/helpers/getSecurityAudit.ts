@@ -26,7 +26,8 @@ const auditSchema = z.object({
       title: z.string(),
       module_name: z.string(),
       vulnerable_versions: z.string(),
-      patched_versions: z.string(),
+      patched_versions: z.string().nullable(),
+      patched_versions_unpublished: z.boolean().optional(),
       severity: z.enum(AuditSeverity),
       url: z.url(),
     }),
@@ -44,6 +45,18 @@ const auditSchema = z.object({
 type SecurityAudit = z.infer<typeof auditSchema>;
 function parseSecurityAudit(input: unknown): SecurityAudit {
   return az.with(auditSchema).parse(input);
+}
+
+function resolvePatchedVersions(advisory: CreateEnumType<SecurityAudit["advisories"]>) {
+  if (advisory.patched_versions_unpublished) {
+    return "Not patched yet.";
+  }
+
+  if (advisory.patched_versions === null) {
+    return "Unknown.";
+  }
+
+  return advisory.patched_versions;
 }
 
 async function getSecurityAudit(program: Command): Promise<string> {
@@ -95,7 +108,7 @@ async function getSecurityAudit(program: Command): Promise<string> {
           .replace("{{packageName}}", escapeHTML(data.module_name))
           .replace("{{title}}", escapeHTML(data.title))
           .replace("{{affected}}", escapeHTML(data.vulnerable_versions))
-          .replace("{{patched}}", escapeHTML(data.patched_versions))
+          .replace("{{patched}}", escapeHTML(resolvePatchedVersions(data)))
           .replace("{{url}}", escapeHTML(data.url));
       })
       .join("\n"),
