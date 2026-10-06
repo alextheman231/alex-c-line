@@ -1,11 +1,9 @@
 import { az } from "@alextheman/utility";
 import z from "zod";
 
-export const alexCLineGlobalConfigSchema = z
-  .object({
-    enableUpdateNotifications: z.boolean(),
-  })
-  .partial();
+export const alexCLineGlobalConfigSchema = z.object({
+  enableUpdateNotifications: z.boolean(),
+});
 export type AlexCLineGlobalConfig = z.infer<typeof alexCLineGlobalConfigSchema>;
 
 export function parseAlexCLineGlobalConfig(input: unknown): AlexCLineGlobalConfig {
