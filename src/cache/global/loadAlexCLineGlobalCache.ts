@@ -2,8 +2,8 @@ import type { AlexCLineGlobalCache } from "src/cache/global/types/AlexCLineGloba
 
 import { readFile } from "node:fs/promises";
 
-import { ALEX_C_LINE_GLOBAL_CACHE_PATH } from "src/cache/global/envPaths";
 import parseAlexCLineGlobalCache from "src/cache/global/parseAlexCLineGlobalCache";
+import { ALEX_C_LINE_GLOBAL_CACHE_PATH } from "src/utility/constants/envPaths";
 
 async function loadAlexCLineGlobalCache(): Promise<AlexCLineGlobalCache | null> {
   try {

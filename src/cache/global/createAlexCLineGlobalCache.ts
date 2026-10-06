@@ -5,7 +5,7 @@ import { mkdir, writeFile } from "node:fs/promises";
 import {
   ALEX_C_LINE_GLOBAL_CACHE_DIRECTORY,
   ALEX_C_LINE_GLOBAL_CACHE_PATH,
-} from "src/cache/global/envPaths";
+} from "src/utility/constants/envPaths";
 
 async function createAlexCLineGlobalCache(cacheData: AlexCLineGlobalCache) {
   await mkdir(ALEX_C_LINE_GLOBAL_CACHE_DIRECTORY, { recursive: true });

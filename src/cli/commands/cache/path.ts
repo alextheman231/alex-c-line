@@ -1,6 +1,6 @@
 import type { Command } from "commander";
 
-import { ALEX_C_LINE_GLOBAL_CACHE_PATH } from "src/cache/global/envPaths";
+import { ALEX_C_LINE_GLOBAL_CACHE_PATH } from "src/utility/constants/envPaths";
 
 function cachePath(program: Command) {
   program

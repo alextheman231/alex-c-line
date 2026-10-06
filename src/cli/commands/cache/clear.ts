@@ -2,7 +2,7 @@ import type { Command } from "commander";
 
 import { unlink } from "node:fs/promises";
 
-import { ALEX_C_LINE_GLOBAL_CACHE_PATH } from "src/cache/global/envPaths";
+import { ALEX_C_LINE_GLOBAL_CACHE_PATH } from "src/utility/constants/envPaths";
 
 function cacheClear(program: Command) {
   program
