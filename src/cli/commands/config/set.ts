@@ -15,7 +15,8 @@ function configSet(program: Command) {
     })
     .argument("<value>", "The value to set the given option to.", parseBooleanArgument)
     .action(async (key, value) => {
-      await upsertAlexCLineGlobalConfig({ [key]: value });
+      const newConfig = await upsertAlexCLineGlobalConfig({ [key]: value });
+      console.info(`Config updated! Option \`${key}\` has been set to \`${newConfig[key]}\`.`);
     });
 }
 
