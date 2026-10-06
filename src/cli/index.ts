@@ -1,4 +1,6 @@
 #!/usr/bin/env node
+import type { AlexCLineGlobalConfig } from "src/configs/helpers/defineAlexCLineGlobalConfig";
+
 import { Command } from "commander";
 
 import createCommands from "src/cli/commands";
@@ -6,9 +8,21 @@ import maybeSendBirthdayNotification from "src/cli/notifications/birthday/maybeS
 import shouldShowNotifications from "src/cli/notifications/shouldShowNotifications";
 import { registerUpdateMessagePrinter } from "src/cli/notifications/updates/pendingUpdateMessage";
 import runAutomatedUpdateCheck from "src/cli/notifications/updates/runAutomatedUpdateCheck";
+import loadAlexCLineGlobalConfig from "src/services/configs/loadAlexCLineGlobalConfig";
+import upsertAlexCLineGlobalConfig from "src/services/configs/upsertAlexCLineGlobalConfig";
 import formatError from "src/utility/errors/formatError";
 
 import packageInfo from "package.json" with { type: "json" };
+
+async function initialiseGlobalConfig(): Promise<AlexCLineGlobalConfig> {
+  const globalConfig = await loadAlexCLineGlobalConfig();
+
+  if (globalConfig === null) {
+    return await upsertAlexCLineGlobalConfig({});
+  }
+
+  return globalConfig;
+}
 
 (async () => {
   try {
@@ -18,11 +32,14 @@ import packageInfo from "package.json" with { type: "json" };
       .description(packageInfo.description)
       .version(packageInfo.version);
 
+    const globalConfig = await initialiseGlobalConfig();
     registerUpdateMessagePrinter();
 
     if (shouldShowNotifications) {
       setTimeout(() => {
-        void runAutomatedUpdateCheck();
+        if (globalConfig.enableUpdateNotifications) {
+          void runAutomatedUpdateCheck();
+        }
         void maybeSendBirthdayNotification();
       }, 0);
     }
