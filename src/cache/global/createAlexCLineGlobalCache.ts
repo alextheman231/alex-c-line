@@ -10,7 +10,7 @@ import stringifyJSON from "src/utility/miscellaneous/stringifyJSON";
 
 async function createAlexCLineGlobalCache(cacheData: AlexCLineGlobalCache) {
   await mkdir(ALEX_C_LINE_GLOBAL_CACHE_DIRECTORY, { recursive: true });
-  await writeFile(ALEX_C_LINE_GLOBAL_CACHE_PATH, `${stringifyJSON(cacheData)}\n`);
+  await writeFile(ALEX_C_LINE_GLOBAL_CACHE_PATH, stringifyJSON(cacheData));
 }
 
 export default createAlexCLineGlobalCache;
