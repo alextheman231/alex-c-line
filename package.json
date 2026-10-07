@@ -92,7 +92,7 @@
     "zod": "4.6.5"
   },
   "devDependencies": {
-    "@alextheman/eslint-plugin": "5.18.4",
+    "@alextheman/eslint-plugin": "5.18.5",
     "@commander-js/extra-typings": "15.0.0",
     "@faker-js/faker": "10.6.0",
     "@types/eslint": "9.6.1",

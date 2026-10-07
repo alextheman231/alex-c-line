@@ -1,21 +1,13 @@
 import type { AlexCLineGlobalCache } from "src/cache/global/types/AlexCLineGlobalCache";
 
-import { readFile } from "node:fs/promises";
-
 import parseAlexCLineGlobalCache from "src/cache/global/parseAlexCLineGlobalCache";
 import { ALEX_C_LINE_GLOBAL_CACHE_PATH } from "src/utility/constants/envPaths";
+import readJsonFile from "src/utility/fileSystem/readJsonFile";
 
 async function loadAlexCLineGlobalCache(): Promise<AlexCLineGlobalCache | null> {
-  try {
-    return parseAlexCLineGlobalCache(
-      JSON.parse(await readFile(ALEX_C_LINE_GLOBAL_CACHE_PATH, "utf-8")),
-    );
-  } catch (error) {
-    if (error instanceof Error && "code" in error && error.code === "ENOENT") {
-      return null;
-    }
-    throw error;
-  }
+  const cache = await readJsonFile(ALEX_C_LINE_GLOBAL_CACHE_PATH);
+
+  return cache === null ? null : parseAlexCLineGlobalCache(cache);
 }
 
 export default loadAlexCLineGlobalCache;
