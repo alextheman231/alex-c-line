@@ -2,6 +2,7 @@ import type { Command } from "commander";
 
 import artwork from "src/cli/commands/artwork";
 import cache from "src/cli/commands/cache";
+import config from "src/cli/commands/config";
 import envFile from "src/cli/commands/env-file";
 import internal from "src/cli/commands/internal";
 import localPackage from "src/cli/commands/local-package";
@@ -19,6 +20,7 @@ function createCommands(program: Command) {
   loadCommands(program, {
     artwork,
     cache,
+    config,
     envFile,
     internal,
     localPackage,
