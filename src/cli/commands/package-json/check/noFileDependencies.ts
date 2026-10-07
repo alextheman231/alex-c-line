@@ -4,6 +4,7 @@ import { getDependenciesFromGroup, getPackageJsonContents } from "@alextheman/ut
 
 import ERROR_PREFIX from "src/utility/constants/ERROR_PREFIX";
 import SUCCESS_PREFIX from "src/utility/constants/SUCCESS_PREFIX";
+import stringifyJSON from "src/utility/miscellaneous/stringifyJSON";
 
 export interface PackageDependencies {
   dependencies?: Record<string, string>;
@@ -46,7 +47,7 @@ async function noFileDependencies(program: Command) {
 
   if (Object.keys(allFileDependencies).length !== 0) {
     program.error(
-      `${ERROR_PREFIX} File dependencies found:\n\n${JSON.stringify(allFileDependencies, undefined, 2)}
+      `${ERROR_PREFIX} File dependencies found:\n\n${stringifyJSON(allFileDependencies)}
           `,
       { exitCode: 2, code: "FILE_DEPENDENCIES_FOUND" },
     );

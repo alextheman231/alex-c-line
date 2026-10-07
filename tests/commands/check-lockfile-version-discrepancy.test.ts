@@ -9,6 +9,7 @@ import setDirectory from "tests/helpers/setDirectory";
 import alexCLineTestClient from "tests/testClients/alexCLineTestClient";
 
 import ERROR_PREFIX from "src/utility/constants/ERROR_PREFIX";
+import stringifyJSON from "src/utility/miscellaneous/stringifyJSON";
 
 describe("check-lockfile-version-discrepancy", () => {
   test("Succeed if version numbers in package.json and package-lock.json are successful", async () => {
@@ -16,8 +17,8 @@ describe("check-lockfile-version-discrepancy", () => {
       const packagePath = path.join(tempDirectory, "package.json");
       const packageLockPath = path.join(tempDirectory, "package-lock.json");
 
-      await writeFile(packagePath, JSON.stringify({ version: "1.0.0" }, null, 2));
-      await writeFile(packageLockPath, JSON.stringify({ version: "1.0.0" }, null, 2));
+      await writeFile(packagePath, stringifyJSON({ version: "1.0.0" }));
+      await writeFile(packageLockPath, stringifyJSON({ version: "1.0.0" }));
 
       const { stdout: output, exitCode } = await alexCLineTestClient(
         setDirectory(tempDirectory),
@@ -31,8 +32,8 @@ describe("check-lockfile-version-discrepancy", () => {
       const packagePath = path.join(tempDirectory, "package.json");
       const packageLockPath = path.join(tempDirectory, "package-lock.json");
 
-      await writeFile(packagePath, JSON.stringify({ version: "1.0.0" }, null, 2));
-      await writeFile(packageLockPath, JSON.stringify({ version: "1.0.1" }, null, 2));
+      await writeFile(packagePath, stringifyJSON({ version: "1.0.0" }));
+      await writeFile(packageLockPath, stringifyJSON({ version: "1.0.1" }));
 
       try {
         await alexCLineTestClient(

@@ -19,6 +19,7 @@ import ERROR_PREFIX from "src/utility/constants/ERROR_PREFIX";
 import getMarkdownBlock from "src/utility/markdownTemplates/getMarkdownBlock";
 import getMarkdownCommentPair from "src/utility/markdownTemplates/getMarkdownCommentPair";
 import getReleaseNotePath from "src/utility/markdownTemplates/releaseNote/getReleaseNotePath";
+import stringifyJSON from "src/utility/miscellaneous/stringifyJSON";
 
 import { name, version } from "package.json" with { type: "json" };
 
@@ -30,7 +31,7 @@ describe("template release-note create", () => {
 
       await writeFile(
         path.join(temporaryPath, "package.json"),
-        JSON.stringify({
+        stringifyJSON({
           name,
           version,
         }),
@@ -52,7 +53,7 @@ describe("template release-note create", () => {
       const alexCLineTestClient = createAlexCLineTestClient(setDirectory(temporaryPath));
       await writeFile(
         path.join(temporaryPath, "package.json"),
-        JSON.stringify({
+        stringifyJSON({
           name,
           version: "v2.0.0",
         }),
@@ -79,7 +80,7 @@ describe("template release-note create", () => {
         const alexCLineTestClient = createAlexCLineTestClient(setDirectory(temporaryPath));
         await writeFile(
           path.join(temporaryPath, "package.json"),
-          JSON.stringify({
+          stringifyJSON({
             name,
             version: versionNumber.toString(),
           }),
@@ -103,7 +104,7 @@ describe("template release-note create", () => {
       const alexCLineTestClient = createAlexCLineTestClient(setDirectory(temporaryPath));
       await writeFile(
         path.join(temporaryPath, "package.json"),
-        JSON.stringify({
+        stringifyJSON({
           name,
           version: "v1.2.3",
         }),
@@ -128,7 +129,7 @@ describe("template release-note create", () => {
         const alexCLineTestClient = createAlexCLineTestClient(setDirectory(temporaryPath));
         await writeFile(
           path.join(temporaryPath, "package.json"),
-          JSON.stringify({
+          stringifyJSON({
             name,
             version,
           }),
@@ -156,7 +157,7 @@ describe("template release-note create", () => {
       const alexCLineTestClient = createAlexCLineTestClient(setDirectory(temporaryPath));
       await writeFile(
         path.join(temporaryPath, "package.json"),
-        JSON.stringify({
+        stringifyJSON({
           name,
           version,
         }),
@@ -184,7 +185,7 @@ describe("template release-note create", () => {
         const alexCLineTestClient = createAlexCLineTestClient(setDirectory(temporaryPath));
         await writeFile(
           path.join(temporaryPath, "package.json"),
-          JSON.stringify({
+          stringifyJSON({
             name,
             version,
           }),
@@ -215,7 +216,7 @@ describe("template release-note create", () => {
         const alexCLineTestClient = createAlexCLineTestClient(setDirectory(temporaryPath));
         await writeFile(
           path.join(temporaryPath, "package.json"),
-          JSON.stringify({
+          stringifyJSON({
             name,
             version,
           }),

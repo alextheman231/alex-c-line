@@ -13,6 +13,7 @@ import createReleaseNoteFromTemplates from "src/utility/markdownTemplates/releas
 import getReleaseNotePath from "src/utility/markdownTemplates/releaseNote/getReleaseNotePath";
 import parseReleaseStatus from "src/utility/markdownTemplates/releaseNote/parseReleaseStatus";
 import { ReleaseStatus } from "src/utility/markdownTemplates/releaseNote/types/ReleaseStatus";
+import stringifyJSON from "src/utility/miscellaneous/stringifyJSON";
 
 function templateReleaseNoteCreate(program: Command) {
   program
@@ -94,7 +95,7 @@ function templateReleaseNoteCreate(program: Command) {
         newPackageInfo.version = versionNumber.format({ omitPrefix: true });
         await writeFile(
           path.join(process.cwd(), "package.json"),
-          `${JSON.stringify(newPackageInfo, null, 2)}\n`,
+          `${stringifyJSON(newPackageInfo)}\n`,
         );
         console.info(`Updated the version in package.json to ${versionNumber}`);
       }

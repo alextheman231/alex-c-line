@@ -13,6 +13,8 @@ import path from "node:path";
 import setDirectory from "tests/helpers/setDirectory";
 import alexCLineTestClient from "tests/testClients/alexCLineTestClient";
 
+import stringifyJSON from "src/utility/miscellaneous/stringifyJSON";
+
 import packageInfo, { version } from "package.json" with { type: "json" };
 
 describe("incrementVersion", () => {
@@ -74,7 +76,7 @@ describe("incrementVersion", () => {
           }),
         });
 
-        await writeFile(path.join(temporaryPath, "package.json"), JSON.stringify(packageInfo));
+        await writeFile(path.join(temporaryPath, "package.json"), stringifyJSON(packageInfo));
 
         const execaInDirectory = execa({ cwd: temporaryPath });
         await execaInDirectory`git init`;
@@ -105,7 +107,7 @@ describe("incrementVersion", () => {
 
         expect(
           VersionNumber.isEqual(newAlexCLineVersion, newNpmVersion),
-          JSON.stringify({ versionType, newAlexCLineVersion, newNpmVersion }, null, 2),
+          stringifyJSON({ versionType, newAlexCLineVersion, newNpmVersion }),
         ).toBe(true);
       });
     },

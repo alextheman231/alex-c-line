@@ -10,6 +10,7 @@ import { minVersion, prerelease } from "semver";
 
 import ERROR_PREFIX from "src/utility/constants/ERROR_PREFIX";
 import SUCCESS_PREFIX from "src/utility/constants/SUCCESS_PREFIX";
+import stringifyJSON from "src/utility/miscellaneous/stringifyJSON";
 
 function isPreRelease(dependencyVersionRange: string) {
   const minimumFromRange = minVersion(dependencyVersionRange);
@@ -49,14 +50,10 @@ async function noPreReleaseDependencies(program: Command): Promise<void> {
             ${ERROR_PREFIX} Pre-release version pinning is not allowed. Found the following violations:
 
         ` +
-        JSON.stringify(
-          {
-            dependencies: preReleaseDependencies,
-            devDependencies: preReleaseDevDependencies,
-          },
-          null,
-          2,
-        ),
+        stringifyJSON({
+          dependencies: preReleaseDependencies,
+          devDependencies: preReleaseDevDependencies,
+        }),
       { exitCode: 2, code: "UNEXPECTED_PRE_RELEASE_VERSION" },
     );
   }

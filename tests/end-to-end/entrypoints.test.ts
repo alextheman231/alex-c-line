@@ -16,6 +16,7 @@ import path from "node:path";
 
 import doesFileExist from "src/utility/fileSystem/doesFileExist";
 import createAlexCLineArtwork from "src/utility/miscellaneous/createAlexCLineArtwork";
+import stringifyJSON from "src/utility/miscellaneous/stringifyJSON";
 
 const Entrypoint = {
   ROOT: "alex-c-line",
@@ -90,10 +91,7 @@ describe.skip.each<Entrypoint>([Entrypoint.ROOT, Entrypoint.CONFIGS, Entrypoint.
               );
             }
 
-            await writeFile(
-              getPackageJsonPath(temporaryPath),
-              JSON.stringify(testPackageInfo, null, 2),
-            );
+            await writeFile(getPackageJsonPath(temporaryPath), stringifyJSON(testPackageInfo));
 
             if (packageManager === PackageManager.PNPM) {
               await runCommandInTempDirectory`pnpm install --no-frozen-lockfile`;

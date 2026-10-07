@@ -12,6 +12,7 @@ import createAlexCLineTestClient from "tests/testClients/alexCLineTestClient";
 
 import getReleaseNotePath from "src/utility/markdownTemplates/releaseNote/getReleaseNotePath";
 import { ReleaseStatus } from "src/utility/markdownTemplates/releaseNote/types/ReleaseStatus";
+import stringifyJSON from "src/utility/miscellaneous/stringifyJSON";
 
 import packageInfo from "package.json" with { type: "json" };
 
@@ -20,7 +21,7 @@ describe("template release-note check", () => {
     "Exit code 0 on valid %s release note",
     async (versionType) => {
       await temporaryDirectoryTask(async (temporaryPath) => {
-        await writeFile(path.join(temporaryPath, "package.json"), JSON.stringify(packageInfo));
+        await writeFile(path.join(temporaryPath, "package.json"), stringifyJSON(packageInfo));
         const alexCLineTestClient = createAlexCLineTestClient(setDirectory(temporaryPath));
         const { exitCode: createReleaseNoteExitCode } =
           await alexCLineTestClient`template release-note create ${versionType}`;
@@ -38,7 +39,7 @@ describe("template release-note check", () => {
 
   test("Exit code 1 on invalid release note and does not expose DataError", async () => {
     await temporaryDirectoryTask(async (temporaryPath) => {
-      await writeFile(path.join(temporaryPath, "package.json"), JSON.stringify(packageInfo));
+      await writeFile(path.join(temporaryPath, "package.json"), stringifyJSON(packageInfo));
 
       const invalidFilePath = path.join(temporaryPath, "v1.2.3.md");
       await writeFile(invalidFilePath, "This is not valid");
@@ -59,7 +60,7 @@ describe("template release-note check", () => {
     async (versionType) => {
       await temporaryDirectoryTask(async (temporaryPath) => {
         // Write actual package.json contents to directory
-        await writeFile(path.join(temporaryPath, "package.json"), JSON.stringify(packageInfo));
+        await writeFile(path.join(temporaryPath, "package.json"), stringifyJSON(packageInfo));
 
         const alexCLineTestClient = createAlexCLineTestClient(setDirectory(temporaryPath));
 

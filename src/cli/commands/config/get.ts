@@ -5,6 +5,7 @@ import { CodeError } from "@alextheman/utility/v6";
 
 import { parseAlexCLineGlobalConfigKey } from "src/configs/helpers/defineAlexCLineGlobalConfig";
 import loadAlexCLineGlobalConfig from "src/services/configs/loadAlexCLineGlobalConfig";
+import stringifyJSON from "src/utility/miscellaneous/stringifyJSON";
 
 function configGet(program: Command) {
   program
@@ -23,11 +24,11 @@ function configGet(program: Command) {
       }
 
       if (key === undefined) {
-        console.info(JSON.stringify(config, null, 2));
+        console.info(stringifyJSON(config));
         return;
       }
 
-      console.info(JSON.stringify({ [key]: config[key] }, null, 2));
+      console.info(stringifyJSON({ [key]: config[key] }));
     });
 }
 
