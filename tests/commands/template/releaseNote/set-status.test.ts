@@ -14,6 +14,7 @@ import getMarkdownBlock from "src/utility/markdownTemplates/getMarkdownBlock";
 import getMarkdownCommentPair from "src/utility/markdownTemplates/getMarkdownCommentPair";
 import createReleaseNoteFromTemplates from "src/utility/markdownTemplates/releaseNote/createReleaseNoteFromTemplates";
 import getReleaseNotePath from "src/utility/markdownTemplates/releaseNote/getReleaseNotePath";
+import stringifyJSON from "src/utility/miscellaneous/stringifyJSON";
 
 import { name, version } from "package.json" with { type: "json" };
 
@@ -25,7 +26,7 @@ describe("template release-note set-status", () => {
 
       await writeFile(
         path.join(temporaryPath, "package.json"),
-        JSON.stringify({
+        stringifyJSON({
           name,
           version,
         }),
@@ -67,7 +68,7 @@ describe("template release-note set-status", () => {
 
       await writeFile(
         path.join(temporaryPath, "package.json"),
-        JSON.stringify({
+        stringifyJSON({
           name,
           version,
         }),
@@ -163,7 +164,7 @@ describe("template release-note set-status", () => {
 
       await writeFile(
         path.join(temporaryPath, "package.json"),
-        JSON.stringify({
+        stringifyJSON({
           name,
           version,
         }),
@@ -194,7 +195,7 @@ describe("template release-note set-status", () => {
 
       await writeFile(
         path.join(temporaryPath, "package.json"),
-        JSON.stringify({
+        stringifyJSON({
           name,
           version,
         }),

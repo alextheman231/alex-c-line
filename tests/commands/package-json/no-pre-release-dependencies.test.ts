@@ -11,24 +11,21 @@ import alexCLineTestClient from "tests/testClients/alexCLineTestClient";
 
 import ERROR_PREFIX from "src/utility/constants/ERROR_PREFIX";
 import SUCCESS_PREFIX from "src/utility/constants/SUCCESS_PREFIX";
+import stringifyJSON from "src/utility/miscellaneous/stringifyJSON";
 
 describe("no-pre-release-dependencies", () => {
   test("Exits with exit code 0 if there are no pre-release versions", async () => {
     await temporaryDirectoryTask(async (temporaryPath) => {
       await writeFile(
         path.join(temporaryPath, "package.json"),
-        JSON.stringify(
-          {
-            dependencies: {
-              "@alextheman/utility": "^5.1.0",
-            },
-            devDependencies: {
-              eslint: "^10.0.2",
-            },
+        stringifyJSON({
+          dependencies: {
+            "@alextheman/utility": "^5.1.0",
           },
-          null,
-          2,
-        ),
+          devDependencies: {
+            eslint: "^10.0.2",
+          },
+        }),
       );
 
       const testClient = alexCLineTestClient(setDirectory(temporaryPath));
@@ -51,19 +48,15 @@ describe("no-pre-release-dependencies", () => {
       await temporaryDirectoryTask(async (temporaryPath) => {
         await writeFile(
           path.join(temporaryPath, "package.json"),
-          JSON.stringify(
-            {
-              dependencies: {
-                "@alextheman/utility":
-                  dependencyGroup === "dependencies" ? preReleaseRange : "^5.1.0",
-              },
-              devDependencies: {
-                tsdown: dependencyGroup === "devDependencies" ? preReleaseRange : "^10.0.2",
-              },
+          stringifyJSON({
+            dependencies: {
+              "@alextheman/utility":
+                dependencyGroup === "dependencies" ? preReleaseRange : "^5.1.0",
             },
-            null,
-            2,
-          ),
+            devDependencies: {
+              tsdown: dependencyGroup === "devDependencies" ? preReleaseRange : "^10.0.2",
+            },
+          }),
         );
 
         const testClient = alexCLineTestClient({ ...setDirectory(temporaryPath), reject: false });

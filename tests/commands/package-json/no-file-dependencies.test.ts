@@ -9,6 +9,7 @@ import setDirectory from "tests/helpers/setDirectory";
 import createAlexCLineTestClient from "tests/testClients/alexCLineTestClient";
 
 import ERROR_PREFIX from "src/utility/constants/ERROR_PREFIX";
+import stringifyJSON from "src/utility/miscellaneous/stringifyJSON";
 
 describe("package-json no-file-dependencies", () => {
   test("Exits with exit code 0 if no file dependencies found", async () => {
@@ -16,7 +17,7 @@ describe("package-json no-file-dependencies", () => {
       const alexCLineTestClient = createAlexCLineTestClient(setDirectory(temporaryDirectory));
       await writeFile(
         path.join(temporaryDirectory, "package.json"),
-        JSON.stringify({
+        stringifyJSON({
           dependencies: {
             "@alextheman/components": "^3.5.3",
             "@alextheman/utility": "*",
@@ -40,7 +41,7 @@ describe("package-json no-file-dependencies", () => {
         const alexCLineTestClient = createAlexCLineTestClient(setDirectory(temporaryDirectory));
         await writeFile(
           path.join(temporaryDirectory, "package.json"),
-          JSON.stringify({
+          stringifyJSON({
             dependencies: {
               "@alextheman/components": "^3.5.3",
               "@alextheman/utility": "*",
@@ -62,7 +63,7 @@ test("Dependencies only", async () => {
     const alexCLineTestClient = createAlexCLineTestClient(setDirectory(temporaryDirectory));
     await writeFile(
       path.join(temporaryDirectory, "package.json"),
-      JSON.stringify({
+      stringifyJSON({
         dependencies: {
           "@alextheman/components": "^3.5.3",
           "@alextheman/utility": "*",
@@ -84,7 +85,7 @@ test("Dependencies only", async () => {
 test("Succeeds if package.json is completely empty", async () => {
   await temporaryDirectoryTask(async (temporaryDirectory) => {
     const alexCLineTestClient = createAlexCLineTestClient(setDirectory(temporaryDirectory));
-    await writeFile(getPackageJsonPath(temporaryDirectory), JSON.stringify({}));
+    await writeFile(getPackageJsonPath(temporaryDirectory), stringifyJSON({}));
 
     const { stdout: message, exitCode } =
       await alexCLineTestClient`package-json check --rules no-file-dependencies`;
@@ -98,7 +99,7 @@ test("Exit with exit code 2 if file dependencies found", async () => {
     const alexCLineTestClient = createAlexCLineTestClient(setDirectory(temporaryDirectory));
     await writeFile(
       getPackageJsonPath(temporaryDirectory),
-      JSON.stringify({
+      stringifyJSON({
         dependencies: {
           "@alextheman/components": "file:../components",
           gitmock: "1.0.0",
@@ -122,14 +123,10 @@ test("Exit with exit code 2 if file dependencies found", async () => {
     expect(message).toContain("Checking for file dependencies...");
     expect(errorMessage).toContain(`${ERROR_PREFIX} File dependencies found:`);
     expect(errorMessage).toContain(
-      JSON.stringify(
-        {
-          dependencies: { "@alextheman/components": "file:../components" },
-          devDependencies: { "@alextheman/eslint-plugin": "file:../eslint-plugin" },
-        },
-        undefined,
-        2,
-      ),
+      stringifyJSON({
+        dependencies: { "@alextheman/components": "file:../components" },
+        devDependencies: { "@alextheman/eslint-plugin": "file:../eslint-plugin" },
+      }),
     );
   });
 });
@@ -139,7 +136,7 @@ describe("devDependencies can be left out even if error code is 2", () => {
       const alexCLineTestClient = createAlexCLineTestClient(setDirectory(temporaryDirectory));
       await writeFile(
         path.join(temporaryDirectory, "package.json"),
-        JSON.stringify({
+        stringifyJSON({
           dependencies: {
             "@alextheman/components": "file:../components",
             "@alextheman/utility": "^1.16.0",
@@ -159,13 +156,9 @@ describe("devDependencies can be left out even if error code is 2", () => {
       expect(message).toContain("Checking for file dependencies...");
       expect(errorMessage).toContain(`${ERROR_PREFIX} File dependencies found:`);
       expect(errorMessage).toContain(
-        JSON.stringify(
-          {
-            dependencies: { "@alextheman/components": "file:../components" },
-          },
-          undefined,
-          2,
-        ),
+        stringifyJSON({
+          dependencies: { "@alextheman/components": "file:../components" },
+        }),
       );
     });
   });
@@ -174,7 +167,7 @@ describe("devDependencies can be left out even if error code is 2", () => {
       const alexCLineTestClient = createAlexCLineTestClient(setDirectory(temporaryDirectory));
       await writeFile(
         path.join(temporaryDirectory, "package.json"),
-        JSON.stringify({
+        stringifyJSON({
           dependencies: {
             "@alextheman/components": "file:../components",
             gitmock: "1.0.0",
@@ -195,13 +188,9 @@ describe("devDependencies can be left out even if error code is 2", () => {
       expect(message).toContain("Checking for file dependencies...");
       expect(errorMessage).toContain(`${ERROR_PREFIX} File dependencies found:`);
       expect(errorMessage).toContain(
-        JSON.stringify(
-          {
-            dependencies: { "@alextheman/components": "file:../components" },
-          },
-          undefined,
-          2,
-        ),
+        stringifyJSON({
+          dependencies: { "@alextheman/components": "file:../components" },
+        }),
       );
     });
   });
