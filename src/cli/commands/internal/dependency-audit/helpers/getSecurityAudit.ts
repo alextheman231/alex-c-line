@@ -1,4 +1,4 @@
-import type { CreateEnumType } from "@alextheman/utility";
+import type { ObjectValue } from "@alextheman/utility";
 import type { Command } from "commander";
 
 import { az, escapeHTML, normaliseIndents, sortBy } from "@alextheman/utility";
@@ -17,7 +17,7 @@ const AuditSeverity = {
   HIGH: "high",
   CRITICAL: "critical",
 } as const;
-type AuditSeverity = CreateEnumType<typeof AuditSeverity>;
+type AuditSeverity = ObjectValue<typeof AuditSeverity>;
 
 const auditSchema = z.object({
   advisories: z.record(
@@ -47,7 +47,7 @@ function parseSecurityAudit(input: unknown): SecurityAudit {
   return az.with(auditSchema).parse(input);
 }
 
-function resolvePatchedVersions(advisory: CreateEnumType<SecurityAudit["advisories"]>) {
+function resolvePatchedVersions(advisory: ObjectValue<SecurityAudit["advisories"]>) {
   if (advisory.patched_versions_unpublished) {
     return "Not patched yet.";
   }

@@ -1,4 +1,4 @@
-import type { CreateEnumType } from "@alextheman/utility";
+import type { ObjectValue } from "@alextheman/utility";
 import type { Command } from "commander";
 
 import { az } from "@alextheman/utility";
@@ -10,7 +10,7 @@ import SUCCESS_PREFIX from "src/utility/constants/SUCCESS_PREFIX";
 const RuleName = {
   PREFER_EXACT_DEPENDENCY_VERSIONS: "prefer-exact-dependency-versions",
 } as const;
-type RuleName = CreateEnumType<typeof RuleName>;
+type RuleName = ObjectValue<typeof RuleName>;
 
 function pyprojectCheck(program: Command) {
   program

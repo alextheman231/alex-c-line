@@ -1,4 +1,4 @@
-import type { CreateEnumType } from "@alextheman/utility";
+import type { ObjectValue } from "@alextheman/utility";
 
 import { normaliseIndents, parseBoolean } from "@alextheman/utility";
 import {
@@ -23,7 +23,7 @@ const Entrypoint = {
   CONFIGS: "alex-c-line/configs",
   CONFIGS_INTERNAL: "alex-c-line/configs/internal",
 } as const;
-type Entrypoint = CreateEnumType<typeof Entrypoint>;
+type Entrypoint = ObjectValue<typeof Entrypoint>;
 
 const describe = parseBoolean(process.env.RUN_END_TO_END ?? "false")
   ? describeVitest
