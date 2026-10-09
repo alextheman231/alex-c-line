@@ -1,4 +1,4 @@
-import type { CreateEnumType } from "@alextheman/utility";
+import type { ObjectValue } from "@alextheman/utility";
 import type { Command } from "commander";
 
 import { az } from "@alextheman/utility";
@@ -13,7 +13,7 @@ const RuleName = {
   NO_FILE_DEPENDENCIES: "no-file-dependencies",
   NO_PRE_RELEASE_DEPENDENCIES: "no-pre-release-dependencies",
 } as const;
-type RuleName = CreateEnumType<typeof RuleName>;
+type RuleName = ObjectValue<typeof RuleName>;
 
 function packageJsonCheck(program: Command) {
   program

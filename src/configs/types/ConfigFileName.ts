@@ -1,4 +1,4 @@
-import type { CreateEnumType } from "@alextheman/utility";
+import type { ObjectValue } from "@alextheman/utility";
 
 export const ConfigFileName = {
   STANDARD_JAVASCRIPT: "alex-c-line.config.js",
@@ -6,7 +6,7 @@ export const ConfigFileName = {
   COMMON_JS_JAVASCRIPT: "alex-c-line.config.cjs",
 } as const;
 
-export type ConfigFileName = CreateEnumType<typeof ConfigFileName>;
+export type ConfigFileName = ObjectValue<typeof ConfigFileName>;
 
 export const PrivateConfigFileName = {
   STANDARD_JAVASCRIPT: ".alex-c-line.private.config.js",
@@ -14,4 +14,4 @@ export const PrivateConfigFileName = {
   COMMON_JS_JAVASCRIPT: ".alex-c-line.private.config.cjs",
 };
 
-export type PrivateConfigFileName = CreateEnumType<typeof PrivateConfigFileName>;
+export type PrivateConfigFileName = ObjectValue<typeof PrivateConfigFileName>;

@@ -170,8 +170,8 @@ importers:
   .:
     dependencies:
       '@alextheman/utility':
-        specifier: 5.28.4
-        version: 5.28.4(zod@4.6.5)
+        specifier: 5.29.0
+        version: 5.29.0(zod@4.6.5)
       '@inquirer/prompts':
         specifier: 8.7.2
         version: 8.7.2(@types/node@26.6.4)
@@ -308,6 +308,12 @@ packages:
 
   '@alextheman/utility@5.28.4':
     resolution: {integrity: sha512-DVeofG6bNXnexOVyFf7mTrLh94XnW+sXDqpOmFQbxfui0AQRS2gHgq0HXDkQJCjQTg6sfdy/GzGa1iu4WW0rZg==}
+    engines: {node: '>=22.3.0'}
+    peerDependencies:
+      zod: '>=4.0.0'
+
+  '@alextheman/utility@5.29.0':
+    resolution: {integrity: sha512-MxByroW1WlKGIk3tr3FMBn/lS3vOGx4etgsz/48z/QkcE6dvVWuZARF6Mdxxk+eEq5X50GRH9bzViVDh1demdw==}
     engines: {node: '>=22.3.0'}
     peerDependencies:
       zod: '>=4.0.0'
@@ -3365,6 +3371,12 @@ snapshots:
   '@alextheman/utility@5.28.4(zod@4.6.5)':
     dependencies:
       dotenv: 18.0.3
+      execa: 10.0.1
+      zod: 4.6.5
+
+  '@alextheman/utility@5.29.0(zod@4.6.5)':
+    dependencies:
+      dotenv: 18.0.5
       execa: 10.0.1
       zod: 4.6.5
 
