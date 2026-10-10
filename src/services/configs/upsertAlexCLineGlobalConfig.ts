@@ -1,8 +1,8 @@
-import type { AlexCLineGlobalConfig } from "src/configs/helpers/defineAlexCLineGlobalConfig";
+import type { AlexCLineGlobalConfig } from "src/models/configs/AlexCLineGlobalConfig";
 
 import { mkdir, writeFile } from "node:fs/promises";
 
-import { parseAlexCLineGlobalConfig } from "src/configs/helpers/defineAlexCLineGlobalConfig";
+import { parseAlexCLineGlobalConfig } from "src/models/configs/AlexCLineGlobalConfig";
 import DEFAULT_GLOBAL_CONFIG from "src/services/configs/DEFAULT_GLOBAL_CONFIG";
 import loadAlexCLineGlobalConfig from "src/services/configs/loadAlexCLineGlobalConfig";
 import {
