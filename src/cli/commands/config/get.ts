@@ -3,7 +3,7 @@ import type { Command } from "commander";
 import { kebabToCamel } from "@alextheman/utility";
 import { CodeError } from "@alextheman/utility/v6";
 
-import { parseAlexCLineGlobalConfigKey } from "src/configs/helpers/defineAlexCLineGlobalConfig";
+import { parseAlexCLineGlobalConfigKey } from "src/models/configs/AlexCLineGlobalConfig";
 import loadAlexCLineGlobalConfig from "src/services/configs/loadAlexCLineGlobalConfig";
 import stringifyJSON from "src/utility/miscellaneous/stringifyJSON";
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import type { AlexCLineGlobalConfig } from "src/configs/helpers/defineAlexCLineGlobalConfig";
+import type { AlexCLineGlobalConfig } from "src/models/configs/AlexCLineGlobalConfig";
 
 import { Command } from "commander";
 

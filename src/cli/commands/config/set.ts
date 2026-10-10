@@ -2,7 +2,7 @@ import type { Command } from "commander";
 
 import { kebabToCamel } from "@alextheman/utility";
 
-import { parseAlexCLineGlobalConfigKey } from "src/configs/helpers/defineAlexCLineGlobalConfig";
+import { parseAlexCLineGlobalConfigKey } from "src/models/configs/AlexCLineGlobalConfig";
 import upsertAlexCLineGlobalConfig from "src/services/configs/upsertAlexCLineGlobalConfig";
 import parseBooleanArgument from "src/utility/miscellaneous/parseBooleanArgument";
 
