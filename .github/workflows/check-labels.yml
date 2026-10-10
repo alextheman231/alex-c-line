@@ -8,7 +8,7 @@ jobs:
   check-labels:
     permissions:
       pull-requests: read
-    uses: alextheman231/github-actions/.github/workflows/check-labels.yml@f1ff1cf13a2143e1e04a55da4b1fd77c2adb9b78 # v14.0.0
+    uses: alextheman231/github-actions/.github/workflows/check-labels.yml@a8e567aa7146169f3d858752ffb0f2dfd9ecb70f # v14.0.1
     with:
       pull-request-number: ${{ github.event.pull_request.number }}
       CLIENT_ID: ${{ vars.ALEX_UP_BOT_CLIENT_ID }}
