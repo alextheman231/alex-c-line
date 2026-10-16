@@ -10,7 +10,7 @@ jobs:
     permissions:
       contents: write
     if: ${{ github.repository == 'alextheman231/alex-c-line' }}
-    uses: alextheman231/github-actions/.github/workflows/scheduled-patch-release.yml@a8e567aa7146169f3d858752ffb0f2dfd9ecb70f # v14.0.1
+    uses: alextheman231/github-actions/.github/workflows/scheduled-patch-release.yml@c33cab51e66ede91cc06169f056ce75f59222ff5 # v14.2.0
     with:
       node-version: 26
       CLIENT_ID: ${{ vars.ALEX_UP_BOT_CLIENT_ID }}
