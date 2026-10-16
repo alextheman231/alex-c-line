@@ -11,7 +11,7 @@ permissions:
 
 jobs:
   restrict-alex-up-bot-branches:
-    uses: alextheman231/github-actions/.github/workflows/restrict-alex-up-bot-branches.yml@a8e567aa7146169f3d858752ffb0f2dfd9ecb70f # v14.0.1
+    uses: alextheman231/github-actions/.github/workflows/restrict-alex-up-bot-branches.yml@c33cab51e66ede91cc06169f056ce75f59222ff5 # v14.2.0
     with:
       CLIENT_ID: ${{ vars.ALEX_UP_BOT_CLIENT_ID }}
     secrets:
