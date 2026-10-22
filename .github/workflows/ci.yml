@@ -35,3 +35,14 @@ jobs:
     uses: alextheman231/github-actions/.github/workflows/end-to-end-node-package-ci.yml@418c332315197ab9833fa7e2abf2bfb6475335d1 # v14.3.0
     with:
       node-version: 26
+
+  secret-scan-ci:
+    permissions:
+      contents: read
+    uses: alextheman231/github-actions/.github/workflows/secret-scan-ci.yml@418c332315197ab9833fa7e2abf2bfb6475335d1 # v14.3.0
+    with:
+      github-push-before-sha: ${{ github.event.before }}
+      github-push-base-sha: ${{ github.event.base_ref }}
+      github-pull-base-sha: ${{ github.event.pull_request.base.sha }}
+    secrets:
+      GITGUARDIAN_API_KEY: ${{ secrets.GITGUARDIAN_API_KEY }}
