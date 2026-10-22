@@ -1,4 +1,4 @@
-import type { Options, Result, TemplateExpression } from "execa";
+import type { Options, ResultPromise, TemplateExpression } from "execa";
 
 import { isTemplateStringsArray } from "@alextheman/utility";
 import { execa } from "execa";
@@ -13,8 +13,8 @@ export interface AlexCLineTestClient<ExecaOptions extends Options = Options> {
   (
     strings: TemplateStringsArray,
     ...interpolations: Array<TemplateExpression>
-  ): Promise<Result<object>>;
-  (command: string, args?: Array<string>, options?: ExecaOptions): Promise<Result<ExecaOptions>>;
+  ): ResultPromise<object>;
+  (command: string, args?: Array<string>, options?: ExecaOptions): ResultPromise<ExecaOptions>;
 }
 
 function resolveTemplateToArgs(
@@ -39,7 +39,7 @@ function resolveAsTemplate<ExecaOptions extends Options = Options>(
   strings: TemplateStringsArray,
   interpolations: Array<TemplateExpression>,
   options?: ExecaOptions,
-) {
+): ReturnType<typeof execa<ExecaOptions>> {
   const args = resolveTemplateToArgs(strings, ...interpolations);
 
   return execa(process.execPath, [entryPoint, ...args], options);
@@ -49,7 +49,7 @@ function resolveAsCommandArgs<ExecaOptions extends Options = Options>(
   command: string,
   args: ReadonlyArray<string>,
   options?: ExecaOptions,
-) {
+): ReturnType<typeof execa<ExecaOptions>> {
   return execa(process.execPath, [entryPoint, command, ...args], options);
 }
 
@@ -77,19 +77,19 @@ function bindAlexCLineClient<ExecaOptions extends Options = Options>(
 function alexCLineTestClient<ExecaOptions extends Options = Options>(
   options: ExecaOptions,
 ): AlexCLineTestClient<ExecaOptions>;
-function alexCLineTestClient(
+function alexCLineTestClient<ExecaOptions extends Options = Options>(
   strings: TemplateStringsArray,
   ...interpolations: Array<TemplateExpression>
-): Promise<Result<object>>;
+): ResultPromise<ExecaOptions>;
 function alexCLineTestClient<ExecaOptions extends Options = Options>(
   command: string,
   args?: ReadonlyArray<string>,
   options?: ExecaOptions,
-): Promise<Result<ExecaOptions>>;
+): ResultPromise<ExecaOptions>;
 function alexCLineTestClient<ExecaOptions extends Options = Options>(
   first: string | TemplateStringsArray | ExecaOptions,
   ...second: Array<unknown>
-): Promise<Result<ExecaOptions>> | Promise<Result<object>> | AlexCLineTestClient<ExecaOptions> {
+) {
   if (typeof first === "string") {
     return resolveAsCommandArgs<ExecaOptions>(
       first,
@@ -99,7 +99,7 @@ function alexCLineTestClient<ExecaOptions extends Options = Options>(
   }
 
   if (isTemplateStringsArray(first)) {
-    return resolveAsTemplate(first, second as Array<TemplateExpression>);
+    return resolveAsTemplate<ExecaOptions>(first, second as Array<TemplateExpression>);
   }
 
   return bindAlexCLineClient(first);
