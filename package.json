@@ -80,7 +80,7 @@
     "boxen": "9.0.0",
     "chalk": "6.0.1",
     "commander": "15.0.0",
-    "dotenv": "18.0.8",
+    "dotenv": "18.0.9",
     "dotenv-stringify": "3.0.1",
     "env-paths": "4.0.0",
     "execa": "10.2.0",
