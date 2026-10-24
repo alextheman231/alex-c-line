@@ -23,7 +23,7 @@ async function checkUpdate(options?: CheckUpdateOptions) {
   });
   const latestVersion = new VersionNumber(data.version);
 
-  if (!VersionNumber.isEqual(currentVersion, latestVersion)) {
+  if (currentVersion.isLessThan(latestVersion)) {
     const message = normaliseIndents`
               A new update of \`alex-c-line\` is available!
               ${currentVersion.toString()} → ${latestVersion.toString()}
