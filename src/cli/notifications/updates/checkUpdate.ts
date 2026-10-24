@@ -27,7 +27,7 @@ async function checkUpdate(options?: CheckUpdateOptions) {
     const message = normaliseIndents`
               A new update of \`alex-c-line\` is available!
               ${currentVersion.toString()} → ${latestVersion.toString()}
-              Run \`npm install -g alex-c-line@latest\` to update.
+              Run \`npm install -g alex-c-line@${latestVersion.toString()}\` to update.
           `;
     const width = Math.max(
       ...message.split("\n").map((line) => {
