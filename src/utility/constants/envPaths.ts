@@ -11,7 +11,3 @@ export const ALEX_C_LINE_GLOBAL_CACHE_PATH: string = path.join(
   ALEX_C_LINE_GLOBAL_CACHE_DIRECTORY,
   "cache.json",
 );
-export const ALEX_C_LINE_GLOBAL_CONFIG_PATH = path.join(
-  ALEX_C_LINE_GLOBAL_CONFIG_DIRECTORY,
-  "config.json",
-);

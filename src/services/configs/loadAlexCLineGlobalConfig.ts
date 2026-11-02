@@ -5,7 +5,7 @@ import type { AlexCLineGlobalConfig } from "src/models/configs/AlexCLineGlobalCo
 import { CodeError } from "@alextheman/utility/v6";
 
 import { parseAlexCLineGlobalConfig } from "src/models/configs/AlexCLineGlobalConfig";
-import { ALEX_C_LINE_GLOBAL_CONFIG_PATH } from "src/utility/constants/envPaths";
+import getAlexCLineGlobalConfigPath from "src/services/configs/getAlexCLineGlobalConfigPath";
 import readJsonFile from "src/utility/fileSystem/readJsonFile";
 
 interface LoadAlexCLineGlobalConfigOptions<Strict extends boolean> {
@@ -15,7 +15,7 @@ interface LoadAlexCLineGlobalConfigOptions<Strict extends boolean> {
 async function loadAlexCLineGlobalConfig<Strict extends boolean = true>(
   options?: LoadAlexCLineGlobalConfigOptions<Strict>,
 ): Promise<OptionalOnCondition<Strict, AlexCLineGlobalConfig | null>> {
-  const result = await readJsonFile(ALEX_C_LINE_GLOBAL_CONFIG_PATH);
+  const result = await readJsonFile(await getAlexCLineGlobalConfigPath());
 
   const strictModeEnabled = options?.strict ?? true;
 
