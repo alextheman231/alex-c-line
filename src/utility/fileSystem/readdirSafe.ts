@@ -6,7 +6,11 @@ async function readdirSafe(path: string): Promise<Array<Dirent<string>> | undefi
   try {
     return await readdir(path, { withFileTypes: true });
   } catch (error) {
-    if (error instanceof Error && "code" in error && error.code === "ENOTDIR") {
+    if (
+      error instanceof Error &&
+      "code" in error &&
+      (error.code === "ENOTDIR" || error.code === "ENOENT")
+    ) {
       return undefined;
     }
     throw error;
