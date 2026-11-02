@@ -22,7 +22,7 @@ import packageInfo from "package.json" with { type: "json" };
 
     await migrate();
 
-    const globalConfig = await loadAlexCLineGlobalConfig({ strict: false });
+    const globalConfig = await loadAlexCLineGlobalConfig();
     registerUpdateMessagePrinter();
 
     if (shouldShowNotifications) {
