@@ -6,6 +6,7 @@ import maybeSendBirthdayNotification from "src/cli/notifications/birthday/maybeS
 import shouldShowNotifications from "src/cli/notifications/shouldShowNotifications";
 import { registerUpdateMessagePrinter } from "src/cli/notifications/updates/pendingUpdateMessage";
 import runAutomatedUpdateCheck from "src/cli/notifications/updates/runAutomatedUpdateCheck";
+import migrate from "src/configs/migrations";
 import loadAlexCLineGlobalConfig from "src/services/configs/loadAlexCLineGlobalConfig";
 import formatError from "src/utility/errors/formatError";
 
@@ -18,6 +19,8 @@ import packageInfo from "package.json" with { type: "json" };
       .name(packageInfo.name)
       .description(packageInfo.description)
       .version(packageInfo.version);
+
+    await migrate();
 
     const globalConfig = await loadAlexCLineGlobalConfig({ strict: false });
     registerUpdateMessagePrinter();
