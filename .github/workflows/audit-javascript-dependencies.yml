@@ -11,7 +11,7 @@ jobs:
     permissions:
       contents: read
       pull-requests: write
-    uses: alextheman231/github-actions/.github/workflows/audit-javascript-dependencies.yml@418c332315197ab9833fa7e2abf2bfb6475335d1 # v14.3.0
+    uses: alextheman231/github-actions/.github/workflows/audit-javascript-dependencies.yml@6303ccc55913d70a641b50c97dc36475c5053c99 # v14.4.0
     with:
       pull-request-number: ${{ github.event.pull_request.number }}
       CLIENT_ID: ${{ vars.ALEX_UP_BOT_CLIENT_ID }}
