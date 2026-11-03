@@ -25,7 +25,7 @@ jobs:
 
   npm-registry-publish:
     needs: [check-npm-version, check-version-tag]
-    if: ${{ needs.check-npm-version.outputs.version-exists == 'false' && needs.check-version-tag.outputs.tag-exists == 'false' }}
+    if: ${{ needs.check-npm-version.outputs.version-exists == 'false' && needs.check-version-tag.outputs.tag-exists == 'false' && needs.check-release-note.outputs.release-note-found == 'true' }}
     permissions:
       id-token: write
     uses: alextheman231/github-actions/.github/workflows/npm-registry-publish.yml@6303ccc55913d70a641b50c97dc36475c5053c99 # v14.4.0
@@ -36,7 +36,7 @@ jobs:
     needs: [check-version-tag]
     permissions:
       contents: write
-    if: ${{ needs.check-version-tag.outputs.tag-exists == 'false' }}
+    if: ${{ needs.check-version-tag.outputs.tag-exists == 'false' && needs.check-release-note.outputs.release-note-found == 'true' }}
     uses: alextheman231/github-actions/.github/workflows/create-github-release.yml@6303ccc55913d70a641b50c97dc36475c5053c99 # v14.4.0
     with:
       CLIENT_ID: ${{ vars.ALEX_UP_BOT_CLIENT_ID }}
