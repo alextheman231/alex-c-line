@@ -1,0 +1,3 @@
+const CURRENT_CONFIG_VERSION = 1;
+
+export default CURRENT_CONFIG_VERSION;
