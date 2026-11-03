@@ -34,7 +34,7 @@ jobs:
       APP_PRIVATE_KEY: ${{ secrets.ALEX_UP_BOT_PRIVATE_KEY }}
 
   npm-registry-publish:
-    needs: [check-npm-version, check-version-tag, check-release-note]
+    needs: [check-npm-version, check-version-tag]
     if: ${{ needs.check-npm-version.outputs.version-exists == 'false' && needs.check-version-tag.outputs.tag-exists == 'false' && needs.check-release-note.outputs.release-note-found == 'true' }}
     permissions:
       id-token: write
@@ -43,7 +43,7 @@ jobs:
       node-version: 26
 
   create-github-release:
-    needs: [check-version-tag, check-release-note]
+    needs: [check-version-tag]
     permissions:
       contents: write
     if: ${{ needs.check-version-tag.outputs.tag-exists == 'false' && needs.check-release-note.outputs.release-note-found == 'true' }}
