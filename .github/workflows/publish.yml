@@ -23,6 +23,16 @@ jobs:
     secrets:
       APP_PRIVATE_KEY: ${{ secrets.ALEX_UP_BOT_PRIVATE_KEY }}
 
+  check-release-note:
+    permissions:
+      contents: read
+    uses: alextheman231/github-actions/.github/workflows/report-release-note-existence.yml@6303ccc55913d70a641b50c97dc36475c5053c99 # v14.4.0
+    with:
+      CLIENT_ID: ${{ vars.ALEX_UP_BOT_CLIENT_ID }}
+      node-version: 26
+    secrets:
+      APP_PRIVATE_KEY: ${{ secrets.ALEX_UP_BOT_PRIVATE_KEY }}
+
   npm-registry-publish:
     needs: [check-npm-version, check-version-tag]
     if: ${{ needs.check-npm-version.outputs.version-exists == 'false' && needs.check-version-tag.outputs.tag-exists == 'false' && needs.check-release-note.outputs.release-note-found == 'true' }}
