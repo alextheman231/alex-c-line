@@ -1,13 +1,13 @@
 import type { Command } from "commander";
 
-import getAlexCLineGlobalConfigPath from "src/services/configs/getAlexCLineGlobalConfigPath";
+import { ALEX_C_LINE_GLOBAL_CONFIG_PATH } from "src/utility/constants/envPaths";
 
 function configPath(program: Command) {
   program
     .command("path")
     .description("Get the path to the raw alex-c-line config file.")
     .action(async () => {
-      console.info(await getAlexCLineGlobalConfigPath());
+      console.info(ALEX_C_LINE_GLOBAL_CONFIG_PATH);
     });
 }
 
