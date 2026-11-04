@@ -2,6 +2,7 @@ import type { AlexCLineGlobalConfig } from "src/models/configs/AlexCLineGlobalCo
 
 const DEFAULT_GLOBAL_CONFIG: AlexCLineGlobalConfig = {
   enableUpdateNotifications: true,
+  budget: null,
 };
 
 export default DEFAULT_GLOBAL_CONFIG;
