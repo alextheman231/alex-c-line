@@ -187,6 +187,9 @@ importers:
       commander:
         specifier: 15.1.0
         version: 15.1.0
+      csv:
+        specifier: 6.6.4
+        version: 6.6.4
       dotenv:
         specifier: 18.0.9
         version: 18.0.9
@@ -1636,6 +1639,19 @@ packages:
     resolution: {integrity: sha512-x8dy3RnvYdlUcPOjkEHqozhiwzKNSq7GcPuXFbnyMOCHxX8V3OgIg/pYuabl2sbUPfIJaeAQB7PMOK8DFIdoRA==}
     engines: {node: '>=12'}
 
+  csv-generate@4.6.2:
+    resolution: {integrity: sha512-1G69uT4HKxLRL3dH5UlwlEBpHFOh7A9T86XZn6IkCXkb2k5cnk3xhxNpLcYZvoBFpC1SIZTXBPHzNGd16cIp/A==}
+
+  csv-parse@7.0.3:
+    resolution: {integrity: sha512-YFd3QM/yo17vH91L1IOZuvl09zM0zEEtdfTcOCKWcMdM++MNaQSyp09slXyFCLaPXvHstQFx/xC8myiFHSMUvw==}
+
+  csv-stringify@6.9.0:
+    resolution: {integrity: sha512-6b3e29CILFfSQ2nDRuZMRROzQOpPuJ+s8zPB5H7eK5ncXBbFOyVuRLU5Sx/zAUmVri3Ly49GyC8NEme4SVSAbA==}
+
+  csv@6.6.4:
+    resolution: {integrity: sha512-HeLcw5VphIwHTNKljvINW9IT0stYqgZ/2AIcx5ur8DcArOvRxb4INpgDs008UStv8l7dVVJaCB3twWi59SSouA==}
+    engines: {node: '>= 0.1.90'}
+
   damerau-levenshtein@1.0.8:
     resolution: {integrity: sha512-sdQSFB7+llfUcQHUQO3+B8ERRj0Oa4w9POWMI/puGtuf7gFywGmkaLCElnudfTiKZV+NvHqL0ifzdrI8Ro7ESA==}
 
@@ -2915,6 +2931,9 @@ packages:
 
   std-env@4.3.0:
     resolution: {integrity: sha512-OtU/EgQ1kIm5KwqQpBC6ZEMXrZRui11w8zgfTWp8cdO9B8OaPsbA8bTHO2P+HNo1VlUTGMVBwPhydu6poeXiag==}
+
+  stream-transform@3.6.0:
+    resolution: {integrity: sha512-iDtH6HV1MOQ3Ipva+9g/kke1uVLubZlEbGCxbWWlI+Ak++sDRQRxmPZ1iXlmXdLK6kP5fIziUf79GBB7erbppQ==}
 
   string-ts@2.4.0:
     resolution: {integrity: sha512-JOrTlmqL2wGvXZI+4RLzSAAqvhQL3rXOmSCLoacd9MC5hIj20xoa7CfYBEApBDncf+hhvbGi6atCy7LyweWRKQ==}
@@ -4452,6 +4471,19 @@ snapshots:
     dependencies:
       type-fest: 1.4.0
 
+  csv-generate@4.6.2: {}
+
+  csv-parse@7.0.3: {}
+
+  csv-stringify@6.9.0: {}
+
+  csv@6.6.4:
+    dependencies:
+      csv-generate: 4.6.2
+      csv-parse: 7.0.3
+      csv-stringify: 6.9.0
+      stream-transform: 3.6.0
+
   damerau-levenshtein@1.0.8: {}
 
   debug@4.4.3(supports-color@11.0.0):
@@ -5839,6 +5871,8 @@ snapshots:
   stable-hash-x@0.2.0: {}
 
   std-env@4.3.0: {}
+
+  stream-transform@3.6.0: {}
 
   string-ts@2.4.0: {}
 
