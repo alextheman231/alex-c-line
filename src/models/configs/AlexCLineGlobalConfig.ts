@@ -3,6 +3,11 @@ import z from "zod";
 
 export const alexCLineGlobalConfigSchema = z.object({
   enableUpdateNotifications: z.boolean(),
+  budget: z
+    .object({
+      expenses: z.record(z.string(), z.number()),
+    })
+    .nullable(),
 });
 export type AlexCLineGlobalConfig = z.infer<typeof alexCLineGlobalConfigSchema>;
 
