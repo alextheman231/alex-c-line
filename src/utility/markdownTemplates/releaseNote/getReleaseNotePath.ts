@@ -6,9 +6,9 @@ function getReleaseNotePath(versionNumber: VersionNumber) {
   return path.join(
     "docs",
     "releases",
-    versionNumber.format({ omitMinor: true }),
-    versionNumber.format({ omitPatch: true }),
-    `${versionNumber}.md`,
+    versionNumber.format({ omitMinor: true, omitPrefix: false }),
+    versionNumber.format({ omitPatch: true, omitPrefix: false }),
+    `${versionNumber.format({ omitPrefix: false })}.md`,
   );
 }
 
