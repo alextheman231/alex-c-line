@@ -24,7 +24,18 @@ jobs:
       node-version: 26
 
   actions-ci:
-    uses: alextheman231/github-actions/.github/workflows/actions-ci.yml@6303ccc55913d70a641b50c97dc36475c5053c99 # v14.4.0
+    permissions:
+      contents: read
+    uses: alextheman231/github-actions/.github/workflows/actions-ci.yml@bc8e87ed726b1680a46574b7de40ff2f3c364894 # v14.8.0
+    with:
+      CLIENT_ID: ${{ vars.ALEX_UP_BOT_CLIENT_ID }}
+    secrets:
+      APP_PRIVATE_KEY: ${{ secrets.ALEX_UP_BOT_PRIVATE_KEY }}
+
+  pyproject-ci:
+    permissions:
+      contents: read
+    uses: alextheman231/github-actions/.github/workflows/pyproject-ci.yml@bc8e87ed726b1680a46574b7de40ff2f3c364894 # v14.8.0
 
   end-to-end-legacy:
     uses: alextheman231/github-actions/.github/workflows/end-to-end-node-package-ci.yml@6303ccc55913d70a641b50c97dc36475c5053c99 # v14.4.0
