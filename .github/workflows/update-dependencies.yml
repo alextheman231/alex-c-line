@@ -19,4 +19,5 @@ jobs:
       update_pnpm: true
       update_javascript_dependencies: true
       update_actions: true
+      update_python_dependencies: true
       node-version: 26
