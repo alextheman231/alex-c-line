@@ -1,0 +1,30 @@
+[project]
+name = "alex-c-line"
+version = "0.1.0"
+description = "Default template for PDM package"
+readme = "README.md"
+license = "MIT"
+requires-python = "==3.14.*"
+dependencies = []
+[[project.authors]]
+name = "AlexMan123456"
+email = "alex.man03888@gmail.com"
+
+[dependency-groups]
+dev = [
+  "pyproject-fmt==2.30.6",
+  "zizmor==1.32",
+]
+
+[tool.pdm]
+distribution = false
+[tool.pdm.scripts]
+format = { composite = [ "format-pyproject" ] }
+format-pyproject = { shell = "pyproject-fmt pyproject.toml || true" }
+lint = { composite = [ "lint-zizmor", "lint-pyproject" ] }
+lint-pyproject = "pyproject-fmt --check pyproject.toml"
+lint-zizmor = "zizmor ."
+
+[tool.pyproject-fmt]
+generate_python_version_classifiers = false
+table_format = "long"
