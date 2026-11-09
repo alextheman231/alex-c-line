@@ -9,14 +9,14 @@ jobs:
   check-npm-version:
     permissions:
       contents: read
-    uses: alextheman231/github-actions/.github/workflows/report-npm-version-existence.yml@6303ccc55913d70a641b50c97dc36475c5053c99 # v14.4.0
+    uses: alextheman231/github-actions/.github/workflows/report-npm-version-existence.yml@7898ab5454a48b6f36571d438a73bbd65673f244 # v14.8.1
     with:
       node-version: 26
 
   check-version-tag:
     permissions:
       contents: read
-    uses: alextheman231/github-actions/.github/workflows/report-version-tag-existence.yml@6303ccc55913d70a641b50c97dc36475c5053c99 # v14.4.0
+    uses: alextheman231/github-actions/.github/workflows/report-version-tag-existence.yml@7898ab5454a48b6f36571d438a73bbd65673f244 # v14.8.1
     with:
       CLIENT_ID: ${{ vars.ALEX_UP_BOT_CLIENT_ID }}
       node-version: 26
@@ -26,7 +26,7 @@ jobs:
   check-release-note:
     permissions:
       contents: read
-    uses: alextheman231/github-actions/.github/workflows/report-release-note-existence.yml@6303ccc55913d70a641b50c97dc36475c5053c99 # v14.4.0
+    uses: alextheman231/github-actions/.github/workflows/report-release-note-existence.yml@7898ab5454a48b6f36571d438a73bbd65673f244 # v14.8.1
     with:
       CLIENT_ID: ${{ vars.ALEX_UP_BOT_CLIENT_ID }}
       node-version: 26
@@ -38,7 +38,7 @@ jobs:
     if: ${{ needs.check-npm-version.outputs.version-exists == 'false' && needs.check-version-tag.outputs.tag-exists == 'false' && needs.check-release-note.outputs.release-note-found == 'true' }}
     permissions:
       id-token: write
-    uses: alextheman231/github-actions/.github/workflows/npm-registry-publish.yml@6303ccc55913d70a641b50c97dc36475c5053c99 # v14.4.0
+    uses: alextheman231/github-actions/.github/workflows/npm-registry-publish.yml@7898ab5454a48b6f36571d438a73bbd65673f244 # v14.8.1
     with:
       node-version: 26
 
@@ -47,7 +47,7 @@ jobs:
     permissions:
       contents: write
     if: ${{ needs.check-version-tag.outputs.tag-exists == 'false' && needs.check-release-note.outputs.release-note-found == 'true' }}
-    uses: alextheman231/github-actions/.github/workflows/create-github-release.yml@6303ccc55913d70a641b50c97dc36475c5053c99 # v14.4.0
+    uses: alextheman231/github-actions/.github/workflows/create-github-release.yml@7898ab5454a48b6f36571d438a73bbd65673f244 # v14.8.1
     with:
       CLIENT_ID: ${{ vars.ALEX_UP_BOT_CLIENT_ID }}
       tag: ${{ needs.check-version-tag.outputs.tag }}
