@@ -5,3 +5,5 @@ dist
 .alex-c-line.private.config.js
 alex-c-line-*.tgz
 .alex-c-line
+
+.pdm-python
