@@ -5,6 +5,8 @@ import internalDependencyAudit from "src/cli/commands/internal/dependency-audit"
 import internalGitPostMergeCleanup from "src/cli/commands/internal/git-post-merge-cleanup";
 import internalMedia from "src/cli/commands/internal/media";
 import internalOutdatedDependencies from "src/cli/commands/internal/outdated-dependencies";
+import internalThrowCodeError from "src/cli/commands/internal/throw-code-error";
+import internalThrowProgramError from "src/cli/commands/internal/throw-program-error";
 import loadCommands from "src/utility/miscellaneous/loadCommands";
 
 function internal(program: Command) {
@@ -20,6 +22,8 @@ function internal(program: Command) {
     internalGitPostMergeCleanup,
     internalMedia,
     internalOutdatedDependencies,
+    internalThrowCodeError,
+    internalThrowProgramError,
   });
 }
 
