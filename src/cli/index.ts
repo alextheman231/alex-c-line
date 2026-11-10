@@ -13,8 +13,9 @@ import formatError from "src/utility/errors/formatError";
 import packageInfo from "package.json" with { type: "json" };
 
 (async () => {
+  const program = new Command();
+
   try {
-    const program = new Command();
     program
       .name(packageInfo.name)
       .description(packageInfo.description)
@@ -38,6 +39,6 @@ import packageInfo from "package.json" with { type: "json" };
     createCommands(program);
     await program.parseAsync(process.argv);
   } catch (error) {
-    formatError(error);
+    formatError(error, program);
   }
 })();
