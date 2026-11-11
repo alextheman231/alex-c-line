@@ -1,6 +1,6 @@
 import type { Command } from "commander";
 
-import { az, omitProperties } from "@alextheman/utility";
+import { assertNotUndefined, az, omitProperties } from "@alextheman/utility";
 import { getDependenciesFromGroup, getPackageJsonContents } from "@alextheman/utility/internal";
 import { DataError } from "@alextheman/utility/v6";
 import { execa } from "execa";
@@ -13,7 +13,7 @@ import loadAlexCLineProjectCache from "src/cache/project/loadAlexCLineProjectCac
 import { PrivateConfigFileName } from "src/configs/types/ConfigFileName";
 import findAlexCLineConfig from "src/utility/configs/findAlexCLineConfig";
 import loadAlexCLinePrivateConfig from "src/utility/configs/loadAlexCLinePrivateConfig";
-import ERROR_PREFIX from "src/utility/constants/ERROR_PREFIX";
+import ProgramError from "src/utility/errors/ProgramError";
 import findTgzFile from "src/utility/fileSystem/findTgzFile";
 import removeAllTarballs from "src/utility/miscellaneous/removeAllTarballs";
 
@@ -124,10 +124,12 @@ function localPackageUse(program: Command) {
         );
 
         if (exitCode !== 0) {
-          program.error(`${ERROR_PREFIX} An error occurred during the local \`alex-c-line\` run.`, {
+          assertNotUndefined(exitCode);
+          throw new ProgramError(
             exitCode,
-            code: "LOCAL_ALEX_C_LINE_ERROR",
-          });
+            "LOCAL_ALEX_C_LINE_ERROR",
+            "An error occurred during the local `alex-c-line` run.",
+          );
         }
       } else {
         const cacheContents = enableCache ? await loadAlexCLineProjectCache() : {};

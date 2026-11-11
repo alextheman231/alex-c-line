@@ -1,7 +1,6 @@
 import type { DataError } from "@alextheman/utility/v6";
-import type { Command } from "commander";
 
-import ERROR_PREFIX from "src/utility/constants/ERROR_PREFIX";
+import ProgramError from "src/utility/errors/ProgramError";
 
 export interface ConvertDataErrorToProgramErrorOptions {
   exitCode?: number;
@@ -9,13 +8,9 @@ export interface ConvertDataErrorToProgramErrorOptions {
 
 function convertDataErrorToProgramError(
   dataError: DataError,
-  program: Command,
   options?: ConvertDataErrorToProgramErrorOptions,
 ) {
-  program.error(`${ERROR_PREFIX} ${dataError.message}`, {
-    exitCode: options?.exitCode ?? 1,
-    code: dataError.code,
-  });
+  throw new ProgramError(options?.exitCode ?? 1, dataError.code, dataError.message);
 }
 
 export default convertDataErrorToProgramError;

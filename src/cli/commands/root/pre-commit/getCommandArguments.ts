@@ -1,18 +1,16 @@
-import type { Command } from "commander";
-
-import ERROR_PREFIX from "src/utility/constants/ERROR_PREFIX";
+import ProgramError from "src/utility/errors/ProgramError";
 
 function getCommandArguments(
-  program: Command,
   script: string,
   scripts?: Record<string, string>,
   args?: Array<string>,
 ): Array<string> {
   if (!(script in (scripts ?? {}))) {
-    program.error(`${ERROR_PREFIX} Could not find script \`${script}\` in package.json.`, {
-      exitCode: 1,
-      code: "SCRIPT_NOT_FOUND",
-    });
+    throw new ProgramError(
+      1,
+      "SCRIPT_NOT_FOUND",
+      `Could not find script \`${script}\` in package.json.`,
+    );
   }
   const result = script === "test" ? [script] : ["run", script];
 

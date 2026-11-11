@@ -5,8 +5,8 @@ import { execa, ExecaError } from "execa";
 import { stat } from "node:fs/promises";
 import path from "node:path";
 
-import ERROR_PREFIX from "src/utility/constants/ERROR_PREFIX";
 import WARNING_PREFIX from "src/utility/constants/WARNING_PREFIX";
+import ProgramError from "src/utility/errors/ProgramError";
 import readdirSafe from "src/utility/fileSystem/readdirSafe";
 
 function internalMediaGenerate(program: Command) {
@@ -44,12 +44,10 @@ function internalMediaGenerate(program: Command) {
           return await runManimCommand`manim -qh ${file}`;
         } catch (error) {
           if (error instanceof ExecaError) {
-            program.error(
-              `${ERROR_PREFIX} An error has occurred with Manim while rendering ${relativePath}.`,
-              {
-                exitCode: error.exitCode ?? 1,
-                code: "MANIM_ERROR",
-              },
+            throw new ProgramError(
+              error.exitCode ?? 1,
+              "MANIM_ERROR",
+              `An error has occurred with Manim while rendering ${relativePath}.`,
             );
           } else {
             throw error;

@@ -13,7 +13,7 @@ import createStepRunner from "src/cli/commands/root/pre-commit/createStepRunner"
 import getCommandArguments from "src/cli/commands/root/pre-commit/getCommandArguments";
 import findAlexCLineConfig from "src/utility/configs/findAlexCLineConfig";
 import loadAlexCLineConfig from "src/utility/configs/loadAlexCLineConfig";
-import ERROR_PREFIX from "src/utility/constants/ERROR_PREFIX";
+import ProgramError from "src/utility/errors/ProgramError";
 
 function preCommit(program: Command) {
   program
@@ -51,11 +51,7 @@ function preCommit(program: Command) {
 
       switch (diffExitCode) {
         case 128:
-          program.error(`${ERROR_PREFIX} Not currently in a Git repository`, {
-            exitCode: 1,
-            code: "GIT_DIFF_FAILED",
-          });
-        // eslint-disable-next-line no-fallthrough -- program.error() will throw an error and stop the program, so it is redundant to include a break here.
+          throw new ProgramError(1, "GIT_DIFF_FAILED", "Not currently in a Git repository");
         case 0:
           if (allowNoStagedChanges ?? preCommitConfig.allowNoStagedChanges) {
             break;
@@ -84,19 +80,16 @@ function preCommit(program: Command) {
           ),
         );
 
-      const stepRunner = createStepRunner(program);
+      const stepRunner = createStepRunner();
 
       for (const step of preCommitConfig.steps) {
         if (typeof step === "function") {
           await step(stepRunner);
         } else if (typeof step === "string") {
-          await stepRunner(packageManager, getCommandArguments(program, step, scripts));
+          await stepRunner(packageManager, getCommandArguments(step, scripts));
         } else {
           const [script, options] = step;
-          await stepRunner(
-            packageManager,
-            getCommandArguments(program, script, scripts, options.arguments),
-          );
+          await stepRunner(packageManager, getCommandArguments(script, scripts, options.arguments));
         }
       }
 

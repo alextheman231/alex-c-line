@@ -3,7 +3,6 @@ import type { Command } from "commander";
 import type { BudgetInputs } from "src/services/budget/BudgetInputs";
 
 import { az } from "@alextheman/utility";
-import { DataError } from "@alextheman/utility/v6";
 import z from "zod";
 
 import path from "node:path";
@@ -11,6 +10,7 @@ import path from "node:path";
 import createBudgetCsv from "src/services/budget/createBudgetCsv";
 import loadExpenses from "src/services/budget/loadExpenses";
 import logBudget from "src/services/budget/logBudget";
+import UserError from "src/utility/errors/UserError";
 
 function budgetCalculate(program: Command) {
   program
@@ -23,27 +23,24 @@ function budgetCalculate(program: Command) {
       "An additional expense to include.",
       (expense, previous: Record<string, number>) => {
         if (!expense.includes("=")) {
-          program.error("Expenses must be provided in the format `name=value`.", {
-            exitCode: 2,
-            code: "INVALID_FORMAT",
-          });
+          throw new UserError(
+            "INVALID_FORMAT",
+            "Expenses must be provided in the format `name=value`.",
+          );
         }
 
         const parts = expense.split("=");
         if (parts.length !== 2) {
-          program.error("There must not be more than one `=` in an expense argument.", {
-            exitCode: 2,
-            code: "INVALID_FORMAT",
-          });
+          throw new UserError(
+            "INVALID_FORMAT",
+            "There must not be more than one `=` in an expense argument.",
+          );
         }
 
         const [name, value] = parts;
 
         if (name === "") {
-          program.error("The expense name must not be empty.", {
-            exitCode: 2,
-            code: "INVALID_INPUT",
-          });
+          throw new UserError("INVALID_INPUT", "The expense name must not be empty.");
         }
 
         const newExpenses: Record<string, number> = {
@@ -70,11 +67,7 @@ function budgetCalculate(program: Command) {
       "The file path to output the results to. Must be a CSV file for now.",
       (rawValue) => {
         if (path.extname(rawValue) !== ".csv") {
-          throw new DataError(
-            { filename: rawValue },
-            "NOT_A_CSV",
-            "The output path must be a CSV file.",
-          );
+          throw new UserError("NOT_A_CSV", "The output path must be a CSV file.");
         }
 
         return rawValue;
@@ -82,10 +75,7 @@ function budgetCalculate(program: Command) {
     )
     .action(async ({ salary, balanceForward, expense: additionalExpenses, output }) => {
       if (salary === undefined) {
-        program.error("Salary must be provided", {
-          exitCode: 2,
-          code: "SALARY_NOT_FOUND",
-        });
+        throw new UserError("SALARY_NOT_FOUND", "Salary must be provided");
       }
 
       const constantExpenses = (await loadExpenses()) ?? {};

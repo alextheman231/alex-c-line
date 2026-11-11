@@ -1,6 +1,4 @@
-import type { Command } from "commander";
-
-import { az, escapeHTML, normaliseIndents, sortBy } from "@alextheman/utility";
+import { assertNotUndefined, az, escapeHTML, normaliseIndents, sortBy } from "@alextheman/utility";
 import { execa } from "execa";
 import z from "zod";
 
@@ -8,6 +6,7 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 
 import ALEX_C_LINE_PACKAGE_ROOT from "src/utility/constants/ALEX_C_LINE_PACKAGE_ROOT";
+import ProgramError from "src/utility/errors/ProgramError";
 import isValidLicense from "src/utility/licenses/isValidLicense";
 
 // TODO: Allow this to be configurable by alex-c-line.config.js
@@ -39,13 +38,11 @@ function parseLicenseCheck(input: unknown): LicenseCheck {
   return az.with(pnpmLicensesSchema).parse(input);
 }
 
-async function getLicenseCheck(program: Command): Promise<string> {
+async function getLicenseCheck(): Promise<string> {
   const { exitCode, stdout, stderr } = await execa({ reject: false })`pnpm licenses ls --json`;
   if (!([0, 1] as Array<number | undefined>).includes(exitCode)) {
-    program.error(stderr ?? stdout, {
-      exitCode,
-      code: "LICENSE_CHECK_ERROR",
-    });
+    assertNotUndefined(exitCode);
+    throw new ProgramError(exitCode, "LICENSE_CHECK_ERROR", stderr ?? stdout);
   }
 
   const licenseCheck = parseLicenseCheck(JSON.parse(stdout.trim()));

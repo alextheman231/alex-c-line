@@ -1,13 +1,11 @@
-import type { Command } from "commander";
-
 import { az } from "@alextheman/utility";
 import { parse as parseToml } from "toml";
 import z from "zod";
 
 import { readFile } from "node:fs/promises";
 
-import ERROR_PREFIX from "src/utility/constants/ERROR_PREFIX";
 import SUCCESS_PREFIX from "src/utility/constants/SUCCESS_PREFIX";
+import UserError from "src/utility/errors/UserError";
 
 const pyprojectSchema = z
   .object({
@@ -20,7 +18,7 @@ const pyprojectSchema = z
   })
   .partial();
 
-async function preferExactDependencyVersions(program: Command) {
+async function preferExactDependencyVersions() {
   const data = az.with(pyprojectSchema).parse(parseToml(await readFile("pyproject.toml", "utf-8")));
 
   const sections = [data.project?.dependencies ?? [], data["dependency-groups"]?.dev ?? []];
@@ -36,10 +34,10 @@ async function preferExactDependencyVersions(program: Command) {
   }
 
   if (violations.length !== 0) {
-    program.error(`${ERROR_PREFIX} Non-exact dependencies found:\n\n${violations.join("\n")}`, {
-      code: "NON_EXACT_DEPENDENCIES_FOUND",
-      exitCode: 2,
-    });
+    throw new UserError(
+      "NON_EXACT_DEPENDENCIES_FOUND",
+      `Non-exact dependencies found:\n\n${violations.join("\n")}`,
+    );
   }
 
   console.info(`${SUCCESS_PREFIX} All dependencies are exactly pinned`);

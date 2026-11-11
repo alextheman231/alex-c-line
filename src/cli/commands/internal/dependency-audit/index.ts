@@ -17,10 +17,10 @@ function internalDependencyAudit(program: Command) {
     .description("Run an audit of the PNPM dependencies")
     .option("-o, --output <path>", "Save the output to markdown file.")
     .action(async ({ output }) => {
-      const securityAudit = await getSecurityAudit(program);
-      const peerCheckResult = await getPeerCheck(program);
-      const outdatedDependencies = await getOutdatedDependencies(program);
-      const licenseCheck = await getLicenseCheck(program);
+      const securityAudit = await getSecurityAudit();
+      const peerCheckResult = await getPeerCheck();
+      const outdatedDependencies = await getOutdatedDependencies();
+      const licenseCheck = await getLicenseCheck();
 
       const content = normaliseIndents`
         # JavaScript Dependency Audit

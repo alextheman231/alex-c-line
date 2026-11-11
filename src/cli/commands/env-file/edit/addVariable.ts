@@ -1,14 +1,12 @@
-import type { Command } from "commander";
 import type { DotenvParseOutput } from "dotenv";
 
 import { normaliseIndents } from "@alextheman/utility";
 import { input, password } from "@inquirer/prompts";
 
-import ERROR_PREFIX from "src/utility/constants/ERROR_PREFIX";
 import upsertDotenvFile from "src/utility/envFile/upsertDotenvFile";
+import UserError from "src/utility/errors/UserError";
 
 async function addVariable<EnvContents extends DotenvParseOutput>(
-  program: Command,
   envFileContents: EnvContents,
   file: string,
 ) {
@@ -17,28 +15,22 @@ async function addVariable<EnvContents extends DotenvParseOutput>(
   });
 
   if (newVariableName in envFileContents) {
-    program.error(
-      `
-            ${ERROR_PREFIX} Error with chosen environment variable name ${newVariableName}.
-            Variable name already exists. If you wish to edit this variable, please select it from the initial menu instead.
-            `,
-      {
-        exitCode: 2,
-        code: "DUPLICATE_ENVIRONMENT_VARIABLE_NAME",
-      },
+    throw new UserError(
+      "DUPLICATE_ENVIRONMENT_VARIABLE_NAME",
+      normaliseIndents`
+        Error with chosen environment variable name ${newVariableName}.
+        Variable name already exists. If you wish to edit this variable, please select it from the initial menu instead.
+      `,
     );
   }
 
   if (/[ \t\r\n]/.test(newVariableName)) {
-    program.error(
+    throw new UserError(
+      "INVALID_VARIABLE_NAME",
       normaliseIndents`
-            ${ERROR_PREFIX} Error with chosen environment variable name ${newVariableName}.
-            Environment variables are not allowed to have whitespace.
-            `,
-      {
-        exitCode: 2,
-        code: "INVALID_VARIABLE_NAME",
-      },
+        Error with chosen environment variable name ${newVariableName}.
+        Environment variables are not allowed to have whitespace.
+      `,
     );
   }
 

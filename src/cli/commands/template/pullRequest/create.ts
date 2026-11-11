@@ -12,6 +12,7 @@ import { PullRequestTemplateCategory } from "src/configs";
 import { parseTemplatePullRequestConfig } from "src/configs/helpers/template/pullRequest/defineTemplatePullRequestSchema";
 import findAlexCLineConfig from "src/utility/configs/findAlexCLineConfig";
 import loadAlexCLineConfig from "src/utility/configs/loadAlexCLineConfig";
+import ProgramError from "src/utility/errors/ProgramError";
 import createPullRequestTemplatesFromTemplates from "src/utility/markdownTemplates/pullRequest/createPullRequestTemplatesFromTemplates";
 
 function templatePullRequestCreate(program: Command) {
@@ -22,7 +23,9 @@ function templatePullRequestCreate(program: Command) {
       "The category of pull request templates to get (can be either `general` or `infrastructure`)",
       (rawValue) => {
         return az.with(z.enum(PullRequestTemplateCategory)).parse(rawValue, () => {
-          program.error(
+          throw new ProgramError(
+            1,
+            "INVALID_TEMPLATE",
             `Invalid template category ${rawValue}. The category must be one of \`general\` or \`infrastructure\``,
           );
         });

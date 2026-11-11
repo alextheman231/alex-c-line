@@ -1,6 +1,4 @@
-import type { Command } from "commander";
-
-import { az, escapeHTML } from "@alextheman/utility";
+import { assertNotUndefined, az, escapeHTML } from "@alextheman/utility";
 import { execa } from "execa";
 import z from "zod";
 
@@ -9,6 +7,7 @@ import path from "node:path";
 
 import { DependencyGroup } from "src/configs";
 import ALEX_C_LINE_PACKAGE_ROOT from "src/utility/constants/ALEX_C_LINE_PACKAGE_ROOT";
+import ProgramError from "src/utility/errors/ProgramError";
 
 const pnpmOutdatedSchema = z.record(
   z.string(),
@@ -24,13 +23,11 @@ function parseOutdated(input: unknown): OutdatedDependencies {
   return az.with(pnpmOutdatedSchema).parse(input);
 }
 
-async function getOutdatedDependencies(program: Command): Promise<string> {
+async function getOutdatedDependencies(): Promise<string> {
   const { exitCode, stdout, stderr } = await execa({ reject: false })`pnpm outdated --json`;
   if (!([0, 1] as Array<number | undefined>).includes(exitCode)) {
-    program.error(stderr ?? stdout, {
-      exitCode,
-      code: "OUTDATED_DEPENDENCIES_ERROR",
-    });
+    assertNotUndefined(exitCode);
+    throw new ProgramError(exitCode, "OUTDATED_DEPENDENCIES_ERROR", stderr ?? stdout);
   }
 
   const outdatedDependencies = parseOutdated(JSON.parse(stdout.trim()));

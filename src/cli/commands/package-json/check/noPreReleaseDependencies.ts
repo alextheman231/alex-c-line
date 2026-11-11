@@ -1,5 +1,3 @@
-import type { Command } from "commander";
-
 import { normaliseIndents } from "@alextheman/utility";
 import {
   getDependenciesFromGroup,
@@ -8,8 +6,8 @@ import {
 } from "@alextheman/utility/internal";
 import { minVersion, prerelease } from "semver";
 
-import ERROR_PREFIX from "src/utility/constants/ERROR_PREFIX";
 import SUCCESS_PREFIX from "src/utility/constants/SUCCESS_PREFIX";
+import UserError from "src/utility/errors/UserError";
 import stringifyJSON from "src/utility/miscellaneous/stringifyJSON";
 
 function isPreRelease(dependencyVersionRange: string) {
@@ -17,7 +15,7 @@ function isPreRelease(dependencyVersionRange: string) {
   return minimumFromRange !== null && prerelease(minimumFromRange) !== null;
 }
 
-async function noPreReleaseDependencies(program: Command): Promise<void> {
+async function noPreReleaseDependencies(): Promise<void> {
   const packageJson = await getPackageJsonContents(process.cwd());
 
   if (packageJson === null) {
@@ -45,16 +43,16 @@ async function noPreReleaseDependencies(program: Command): Promise<void> {
     Object.keys(preReleaseDependencies).length !== 0 ||
     Object.keys(preReleaseDevDependencies).length !== 0
   ) {
-    program.error(
+    throw new UserError(
+      "UNEXPECTED_PRE_RELEASE_VERSION",
       normaliseIndents`
-            ${ERROR_PREFIX} Pre-release version pinning is not allowed. Found the following violations:
+        Pre-release version pinning is not allowed. Found the following violations:
 
-        ` +
+    ` +
         stringifyJSON({
           dependencies: preReleaseDependencies,
           devDependencies: preReleaseDevDependencies,
         }),
-      { exitCode: 2, code: "UNEXPECTED_PRE_RELEASE_VERSION" },
     );
   }
 
