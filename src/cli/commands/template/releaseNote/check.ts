@@ -11,6 +11,7 @@ import path from "node:path";
 
 import SUCCESS_PREFIX from "src/utility/constants/SUCCESS_PREFIX";
 import convertDataErrorToProgramError from "src/utility/errors/convertDataErrorToProgramError";
+import ProgramError from "src/utility/errors/ProgramError";
 import parseReleaseStatus from "src/utility/markdownTemplates/releaseNote/parseReleaseStatus";
 import validateReleaseDocument from "src/utility/markdownTemplates/releaseNote/validateReleaseDocument";
 
@@ -32,7 +33,7 @@ function templateReleaseNoteCheck(program: Command) {
       const { name } = az
         .with(z.object({ name: z.string() }))
         .parse(await getPackageJsonContents(process.cwd()), () => {
-          program.error("Your package.json is invalid");
+          throw new ProgramError(1, "INVALID_PACKAGE_JSON", "Your package.json is invalid");
         });
 
       const documentVersion = new VersionNumber(
@@ -49,7 +50,7 @@ function templateReleaseNoteCheck(program: Command) {
         console.info(`${SUCCESS_PREFIX} Release document is valid!`);
       } catch (error) {
         if (DataError.check(error)) {
-          convertDataErrorToProgramError(error, program, { exitCode: 2 });
+          convertDataErrorToProgramError(error, { exitCode: 2 });
         } else {
           throw error;
         }

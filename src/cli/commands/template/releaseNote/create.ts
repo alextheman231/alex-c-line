@@ -8,7 +8,7 @@ import z from "zod";
 import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 
-import ERROR_PREFIX from "src/utility/constants/ERROR_PREFIX";
+import ProgramError from "src/utility/errors/ProgramError";
 import createReleaseNoteFromTemplates from "src/utility/markdownTemplates/releaseNote/createReleaseNoteFromTemplates";
 import getReleaseNotePath from "src/utility/markdownTemplates/releaseNote/getReleaseNotePath";
 import parseReleaseStatus from "src/utility/markdownTemplates/releaseNote/parseReleaseStatus";
@@ -81,10 +81,7 @@ function templateReleaseNoteCreate(program: Command) {
         );
       } catch (error) {
         if (error instanceof Error && "code" in error && error.code === "EEXIST") {
-          program.error(`${ERROR_PREFIX} Release notes already exist.`, {
-            exitCode: 1,
-            code: "RELEASE_NOTE_EXISTS",
-          });
+          throw new ProgramError(1, "RELEASE_NOTE_EXISTS", "Release notes already exist.");
         } else {
           throw error;
         }

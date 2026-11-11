@@ -39,7 +39,6 @@ function versionFormat(program: Command) {
     .option("--no-patch", "Omit the patch version number from the output.")
     .action((version, options) => {
       const { prefix, minor, patch } = parseZodSchemaForProgram(
-        program,
         versionFormatOptionsSchema,
         options.minor === false ? omitProperties(options, "patch") : options,
       );

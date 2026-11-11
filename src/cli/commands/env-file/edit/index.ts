@@ -54,7 +54,7 @@ function envFileEdit(program: Command) {
 
           switch (variableToEdit) {
             case "Add new":
-              await addVariable(program, envFileContents, file);
+              await addVariable(envFileContents, file);
               break;
             case "Exit editor":
               exitInteractiveMode = true;

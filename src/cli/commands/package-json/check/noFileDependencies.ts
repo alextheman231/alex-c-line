@@ -1,9 +1,7 @@
-import type { Command } from "commander";
-
 import { getDependenciesFromGroup, getPackageJsonContents } from "@alextheman/utility/internal";
 
-import ERROR_PREFIX from "src/utility/constants/ERROR_PREFIX";
 import SUCCESS_PREFIX from "src/utility/constants/SUCCESS_PREFIX";
+import UserError from "src/utility/errors/UserError";
 import stringifyJSON from "src/utility/miscellaneous/stringifyJSON";
 
 export interface PackageDependencies {
@@ -26,7 +24,7 @@ function findFileDependencies(
   return fileDependencies;
 }
 
-async function noFileDependencies(program: Command) {
+async function noFileDependencies() {
   console.info("Checking for file dependencies...");
   const packageInfo = await getPackageJsonContents(process.cwd());
 
@@ -46,10 +44,9 @@ async function noFileDependencies(program: Command) {
   }
 
   if (Object.keys(allFileDependencies).length !== 0) {
-    program.error(
-      `${ERROR_PREFIX} File dependencies found:\n\n${stringifyJSON(allFileDependencies)}
-          `,
-      { exitCode: 2, code: "FILE_DEPENDENCIES_FOUND" },
+    throw new UserError(
+      "FILE_DEPENDENCIES_FOUND",
+      `File dependencies found:\n\n${stringifyJSON(allFileDependencies)}`,
     );
   }
   console.info(`${SUCCESS_PREFIX} No file dependencies found!`);

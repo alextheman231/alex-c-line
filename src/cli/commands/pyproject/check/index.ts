@@ -22,7 +22,7 @@ function pyprojectCheck(program: Command) {
     })
     .action(async ({ rules }) => {
       if (rules?.includes("prefer-exact-dependency-versions")) {
-        await preferExactDependencyVersions(program);
+        await preferExactDependencyVersions();
       }
       console.info(`${SUCCESS_PREFIX} Success! All checks passed!`);
     });

@@ -25,10 +25,10 @@ function packageJsonCheck(program: Command) {
     })
     .action(async ({ rules }) => {
       if (rules?.includes("no-pre-release-dependencies")) {
-        await noPreReleaseDependencies(program);
+        await noPreReleaseDependencies();
       }
       if (rules?.includes("no-file-dependencies")) {
-        await noFileDependencies(program);
+        await noFileDependencies();
       }
       console.info(`${SUCCESS_PREFIX} Success! All checks passed!`);
     });

@@ -1,6 +1,4 @@
-import type { Command } from "commander";
-
-import { az, escapeHTML } from "@alextheman/utility";
+import { assertNotUndefined, az, escapeHTML } from "@alextheman/utility";
 import { execa } from "execa";
 import z from "zod";
 
@@ -8,6 +6,7 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 
 import ALEX_C_LINE_PACKAGE_ROOT from "src/utility/constants/ALEX_C_LINE_PACKAGE_ROOT";
+import ProgramError from "src/utility/errors/ProgramError";
 
 const pnpmPeerCheckSchema = z.object({
   ".": z.object({
@@ -34,14 +33,12 @@ function parsePeerCheck(input: unknown): PeerCheck {
   return az.with(pnpmPeerCheckSchema).parse(input);
 }
 
-async function getPeerCheck(program: Command): Promise<string> {
+async function getPeerCheck(): Promise<string> {
   const { stdout, stderr, exitCode } = await execa({ reject: false })`pnpm peers check --json`;
 
   if (!([0, 1] as Array<number | undefined>).includes(exitCode)) {
-    program.error(stderr ?? stdout, {
-      exitCode,
-      code: "PEERS_CHECK_ERROR",
-    });
+    assertNotUndefined(exitCode);
+    throw new ProgramError(exitCode, "PEER_CHECK_ERROR", stderr ?? stdout);
   }
 
   const peerCheck = parsePeerCheck(JSON.parse(stdout));

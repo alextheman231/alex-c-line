@@ -48,6 +48,7 @@ async function checkUpdate(options?: CheckUpdateOptions) {
 
     if (options?.program) {
       const { program } = options;
+      // Manual invocation here rather than ProgramError because otherwise the error prefix would be included.
       program.error(messageWithArtwork, {
         exitCode: 2,
         code: "OUTDATED_VERSION",

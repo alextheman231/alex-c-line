@@ -1,7 +1,6 @@
 import type { ObjectValue } from "@alextheman/utility";
-import type { Command } from "commander";
 
-import { az, escapeHTML, normaliseIndents, sortBy } from "@alextheman/utility";
+import { assertNotUndefined, az, escapeHTML, normaliseIndents, sortBy } from "@alextheman/utility";
 import { execa } from "execa";
 import z from "zod";
 
@@ -9,6 +8,7 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 
 import ALEX_C_LINE_PACKAGE_ROOT from "src/utility/constants/ALEX_C_LINE_PACKAGE_ROOT";
+import ProgramError from "src/utility/errors/ProgramError";
 
 const AuditSeverity = {
   INFO: "info",
@@ -59,14 +59,12 @@ function resolvePatchedVersions(advisory: ObjectValue<SecurityAudit["advisories"
   return advisory.patched_versions;
 }
 
-async function getSecurityAudit(program: Command): Promise<string> {
+async function getSecurityAudit(): Promise<string> {
   const { stdout, stderr, exitCode } = await execa({ reject: false })`pnpm audit --json`;
 
   if (!([0, 1] as Array<number | undefined>).includes(exitCode)) {
-    program.error(stderr ?? stdout, {
-      exitCode,
-      code: "SECURITY_AUDIT_ERROR",
-    });
+    assertNotUndefined(exitCode);
+    throw new ProgramError(exitCode, "SECURITY_AUDIT_ERROR", stderr ?? stdout);
   }
 
   const securityAudit = parseSecurityAudit(JSON.parse(stdout));

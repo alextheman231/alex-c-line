@@ -2,7 +2,7 @@ import type { Command } from "commander";
 
 import { execa } from "execa";
 
-import ERROR_PREFIX from "src/utility/constants/ERROR_PREFIX";
+import ProgramError from "src/utility/errors/ProgramError";
 
 function internalGitPostMergeCleanup(program: Command) {
   program
@@ -16,10 +16,7 @@ function internalGitPostMergeCleanup(program: Command) {
 
       const { stdout: currentBranch } = await execa`git branch --show-current`;
       if (currentBranch === branch) {
-        program.error(`${ERROR_PREFIX} Cannot run cleanup on ${branch} branch!`, {
-          exitCode: 1,
-          code: "INVALID_BRANCH",
-        });
+        throw new ProgramError(1, "INVALID_BRANCH", `Cannot run cleanup on ${branch} branch!`);
       }
       const runCommandAndLogToConsole = execa({
         stdio: "inherit",
@@ -36,10 +33,7 @@ function internalGitPostMergeCleanup(program: Command) {
         const { stdout: changes } = await execa`git diff ${branch}..${currentBranch}`;
         if (changes) {
           await execa`git checkout ${currentBranch}`;
-          program.error(`${ERROR_PREFIX} Changes on branch not fully merged!`, {
-            exitCode: 1,
-            code: "CHANGES_NOT_MERGED",
-          });
+          throw new ProgramError(1, "CHANGES_NOT_MERGED", "Changes on branch not fully merged!");
         }
         await runCommandAndLogToConsole`git branch -D ${currentBranch}`;
       } else {
@@ -51,10 +45,7 @@ function internalGitPostMergeCleanup(program: Command) {
 
         if (exitCode !== 0) {
           await execa`git checkout ${currentBranch}`;
-          program.error(`${ERROR_PREFIX} Changes on branch not fully merged!`, {
-            exitCode: 1,
-            code: "CHANGES_NOT_MERGED",
-          });
+          throw new ProgramError(1, "CHANGES_NOT_MERGED", "Changes on branch not fully merged!");
         }
 
         console.info(branchDeletedMessage);

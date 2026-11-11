@@ -1,20 +1,20 @@
 import type { Command } from "commander";
 
+import { assertNotUndefined } from "@alextheman/utility";
 import { execa } from "execa";
 
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 
 import ALEX_C_LINE_PACKAGE_ROOT from "src/utility/constants/ALEX_C_LINE_PACKAGE_ROOT";
+import ProgramError from "src/utility/errors/ProgramError";
 
 function internalOutdatedDependencies(program: Command) {
   program.command("outdated-dependencies").action(async () => {
     const { exitCode, stdout, stderr } = await execa({ reject: false })`pnpm outdated --json`;
     if (!([0, 1] as Array<number | undefined>).includes(exitCode)) {
-      program.error(stderr ?? stdout, {
-        exitCode,
-        code: "PNPM_OUDATED_ERROR",
-      });
+      assertNotUndefined(exitCode);
+      throw new ProgramError(exitCode, "PNPM_OUTDATED_ERROR", stderr ?? stdout);
     }
 
     const outdatedDependencies: Record<string, Record<string, string>> = JSON.parse(stdout.trim());
