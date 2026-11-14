@@ -12,8 +12,8 @@ import ProgramError from "src/utility/errors/ProgramError";
 const pnpmOutdatedSchema = z.record(
   z.string(),
   z.object({
-    current: az.versionNumber(),
-    latest: az.versionNumber(),
+    current: z.string(),
+    latest: z.string(),
     isDeprecated: z.boolean(),
     dependencyType: z.enum(DependencyGroup),
   }),
@@ -55,8 +55,8 @@ async function getOutdatedDependencies(): Promise<string> {
       .map(([packageName, data]) => {
         return tableRowTemplate
           .replace("{{packageName}}", escapeHTML(packageName))
-          .replace("{{currentVersion}}", escapeHTML(data.current.toString()))
-          .replace("{{latestVersion}}", escapeHTML(data.latest.toString()))
+          .replace("{{currentVersion}}", escapeHTML(data.current))
+          .replace("{{latestVersion}}", escapeHTML(data.latest))
           .replace("{{isDeprecated}}", data.isDeprecated ? "Yes" : "No")
           .replace("{{dependencyGroup}}", escapeHTML(data.dependencyType));
       })
