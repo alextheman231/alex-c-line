@@ -40,23 +40,15 @@
     "create-release": "bash -c 'git pull origin main && pnpm run command template release-note create $@ --status \"Released\" --update-version' --",
     "create-release-note": "bash -c 'git pull origin main && pnpm run command template release-note create $@' --",
     "dev": "tsx src/cli/index.ts",
-    "format": "pnpm run format-prettier && pnpm run format-eslint && pnpm run format-markdownlint",
+    "format": "pnpm run format-oxfmt && pnpm run format-eslint && pnpm run format-markdownlint",
     "format-eslint": "eslint --fix --suppress-all \"package.json\" \"{src,tests}/**/*.ts\" && rm -f eslint-suppressions.json",
     "format-markdownlint": "pnpm exec markdownlint-cli2 --fix \"**/*.md\" \"!{node_modules,dist}/**\" | grep -v \"^Finding:\"",
-    "format-prettier": "pnpm run format-prettier-typescript && pnpm run format-prettier-javascript && pnpm run format-prettier-yml && pnpm run format-prettier-html",
-    "format-prettier-html": "prettier --write \"**/*.html\"",
-    "format-prettier-javascript": "prettier --write \"./**/*.js\"",
-    "format-prettier-typescript": "prettier --write --parser typescript \"./**/*.ts\"",
-    "format-prettier-yml": "prettier --write \"./**/*.{yml,yaml}\"",
-    "lint": "pnpm run lint-tsc && pnpm run lint-eslint && pnpm run lint-markdownlint && pnpm run lint-prettier && pnpm run lint-pre-release",
+    "format-oxfmt": "oxfmt \"./**/*.{ts,js,yml,yaml,html}\"",
+    "lint": "pnpm run lint-tsc && pnpm run lint-eslint && pnpm run lint-markdownlint && pnpm run lint-oxfmt && pnpm run lint-pre-release",
     "lint-eslint": "eslint \"package.json\" \"{src,tests}/**/*.ts\"",
     "lint-markdownlint": "bash -o pipefail -c 'pnpm exec markdownlint-cli2 \"**/*.md\" \"!{node_modules,dist}/**\"| grep -v \"^Finding:\"'",
+    "lint-oxfmt": "oxfmt --check \"./**/*.{ts,js,yml,yaml,html}\"",
     "lint-pre-release": "node dist/index.js package-json check --rules no-pre-release-dependencies",
-    "lint-prettier": "pnpm run lint-prettier-typescript && pnpm run lint-prettier-javascript && pnpm run lint-prettier-yml && pnpm run lint-prettier-html",
-    "lint-prettier-html": "prettier --check \"**/*.html\"",
-    "lint-prettier-javascript": "prettier --check \"./**/*.js\"",
-    "lint-prettier-typescript": "prettier --check --parser typescript \"./**/*.ts\"",
-    "lint-prettier-yml": "prettier --check \"./**/*.{yml,yaml}\"",
     "lint-tsc": "tsc --noEmit",
     "pre-commit": "pnpm run command pre-commit",
     "prepare": "husky",
@@ -93,7 +85,7 @@
     "zod": "4.6.7"
   },
   "devDependencies": {
-    "@alextheman/eslint-plugin": "5.18.8",
+    "@alextheman/eslint-plugin": "5.18.9",
     "@commander-js/extra-typings": "15.1.0",
     "@faker-js/faker": "10.6.0",
     "@types/eslint": "9.6.1",
@@ -105,7 +97,7 @@
     "eslint": "10.14.0",
     "husky": "9.1.7",
     "markdownlint-cli2": "0.24.0",
-    "prettier": "3.9.10",
+    "oxfmt": "0.78.0",
     "tempy": "3.2.0",
     "ts-node": "10.9.2",
     "tsdown": "0.23.7",
@@ -120,4 +112,3 @@
     "node": ">=22.3.0"
   }
 }
-

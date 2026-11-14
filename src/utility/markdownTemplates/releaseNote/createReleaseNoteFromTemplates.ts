@@ -27,7 +27,8 @@ interface ReleaseNoteDataEditableSection extends ReleaseNoteDataBase {
 }
 
 export type ReleaseNoteData =
-  ReleaseNoteDataEditableSection | ReleaseNoteDataSpecificEditableSections;
+  | ReleaseNoteDataEditableSection
+  | ReleaseNoteDataSpecificEditableSections;
 
 async function getTemplateVariables(
   projectName: string,
