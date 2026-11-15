@@ -35,7 +35,11 @@ jobs:
   pyproject-ci:
     permissions:
       contents: read
-    uses: alextheman231/github-actions/.github/workflows/pyproject-ci.yml@7898ab5454a48b6f36571d438a73bbd65673f244 # v14.8.1
+    uses: alextheman231/github-actions/.github/workflows/pyproject-ci.yml@3afc74f099e74b1beb17ab72d17af1f20e47e0ca # v14.9.0
+    with:
+      CLIENT_ID: ${{ vars.ALEX_UP_BOT_CLIENT_ID }}
+    secrets:
+      APP_PRIVATE_KEY: ${{ secrets.ALEX_UP_BOT_PRIVATE_KEY }}
 
   end-to-end-legacy:
     uses: alextheman231/github-actions/.github/workflows/end-to-end-node-package-ci.yml@7898ab5454a48b6f36571d438a73bbd65673f244 # v14.8.1
