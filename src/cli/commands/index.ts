@@ -7,6 +7,7 @@ import config from "src/cli/commands/config";
 import envFile from "src/cli/commands/env-file";
 import internal from "src/cli/commands/internal";
 import localPackage from "src/cli/commands/local-package";
+import packageJson from "src/cli/commands/package-json";
 import pyproject from "src/cli/commands/pyproject";
 import root from "src/cli/commands/root";
 import template from "src/cli/commands/template";
@@ -14,8 +15,6 @@ import update from "src/cli/commands/update";
 import uuid from "src/cli/commands/uuid";
 import version from "src/cli/commands/version";
 import loadCommands from "src/utility/miscellaneous/loadCommands";
-
-import packageJson from "src/cli/commands/package-json";
 
 function createCommands(program: Command) {
   loadCommands(program, {
