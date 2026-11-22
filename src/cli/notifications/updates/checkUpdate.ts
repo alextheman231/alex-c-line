@@ -1,14 +1,14 @@
 import type { Command } from "commander";
 
 import { normaliseIndents, VersionNumber } from "@alextheman/utility";
+import { getPackageJsonContents } from "@alextheman/utility/internal";
 import axios from "axios";
 import chalk from "chalk";
 import supportsColor from "supports-color";
 
+import ALEX_C_LINE_PACKAGE_ROOT from "src/utility/constants/ALEX_C_LINE_PACKAGE_ROOT";
 import centerLine from "src/utility/miscellaneous/centerLine";
 import createAlexCLineArtwork from "src/utility/miscellaneous/createAlexCLineArtwork";
-
-import { version } from "package.json" with { type: "json" };
 
 export interface CheckUpdateOptions {
   program?: Command;
@@ -17,6 +17,9 @@ export interface CheckUpdateOptions {
 }
 
 async function checkUpdate(options?: CheckUpdateOptions) {
+  const packageInfo = await getPackageJsonContents(await ALEX_C_LINE_PACKAGE_ROOT);
+  const { version } = packageInfo;
+
   const currentVersion = new VersionNumber(version);
   const { data } = await axios.get("https://registry.npmjs.org/alex-c-line/latest", {
     timeout: 5000,

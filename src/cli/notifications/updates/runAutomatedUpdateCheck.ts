@@ -1,14 +1,17 @@
 import { ONE_DAY_IN_MILLISECONDS } from "@alextheman/utility";
+import { getPackageJsonContents } from "@alextheman/utility/internal";
 
 import createAlexCLineGlobalCache from "src/cache/global/createAlexCLineGlobalCache";
 import loadAlexCLineGlobalCache from "src/cache/global/loadAlexCLineGlobalCache";
 import checkUpdate from "src/cli/notifications/updates/checkUpdate";
 import { setPendingUpdateMessage } from "src/cli/notifications/updates/pendingUpdateMessage";
-
-import { version } from "package.json" with { type: "json" };
+import ALEX_C_LINE_PACKAGE_ROOT from "src/utility/constants/ALEX_C_LINE_PACKAGE_ROOT";
 
 async function runAutomatedUpdateCheck() {
   try {
+    const packageInfo = await getPackageJsonContents(await ALEX_C_LINE_PACKAGE_ROOT);
+    const { version } = packageInfo;
+
     const cacheData = await loadAlexCLineGlobalCache();
 
     const lastChecked = cacheData?.updateChecks?.[version]
