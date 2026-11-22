@@ -85,7 +85,7 @@
     "zod": "4.6.7"
   },
   "devDependencies": {
-    "@alextheman/configs": "1.2.2",
+    "@alextheman/configs": "1.3.0",
     "@commander-js/extra-typings": "15.1.0",
     "@faker-js/faker": "10.6.0",
     "@types/eslint": "9.6.1",
@@ -112,4 +112,3 @@
     "node": ">=22.3.0"
   }
 }
-
