@@ -40,7 +40,7 @@ function versionFormat(program: Command) {
     .action((version, options) => {
       const { prefix, minor, patch } = parseZodSchemaForProgram(
         versionFormatOptionsSchema,
-        options.minor === false ? omitProperties(options, "patch") : options,
+        !options.minor ? omitProperties(options, "patch") : options,
       );
       // @ts-expect-error: The discriminated union is accounted for at runtime with the Zod schema.
       console.info(version.format({ omitPrefix: !prefix, omitMinor: !minor, omitPatch: !patch }));

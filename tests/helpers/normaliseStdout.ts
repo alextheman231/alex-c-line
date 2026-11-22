@@ -1,7 +1,7 @@
 import { DataError } from "@alextheman/utility/v6";
 
 function normaliseStdout(
-  stdout: string | Array<string> | Array<unknown> | Uint8Array<ArrayBufferLike> | undefined | null,
+  stdout: string | Array<string> | Array<unknown> | Uint8Array | undefined | null,
 ): string {
   if (stdout === undefined || stdout === null) {
     throw new DataError({ stdout }, "NO_STDOUT", "No stdout returned.");

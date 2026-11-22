@@ -101,7 +101,7 @@ describe("template release-note set-status", () => {
           fileContentsAfterWrite,
           ...getMarkdownCommentPair("alex-c-line-release-status"),
         ),
-      );
+      ).not.toBeNull();
       expect(fileContentsAfterWrite).toContain("**Status**: In progress");
     });
   });

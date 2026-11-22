@@ -12,7 +12,7 @@ import formatError from "src/utility/errors/formatError";
 
 import packageInfo from "package.json" with { type: "json" };
 
-(async () => {
+void (async () => {
   const program = new Command();
 
   try {

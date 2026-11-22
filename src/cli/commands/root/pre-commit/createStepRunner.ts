@@ -47,7 +47,7 @@ function bindStepRunner<ExecaOptions extends Options>(
 ): StepRunner<ExecaOptions> {
   function stepRunner(first: unknown, ...second: Array<unknown>): unknown {
     if (typeof first === "string") {
-      const command = first as string;
+      const command = first;
       const args = (second[0] as ReadonlyArray<string> | undefined) ?? [];
       const client = runCommandAndLogToConsole(boundOptions);
       return evaluateResult(
@@ -66,7 +66,7 @@ function bindStepRunner<ExecaOptions extends Options>(
       return evaluateResult(client(...args), interpolate(...args), boundOptions);
     }
 
-    return bindStepRunner({ ...boundOptions, ...(first as Options) } as ExecaOptions & Options);
+    return bindStepRunner({ ...boundOptions, ...(first as Options) });
   }
 
   return stepRunner as StepRunner<ExecaOptions>;
