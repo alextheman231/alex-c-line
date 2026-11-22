@@ -22,9 +22,9 @@ async function runAutomatedUpdateCheck() {
     ) {
       await checkUpdate({ logNoUpdates: false, updateLogger: setPendingUpdateMessage });
       await createAlexCLineGlobalCache({
-        ...(cacheData ?? {}),
+        ...cacheData,
         updateChecks: {
-          ...(cacheData?.updateChecks ?? {}),
+          ...cacheData?.updateChecks,
           [version]: currentDate.toISOString(),
         },
       });

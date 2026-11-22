@@ -33,9 +33,9 @@ async function maybeSendBirthdayNotification() {
       ) {
         await sendBirthdayNotification(birthdayData.getMessage(age));
         await createAlexCLineGlobalCache({
-          ...(cacheData ?? {}),
+          ...cacheData,
           birthdayChecks: {
-            ...(cacheData?.birthdayChecks ?? {}),
+            ...cacheData?.birthdayChecks,
             [cacheKey]: currentDate.toString(),
           },
         });

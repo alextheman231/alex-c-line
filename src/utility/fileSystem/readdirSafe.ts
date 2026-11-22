@@ -2,7 +2,7 @@ import type { Dirent } from "node:fs";
 
 import { readdir } from "node:fs/promises";
 
-async function readdirSafe(path: string): Promise<Array<Dirent<string>> | undefined> {
+async function readdirSafe(path: string): Promise<Array<Dirent> | undefined> {
   try {
     return await readdir(path, { withFileTypes: true });
   } catch (error) {

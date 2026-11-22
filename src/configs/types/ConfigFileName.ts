@@ -12,6 +12,6 @@ export const PrivateConfigFileName = {
   STANDARD_JAVASCRIPT: ".alex-c-line.private.config.js",
   ES_MODULES_JAVASCRIPT: ".alex-c-line.private.config.mjs",
   COMMON_JS_JAVASCRIPT: ".alex-c-line.private.config.cjs",
-};
+} as const;
 
 export type PrivateConfigFileName = ObjectValue<typeof PrivateConfigFileName>;

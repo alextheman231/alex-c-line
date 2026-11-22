@@ -178,7 +178,7 @@ function localPackageUse(program: Command) {
 
         if (!reverse && enableCache) {
           const packageCacheData = {
-            ...(cacheContents?.useLocalPackage?.dependencies?.[packageName] ?? {}),
+            ...cacheContents?.useLocalPackage?.dependencies?.[packageName],
             previousVersion: dependencies[packageName],
             dependencyGroup,
             currentVersion: getDependenciesFromGroup(
@@ -187,7 +187,7 @@ function localPackageUse(program: Command) {
             )[packageName],
           };
           await createAlexCLineProjectCache({
-            ...(cacheContents ?? {}),
+            ...cacheContents,
             useLocalPackage: {
               ...cacheContents?.useLocalPackage,
               dependencies: {
@@ -198,7 +198,7 @@ function localPackageUse(program: Command) {
           });
         } else if (enableCache) {
           await createAlexCLineProjectCache({
-            ...(cacheContents ?? {}),
+            ...cacheContents,
             useLocalPackage: {
               ...cacheContents?.useLocalPackage,
               dependencies: {

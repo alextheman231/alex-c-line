@@ -1,6 +1,6 @@
 import type { Options, ResultPromise, TemplateExpression } from "execa";
 
-import { isTemplateStringsArray } from "@alextheman/utility";
+import { isNonNullableObject, isTemplateStringsArray } from "@alextheman/utility";
 import { execa } from "execa";
 
 import path from "node:path";
@@ -28,7 +28,12 @@ function resolveTemplateToArgs(
     result.push(...parts);
 
     if (i < interpolations.length) {
-      result.push(String(interpolations[i]));
+      const interpolation = interpolations[i];
+      result.push(
+        isNonNullableObject(interpolation)
+          ? JSON.stringify(interpolation)
+          : interpolation.toString(),
+      );
     }
   }
 
@@ -58,7 +63,7 @@ function bindAlexCLineClient<ExecaOptions extends Options = Options>(
 ): AlexCLineTestClient<ExecaOptions> {
   function client(first: unknown, ...second: Array<unknown>): unknown {
     if (typeof first === "string") {
-      return resolveAsCommandArgs(first as string, (second[0] as Array<string>) ?? [], {
+      return resolveAsCommandArgs(first, (second[0] as Array<string>) ?? [], {
         ...boundOptions,
         ...(second[1] as Options | undefined),
       });
@@ -68,7 +73,7 @@ function bindAlexCLineClient<ExecaOptions extends Options = Options>(
       return resolveAsTemplate(first, second as Array<TemplateExpression>, boundOptions);
     }
 
-    return bindAlexCLineClient({ ...boundOptions, ...(first as Options) } as ExecaOptions);
+    return bindAlexCLineClient({ ...boundOptions, ...(first as Options) });
   }
 
   return client as AlexCLineTestClient<ExecaOptions>;

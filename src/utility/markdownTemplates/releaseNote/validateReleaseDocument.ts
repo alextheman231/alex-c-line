@@ -56,7 +56,7 @@ async function validateReleaseDocument(
         Current: "${releaseStatus}"
         Expected: ${
           allowedReleaseStatuses.length === 1
-            ? `"${allowedReleaseStatus}"`
+            ? `"${allowedReleaseStatuses[0]}"`
             : `one of: ${allowedReleaseStatuses
                 .map((status) => {
                   return `"${status}"`;

@@ -58,9 +58,11 @@ describe.skip.each<Entrypoint>([Entrypoint.ROOT, Entrypoint.CONFIGS, Entrypoint.
   (entrypoint) => {
     describe.each<PackageManager>(["npm", "pnpm"])("Package manager %s", (packageManager) => {
       test(
+        // oxlint-disable vitest/valid-title -- It is a string
         entrypoint === Entrypoint.ROOT
           ? "Can run the command-line from a package.json script"
           : "Can import the configs",
+        // oxlint-enable vitest/valid-title
         async () => {
           await temporaryDirectoryTask(async (temporaryPath) => {
             const runCommandInTempDirectory = await setupPackageEndToEnd(
@@ -79,7 +81,7 @@ describe.skip.each<Entrypoint>([Entrypoint.ROOT, Entrypoint.CONFIGS, Entrypoint.
             }
 
             testPackageInfo.scripts = {
-              ...(testPackageInfo.scripts ?? {}),
+              ...testPackageInfo.scripts,
               artwork: "alex-c-line artwork log",
               "pre-commit": "alex-c-line pre-commit",
             };
