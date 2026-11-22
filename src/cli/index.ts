@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import { getPackageJsonContents } from "@alextheman/utility/internal";
 import { Command } from "commander";
 
 import createCommands from "src/cli/commands";
@@ -8,12 +9,13 @@ import { registerUpdateMessagePrinter } from "src/cli/notifications/updates/pend
 import runAutomatedUpdateCheck from "src/cli/notifications/updates/runAutomatedUpdateCheck";
 import migrate from "src/configs/migrations";
 import loadAlexCLineGlobalConfig from "src/services/configs/loadAlexCLineGlobalConfig";
+import ALEX_C_LINE_PACKAGE_ROOT from "src/utility/constants/ALEX_C_LINE_PACKAGE_ROOT";
 import formatError from "src/utility/errors/formatError";
-
-import packageInfo from "package.json" with { type: "json" };
 
 void (async () => {
   const program = new Command();
+
+  const packageInfo = await getPackageJsonContents(await ALEX_C_LINE_PACKAGE_ROOT);
 
   try {
     program

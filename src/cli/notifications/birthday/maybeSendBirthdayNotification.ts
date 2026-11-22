@@ -1,11 +1,15 @@
+import { getPackageJsonContents } from "@alextheman/utility/internal";
+
 import createAlexCLineGlobalCache from "src/cache/global/createAlexCLineGlobalCache";
 import loadAlexCLineGlobalCache from "src/cache/global/loadAlexCLineGlobalCache";
 import sendBirthdayNotification from "src/cli/notifications/birthday/sendBirthdayNotification";
-
-import { version } from "package.json" with { type: "json" };
+import ALEX_C_LINE_PACKAGE_ROOT from "src/utility/constants/ALEX_C_LINE_PACKAGE_ROOT";
 
 async function maybeSendBirthdayNotification() {
   try {
+    const packageInfo = await getPackageJsonContents(await ALEX_C_LINE_PACKAGE_ROOT);
+    const { version } = packageInfo;
+
     if (typeof Temporal === "undefined") {
       return;
     }
