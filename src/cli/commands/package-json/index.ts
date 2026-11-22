@@ -1,8 +1,7 @@
 import type { Command } from "commander";
 
-import loadCommands from "src/utility/miscellaneous/loadCommands";
-
 import packageJsonCheck from "src/cli/commands/package-json/check";
+import loadCommands from "src/utility/miscellaneous/loadCommands";
 
 function packageJson(program: Command) {
   const packageJsonProgram = program

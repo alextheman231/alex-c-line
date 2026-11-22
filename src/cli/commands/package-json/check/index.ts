@@ -4,10 +4,9 @@ import type { Command } from "commander";
 import { az } from "@alextheman/utility";
 import z from "zod";
 
-import SUCCESS_PREFIX from "src/utility/constants/SUCCESS_PREFIX";
-
 import noFileDependencies from "src/cli/commands/package-json/check/noFileDependencies";
 import noPreReleaseDependencies from "src/cli/commands/package-json/check/noPreReleaseDependencies";
+import SUCCESS_PREFIX from "src/utility/constants/SUCCESS_PREFIX";
 
 const RuleName = {
   NO_FILE_DEPENDENCIES: "no-file-dependencies",
