@@ -8,16 +8,20 @@ import stringifyCsv from "src/utility/miscellaneous/stringifyCsv";
 
 async function createBudgetCsv({ salary, balanceForward, expenses }: BudgetInputs, output: string) {
   const { totalExpenditure, totalSavings } = calculateBudget(
-    salary + balanceForward,
+    salary.add(balanceForward),
     Object.values(expenses),
   );
 
   const csv = await stringifyCsv({
-    Salary: salary,
-    "Balance forward": balanceForward,
-    ...expenses,
-    "Total expenditure": totalExpenditure,
-    "Total savings": totalSavings,
+    Salary: salary.toFixed(2),
+    "Balance forward": balanceForward.toFixed(2),
+    ...Object.fromEntries(
+      Object.entries(expenses).map(([name, value]) => {
+        return [name, value.toFixed(2)];
+      }),
+    ),
+    "Total expenditure": totalExpenditure.toFixed(2),
+    "Total savings": totalSavings.toFixed(2),
   });
 
   await writeFile(path.resolve(output), csv);

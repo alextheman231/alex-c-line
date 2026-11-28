@@ -21,7 +21,7 @@ function budgetExpenseGet(program: Command) {
         console.info(
           Object.entries(expenses)
             .map(([name, value]) => {
-              return `${name}: £${value}`;
+              return `${name}: £${value.toFixed(2)}`;
             })
             .join("\n"),
         );
@@ -30,7 +30,7 @@ function budgetExpenseGet(program: Command) {
 
       if (name in expenses) {
         const value = expenses[name];
-        console.info(`${name}: £${value}`);
+        console.info(`${name}: £${value.toFixed(2)}`);
         return;
       }
 
