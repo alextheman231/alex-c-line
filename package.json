@@ -1,6 +1,6 @@
 {
   "name": "alex-c-line",
-  "version": "2.18.3",
+  "version": "2.18.4",
   "description": "Command-line tool with commands to streamline the developer workflow.",
   "repository": {
     "type": "git",
@@ -113,3 +113,4 @@
     "node": ">=22.3.0"
   }
 }
+
