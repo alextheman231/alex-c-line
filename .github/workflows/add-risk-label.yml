@@ -4,6 +4,10 @@ on:
   pull_request:
     types: [opened, edited]
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   add-risk-label:
     uses: alextheman231/github-actions/.github/workflows/add-risk-label.yml@0b57250b2e91ab1fff3a5b65deae7ea25a19b824 # v14.9.1

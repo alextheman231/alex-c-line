@@ -11,6 +11,10 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   package-ci-legacy:
     uses: alextheman231/github-actions/.github/workflows/package-ci.yml@0b57250b2e91ab1fff3a5b65deae7ea25a19b824 # v14.9.1
