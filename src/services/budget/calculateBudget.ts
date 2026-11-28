@@ -1,14 +1,16 @@
+import Decimal from "decimal.js";
+
 interface CalculateBudgetOutput {
-  totalExpenditure: number;
-  totalSavings: number;
+  totalExpenditure: Decimal;
+  totalSavings: Decimal;
 }
 
-function calculateBudget(paydayTotal: number, expenses: Array<number>): CalculateBudgetOutput {
+function calculateBudget(paydayTotal: Decimal, expenses: Array<Decimal>): CalculateBudgetOutput {
   const totalExpenditure = expenses.reduce((previous, current) => {
-    return previous + current;
-  }, 0);
+    return previous.add(current);
+  }, new Decimal("0"));
 
-  return { totalExpenditure, totalSavings: paydayTotal - totalExpenditure };
+  return { totalExpenditure, totalSavings: paydayTotal.minus(totalExpenditure) };
 }
 
 export default calculateBudget;

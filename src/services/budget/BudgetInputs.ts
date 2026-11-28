@@ -1,5 +1,7 @@
+import type Decimal from "decimal.js";
+
 export interface BudgetInputs {
-  salary: number;
-  balanceForward: number;
-  expenses: Record<string, number>;
+  salary: Decimal;
+  balanceForward: Decimal;
+  expenses: Record<string, Decimal>;
 }

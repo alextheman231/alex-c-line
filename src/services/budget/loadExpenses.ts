@@ -1,6 +1,8 @@
+import type Decimal from "decimal.js";
+
 import loadAlexCLineGlobalConfig from "src/services/configs/loadAlexCLineGlobalConfig";
 
-async function loadExpenses(): Promise<Record<string, number> | null> {
+async function loadExpenses(): Promise<Record<string, Decimal> | null> {
   const config = await loadAlexCLineGlobalConfig();
 
   if (config === null) {

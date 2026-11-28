@@ -3,7 +3,7 @@ import type { Command } from "commander";
 import type { BudgetInputs } from "src/services/budget/BudgetInputs";
 
 import { az } from "@alextheman/utility";
-import z from "zod";
+import Decimal from "decimal.js";
 
 import path from "node:path";
 
@@ -21,7 +21,7 @@ function budgetCalculate(program: Command) {
     .option(
       "-e, --expense <expense>",
       "An additional expense to include.",
-      (expense, previous: Record<string, number>) => {
+      (expense, previous: Record<string, Decimal>) => {
         if (!expense.includes("=")) {
           throw new UserError(
             "INVALID_FORMAT",
@@ -43,24 +43,42 @@ function budgetCalculate(program: Command) {
           throw new UserError("INVALID_INPUT", "The expense name must not be empty.");
         }
 
-        const newExpenses: Record<string, number> = {
+        const newExpenses: Record<string, Decimal> = {
           ...previous,
-          [name]: az.with(z.coerce.number()).parse(value),
+          [name]: az
+            .with(
+              az.decimal().refine((value) => {
+                return value.isFinite();
+              }),
+            )
+            .parse(value),
         };
         return newExpenses;
       },
       {},
     )
     .option("-s, --salary <salary>", "Your monthly salary.", (rawValue) => {
-      return az.with(z.coerce.number()).parse(rawValue);
+      return az
+        .with(
+          az.decimal().refine((value) => {
+            return value.isFinite();
+          }),
+        )
+        .parse(rawValue);
     })
     .option(
       "-b, --balance-forward <balanceForward>",
       "The total amount brought forward from the previous month; the amount in the bank the day before payday.",
       (rawValue) => {
-        return az.with(z.coerce.number()).parse(rawValue);
+        return az
+          .with(
+            az.decimal().refine((value) => {
+              return value.isFinite();
+            }),
+          )
+          .parse(rawValue);
       },
-      0,
+      new Decimal("0"),
     )
     .option(
       "-o, --output <path>",
@@ -79,7 +97,7 @@ function budgetCalculate(program: Command) {
       }
 
       const constantExpenses = (await loadExpenses()) ?? {};
-      const allExpenses: Record<string, number> = { ...constantExpenses, ...additionalExpenses };
+      const allExpenses: Record<string, Decimal> = { ...constantExpenses, ...additionalExpenses };
 
       const inputs: BudgetInputs = { salary, balanceForward, expenses: allExpenses };
 

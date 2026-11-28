@@ -5,7 +5,12 @@ export const alexCLineGlobalConfigSchema = z.object({
   enableUpdateNotifications: z.boolean(),
   budget: z
     .object({
-      expenses: z.record(z.string(), z.number()),
+      expenses: z.record(
+        z.string(),
+        az.decimal().refine((value) => {
+          return value.isFinite();
+        }),
+      ),
     })
     .nullable(),
 });

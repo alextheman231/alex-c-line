@@ -1,7 +1,9 @@
+import type Decimal from "decimal.js";
+
 import loadAlexCLineGlobalConfig from "src/services/configs/loadAlexCLineGlobalConfig";
 import upsertAlexCLineGlobalConfig from "src/services/configs/upsertAlexCLineGlobalConfig";
 
-async function addExpenses(expenses: Record<string, number>) {
+async function addExpenses(expenses: Record<string, Decimal>) {
   const config = await loadAlexCLineGlobalConfig();
   const existingExpenses = config?.budget?.expenses ?? {};
 
